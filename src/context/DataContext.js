@@ -7,11 +7,19 @@ const DataContext = createContext();
 
 export default function DataContextProvider({ children }) {
   const [apiDataRaw, setData] = useState();
+  const [dataFiltered, setDataFiltered] = useState();
+  const [name, setName] = useState('');
+  const filters = {
+    filters: {
+      filterByName: name,
+    },
+  };
 
   useEffect(() => {
     async function fetchUrl() {
       const response = await getPlanetInfo();
       setData(response);
+      setDataFiltered(response);
     }
     fetchUrl();
   }, []);
@@ -21,6 +29,11 @@ export default function DataContextProvider({ children }) {
       value={ {
         apiDataRaw,
         setData,
+        name,
+        setName,
+        dataFiltered,
+        setDataFiltered,
+        filters,
       } }
     >
       { children }
@@ -28,9 +41,24 @@ export default function DataContextProvider({ children }) {
   );
 }
 
-export function useDataContext() {
-  const context = useContext(DataContext);
-  return context;
+export function useData() {
+  const { apiDataRaw, setData } = useContext(DataContext);
+  return { apiDataRaw, setData };
+}
+
+export function useDataFiltered() {
+  const { dataFiltered, setDataFiltered } = useContext(DataContext);
+  return { dataFiltered, setDataFiltered };
+}
+
+export function useFilters() {
+  const { filters } = useContext(DataContext);
+  return filters;
+}
+
+export function useFilterByName() {
+  const { name, setName } = useContext(DataContext);
+  return { name, setName };
 }
 
 DataContextProvider.propTypes = {

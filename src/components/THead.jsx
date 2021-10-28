@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDataContext } from '../context/DataContext';
+import { useData } from '../context/DataContext';
 
 export default function THead() {
-  const { apiDataRaw } = useDataContext();
-  console.log('apiDataRaw', apiDataRaw);
+  const { apiDataRaw } = useData();
   if (!apiDataRaw) return null;
   const columns = Object.keys(apiDataRaw[0]);
   return (
