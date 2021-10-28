@@ -1,9 +1,15 @@
 import React from 'react';
 import './App.css';
 
+import Main from './pages/Main';
+
+import DataContextProvider from './context/DataContext';
+
 function App() {
   return (
-    <span>Hello, App!</span>
+    <DataContextProvider>
+      <Main />
+    </DataContextProvider>
   );
 }
 

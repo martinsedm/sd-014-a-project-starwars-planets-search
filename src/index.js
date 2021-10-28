@@ -2,4 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import DataContextProvider from './context/DataContext';
+
+ReactDOM.render(
+  <DataContextProvider>
+    <App />
+  </DataContextProvider>,
+  document.getElementById('root'),
+);
