@@ -10,10 +10,12 @@ export default function DataContextProvider({ children }) {
   const [dataFiltered, setDataFiltered] = useState();
   const [name, setName] = useState('');
   const [numericValue, setNumericValue] = useState([]);
+  const [order, setOrder] = useState({ column: 'name', sort: 'ASC' });
   const filters = {
     filters: {
       filterByName: name,
       filterByNumericValue: numericValue,
+      order,
     },
   };
 
@@ -38,6 +40,8 @@ export default function DataContextProvider({ children }) {
         filters,
         numericValue,
         setNumericValue,
+        order,
+        setOrder,
       } }
     >
       { children }
@@ -55,7 +59,7 @@ export function useDataFiltered() {
   return { dataFiltered, setDataFiltered };
 }
 
-export function useFilters() {
+export function useFiltersInfo() {
   const { filters } = useContext(DataContext);
   return filters;
 }
@@ -68,6 +72,11 @@ export function useFilterByName() {
 export function useFilterByNumericValue() {
   const { numericValue, setNumericValue } = useContext(DataContext);
   return { numericValue, setNumericValue };
+}
+
+export function useFilterByOrder() {
+  const { order, setOrder } = useContext(DataContext);
+  return { order, setOrder };
 }
 
 DataContextProvider.propTypes = {

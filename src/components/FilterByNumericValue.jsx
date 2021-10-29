@@ -4,13 +4,14 @@ import { useData, useFilterByNumericValue } from '../context/DataContext';
 export default function FilterByNumericValue() {
   const { apiDataRaw } = useData();
   const { numericValue, setNumericValue } = useFilterByNumericValue();
+
   const optionsToNumeric = Object.entries(apiDataRaw[0]).filter((ele) => (
     !Number.isNaN(Number(ele[1]))
   )).map((ele) => ele[0]).filter((ele) => !numericValue
     .some(({ column }) => ele === column));
 
   const [option, setOption] = useState(optionsToNumeric[0]);
-  const [comparator, setComparator] = useState('>');
+  const [comparator, setComparator] = useState('maior que');
   const [value, setValue] = useState(0);
 
   function handleClick() {
@@ -23,8 +24,6 @@ export default function FilterByNumericValue() {
     setOption(optionsToNumeric[1]);
     setComparator(comparator);
   }
-
-  console.log(numericValue);
 
   return (
     <div>

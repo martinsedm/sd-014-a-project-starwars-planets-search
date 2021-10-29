@@ -1,10 +1,10 @@
 import React from 'react';
-import { useData, useFilters } from '../context/DataContext';
+import { useData, useFiltersInfo } from '../context/DataContext';
 import useFilter from '../hooks/useFilter';
 
 export default function TBody() {
   const { apiDataRaw } = useData();
-  const { filters } = useFilters();
+  const { filters } = useFiltersInfo();
   const { dataFiltered } = useFilter(apiDataRaw, filters);
 
   return (
@@ -14,7 +14,12 @@ export default function TBody() {
         return (
           <tr key={ i }>
             {info.map(([key, value]) => (
-              <td key={ key }>{ value }</td>
+              <td
+                key={ key }
+                data-testid={ key === 'name' ? 'planet-name' : 'planet-info' }
+              >
+                { value }
+              </td>
             ))}
           </tr>
         );
