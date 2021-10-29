@@ -5,15 +5,35 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
 
-  const contextValue = {
-    planets,
-    setPlanets,
+  const filter = {
+    filterByName: '',
   };
+
+  const [filters, setFilters] = useState(filter);
 
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const data = await response.json();
     setPlanets(data.results);
+  };
+
+  const filterPlanetsByName = (name) => {
+    if (name) {
+      const filteredPlanets = planets.filter(
+        (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+      );
+      setPlanets(filteredPlanets);
+    } else {
+      fetchPlanets();
+    }
+  };
+
+  const contextValue = {
+    planets,
+    setPlanets,
+    filters,
+    setFilters,
+    filterPlanetsByName,
   };
 
   useEffect(() => {
