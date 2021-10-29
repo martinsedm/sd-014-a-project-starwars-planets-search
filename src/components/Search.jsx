@@ -6,7 +6,7 @@ function Search() {
 
   const handleChange = (e) => {
     filterPlanetsByName(e.target.value);
-    setFilters({ ...filters, filterByName: e.target.value });
+    setFilters({ ...filters, filterByName: { name: e.target.value } });
   };
 
   return (
@@ -15,7 +15,7 @@ function Search() {
         type="text"
         data-testid="name-filter"
         placeholder="Pesquisar..."
-        value={ filters.filterByName }
+        value={ filters.filterByName.name }
         onChange={ handleChange }
       />
     </section>

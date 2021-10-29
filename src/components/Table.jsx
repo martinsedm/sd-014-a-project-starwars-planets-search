@@ -3,7 +3,27 @@ import StarWarsContext from '../Context/StarWarsContext';
 import Tr from './Tr';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
+  const { planets, filters } = useContext(StarWarsContext);
+  const { order: { column, sort } } = filters;
+
+  const sortedPlanets = planets.sort((a, b) => {
+    let first = a[column];
+    let second = b[column];
+    if (column === 'orbital_period') {
+      first = Number(first);
+      second = Number(second);
+    }
+    const MINUS_ONE = -1;
+    switch (sort) {
+    case 'ASC':
+      return first > second ? 1 : MINUS_ONE;
+    case 'DESC':
+      return first < second ? 1 : MINUS_ONE;
+    default:
+      return 0;
+    }
+  });
+
   return (
     <table>
       <thead>
@@ -24,7 +44,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet) => <Tr key={ planet.url } planet={ planet } />) }
+        { sortedPlanets.map((planet) => <Tr key={ planet.url } planet={ planet } />) }
       </tbody>
     </table>
   );
