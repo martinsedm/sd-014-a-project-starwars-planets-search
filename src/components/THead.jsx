@@ -3,7 +3,6 @@ import { useData } from '../context/DataContext';
 
 export default function THead() {
   const { apiDataRaw } = useData();
-  if (!apiDataRaw) return null;
   const columns = Object.keys(apiDataRaw[0]);
   return (
     <thead>

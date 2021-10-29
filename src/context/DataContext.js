@@ -9,9 +9,11 @@ export default function DataContextProvider({ children }) {
   const [apiDataRaw, setData] = useState();
   const [dataFiltered, setDataFiltered] = useState();
   const [name, setName] = useState('');
+  const [numericValue, setNumericValue] = useState([]);
   const filters = {
     filters: {
       filterByName: name,
+      filterByNumericValue: numericValue,
     },
   };
 
@@ -34,6 +36,8 @@ export default function DataContextProvider({ children }) {
         dataFiltered,
         setDataFiltered,
         filters,
+        numericValue,
+        setNumericValue,
       } }
     >
       { children }
@@ -59,6 +63,11 @@ export function useFilters() {
 export function useFilterByName() {
   const { name, setName } = useContext(DataContext);
   return { name, setName };
+}
+
+export function useFilterByNumericValue() {
+  const { numericValue, setNumericValue } = useContext(DataContext);
+  return { numericValue, setNumericValue };
 }
 
 DataContextProvider.propTypes = {

@@ -7,8 +7,6 @@ export default function TBody() {
   const { filters } = useFilters();
   const { dataFiltered } = useFilter(apiDataRaw, filters);
 
-  if (!dataFiltered) return null;
-
   return (
     <tbody>
       {dataFiltered.map((planet, i) => {

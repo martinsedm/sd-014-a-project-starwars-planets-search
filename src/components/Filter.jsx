@@ -1,18 +1,16 @@
 import React from 'react';
-import { useFilterByName } from '../context/DataContext';
+import FilterByName from './FilterByName';
+import FilterByNumericValue from './FilterByNumericValue';
 
 export default function Filter() {
-  const { name, setName } = useFilterByName();
-
   return (
     <div>
-      <input
-        type="text"
-        data-testid="name-filter"
-        value={ name }
-        onChange={ ({ target: { value } }) => setName(value) }
-        placeholder="Filtre pelo nome"
-      />
+      <div>
+        <FilterByName />
+      </div>
+      <div>
+        <FilterByNumericValue />
+      </div>
     </div>
   );
 }
