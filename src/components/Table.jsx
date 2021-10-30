@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import planetSearchContext from '../context/planetsSearchContext';
 import TableHeaders from './TableHeaders';
 import TableRow from './TableRow';
 
 export default function Table({ data }) {
+  const { filters } = useContext(planetSearchContext);
   return (
     <table className="table table-dark table-striped">
-      <thead>
-        <TableHeaders />
-      </thead>
+
+      <TableHeaders />
+
       <tbody>
-        {data.map((planet) => <TableRow key={ planet.name } planet={ planet } />)}
+        {data.filter((planet) => RegExp(filters.name, 'i').test(planet.name))
+          .map((planet) => <TableRow key={ planet.name } planet={ planet } />)}
       </tbody>
     </table>
   );

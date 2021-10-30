@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import planetSearchContext from './planetsSearchContext';
 import getPlanetsList from '../services/planetsSearchAPI';
+import useFilters from '../hooks/useFilters';
 
 function PlanetsSearchProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const filters = useFilters();
 
   const toggleLoading = () => {
     setLoading((prevState) => !prevState);
@@ -19,7 +21,7 @@ function PlanetsSearchProvider({ children }) {
   };
 
   return (
-    <planetSearchContext.Provider value={ { data, loading, fetchData } }>
+    <planetSearchContext.Provider value={ { data, loading, fetchData, filters } }>
       {children}
     </planetSearchContext.Provider>
   );

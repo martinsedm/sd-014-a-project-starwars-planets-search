@@ -1,13 +1,37 @@
 .app {
   text-align: center;
   background-color: whitesmoke;
-  width: 100vw;
+  width: fit-content;
   height: 100vh;
 }
 
+.loading{
+    position: absolute;
+    top: 40vh;
+    left: 40vw;
+}
+
 .header {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
   text-align: center;
   background-color: white;
-  padding: 20px;
+  padding: 10px;
+}
+
+.searchBar{
+  display: flex;
+  justify-content: center;
+  background-color: #121212;
+  position: fixed;
+  width: 100%;
+  top: 66.91px;
+  left: 0;
+  padding: 10px;
+}
+
+.table{
+   margin-top: 124.91px;
 }

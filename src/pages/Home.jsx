@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 
 import planetSearchContext from '../context/planetsSearchContext';
-import { Header, Table } from '../components';
+import { Header, Table, SearchInput } from '../components';
 
 function Home() {
   const { data, loading, fetchData } = useContext(planetSearchContext);
 
   useEffect(() => {
-    console.log('montou');
     fetchData();
   }, []);
 
-  return (
+  return loading ? <h1 className="loading">Carregando...</h1> : (
     <>
       <Header />
-      { loading ? <h1>Carregando...</h1> : <Table data={ data } />}
+      <SearchInput />
+      <Table data={ data } />
 
     </>
   );
