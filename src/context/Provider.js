@@ -5,6 +5,18 @@ import fetchPlanets from '../services/opendtbAPI';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
+      filterByNumericValues: [],
+    },
+  });
 
   const getPlanets = async () => {
     setLoading(true);
@@ -13,9 +25,17 @@ function Provider({ children }) {
     setLoading(false);
   };
 
+  const value = {
+    data,
+    loading,
+    getPlanets,
+    filter,
+    setFilter,
+  };
+
   return (
     <div>
-      <planetContext.Provider value={ { data, loading, getPlanets } }>
+      <planetContext.Provider value={ value }>
         { children }
       </planetContext.Provider>
     </div>

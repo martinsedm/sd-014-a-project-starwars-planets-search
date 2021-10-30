@@ -2,15 +2,15 @@ import React from 'react';
 import Table from './components/Table';
 import './App.css';
 import Provider from './context/Provider';
+import FilterInput from './components/FilterInput';
 
-function App(props) {
+function App() {
   return (
-    <>
     <Provider>
-    <h1>Projeto Star Wars - Trybe!</h1>
-    <Table />
+      <h1>Projeto Star Wars - Trybe!</h1>
+      <FilterInput />
+      <Table />
     </Provider>
-    </>
   );
 }
 
