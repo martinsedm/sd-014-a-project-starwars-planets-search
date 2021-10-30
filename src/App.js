@@ -1,9 +1,23 @@
 import React from 'react';
 import './App.css';
 
+import { PlanetProvider } from './Context/PlanetProvider';
+
+import Table from './Components/PlanetsTable';
+import TextFilter from './Components/FilterForms';
+import NumericFilter from './Components/NumericFilter';
+import FilterDisableButton from './Components/FilterDisableButton';
+import FilterByOrder from './Components/FilterByOrder';
+
 function App() {
   return (
-    <span>Hello, App!</span>
+    <PlanetProvider>
+      <TextFilter />
+      <NumericFilter />
+      <FilterByOrder />
+      <FilterDisableButton />
+      <Table />
+    </PlanetProvider>
   );
 }
 
