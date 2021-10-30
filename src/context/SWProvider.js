@@ -6,12 +6,14 @@ function SWProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
       const newData = await (await fetch('https://swapi-trybe.herokuapp.com/api/planets/')).json();
-      setData(newData);
+      setData(newData.results);
+      setFilteredData(newData.results);
       setIsLoading(false);
       console.log('fetched!');
     } catch (error) {
@@ -20,14 +22,13 @@ function SWProvider({ children }) {
     }
   };
 
-  // const createNewQuestion = async (newQuestion) => {
-  //   setIsLoading(true);
-  //   await createQuestion(newQuestion);
-  //   setQuestion([...question, newQuestion]);
-  //   setIsLoading(false);
-  // }
+  const filterByName = (name) => {
+    const newData = data.filter((planet) => ((planet.name).toLowerCase()).includes(name));
+    setFilteredData(newData);
+  };
+
   return (
-    <SWContext.Provider value={ { data, isLoading, fetchData } }>
+    <SWContext.Provider value={ { filteredData, isLoading, fetchData, filterByName } }>
       {children}
     </SWContext.Provider>
   );

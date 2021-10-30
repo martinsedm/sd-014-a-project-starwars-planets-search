@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import SWContext from '../context/SWContext';
 import Loading from '../components/Loading';
+import Header from '../components/Header';
 import Table from '../components/Table';
+import Form from '../components/Form';
 
 function Home() {
   const { fetchData, isLoading } = useContext(SWContext);
@@ -9,10 +11,16 @@ function Home() {
     fetchData();
   }, []);
   return (
-    isLoading ? <Loading />
-      : (
-        <Table />
-      ));
+    <div>
+      <Header />
+      { isLoading ? <Loading /> : (
+        <div>
+          <Form />
+          <Table />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Home;
