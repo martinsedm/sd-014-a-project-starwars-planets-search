@@ -3,9 +3,8 @@ import Input from './generic/Input';
 import Select from './generic/Select';
 import Button from './generic/Button';
 
-function FormValueNumeric() {
-  const testeOptionsColuns = ['option 1', 'option 2', 'option3'];
-  const testeOptionsOperadores = ['maior que', 'menor que', 'igual a'];
+function FormOrderFilter() {
+  const colunsOrder = ['option 1', 'option 2', 'option3'];
 
   return (
     <form>
@@ -13,30 +12,32 @@ function FormValueNumeric() {
         name="ColunasNumericas"
         setState={ (value) => console.log(value) }
         testId="column-filter"
-        options={ testeOptionsColuns }
+        options={ colunsOrder }
         value="option 2" // valor do state, no valor inincial deve estar o valor padrao
       />
-      <Select
-        name="ColunasComparação"
+      <Input
+        type="radio"
+        id="ASC"
+        name="order"
         setState={ (value) => console.log(value) }
-        testId="comparison-filter"
-        options={ testeOptionsOperadores }
-        value="maior que" // valor do state, no valor inincial deve estar o valor padrao
+        value="ASC"
+        textLabel="ascendente"
       />
       <Input
-        type="number"
+        type="radio"
+        id="DESC"
+        name="order"
         setState={ (value) => console.log(value) }
-        testId="value-filter"
-        name="valueFilter"
-        value={ 2 } // valor do state
+        value="DESC"
+        textLabel="descendente"
       />
       <Button
-        testId="button-filter"
+        testId="column-sort-button"
         onClick={ () => console.log('função que manipula state') }
-        text="Filtrar"
+        text="Ordenar"
       />
     </form>
   );
 }
 
-export default FormValueNumeric;
+export default FormOrderFilter;
