@@ -47,3 +47,5 @@ export const checkIfHasToSort = (hasSortFilter, list, { column, sort }) => {
 
   return sortByText(list, 'name');
 };
+
+// para onde foram meus commits? D:
