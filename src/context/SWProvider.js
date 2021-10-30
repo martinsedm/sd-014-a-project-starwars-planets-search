@@ -7,6 +7,7 @@ function SWProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: '' });
 
   const fetchData = async () => {
     try {
@@ -15,20 +16,46 @@ function SWProvider({ children }) {
       setData(newData.results);
       setFilteredData(newData.results);
       setIsLoading(false);
-      console.log('fetched!');
     } catch (error) {
       setErrorMsg(error);
       console.log(errorMsg);
     }
   };
 
-  const filterByName = (name) => {
-    const newData = data.filter((planet) => ((planet.name).toLowerCase()).includes(name));
+  const filterData = () => {
+    let newData = data.filter((p) => (
+      (p.name).toLowerCase()).includes(filters.filterByName));
+    if (filters.filterByNumericValues) {
+      switch (filters.filterByNumericValues.comparison) {
+      case 'maior que':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        > Number(filters.filterByNumericValues.value));
+        break;
+      case 'menor que':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        < Number(filters.filterByNumericValues.value));
+        break;
+      case 'igual a':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        === Number(filters.filterByNumericValues.value));
+        break;
+      default:
+        break;
+      }
+    }
     setFilteredData(newData);
   };
 
   return (
-    <SWContext.Provider value={ { filteredData, isLoading, fetchData, filterByName } }>
+    <SWContext.Provider
+      value={ {
+        filteredData,
+        isLoading,
+        fetchData,
+        filterData,
+        setFilters,
+        filters } }
+    >
       {children}
     </SWContext.Provider>
   );

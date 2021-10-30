@@ -14,10 +14,10 @@ function Home() {
     <div>
       <Header />
       { isLoading ? <Loading /> : (
-        <div>
+        <main>
           <Form />
           <Table />
-        </div>
+        </main>
       )}
     </div>
   );
