@@ -23,6 +23,15 @@ function Form() {
     });
   };
 
+  const removeFilter = (category) => {
+    let updatedFilter = filters.filterByNumericValues;
+    updatedFilter = updatedFilter.filter((f) => f.column !== category);
+    setFilters({
+      ...filters,
+      filterByNumericValues: updatedFilter,
+    });
+  };
+
   return (
     <form>
       <label htmlFor="search">
@@ -67,6 +76,24 @@ function Form() {
       <button type="button" data-testid="button-filter" onClick={ onButtonClick }>
         Filtrar
       </button>
+      <br />
+      <br />
+      { filters.filterByNumericValues.length > 1
+      && filters.filterByNumericValues.slice(1).map((filter) => (
+        <label data-testid="filter" key={ filter.column } htmlFor={ filter.column }>
+          {`${filter.column} ${filter.comparison} ${filter.value} `}
+          <button
+            id={ filter.column }
+            name={ filter.column }
+            type="button"
+            onClick={ () => removeFilter(filter.column) }
+          >
+            X
+          </button>
+          <br />
+        </label>
+      ))}
+
     </form>
   );
 }
