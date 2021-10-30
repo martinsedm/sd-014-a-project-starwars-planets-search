@@ -1,23 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
 
 function Form() {
-  const { filterData, setFilters, filters } = useContext(SWContext);
-  const [name, setName] = useState('');
+  const {
+    setFilters,
+    filters,
+    categories,
+    name,
+    setName,
+  } = useContext(SWContext);
+
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('value');
 
-  useEffect(() => {
-    setFilters({ ...filters, filterByName: name.toLowerCase() });
-  }, [name]);
-
-  useEffect(() => {
-    filterData();
-  }, [filters]);
-
   const onButtonClick = () => {
-    setFilters({ ...filters, filterByNumericValues: { column, comparison, value } });
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value }],
+    });
   };
 
   return (
@@ -39,11 +42,7 @@ function Form() {
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { categories.map((cat) => <option key={ cat } value={ cat }>{ cat }</option>)}
         </select>
       </label>
       <label htmlFor="comparison">
