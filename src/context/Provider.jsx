@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import StarContext from './context';
 
 function Provider({ children }) {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [filterText, setFilterText] = useState([]);
+
+  const handleChange = (event) => {
+    setFilterText(event.target.value);
+  };
 
   const getPlanets = async () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -13,12 +18,18 @@ function Provider({ children }) {
       .then(() => setLoading(false));
   };
 
+  useEffect(() => {
+    getPlanets();
+  }, [filterText]);
+
   const value = {
     data,
     setData,
     loading,
     setLoading,
     getPlanets,
+    handleChange,
+    filterText,
   };
 
   return (
