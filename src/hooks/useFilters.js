@@ -14,6 +14,9 @@ const useFilters = () => {
       byNumeric: useCallback((filter) => setNumeric((prevState) => (
         [...prevState, filter]
       ))),
+      removeNumericFilter: useCallback((column) => setNumeric(
+        (prevState) => prevState.filter((filter) => filter.column !== column),
+      )),
     },
   ];
 };
