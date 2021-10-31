@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
+import SortTable from './SortTable';
 
 function Form() {
   const {
@@ -78,8 +79,8 @@ function Form() {
       </button>
       <br />
       <br />
-      { filters.filterByNumericValues.length > 1
-      && filters.filterByNumericValues.slice(1).map((filter) => (
+      { filters.filterByNumericValues.length > 0
+      && filters.filterByNumericValues.map((filter) => (
         <label data-testid="filter" key={ filter.column } htmlFor={ filter.column }>
           {`${filter.column} ${filter.comparison} ${filter.value} `}
           <button
@@ -93,7 +94,7 @@ function Form() {
           <br />
         </label>
       ))}
-
+      <SortTable />
     </form>
   );
 }
