@@ -7,6 +7,8 @@ function TableProvider({ children }) {
     data: [],
   });
 
+  const [filterText, setFilterText] = useState([]);
+
   const requestApi = async () => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const fetchUrl = await fetch(url);
@@ -17,11 +19,15 @@ function TableProvider({ children }) {
     });
   };
 
+  const handleChange = ({ target }) => {
+    setFilterText(target.value);
+  };
+
   useEffect(() => {
     requestApi();
   }, []);
 
-  const context = { response };
+  const context = { response, handleChange, filterText };
   return (
     <TableContext.Provider value={ context }>
       { children }

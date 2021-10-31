@@ -2,25 +2,26 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function Table() {
-  const { response: { data } } = useContext(TableContext);
+  const { response: { data }, filterText } = useContext(TableContext);
 
-  const genertateTd = () => data.map((planet) => (
-    <tr key={ planet.name }>
-      <td>{ planet.name }</td>
-      <td>{ planet.rotation_period }</td>
-      <td>{ planet.orbital_period }</td>
-      <td>{ planet.diameter }</td>
-      <td>{ planet.climate }</td>
-      <td>{ planet.gravity }</td>
-      <td>{ planet.terrain }</td>
-      <td>{ planet.surface_water }</td>
-      <td>{ planet.population }</td>
-      <td>{ planet.films }</td>
-      <td>{ planet.created }</td>
-      <td>{ planet.edited }</td>
-      <td>{ planet.url }</td>
-    </tr>
-  ));
+  const genertateTd = () => data.filter((planet) => planet.name.includes(filterText))
+    .map((planets, index) => (
+      <tr key={ index }>
+        <td>{ planets.name }</td>
+        <td>{ planets.rotation_period }</td>
+        <td>{ planets.orbital_period }</td>
+        <td>{ planets.diameter }</td>
+        <td>{ planets.climate }</td>
+        <td>{ planets.gravity }</td>
+        <td>{ planets.terrain }</td>
+        <td>{ planets.surface_water }</td>
+        <td>{ planets.population }</td>
+        <td>{ planets.films }</td>
+        <td>{ planets.created }</td>
+        <td>{ planets.edited }</td>
+        <td>{ planets.url }</td>
+      </tr>
+    ));
 
   const tableHeader = () => (
     <thead>
