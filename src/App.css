@@ -32,6 +32,18 @@
   padding: 10px;
 }
 
+.filtersBar{
+    display: flex;
+    justify-content: center;
+    background-color: #121212;
+    position: fixed;
+    width: 100%;
+    top: 124.91px;
+    left: 0;
+    padding: 10px;
+
+}
+
 .table{
-   margin-top: 124.91px;
+   margin-top: 182.91px;
 }

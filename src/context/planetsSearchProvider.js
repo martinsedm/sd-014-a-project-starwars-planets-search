@@ -8,7 +8,7 @@ import useFilters from '../hooks/useFilters';
 function PlanetsSearchProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const filters = useFilters();
+  const [filter, setFilter] = useFilters();
 
   const toggleLoading = () => {
     setLoading((prevState) => !prevState);
@@ -21,7 +21,9 @@ function PlanetsSearchProvider({ children }) {
   };
 
   return (
-    <planetSearchContext.Provider value={ { data, loading, fetchData, filters } }>
+    <planetSearchContext.Provider
+      value={ { data, loading, fetchData, filter, setFilter } }
+    >
       {children}
     </planetSearchContext.Provider>
   );

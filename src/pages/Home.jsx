@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import planetSearchContext from '../context/planetsSearchContext';
-import { Header, Table, SearchInput } from '../components';
+import { Header, Table, SearchInput, FiltersBar } from '../components';
 
 function Home() {
   const { data, loading, fetchData } = useContext(planetSearchContext);
@@ -14,6 +14,7 @@ function Home() {
     <>
       <Header />
       <SearchInput />
+      <FiltersBar />
       <Table data={ data } />
 
     </>

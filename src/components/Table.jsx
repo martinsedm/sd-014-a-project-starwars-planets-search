@@ -5,15 +5,18 @@ import planetSearchContext from '../context/planetsSearchContext';
 import TableHeaders from './TableHeaders';
 import TableRow from './TableRow';
 
+import filterData from '../utils';
+
 export default function Table({ data }) {
-  const { filters } = useContext(planetSearchContext);
+  const { filter } = useContext(planetSearchContext);
+
   return (
     <table className="table table-dark table-striped">
 
       <TableHeaders />
 
       <tbody>
-        {data.filter((planet) => RegExp(filters.name, 'i').test(planet.name))
+        {filterData(data, filter)
           .map((planet) => <TableRow key={ planet.name } planet={ planet } />)}
       </tbody>
     </table>
