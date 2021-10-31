@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SWContext from '../context/SWContext';
 import { ALL_CATEGORIES } from '../info';
 
 function Table() {
-  const { filteredData } = useContext(SWContext);
+  const { filteredData, filterData } = useContext(SWContext);
+
+  useEffect(() => {
+    filterData();
+  }, []);
+
   return (
     <section>
       <table>
@@ -15,7 +20,19 @@ function Table() {
         <tbody>
           { filteredData.map((planet) => (
             <tr key={ planet.name }>
-              { Object.values(planet).map((value) => <td key={ value }>{ value }</td>) }
+              <td data-testid="planet-name">{ planet.name }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.climate}</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.url }</td>
             </tr>
           ))}
         </tbody>

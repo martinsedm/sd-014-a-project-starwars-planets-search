@@ -11,17 +11,45 @@ function SWProvider({ children }) {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [name, setName] = useState('');
   const [categories, setCategories] = useState(NUMERIC_CATEGORIES);
+  const [sortMethod, setSortMethod] = useState('ASC');
 
-  const sortData = () => {
+  const sortCategoryASC = (type, newData) => {
     const ONE = 1;
-    const { order: { sort, column } } = filters;
-
-    if (sort === 'ASC') {
-      filteredData.sort((a, b) => ((a[column] > b[column]) ? ONE : -ONE));
-      console.log(`ASC sorting, category name: ${column}`);
-    } else {
-      console.log(`DESC sorting, category name: ${column}`);
+    const { order: { column } } = filters;
+    if (type === 'name') {
+      return setFilteredData(newData.sort((a, b) => (
+        (a[column] > b[column]) ? ONE : -ONE)));
     }
+    return setFilteredData(newData.sort((a, b) => (
+      (Number(a[column]) > Number(b[column])) ? ONE : -ONE)));
+  };
+
+  const sortCategoryDESC = (type, newData) => {
+    const ONE = 1;
+    const { order: { column } } = filters;
+    if (type === 'name') {
+      return setFilteredData(newData.sort((a, b) => (
+        (a[column] < b[column]) ? ONE : -ONE)));
+    }
+    return setFilteredData(newData.sort((a, b) => (
+      (Number(a[column]) < Number(b[column])) ? ONE : -ONE)));
+  };
+
+  const sortData = (newData) => {
+    const { order: { sort, column } } = filters;
+    if (sort === 'ASC') {
+      if (column === 'name'
+      || column === 'url'
+      || column === 'climate'
+      || column === 'terrain') {
+        return sortCategoryASC('name', newData);
+      }
+      return sortCategoryASC('', newData);
+    }
+    if (column === 'name' || column === 'url') {
+      return sortCategoryDESC('name', newData);
+    }
+    return sortCategoryDESC('', newData);
   };
 
   const fetchData = async () => {
@@ -43,43 +71,46 @@ function SWProvider({ children }) {
   }, [name]);
 
   const filterData = () => {
+    const { filterByNumericValues } = filters;
     let newData = data.filter((planet) => (
       (planet.name).toLowerCase()).includes(filters.filterByName));
-    if (filters.filterByNumericValues.length > 0) {
-      filters.filterByNumericValues.forEach((filter) => {
-        switch (filter.comparison) {
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
         case 'maior que':
-          newData = newData.filter((planet) => Number(planet[filter.column])
-          > Number(filter.value));
+          newData = newData.filter((planet) => Number(planet[column])
+          > Number(value));
           break;
         case 'menor que':
-          newData = newData.filter((planet) => Number(planet[filter.column])
-          < Number(filter.value));
+          newData = newData.filter((planet) => Number(planet[column])
+          < Number(value));
           break;
         case 'igual a':
-          newData = newData.filter((planet) => Number(planet[filter.column])
-          === Number(filter.value));
+          newData = newData.filter((planet) => Number(planet[column])
+          === Number(value));
           break;
         default:
           break;
         }
       });
     }
-    setFilteredData(newData);
+    sortData(newData);
   };
 
-  const filterCategories = () => {
-    const numericFilter = filters.filterByNumericValues;
-    if (filters.filterByNumericValues.length > 0) {
-      setCategories(categories.filter((
-        (cat) => cat !== numericFilter[numericFilter.length - 1].column)));
+  const updateCategories = () => {
+    let updatedCategories = NUMERIC_CATEGORIES;
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach(({ column }) => {
+        updatedCategories = updatedCategories.filter((cat) => cat !== column);
+      });
     }
+    setCategories(updatedCategories);
   };
 
   useEffect(() => {
     filterData();
-    filterCategories();
-    sortData();
+    updateCategories();
   }, [filters]);
 
   return (
@@ -93,6 +124,9 @@ function SWProvider({ children }) {
         categories,
         name,
         setName,
+        sortMethod,
+        setSortMethod,
+        filterData,
       } }
     >
       {children}

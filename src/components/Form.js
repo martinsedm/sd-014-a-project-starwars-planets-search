@@ -13,7 +13,7 @@ function Form() {
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('value');
+  const [value, setValue] = useState('0');
 
   const onButtonClick = () => {
     setFilters({
@@ -52,7 +52,8 @@ function Form() {
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          { categories.map((cat) => <option key={ cat } value={ cat }>{ cat }</option>)}
+          { categories.map((cat) => (
+            <option key={ cat } value={ cat }>{ cat }</option>))}
         </select>
       </label>
       <label htmlFor="comparison">
