@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getStarWarsPlanets from '../services/swAPI';
+import RenderPlanets from './RenderPlanets';
 
 function Planets() {
   const [planets, setPlanets] = useState([]);
@@ -17,30 +18,9 @@ function Planets() {
     });
   }, []);
 
-  const renderPlanets = () => (
-    <table>
-      <thead>
-        <tr>
-          {Object.keys(planets[0]).map((key) => (
-            <th key={ key }>{key.replace('_', ' ').toUpperCase()}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {planets.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.values(planet).map((value) => (
-              <td key={ value }>{value}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-
   return (
     <div>
-      {loading ? null : renderPlanets()}
+      {loading ? null : <RenderPlanets planets={ planets } />}
     </div>
   );
 }
