@@ -6,6 +6,9 @@ import requestAPI from './requestAPI';
 export default function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+  });
 
   const fetchAPI = async () => {
     setIsLoading(true);
@@ -15,7 +18,15 @@ export default function PlanetsProvider({ children }) {
   };
 
   return (
-    <PlanetsContext.Provider value={ { data, isLoading, fetchAPI } }>
+    <PlanetsContext.Provider
+      value={ {
+        data,
+        isLoading,
+        fetchAPI,
+        filters,
+        setFilters,
+      } }
+    >
       { children }
     </PlanetsContext.Provider>
   );

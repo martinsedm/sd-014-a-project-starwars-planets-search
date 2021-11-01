@@ -2,7 +2,14 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../contextAPI/PlanetsContext';
 
 export default function PlanetsTable() {
-  const { data } = useContext(PlanetsContext);
+  const { data, filters } = useContext(PlanetsContext);
+
+  const getFilteredPlanets = () => {
+    const { filterByName } = filters;
+    return data.filter(({ name }) => (
+      name.toLowerCase().includes(filterByName.name.toLowerCase())
+    ));
+  };
 
   const tblHeaders = () => {
     const headers = Object.keys(data[0]);
@@ -16,7 +23,7 @@ export default function PlanetsTable() {
   };
 
   const rows = () => {
-    const planetRows = data;
+    const planetRows = getFilteredPlanets();
     return planetRows.map((colunm, index) => (
       <tr key={ index }>
         <td data-testid="planet-name">{colunm.name}</td>
