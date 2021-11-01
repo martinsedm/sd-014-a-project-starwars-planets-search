@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../contexts/PlanetsContext';
 
 export default function Table() {
-  const { loading, data } = useContext(PlanetsContext);
-  // const nameInput = '';
+  const { loading, data, nameInput } = useContext(PlanetsContext);
 
   return loading
     ? <span>Loading...</span>
     : (
       <table>
         <thead>
+          {console.log('Table render')}
           <tr>
             <th>Name</th>
             <th>Rotation Period</th>
@@ -27,12 +27,28 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {/* { data
+          { data
             .filter((planet) => planet.name.toLowerCase()
               .includes(nameInput.toLowerCase()))
-            .map((planet, i) => <Row planetInfo={ planet } key={ i } />)} */}
+            .map((planet, i) => (
+              <tr key={ i }>
+                <td>{ planet.name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.climate }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.population }</td>
+                <td>{ planet.films }</td>
+                <td>{ planet.created }</td>
+                <td>{ planet.edited }</td>
+                <td>{ planet.url }</td>
+              </tr>
+            ))}
 
-          { data.map((planet, i) => (
+          {/* { data.map((planet, i) => (
             <tr key={ i }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
@@ -48,7 +64,7 @@ export default function Table() {
               <td>{ planet.edited }</td>
               <td>{ planet.url }</td>
             </tr>
-          )) }
+          )) } */}
         </tbody>
       </table>
     );
