@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import planetSearchContext from '../context/planetsSearchContext';
 import TableHeaders from './TableHeaders';
@@ -7,8 +6,8 @@ import TableRow from './TableRow';
 
 import filterData from '../utils';
 
-export default function Table({ data }) {
-  const { filter } = useContext(planetSearchContext);
+export default function Table() {
+  const { filter, data } = useContext(planetSearchContext);
 
   return (
     <table className="table table-dark table-striped">
@@ -22,5 +21,3 @@ export default function Table({ data }) {
     </table>
   );
 }
-
-Table.propTypes = { data: PropTypes.arrayOf(PropTypes.object).isRequired };

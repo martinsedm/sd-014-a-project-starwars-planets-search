@@ -3,6 +3,10 @@ import { useState, useCallback } from 'react';
 const useFilters = () => {
   const [name, setName] = useState('');
   const [numeric, setNumeric] = useState([]);
+  //   const [order, setOrder] = useState({
+  //     column: 'name',
+  //     sort: 'ASC',
+  //   });
 
   return [
     {
