@@ -62,10 +62,20 @@ export default function Provider({ children }) {
     return filtered;
   };
 
+  const removeFilter = (idx) => {
+    const { filterByNumericValues } = filters;
+    const newFilter = [...filterByNumericValues];
+    newFilter.splice(idx, 1);
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...newFilter],
+    });
+  };
+
   const context = {
     data: filterData(),
     filters,
-    filterFunc: { changeFilters, changeFiltersNumber },
+    filterFunc: { changeFilters, changeFiltersNumber, removeFilter },
   };
   return (
     <myContext.Provider value={ context }>

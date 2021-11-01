@@ -1,22 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import myContext from '../context/myContext';
 
 export default function FilterNum() {
   const { filterFunc: { changeFiltersNumber } } = useContext(myContext);
+  const defaultList = ['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water'];
+  const [list, setList] = useState(defaultList);
   const [localFilter, setLocalFilter] = useState({
-    column: 'population',
+    column: list[0],
     comparison: 'maior que',
     value: '',
   });
   const { filters: { filterByNumericValues } } = useContext(myContext);
 
-  const [list, setList] = useState(['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water']);
   const comparison = ['maior que', 'menor que', 'igual a'];
 
   const onUpdate = () => {
     const activeFilter = filterByNumericValues.map((filt) => filt.column);
-    const newList = list.filter((item) => !activeFilter.includes(item));
+    const newList = defaultList.filter((item) => !activeFilter.includes(item));
     setList(newList);
   };
 
@@ -39,6 +41,10 @@ export default function FilterNum() {
   };
 
   const handleClick = () => {
+    setLocalFilter({
+      ...localFilter,
+      column: list[0],
+    });
     changeFiltersNumber('filterByNumericValues', { ...localFilter });
   };
 
