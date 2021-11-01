@@ -8,6 +8,10 @@ function Planets() {
   const [loading, setLoading] = useState(true);
   const [inputName, setInputName] = useState('');
   const [filter, setFilter] = useState({});
+  const [column, setColumn] = useState('population');
+  const [comparison, SetComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -24,8 +28,13 @@ function Planets() {
   useEffect(() => {
     setFilter({
       filterByName: { name: inputName },
+      filterByNumericValues,
     });
-  }, [inputName]);
+  }, [inputName, filterByNumericValues]);
+
+  const filtrar = () => {
+    setFilterByNumericValues([...filterByNumericValues, { column, comparison, value }]);
+  };
 
   return (
     <div>
@@ -36,6 +45,39 @@ function Planets() {
         onChange={ (e) => setInputName(e.target.value) }
         data-testid="name-filter"
       />
+      <select
+        value={ column }
+        onChange={ (e) => setColumn(e.target.value) }
+        data-testid="column-filter"
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        value={ comparison }
+        onChange={ (e) => SetComparison(e.target.value) }
+        data-testid="comparison-filter"
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        type="number"
+        value={ value }
+        onChange={ (e) => setValue(e.target.value) }
+        data-testid="value-filter"
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ filtrar }
+      >
+        Filtrar
+      </button>
       {loading ? null : <RenderPlanets planets={ planets } filter={ filter } />}
     </div>
   );
