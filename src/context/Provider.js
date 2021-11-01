@@ -6,6 +6,9 @@ import planetsContext from './planetsContext';
 const Provider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [filter, setFilter] = useState({
+    filterByName: { name: '' },
+  });
 
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -15,12 +18,22 @@ const Provider = ({ children }) => {
     setLoading(false);
   };
 
+  const changeNameFilter = (name) => {
+    setFilter({
+      ...filter,
+      filterByName: {
+        ...filter.filterByName,
+        name,
+      },
+    });
+  };
+
   useEffect(() => {
     fetchPlanets();
   }, []);
 
   const context = {
-    data, isLoading,
+    data, isLoading, filter, changeNameFilter,
   };
 
   return (
