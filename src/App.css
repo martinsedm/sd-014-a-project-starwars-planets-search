@@ -1,54 +1,54 @@
 .app {
-  text-align: center;
   background-color: whitesmoke;
-  width: 100vw;
   height: 100vh;
+  text-align: center;
+  width: 100vw;
 }
 
 .loading {
+  left: 40vw;
   position: absolute;
   top: 40vh;
-  left: 40vw;
 }
 
 .header {
-  width: 100%;
-  text-align: center;
   background-color: white;
   padding: 10px;
+  text-align: center;
+  width: 100%;
 }
 
 .searchBar {
+  background-color: #121212;
   display: flex;
   justify-content: center;
-  background-color: #121212;
   padding: 10px;
 }
 
 .filtersBar {
-  display: flex;
-  justify-content: space-around;
   align-items: center;
   background-color: #121212;
+  display: flex;
+  justify-content: space-around;
   padding: 10px;
 }
 
 .filterMessage {
-  display: flex;
-  padding: 0 10px;
-  justify-content: flex-start;
   background-color: #121212;
   color: white;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 10px;
 }
 
 .table {
   font-size: 11px;
 }
 
-.filter-input{
+.filter-input {
   width: 13%;
 }
 
-label{
+label {
   color: white;
 }
