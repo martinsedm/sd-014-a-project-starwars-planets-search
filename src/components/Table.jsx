@@ -6,10 +6,28 @@ function Table() {
   const {
     filters: {
       filterByName: { name },
+      filterByNumericValues: numericValues,
     },
   } = filters;
+  const filterByName = (planet) => planet.name.toLowerCase().includes(name.toLowerCase());
 
-  const filter = (planet) => (planet.name.toLowerCase().includes(name.toLowerCase()));
+  const filterByNumericValues = (planet) => numericValues.reduce(
+    (acc, { column, comparison, value }) => {
+      if (acc === false) return false;
+      const selectedColumn = Number(planet[column]);
+      const valueNumber = Number(value);
+      switch (comparison) {
+      case 'maior que':
+        return selectedColumn > valueNumber;
+      case 'menor que':
+        return selectedColumn < valueNumber;
+      case 'igual a':
+        return selectedColumn === valueNumber;
+      default:
+        return false;
+      }
+    }, true,
+  );
 
   return (
     <table>
@@ -32,7 +50,7 @@ function Table() {
       </thead>
       <tbody>
         {loading || planets.length === 0 ? <tr><td>Loading...</td></tr>
-          : planets.filter(filter).map((planet) => (
+          : planets.filter(filterByName).filter(filterByNumericValues).map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

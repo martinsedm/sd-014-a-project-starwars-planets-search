@@ -29,12 +29,31 @@ function PlanetsProvider({ children }) {
     });
   }, []);
 
-  const setFilter = (obj) => {
-    setFilters({ filters: { ...filters.filters, ...obj } });
+  const setFilterByName = (name) => {
+    setFilters({ filters: { ...filters.filters, filterByName: { name } } });
+  };
+
+  const setFilterByNumericValues = (column, comparison, value) => {
+    const { filterByNumericValues: curNumericFilters } = filters.filters;
+    const filter = {
+      column,
+      comparison,
+      value,
+    };
+    const newFilters = [filter, ...curNumericFilters];
+    setFilters({ filters: { ...filters.filters, filterByNumericValues: newFilters } });
   };
 
   return (
-    <PlanetsContext.Provider value={ { planets, loading, setFilter, filters } }>
+    <PlanetsContext.Provider
+      value={ {
+        planets,
+        loading,
+        filters,
+        setFilterByName,
+        setFilterByNumericValues,
+      } }
+    >
       {children}
     </PlanetsContext.Provider>
   );
