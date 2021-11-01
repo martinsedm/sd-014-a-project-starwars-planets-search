@@ -46,15 +46,24 @@ function Planets() {
         data-testid="name-filter"
       />
       <select
-        value={ column }
         onChange={ (e) => setColumn(e.target.value) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filterByNumericValues.length > 0
+          && filterByNumericValues[0].column === 'population'
+          ? null : <option value="population">population</option>}
+        {filterByNumericValues.length > 0
+          && filterByNumericValues[0].column === 'orbital_period'
+          ? null : <option value="orbital_period">orbital_period</option>}
+        {filterByNumericValues.length > 0
+          && filterByNumericValues[0].column === 'diameter'
+          ? null : <option value="diameter">diameter</option>}
+        {filterByNumericValues.length > 0
+          && filterByNumericValues[0].column === 'rotation_period'
+          ? null : <option value="rotation_period">rotation_period</option>}
+        {filterByNumericValues.length > 0
+          && filterByNumericValues[0].column === 'surface_water'
+          ? null : <option value="surface_water">surface_water</option>}
       </select>
       <select
         value={ comparison }
