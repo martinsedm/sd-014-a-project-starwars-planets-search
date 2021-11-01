@@ -44,6 +44,12 @@ function PlanetsProvider({ children }) {
     setFilters({ filters: { ...filters.filters, filterByNumericValues: newFilters } });
   };
 
+  const deleteFilterByNumericValues = (column) => {
+    const { filterByNumericValues: curNumericFilters } = filters.filters;
+    const newFilters = curNumericFilters.filter((f) => f.column !== column);
+    setFilters({ filters: { ...filters.filters, filterByNumericValues: newFilters } });
+  };
+
   return (
     <PlanetsContext.Provider
       value={ {
@@ -52,6 +58,7 @@ function PlanetsProvider({ children }) {
         filters,
         setFilterByName,
         setFilterByNumericValues,
+        deleteFilterByNumericValues,
       } }
     >
       {children}

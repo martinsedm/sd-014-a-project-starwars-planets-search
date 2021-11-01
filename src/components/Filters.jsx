@@ -18,7 +18,14 @@ function Filters() {
       filterByNumericValues,
     } } = filters;
 
-  const [columnsFilter, setColumnsFilter] = useState('');
+  const filterOptions = (curFilter) => !filterByNumericValues.some(
+    (cur) => curFilter === cur.column,
+  );
+
+  // const [columnsFilter, setColumnsFilter] = useState('');
+  const [columnsFilter, setColumnsFilter] = useState(
+    DEFAULT_COLUMNS_FILTER.filter(filterOptions)[0],
+  );
   const [comparisonFilter, setComparisonFilter] = useState('');
   const [valueFilter, setValueFilter] = useState('');
 
@@ -29,10 +36,6 @@ function Filters() {
     setComparisonFilter('');
     setValueFilter('');
   };
-
-  const filterOptions = (curFilter) => !filterByNumericValues.some(
-    (cur) => curFilter === cur.column,
-  );
 
   return (
     <div>
@@ -55,6 +58,7 @@ function Filters() {
             value={ columnsFilter }
             onChange={ ({ target: { value } }) => setColumnsFilter(value) }
           >
+            {/* <option value="" disabled>Select a column</option> */}
             {
               DEFAULT_COLUMNS_FILTER.filter(filterOptions).map((column) => (
                 <option key={ column } value={ column }>{ column }</option>
