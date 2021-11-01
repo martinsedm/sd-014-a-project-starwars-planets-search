@@ -15,6 +15,7 @@ function Filters() {
   const {
     filters: {
       filterByName,
+      filterByNumericValues,
     } } = filters;
 
   const [columnsFilter, setColumnsFilter] = useState('');
@@ -28,6 +29,10 @@ function Filters() {
     setComparisonFilter('');
     setValueFilter('');
   };
+
+  const filterOptions = (curFilter) => !filterByNumericValues.some(
+    (cur) => curFilter === cur.column,
+  );
 
   return (
     <div>
@@ -50,9 +55,8 @@ function Filters() {
             value={ columnsFilter }
             onChange={ ({ target: { value } }) => setColumnsFilter(value) }
           >
-            <option value="" disabled>Select a column</option>
             {
-              DEFAULT_COLUMNS_FILTER.map((column) => (
+              DEFAULT_COLUMNS_FILTER.filter(filterOptions).map((column) => (
                 <option key={ column } value={ column }>{ column }</option>
               ))
             }
