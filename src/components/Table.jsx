@@ -19,7 +19,7 @@ export default function Table() {
             ))}
           </tr>
           { data.map((plnt) => (
-            <tr key={ plnt }>
+            <tr key={ plnt.id }>
               {titles.map((title) => (
                 <td key={ plnt[title] }>
                   {plnt[title]}

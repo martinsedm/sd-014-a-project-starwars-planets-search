@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import myContext from '../context/myContext';
 
-export default function Filter() {
+export default function FilterName() {
   const [name, setName] = useState('');
-  const { changeFilters } = useContext(myContext);
+  const { filterFunc: { changeFilters } } = useContext(myContext);
 
   const handleClick = ({ target }) => {
     setName(target.value);

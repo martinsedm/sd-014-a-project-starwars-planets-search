@@ -20,6 +20,13 @@ export default function Provider({ children }) {
     filtersByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: ' ',
+        value: '0',
+      },
+    ],
   });
 
   const changeFilters = (type, value) => {
@@ -28,18 +35,37 @@ export default function Provider({ children }) {
       [type]: value,
     });
   };
-
+  const changeFiltersNumber = (type, value) => {
+    setFilters({
+      ...filters,
+      [type]: [...filters[type], value],
+    });
+  };
   const filterData = () => {
     const { name } = filters.filtersByName;
+    const { filterByNumericValues } = filters;
+    let filtered = [{}];
     if (data.length > 1) {
-      return data.filter((planet) => planet.name.includes(name));
+      filtered = data.filter((planet) => planet.name.includes(name));
+      filterByNumericValues.map(({ column, comparison, value }) => {
+        filtered = filtered.filter((plnt) => {
+          const compare = Number(plnt[column]);
+          const valor = Number(value);
+          if (comparison === 'maior que') return compare > valor;
+          if (comparison === 'menor que') return compare < valor;
+          if (comparison === 'igual a') return compare === valor;
+          return true;
+        });
+        return filtered;
+      });
     }
-    return [{}];
+    return filtered;
   };
 
   const context = {
     data: filterData(),
-    changeFilters,
+    filters,
+    filterFunc: { changeFilters, changeFiltersNumber },
   };
   return (
     <myContext.Provider value={ context }>
