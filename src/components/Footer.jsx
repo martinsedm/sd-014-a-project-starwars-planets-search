@@ -2,6 +2,8 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <div />
+    <p className="anna-powered">
+      powered by Anna Hamann
+    </p>
   );
 }

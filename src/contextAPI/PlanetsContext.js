@@ -1,3 +1,5 @@
 import { createContext } from 'react';
 
-export default PlanetsContext = createContext();
+const PlanetsContext = createContext();
+
+export default PlanetsContext;
