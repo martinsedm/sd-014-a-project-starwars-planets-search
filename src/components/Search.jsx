@@ -2,14 +2,15 @@ import React, { useContext } from 'react';
 import StarContext from '../context/context';
 
 function Search() {
-  const { handleChange } = useContext(StarContext);
+  const { setName } = useContext(StarContext);
+
   return (
     <form>
       <label htmlFor="filter">
         <input
           id="filter"
           placeholder="Filtrar por nome"
-          onChange={ handleChange }
+          onChange={ ({ target }) => setName(target.value) }
           data-testid="name-filter"
         />
       </label>
