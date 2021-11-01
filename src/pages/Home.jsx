@@ -1,13 +1,15 @@
 import React from 'react';
 import Table from '../components/Table';
-import SearchBar from '../components/SearchBar';
+import FilterByName from '../components/FilterByName';
+import FilterByNumber from '../components/FilterByNumber';
 
 export default function Home() {
   return (
     <>
-      { console.log('render')}
+      { console.log('Home render') }
       <header>
-        <SearchBar />
+        <FilterByName />
+        <FilterByNumber />
       </header>
       <main>
         <Table />
