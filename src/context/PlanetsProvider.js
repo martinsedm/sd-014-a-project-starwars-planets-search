@@ -50,6 +50,10 @@ function PlanetsProvider({ children }) {
     setFilters({ filters: { ...filters.filters, filterByNumericValues: newFilters } });
   };
 
+  const setOrder = (column, sort) => {
+    setFilters({ filters: { ...filters.filters, order: { column, sort } } });
+  };
+
   return (
     <PlanetsContext.Provider
       value={ {
@@ -59,6 +63,7 @@ function PlanetsProvider({ children }) {
         setFilterByName,
         setFilterByNumericValues,
         deleteFilterByNumericValues,
+        setOrder,
       } }
     >
       {children}

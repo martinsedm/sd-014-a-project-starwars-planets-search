@@ -5,10 +5,15 @@ const DEFAULT_COLUMNS_FILTER = [
   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
 ];
 
+const DEFAULT_COLUMNS_FILTER_SORT = [
+  'name', 'Climate', 'Terrain', ...DEFAULT_COLUMNS_FILTER,
+];
+
 function Filters() {
   const {
     setFilterByName,
     setFilterByNumericValues,
+    setOrder,
     filters,
   } = useContext(PlanetsContext);
 
@@ -16,6 +21,7 @@ function Filters() {
     filters: {
       filterByName,
       filterByNumericValues,
+      order,
     } } = filters;
 
   const filterOptions = (curFilter) => !filterByNumericValues.some(
@@ -28,6 +34,8 @@ function Filters() {
   );
   const [comparisonFilter, setComparisonFilter] = useState('');
   const [valueFilter, setValueFilter] = useState('');
+  const [orderColumn, setOrderColumn] = useState(order.column);
+  const [orderSort, setOrderSort] = useState(order.sort);
 
   const submitNumericFilter = (e) => {
     e.preventDefault();
@@ -35,6 +43,11 @@ function Filters() {
     setColumnsFilter('');
     setComparisonFilter('');
     setValueFilter('');
+  };
+
+  const submitOrder = (e) => {
+    e.preventDefault();
+    setOrder(orderColumn, orderSort);
   };
 
   return (
@@ -95,6 +108,50 @@ function Filters() {
           type="submit"
         >
           Filtrar
+        </button>
+      </form>
+      <form onSubmit={ submitOrder }>
+        <label htmlFor="order">
+          Order By
+          <select
+            id="order"
+            data-testid="column-sort"
+            value={ orderColumn }
+            onChange={ ({ target: { value } }) => setOrderColumn(value) }
+          >
+            <option value="" disabled>Select a column</option>
+            {
+              DEFAULT_COLUMNS_FILTER_SORT.map((column) => (
+                <option key={ column } value={ column }>{ column }</option>
+              ))
+            }
+          </select>
+        </label>
+        <label htmlFor="ASC">
+          <input
+            type="radio"
+            id="ASC"
+            data-testid="column-sort-input-asc"
+            onChange={ () => setOrderSort('ASC') }
+            checked={ orderSort === 'ASC' }
+          />
+          ASC
+        </label>
+        <label htmlFor="ASC">
+          <input
+            type="radio"
+            id="ASC"
+            data-testid="column-sort-input-desc"
+            onChange={ () => setOrderSort('DESC') }
+            checked={ orderSort === 'DESC' }
+          />
+          DESC
+        </label>
+        <button
+          type="submit"
+          data-testid="column-sort-button"
+        >
+          Order
         </button>
       </form>
     </div>
