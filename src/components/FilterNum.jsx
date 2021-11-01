@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import myContext from '../context/myContext';
 
 export default function FilterNum() {
@@ -8,11 +8,21 @@ export default function FilterNum() {
     comparison: 'maior que',
     value: '',
   });
+  const { filters: { filterByNumericValues } } = useContext(myContext);
 
-  const list = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
+  const [list, setList] = useState(['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water']);
   const comparison = ['maior que', 'menor que', 'igual a'];
 
+  const onUpdate = () => {
+    const activeFilter = filterByNumericValues.map((filt) => filt.column);
+    const newList = list.filter((item) => !activeFilter.includes(item));
+    setList(newList);
+  };
+
+  useEffect(() => {
+    onUpdate();
+  }, [filterByNumericValues]);
   const dropDown = (array) => (
     array.map((compar) => (
       <option key={ compar } name={ compar }>
