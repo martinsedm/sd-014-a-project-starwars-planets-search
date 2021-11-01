@@ -1,11 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarContext from '../context/context';
 
 function Filter() {
-  const { setNumerics } = useContext(StarContext);
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState('');
+  const { setColumn, setValue, setComparison, filters, setFilter, column,
+    comparison, value, dropDown, setDropDown } = useContext(StarContext);
+
+  const setNumerics = () => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value },
+      ],
+    });
+    const filteredDropDown = dropDown.filter((dropd) => dropd !== column);
+    setDropDown(filteredDropDown);
+  };
 
   return (
     <form>
@@ -17,11 +27,8 @@ function Filter() {
             onChange={ ({ target }) => setColumn(target.value) }
             data-testid="column-filter"
           >
-            <option>population</option>
-            <option>orbital_period</option>
-            <option>diameter</option>
-            <option>rotation_period</option>
-            <option>surface_water</option>
+            {dropDown
+              .map((colum) => <option key={ colum }>{colum}</option>)}
           </select>
         </label>
         <label htmlFor="comparison-filter">
@@ -47,7 +54,7 @@ function Filter() {
           />
         </label>
         <button
-          onClick={ () => setNumerics(column, comparison, value) }
+          onClick={ () => setNumerics() }
           type="button"
           data-testid="button-filter"
         >

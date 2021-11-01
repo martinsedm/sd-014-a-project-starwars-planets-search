@@ -8,18 +8,18 @@ function Provider({ children }) {
   const [filterData, setFilterData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+  const [dropDown, setDropDown] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period',
+    'surface_water']);
   const [filters, setFilter] = useState(
     {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [
-        {
-          column: '',
-          comparison: '',
-          value: 0,
-        },
-      ],
+      filterByNumericValues: [],
     },
   );
 
@@ -32,7 +32,6 @@ function Provider({ children }) {
   };
 
   const filterFunction = () => {
-    const { column, comparison, value } = filters.filterByNumericValues[0];
     const number = Number(value);
     let filtered;
     switch (comparison) {
@@ -50,19 +49,6 @@ function Provider({ children }) {
     }
   };
 
-  const setNumerics = (column, comparison, value) => {
-    setFilter({
-      ...filters,
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
-    });
-  };
-
   useEffect(() => {
     setFilter({ ...filters, filterByName: name });
   }, [name]);
@@ -71,7 +57,7 @@ function Provider({ children }) {
     setFilterData(filterFunction());
   }, [filters.filterByNumericValues]);
 
-  const value = {
+  const prov = {
     data,
     setData,
     loading,
@@ -83,11 +69,18 @@ function Provider({ children }) {
     setName,
     name,
     filterData,
-    setNumerics,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    dropDown,
+    setDropDown,
   };
 
   return (
-    <StarContext.Provider value={ value }>
+    <StarContext.Provider value={ prov }>
       {children}
     </StarContext.Provider>
   );
