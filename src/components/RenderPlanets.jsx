@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 function RenderPlanets(props) {
-  const { planets } = props;
+  const { planets, filter } = props;
+  const filteredPlanets = planets.filter((planet) => planet
+    .name.toLowerCase().includes(filter.filterByName.name.toLowerCase()));
   return (
     <table>
       <thead>
@@ -13,7 +15,7 @@ function RenderPlanets(props) {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
+        {filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             {Object.values(planet).map((value) => (
               <td key={ value }>{value}</td>
@@ -26,8 +28,15 @@ function RenderPlanets(props) {
 }
 
 RenderPlanets.propTypes = {
+  filter: PropTypes.shape({
+    filterByName: PropTypes.shape({
+      name: PropTypes.shape({
+        toLowerCase: PropTypes.func,
+      }),
+    }),
+  }),
   planets: PropTypes.shape({
-    map: PropTypes.func,
+    filter: PropTypes.func,
   }),
 }.isRequired;
 
