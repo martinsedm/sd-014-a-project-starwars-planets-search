@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import planetSearchContext from './planetsSearchContext';
@@ -14,15 +14,18 @@ function PlanetsSearchProvider({ children }) {
     setLoading((prevState) => !prevState);
   };
 
-  const fetchData = async () => {
-    const planets = await getPlanetsList();
-    setData(planets);
-    toggleLoading();
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const planets = await getPlanetsList();
+      setData(planets);
+      toggleLoading();
+    };
+    fetchData();
+  }, []);
 
   return (
     <planetSearchContext.Provider
-      value={ { data, loading, fetchData, filter, setFilter } }
+      value={ { data, loading, filter, setFilter } }
     >
       {children}
     </planetSearchContext.Provider>

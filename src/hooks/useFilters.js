@@ -10,13 +10,13 @@ const useFilters = () => {
       numeric,
     },
     {
-      byName: useCallback((planet) => setName(planet)),
+      byName: useCallback((planet) => setName(planet), []),
       byNumeric: useCallback((filter) => setNumeric((prevState) => (
         [...prevState, filter]
-      ))),
+      )), []),
       removeNumericFilter: useCallback((column) => setNumeric(
         (prevState) => prevState.filter((filter) => filter.column !== column),
-      )),
+      ), []),
     },
   ];
 };

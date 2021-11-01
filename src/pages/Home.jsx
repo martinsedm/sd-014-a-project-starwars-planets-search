@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import planetSearchContext from '../context/planetsSearchContext';
 import { Header, Table, SearchInput, FiltersBar } from '../components';
 
 function Home() {
-  const { data, loading, fetchData } = useContext(planetSearchContext);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, loading } = useContext(planetSearchContext);
 
   return loading ? <h1 className="loading">Carregando...</h1> : (
     <>
