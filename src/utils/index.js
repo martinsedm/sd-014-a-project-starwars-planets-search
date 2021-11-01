@@ -4,17 +4,30 @@ const compare = {
   'maior que': (a, b) => Number(a) > Number(b),
 };
 
-const filterData = (planets, { name, numeric }) => planets.filter((planet) => {
-  let numericCheck = true;
-  if (numeric.length > 0) {
-    numeric.forEach(({ column, comparison, value }) => {
-      numericCheck = numericCheck && compare[comparison](planet[column], value);
-    });
+const orderCompare = (a, b, order, numeric) => {
+  if (order === 'ASC') {
+    return a.localeCompare(b, undefined, { numeric });
   }
 
-  const nameCheck = RegExp(name, 'i').test(planet.name);
+  return -a.localeCompare(b, undefined, { numeric });
+};
 
-  return nameCheck && numericCheck;
-});
+const filterData = (planets, { name, numeric, order }) => {
+  const filteredData = planets.filter((planet) => {
+    let numericCheck = true;
+    if (numeric.length > 0) {
+      numeric.forEach(({ column, comparison, value }) => {
+        numericCheck = numericCheck && compare[comparison](planet[column], value);
+      });
+    }
+
+    const nameCheck = RegExp(name, 'i').test(planet.name);
+
+    return nameCheck && numericCheck;
+  });
+
+  return filteredData.sort((a, b) => orderCompare(a[order.column], b[order.column],
+    order.sort, order.column !== 'name'));
+};
 
 export default filterData;

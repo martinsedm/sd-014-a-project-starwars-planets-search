@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 function TableRow({ planet }) {
   return (
     <tr>
-      { Object.values(planet).map((value, index) => <td key={ index }>{value}</td>)}
+      <td data-testid="planet-name">{planet.name}</td>
+      { Object.values(planet).slice(1).map(
+        (value, index) => <td key={ index }>{value}</td>,
+      )}
     </tr>
   );
 }

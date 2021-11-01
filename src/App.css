@@ -27,7 +27,8 @@
 
 .filtersBar {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
   background-color: #121212;
   padding: 10px;
 }
@@ -42,4 +43,12 @@
 
 .table {
   font-size: 11px;
+}
+
+.filter-input{
+  width: 13%;
+}
+
+label{
+  color: white;
 }

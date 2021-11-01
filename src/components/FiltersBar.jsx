@@ -12,6 +12,11 @@ export default function FiltersBar() {
     value: '',
   });
 
+  const [orderFilter, setOrderFilter] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
+
   const [showOptions, setShowOptions] = useState({
     pop: true,
     orb: true,
@@ -24,6 +29,14 @@ export default function FiltersBar() {
 
   const handleChange = ({ target: { name, value } }) => {
     setNumericFilters((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSort = ({ target: { name, value } }) => {
+    setOrderFilter((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleClickSort = () => {
+    setFilter.byOrder(orderFilter);
   };
 
   const handleClick = () => {
@@ -47,7 +60,7 @@ export default function FiltersBar() {
       <div className="filtersBar">
         <select
           name="column"
-          className="form-select"
+          className="form-select filter-input"
           data-testid="column-filter"
           onChange={ handleChange }
         >
@@ -60,7 +73,7 @@ export default function FiltersBar() {
         </select>
         <select
           name="comparison"
-          className="form-select"
+          className="form-select filter-input"
           data-testid="comparison-filter"
           onChange={ handleChange }
         >
@@ -75,6 +88,7 @@ export default function FiltersBar() {
           data-testid="value-filter"
           value={ numericFilters.value }
           onChange={ handleChange }
+          className="form-control filter-input"
         />
 
         <button
@@ -84,6 +98,51 @@ export default function FiltersBar() {
           onClick={ handleClick }
         >
           Filtrar
+
+        </button>
+        <select
+          name="column"
+          className="form-select filter-input"
+          data-testid="column-sort"
+          onChange={ handleSort }
+        >
+          <option value="name">name</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+        </select>
+
+        <label htmlFor="ASC">
+          Ascendente
+          <input
+            type="radio"
+            name="sort"
+            id="ASC"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            className="form-check-input ms-1"
+            onChange={ handleSort }
+          />
+        </label>
+
+        <label htmlFor="DESC">
+          Descendente
+          <input
+            type="radio"
+            name="sort"
+            id="DESC"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            className="form-check-input ms-1"
+            onChange={ handleSort }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          className="btn btn-primary"
+          onClick={ handleClickSort }
+        >
+          Ordenar
 
         </button>
       </div>
