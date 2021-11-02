@@ -9,6 +9,9 @@ const Provider = ({ children }) => {
   const [filter, setFilter] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'name', sort: 'ASC',
+    },
   });
 
   const fetchPlanets = async () => {
@@ -45,6 +48,13 @@ const Provider = ({ children }) => {
     });
   };
 
+  const changeOrder = (order) => {
+    setFilter({
+      ...filter,
+      order,
+    });
+  };
+
   useEffect(() => {
     fetchPlanets();
   }, []);
@@ -56,6 +66,7 @@ const Provider = ({ children }) => {
     changeNameFilter,
     addNumericFilter,
     removeNumericFilter,
+    changeOrder,
   };
 
   return (
