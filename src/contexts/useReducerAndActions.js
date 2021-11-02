@@ -1,5 +1,6 @@
 export const BYNAME = 'BYNAME';
 export const BYNUMBER = 'BYNUMBER';
+export const SORT = 'SORT';
 
 export const INITIAL_FILTER = {
   filters: {
@@ -32,6 +33,17 @@ export const updateFilter = (state, { type, payload }) => {
       filters: {
         ...state.filters,
         filterByNumericValues: [...state.filters.filterByNumericValues, payload],
+      },
+    };
+  case SORT:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        sort: {
+          column: payload.column,
+          sort: state.filters.sort.sort === 'ASC' ? 'DESC' : 'ASC',
+        },
       },
     };
   default:

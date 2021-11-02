@@ -1,55 +1,54 @@
 import React, { useContext } from 'react';
+import { SORT } from '../contexts/useReducerAndActions';
 import PlanetsContext from '../contexts/PlanetsContext';
 
 export default function Table() {
-  const { loading, data, filter } = useContext(PlanetsContext);
-  const { filters: { filterByName: { name } } } = filter;
+  const { loading, filteredData, dispatch } = useContext(PlanetsContext);
+
+  const columns = [
+    'Name',
+    'Rotation Period',
+    'Orbital Period',
+    'Diameter',
+    'Climate',
+    'Gravity',
+    'Terrain',
+    'Surface Water',
+    'Population',
+    'Films',
+    'Created',
+    'Edited',
+    'URL',
+  ];
+
+  const columnFilter = ({ target }) => {
+    const { innerHTML } = target;
+    const column = innerHTML.toLowerCase().replace(/ /g, '_');
+
+    const payload = { column, sort: 'ASC' };
+
+    dispatch({ type: SORT, payload });
+  };
 
   return loading
     ? <span>Loading...</span>
     : (
       <table>
         <thead>
-          {console.log('Table render')}
           <tr>
-            <th>Name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-            <th>URL</th>
+            { columns.map((col, i) => (
+              <th
+                style={ { cursor: 'pointer' } }
+                key={ i }
+                onClick={ columnFilter }
+              >
+                { col }
+              </th>
+            )) }
           </tr>
         </thead>
         <tbody>
-          { data
-            .filter((planet) => planet.name.toLowerCase()
-              .includes(name.toLowerCase()))
-            .map((planet, i) => (
-              <tr key={ i }>
-                <td>{ planet.name }</td>
-                <td>{ planet.rotation_period }</td>
-                <td>{ planet.orbital_period }</td>
-                <td>{ planet.diameter }</td>
-                <td>{ planet.climate }</td>
-                <td>{ planet.gravity }</td>
-                <td>{ planet.terrain }</td>
-                <td>{ planet.surface_water }</td>
-                <td>{ planet.population }</td>
-                <td>{ planet.films }</td>
-                <td>{ planet.created }</td>
-                <td>{ planet.edited }</td>
-                <td>{ planet.url }</td>
-              </tr>
-            ))}
-
-          {/* { data.map((planet, i) => (
+          { filteredData.map((planet, i) => (
             <tr key={ i }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
@@ -65,7 +64,7 @@ export default function Table() {
               <td>{ planet.edited }</td>
               <td>{ planet.url }</td>
             </tr>
-          )) } */}
+          ))}
         </tbody>
       </table>
     );
