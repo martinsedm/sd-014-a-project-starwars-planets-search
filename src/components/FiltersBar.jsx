@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import planetSearchContext from '../context/planetsSearchContext';
+import useArray from '../hooks/useArray';
 import FilterMessage from './FilterMessage';
+import SelectInput from './SelectInput';
 
-const WORD_SLICE = 3;
+import { comparisonOptions, orderOptions, numericOptions } from '../data';
 
 export default function FiltersBar() {
   const [numericFilters, setNumericFilters] = useState({
@@ -17,15 +19,13 @@ export default function FiltersBar() {
     sort: 'ASC',
   });
 
-  const [showOptions, setShowOptions] = useState({
-    pop: true,
-    orb: true,
-    dia: true,
-    rot: true,
-    sur: true,
-  });
+  const [numericColumns, setNumericColumns] = useArray(numericOptions);
 
   const { setFilter, filter: { numeric } } = useContext(planetSearchContext);
+
+  useEffect(() => {
+    setNumericFilters((prev) => ({ ...prev, column: numericColumns[0] }));
+  }, [numericColumns]);
 
   const handleChange = ({ target: { name, value } }) => {
     setNumericFilters((prevState) => ({ ...prevState, [name]: value }));
@@ -39,48 +39,31 @@ export default function FiltersBar() {
     setFilter.byOrder(orderFilter);
   };
 
-  const handleClick = () => {
-    setShowOptions((prevState) => ({
-      ...prevState,
-      [numericFilters.column.slice(0, WORD_SLICE)]: false,
-    }));
+  const handleClick = async () => {
+    setNumericColumns.remove(numericFilters.column);
     setFilter.byNumeric(numericFilters);
   };
 
   const removeFilter = (column) => {
-    setShowOptions((prevState) => ({
-      ...prevState,
-      [column.slice(0, WORD_SLICE)]: true,
-    }));
+    setNumericColumns.add(column);
     setFilter.removeNumericFilter(column);
   };
 
   return (
     <div>
       <div className="filtersBar">
-        <select
+        <SelectInput
           name="column"
-          className="form-select filter-input"
-          data-testid="column-filter"
+          testId="column-filter"
           onChange={ handleChange }
-        >
-          {showOptions.pop && <option value="population">population</option>}
-          {showOptions.orb && <option value="orbital_period">orbital_period</option>}
-          {showOptions.dia && <option value="diameter">diameter</option>}
-          {showOptions.rot && <option value="rotation_period">rotation_period</option>}
-          {showOptions.sur && <option value="surface_water">surface_water</option>}
-
-        </select>
-        <select
+          options={ numericColumns }
+        />
+        <SelectInput
           name="comparison"
-          className="form-select filter-input"
-          data-testid="comparison-filter"
+          testId="comparison-filter"
           onChange={ handleChange }
-        >
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-          <option value="maior que">maior que</option>
-        </select>
+          options={ comparisonOptions }
+        />
 
         <input
           type="text"
@@ -100,16 +83,12 @@ export default function FiltersBar() {
           Filtrar
 
         </button>
-        <select
+        <SelectInput
           name="column"
-          className="form-select filter-input"
-          data-testid="column-sort"
+          testId="column-sort"
           onChange={ handleSort }
-        >
-          <option value="name">name</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-        </select>
+          options={ orderOptions }
+        />
 
         <label htmlFor="ASC">
           Ascendente
