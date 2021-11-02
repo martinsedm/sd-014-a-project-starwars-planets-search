@@ -4,19 +4,15 @@ import planetSearchContext from '../context/planetsSearchContext';
 import useArray from '../hooks/useArray';
 import FilterMessage from './FilterMessage';
 import SelectInput from './SelectInput';
+import SortFilter from './SortFilter';
 
-import { comparisonOptions, orderOptions, numericOptions } from '../data';
+import { comparisonOptions, numericOptions } from '../data';
 
 export default function FiltersBar() {
   const [numericFilters, setNumericFilters] = useState({
     column: 'population',
     comparison: 'menor que',
     value: '',
-  });
-
-  const [orderFilter, setOrderFilter] = useState({
-    column: 'name',
-    sort: 'ASC',
   });
 
   const [numericColumns, setNumericColumns] = useArray(numericOptions);
@@ -29,14 +25,6 @@ export default function FiltersBar() {
 
   const handleChange = ({ target: { name, value } }) => {
     setNumericFilters((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSort = ({ target: { name, value } }) => {
-    setOrderFilter((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleClickSort = () => {
-    setFilter.byOrder(orderFilter);
   };
 
   const handleClick = async () => {
@@ -83,47 +71,8 @@ export default function FiltersBar() {
           Filtrar
 
         </button>
-        <SelectInput
-          name="column"
-          testId="column-sort"
-          onChange={ handleSort }
-          options={ orderOptions }
-        />
+        <SortFilter />
 
-        <label htmlFor="ASC">
-          Ascendente
-          <input
-            type="radio"
-            name="sort"
-            id="ASC"
-            value="ASC"
-            data-testid="column-sort-input-asc"
-            className="form-check-input ms-1"
-            onChange={ handleSort }
-          />
-        </label>
-
-        <label htmlFor="DESC">
-          Descendente
-          <input
-            type="radio"
-            name="sort"
-            id="DESC"
-            value="DESC"
-            data-testid="column-sort-input-desc"
-            className="form-check-input ms-1"
-            onChange={ handleSort }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="column-sort-button"
-          className="btn btn-primary"
-          onClick={ handleClickSort }
-        >
-          Ordenar
-
-        </button>
       </div>
       {numeric.map((filter, index) => (<FilterMessage
         key={ index }
