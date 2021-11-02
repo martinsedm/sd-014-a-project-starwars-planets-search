@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import planetsApi from '../services/dataAPI';
+import React, { useContext } from 'react';
+import planetsContext from '../context/planetsContext';
 import Loading from './Loading';
 
 function Table() {
-  const [planets, setPlanets] = useState([]);
-  const [loading, setLoading] = useState(true);
-  console.log(planetsApi());
+  const { dataPlanets, isLoading, filter } = useContext(planetsContext);
 
-  useEffect(() => {
-    setLoading(true);
-    planetsApi().then((data) => {
-      const filtered = data.results.map((planet) => {
-        delete planet.residents;
-        return planet;
-      });
-      setPlanets(filtered);
-      setLoading(false);
-    });
-  }, []);
+  const renderPlanets = () => {
+    const { filterByName: { name } } = filter;
+    const filteredPlanets = name
+      ? dataPlanets.filter((planet) => planet.name.includes(name))
+      : dataPlanets;
 
-  const renderPlanets = () => (
-    <table>
-      <thead>
-        <tr>
-          {Object.keys(planets[0]).map((key) => (
-            <th key={ key }>{key.replace('_', '').toUpperCase()}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {planets.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.values(planet).map((value) => (
-              <td key={ value }>{value}</td>
+    return (
+      <table>
+        <thead>
+          <tr>
+            {Object.keys(dataPlanets[0]).map((key) => (
+              <th key={ key }>{key.replace('_', '').toUpperCase()}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        </thead>
+        <tbody>
+          {filteredPlanets.map((planet) => (
+            <tr key={ planet.name }>
+              {Object.values(planet).map((value) => (
+                <td key={ value }>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
-    <div>{loading ? <Loading /> : renderPlanets()}</div>
+    <div>{isLoading ? <Loading /> : renderPlanets()}</div>
   );
 }
 
