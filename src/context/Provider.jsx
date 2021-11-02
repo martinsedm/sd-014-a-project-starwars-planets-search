@@ -9,9 +9,10 @@ export default function Provider({ children }) {
     const response = await fetch(API);
     const responseJSON = await response.json();
     const { results } = responseJSON;
-    setData(results);
+    const filtered = [...results];
+    setData(filtered);
   };
-
+  const [filterOrder, setFilterOrder] = useState(false);
   useEffect(() => {
     fetchApi();
   }, []);
@@ -27,6 +28,7 @@ export default function Provider({ children }) {
         value: '0',
       },
     ],
+    order: { column: '', sort: '' },
   });
 
   const changeFilters = (type, value) => {
@@ -41,12 +43,34 @@ export default function Provider({ children }) {
       [type]: [...filters[type], value],
     });
   };
+
+  const changeOrder = (filtro) => {
+    const { column, order } = filters.order;
+    if (order === 'ASC') {
+      filtro.sort((a, b) => a[column] - b[column]);
+    } else {
+      filtro.sort((a, b) => b[column] - a[column]);
+    }
+  };
+  const initialFilter = (filtro) => {
+    const UM_NEGATIVO = -1;
+    filtro.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) return UM_NEGATIVO;
+      if (nameA < nameB) return 1;
+      return 0;
+    });
+  };
   const filterData = () => {
     const { name } = filters.filtersByName;
     const { filterByNumericValues } = filters;
     let filtered = [{}];
     if (data.length > 1) {
       filtered = data.filter((planet) => planet.name.includes(name));
+      initialFilter(filtered);
+      // console.log(data);
+      if (filterOrder) changeOrder(filtered);
       filterByNumericValues.map(({ column, comparison, value }) => {
         filtered = filtered.filter((plnt) => {
           const compare = Number(plnt[column]);
@@ -75,7 +99,7 @@ export default function Provider({ children }) {
   const context = {
     data: filterData(),
     filters,
-    filterFunc: { changeFilters, changeFiltersNumber, removeFilter },
+    filterFunc: { changeFilters, changeFiltersNumber, removeFilter, setFilterOrder },
   };
   return (
     <myContext.Provider value={ context }>

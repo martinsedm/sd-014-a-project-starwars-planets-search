@@ -20,11 +20,20 @@ export default function Table() {
           </tr>
           { data.map((plnt) => (
             <tr key={ plnt.id }>
-              {titles.map((title) => (
-                <td key={ plnt[title] }>
-                  {plnt[title]}
-                </td>
-              ))}
+              {titles.map((title, idx) => {
+                if (idx === 0) {
+                  return (
+                    <td key={ plnt[title] } data-testid="planet-name">
+                      {plnt[title]}
+                    </td>
+                  );
+                }
+                return (
+                  <td key={ plnt[title] }>
+                    {plnt[title]}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

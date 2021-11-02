@@ -4,7 +4,6 @@ import myContext from '../context/myContext';
 export default function ActiveFilters() {
   const { filters: { filterByNumericValues } } = useContext(myContext);
   const { filterFunc: { removeFilter } } = useContext(myContext);
-  console.log(filterByNumericValues);
   return (
     <div>
       { filterByNumericValues.map((filter, idx) => {
