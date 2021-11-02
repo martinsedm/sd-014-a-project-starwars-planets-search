@@ -1,27 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PlanetContext from '../context/PlanetContext';
 
 function Table() {
+  const { data: { results } } = useContext(PlanetContext);
   return (
-    <header>
-      <table>
+    <table>
+      <thead>
         <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          { Object.keys(results).map((result) => <th key={ result }>{result}</th>)}
         </tr>
-      </table>
-    </header>
-
+      </thead>
+    </table>
   );
 }
 
