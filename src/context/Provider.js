@@ -28,10 +28,20 @@ const Provider = ({ children }) => {
       },
     });
   };
+
   const addNumericFilter = (newFilter) => {
     setFilter({
       ...filter,
       filterByNumericValues: filter.filterByNumericValues.concat(newFilter),
+    });
+  };
+
+  const removeNumericFilter = (column) => {
+    setFilter({
+      ...filter,
+      filterByNumericValues: filter.filterByNumericValues.filter(
+        (object) => object.column !== column,
+      ),
     });
   };
 
@@ -40,7 +50,12 @@ const Provider = ({ children }) => {
   }, []);
 
   const context = {
-    data, isLoading, filter, changeNameFilter, addNumericFilter,
+    data,
+    isLoading,
+    filter,
+    changeNameFilter,
+    addNumericFilter,
+    removeNumericFilter,
   };
 
   return (
