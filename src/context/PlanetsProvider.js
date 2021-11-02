@@ -8,6 +8,8 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  // src: https://www.youtube.com/watch?v=Q8JyF3wpsHc
+  const [search, setSearch] = useState([]);
 
   // src: https://github.com/tryber/sd-14a-live-lectures/blob/lecture/17.3/iss-location-hooks/src/services/issAPI.js
   const getPlanets = async () => {
@@ -18,12 +20,18 @@ function PlanetsProvider({ children }) {
     setLoading(false);
   };
 
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
+
   useEffect(() => {
     getPlanets();
-  }, []);
+  }, [search]);
 
   return (
-    <PlanetsContext.Provider value={ { data, isLoading, getPlanets } }>
+    <PlanetsContext.Provider
+      value={ { data, isLoading, search, getPlanets, handleChange } }
+    >
       {children}
     </PlanetsContext.Provider>
   );
