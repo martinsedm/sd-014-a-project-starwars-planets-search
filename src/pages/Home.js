@@ -3,20 +3,23 @@ import SWContext from '../context/SWContext';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Table from '../components/Table';
-import Form from '../components/Form';
+import FiltersPanel from '../components/FiltersPanel';
 
 function Home() {
-  const { fetchData, isLoading } = useContext(SWContext);
+  const { fetchData, isLoading, errorMsg } = useContext(SWContext);
+
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div>
       <Header />
       { isLoading ? <Loading /> : (
         <main>
-          <Form />
+          <FiltersPanel />
           <Table />
+          { errorMsg && <h1>{ errorMsg }</h1> }
         </main>
       )}
     </div>

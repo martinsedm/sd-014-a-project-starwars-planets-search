@@ -6,15 +6,15 @@ import { NUMERIC_CATEGORIES, INITIAL_FILTERS } from '../info';
 function SWProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState();
   const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
-  const [name, setName] = useState('');
   const [categories, setCategories] = useState(NUMERIC_CATEGORIES);
   const [sortMethod, setSortMethod] = useState('ASC');
 
+  const ONE = 1;
+
   const sortCategoryASC = (type, newData) => {
-    const ONE = 1;
     const { order: { column } } = filters;
     if (type === 'name') {
       return setFilteredData(newData.sort((a, b) => (
@@ -25,7 +25,6 @@ function SWProvider({ children }) {
   };
 
   const sortCategoryDESC = (type, newData) => {
-    const ONE = 1;
     const { order: { column } } = filters;
     if (type === 'name') {
       return setFilteredData(newData.sort((a, b) => (
@@ -62,13 +61,8 @@ function SWProvider({ children }) {
       setIsLoading(false);
     } catch (error) {
       setErrorMsg(error);
-      console.log(errorMsg);
     }
   };
-
-  useEffect(() => {
-    setFilters({ ...filters, filterByName: name.toLowerCase() });
-  }, [name]);
 
   const filterData = () => {
     const { filterByNumericValues } = filters;
@@ -97,6 +91,11 @@ function SWProvider({ children }) {
     sortData(newData);
   };
 
+  const resetFilters = () => {
+    setFilters(INITIAL_FILTERS);
+    setCategories(NUMERIC_CATEGORIES);
+  };
+
   const updateCategories = () => {
     let updatedCategories = NUMERIC_CATEGORIES;
     const { filterByNumericValues } = filters;
@@ -122,11 +121,11 @@ function SWProvider({ children }) {
         setFilters,
         filters,
         categories,
-        name,
-        setName,
         sortMethod,
         setSortMethod,
-        filterData,
+        sortData,
+        errorMsg,
+        resetFilters
       } }
     >
       {children}

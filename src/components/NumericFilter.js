@@ -1,14 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import SWContext from '../context/SWContext';
-import SortTable from './SortTable';
 
-function Form() {
+function NumericFilter() {
   const {
-    setFilters,
     filters,
+    setFilters,
     categories,
-    name,
-    setName,
   } = useContext(SWContext);
 
   const [column, setColumn] = useState('population');
@@ -34,18 +31,7 @@ function Form() {
   };
 
   return (
-    <form>
-      <label htmlFor="search">
-        <input
-          name="search"
-          type="text"
-          value={ name }
-          onChange={ (e) => setName(e.target.value) }
-          placeholder="Filtrar por nome"
-          data-testid="name-filter"
-        />
-      </label>
-      <br />
+    <section>
       <label htmlFor="column">
         <select
           name="column"
@@ -72,6 +58,7 @@ function Form() {
           type="number"
           data-testid="value-filter"
           name="value"
+          placeholder="0"
           onChange={ (e) => setValue(e.target.value) }
         />
       </label>
@@ -95,9 +82,8 @@ function Form() {
           <br />
         </label>
       ))}
-      <SortTable />
-    </form>
+    </section>
   );
 }
 
-export default Form;
+export default NumericFilter;

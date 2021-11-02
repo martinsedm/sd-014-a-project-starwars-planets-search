@@ -3,7 +3,7 @@ import SWContext from '../context/SWContext';
 
 import { ALL_CATEGORIES as categories } from '../info';
 
-function SortTable() {
+function SortFilter() {
   const [column, setColumn] = useState('Name');
   const { filters, setFilters, sortMethod, setSortMethod } = useContext(SWContext);
 
@@ -13,7 +13,6 @@ function SortTable() {
       order: {
         sort: sortMethod,
         column,
-
       },
     });
   };
@@ -62,4 +61,4 @@ function SortTable() {
   );
 }
 
-export default SortTable;
+export default SortFilter;

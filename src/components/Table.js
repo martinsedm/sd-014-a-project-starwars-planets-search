@@ -3,10 +3,10 @@ import SWContext from '../context/SWContext';
 import { ALL_CATEGORIES } from '../info';
 
 function Table() {
-  const { filteredData, filterData } = useContext(SWContext);
+  const { filteredData, sortData } = useContext(SWContext);
 
   useEffect(() => {
-    filterData();
+    sortData(filteredData);
   }, []);
 
   return (
