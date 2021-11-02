@@ -23,7 +23,8 @@ export default function Provider({ children }) {
   }, []);
 
   const filterMap = (data) => {
-    const filterName = data.filter((n) => n.name.includes(searchText));
+    const filterName = data.filter((n) => n.name.toLowerCase()
+      .includes(searchText.toLowerCase()));
     return filterName;
   };
 
