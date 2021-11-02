@@ -56,7 +56,11 @@ header {
 .anna-powered {
   bottom: 10px;
   color: rgb(158, 158, 158);
+  display: flex;
+  flex-direction: column;
   font-style: italic;
+  height: 120px;
+  justify-content: flex-end;
   position: fixed;
   text-align: right;
   width: 98%;
@@ -101,4 +105,28 @@ input {
 
 .input-search-name {
   width: 300px;
+}
+
+.filters-form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.filters-form p, select {
+  margin-right: 5px;
+}
+
+button {
+  padding: 0 5px;
+}
+
+.chewie {
+  background-image: url('../css/chewie.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 5px;
+  height: 90px;
+  position: absolute;
+  width: 100%;
 }

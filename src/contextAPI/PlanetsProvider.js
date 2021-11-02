@@ -8,7 +8,13 @@ export default function PlanetsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [],
   });
+  const [currentFilters, setCurrentFilters] = useState([{
+    colunm: '',
+    comparison: '',
+    value: 0,
+  }]);
 
   const fetchAPI = async () => {
     setIsLoading(true);
@@ -21,10 +27,14 @@ export default function PlanetsProvider({ children }) {
     <PlanetsContext.Provider
       value={ {
         data,
+        setData,
         isLoading,
+        setIsLoading,
         fetchAPI,
         filters,
         setFilters,
+        currentFilters,
+        setCurrentFilters,
       } }
     >
       { children }

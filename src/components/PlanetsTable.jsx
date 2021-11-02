@@ -4,8 +4,30 @@ import PlanetsContext from '../contextAPI/PlanetsContext';
 export default function PlanetsTable() {
   const { data, filters } = useContext(PlanetsContext);
 
+  const specificFilter = (column, comparison, value) => {
+    if (comparison === 'maior que') {
+      return data.filter((planet) => (
+        planet[column] > Number(value)
+      ));
+    }
+
+    if (comparison === 'menor que') {
+      return data.filter((planet) => (
+        planet[column] < Number(value)
+      ));
+    }
+
+    return data.filter((planet) => (
+      planet[column] === value
+    ));
+  };
+
   const getFilteredPlanets = () => {
-    const { filterByName } = filters;
+    const { filterByName, filterByNumericValues } = filters;
+    const { column, comparison, value } = filterByNumericValues;
+    if (Object.keys(filterByNumericValues).length) {
+      return specificFilter(column, comparison, value);
+    }
     return data.filter(({ name }) => (
       name.toLowerCase().includes(filterByName.name.toLowerCase())
     ));
