@@ -6,6 +6,8 @@ import fetchAPI from '../services/API';
 export default function Provider({ children }) {
   const [project, updateProject] = useState([]);
   const [isLoading, updateIsLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  // const [filters, setFilters] = useState([]);
 
   useEffect(() => {
     async function fetchA() {
@@ -13,14 +15,26 @@ export default function Provider({ children }) {
       results.forEach((a) => delete a.residents);
       updateProject(results);
       updateIsLoading(false);
-      console.log(results);
     }
     fetchA();
   }, []);
 
+  // function getFilterName(value) {
+  //   if (searchText === '') { return project; }
+  //   console.log(project);
+  //   const filtrados = project.filter((e) => e.name.toLowerCase().includes(filters.filterByName.name.toLowerCase()));
+  //   setFilters({ filterByName: {
+  //     name: filtrados,
+  //   } });
+  // }
+
   const valuesContext = {
     project,
     isLoading,
+    searchText,
+    setSearchText,
+    // filters,
+    // getFilterName,
   };
 
   return (
