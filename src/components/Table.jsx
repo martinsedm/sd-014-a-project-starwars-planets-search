@@ -33,14 +33,16 @@ const Table = () => {
   const filterPlanetsByValues = (planets) => {
     const { filterByNumericValues: valuesFilter } = filter;
     return planets.filter((planet) => (
-      planet && valuesFilter.every(({ column, comparison, value }) => {
+      valuesFilter.every(({ column, comparison, value }) => {
         switch (comparison) {
-        case 'maior':
+        case 'maior que':
           return Number(planet[column]) > Number(value);
-        case 'menor':
+        case 'menor que':
           return Number(planet[column]) < Number(value);
-        default:
+        case 'igual a':
           return Number(planet[column]) === Number(value);
+        default:
+          return null;
         }
       })
     ));

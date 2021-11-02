@@ -36,9 +36,9 @@ const ValueFilter = () => {
         data-testid="comparison-filter"
         onChange={ ({ target }) => setComparison(target.value) }
       >
-        <option value="maior">maior que</option>
-        <option value="igual">igual a</option>
-        <option value="menor">menor que</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         data-testid="value-filter"
