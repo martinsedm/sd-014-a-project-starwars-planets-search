@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import Context from '../Context/Context';
 
 function Table() {
-  const { project, isLoading } = useContext(Context);
-  const values = Object.values(project);
+  const { project, isLoading, filterMap } = useContext(Context);
+
   const header = ['name',
     'rotation_period', 'planet.orbital_period',
     'planet.diameter', 'planet.climate', 'planet.gravity',
@@ -20,7 +20,6 @@ function Table() {
   if (isLoading) return <h3>Loading...</h3>;
 
   return (
-
     <table>
       <thead>
         <tr>
@@ -31,8 +30,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-
-        {values.map((planet, i) => (
+        {/*  para a 2º questão consegui clarear c/ consulta ao repo de
+         Marcus Rodrigues - Turma 13B */}
+        {filterMap(project).map((planet, i) => (
           <tr key={ i }>
             <td>{ planet.name}</td>
             <td>{ planet.rotation_period}</td>

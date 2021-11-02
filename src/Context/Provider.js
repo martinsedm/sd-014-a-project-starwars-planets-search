@@ -7,7 +7,10 @@ export default function Provider({ children }) {
   const [project, updateProject] = useState([]);
   const [isLoading, updateIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
-  // const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState([{
+    filterByName: {
+      name: '',
+    } }]);
 
   useEffect(() => {
     async function fetchA() {
@@ -19,22 +22,26 @@ export default function Provider({ children }) {
     fetchA();
   }, []);
 
-  // function getFilterName(value) {
-  //   if (searchText === '') { return project; }
-  //   console.log(project);
-  //   const filtrados = project.filter((e) => e.name.toLowerCase().includes(filters.filterByName.name.toLowerCase()));
-  //   setFilters({ filterByName: {
-  //     name: filtrados,
-  //   } });
-  // }
+  const filterMap = (data) => {
+    const filterName = data.filter((n) => n.name.includes(searchText));
+    return filterName;
+  };
+
+  useEffect(() => {
+    setFilters({
+      filterByName: {
+        name: searchText,
+      },
+    });
+  }, [searchText]);
 
   const valuesContext = {
     project,
     isLoading,
     searchText,
     setSearchText,
-    // filters,
-    // getFilterName,
+    filters,
+    filterMap,
   };
 
   return (
@@ -45,5 +52,5 @@ export default function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.node.isRequired,
 };

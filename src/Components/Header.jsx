@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import Context from '../Context/Context';
-// import React, { useState } from 'react';
 
 function Header() {
   const { setSearchText, searchText } = useContext(Context);
-  // const [filter, updateFilter] = useState('');
 
   return (
     <input
