@@ -33,19 +33,20 @@ export function PlanetProvider({ children }) {
 
   useEffect(() => {
     const filterText = filter.filters.filterByName.name; // string
-    const filterNumberList = filter.filters.filterByNumericValues; // array
-    const filterSort = filter.filters.sort; // object
-    const haveToSort = filterSort.sort !== ''; // boolean
+    const numericFilterList = filter.filters.filterByNumericValues; // array
+    const sortOrder = filter.filters.sort; // object
+    const hasToSort = sortOrder.sort !== ''; // boolean
 
-    const filteredPlanetListByText = data.filter(({ name }) => (
+    const filteredListByText = data.filter(({ name }) => (
       name.includes(filterText)
     ));
 
-    const filteredPlanetListByNumberAndText = filteredPlanetListByText
-      .reduce((acc, planet) => {
+    const filteredPlanetListByNumberAndText = (
+
+      filteredListByText.reduce((acc, planet) => {
         let attendToFilters = false;
 
-        filterNumberList.forEach((filterOption) => {
+        numericFilterList.forEach((filterOption) => {
           const { column, comparison, value } = filterOption;
           switch (comparison) {
           case 'maior que':
@@ -63,17 +64,19 @@ export function PlanetProvider({ children }) {
 
         if (attendToFilters) acc.push(planet);
         return acc;
-      }, []);
+      }, [])
 
-    if (filterNumberList.length !== 0) {
+    );
+
+    if (numericFilterList.length !== 0) {
       setPlanetsToRender(
-        checkIfHasToSort(haveToSort, filteredPlanetListByNumberAndText, filterSort),
+        checkIfHasToSort(hasToSort, filteredPlanetListByNumberAndText, sortOrder),
       );
       return;
     }
 
     setPlanetsToRender(
-      checkIfHasToSort(haveToSort, filteredPlanetListByText, filterSort),
+      checkIfHasToSort(hasToSort, filteredListByText, sortOrder),
     );
   }, [filter, data]);
 
@@ -104,9 +107,9 @@ export function PlanetProvider({ children }) {
   };
 
   const removeFilter = ({ comparison }) => {
-    const filterNumberList = filter.filters.filterByNumericValues; // array
+    const filterNumericList = filter.filters.filterByNumericValues; // array
 
-    const filterNumerListWithoutTarget = filterNumberList
+    const filteredNumericFilterList = filterNumericList
       .reduce((acc, filterToRemove) => {
         if (filterToRemove.comparison === comparison) return acc;
         acc.push(filterToRemove);
@@ -117,7 +120,7 @@ export function PlanetProvider({ children }) {
       ...prev,
       filters: {
         ...prev.filters,
-        filterByNumericValues: filterNumerListWithoutTarget,
+        filterByNumericValues: filteredNumericFilterList,
       },
     }));
   };

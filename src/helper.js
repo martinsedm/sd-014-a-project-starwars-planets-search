@@ -16,17 +16,14 @@ export const fetchPlanets = async () => {
   }
 };
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 export const sortByText = (list, column) => {
   const MINUS_ONE = -1;
   return list.sort((a, b) => {
     const columnA = a[column].toUpperCase();
     const columnB = b[column].toUpperCase();
-    if (columnA < columnB) {
-      return MINUS_ONE;
-    }
-    if (columnA > columnB) {
-      return 1;
-    }
+    if (columnA < columnB) return MINUS_ONE;
+    if (columnA > columnB) return 1;
     return 0;
   });
 };
