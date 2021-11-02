@@ -5,30 +5,50 @@ import planetsContext from '../context/planetsContext';
 const Table = () => {
   const { data, isLoading, filter } = useContext(planetsContext);
 
-  const renderTableHeader = () => (
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Rotation Period</th>
-        <th>Orbital Period</th>
-        <th>Diameter</th>
-        <th>Climate</th>
-        <th>Gravity</th>
-        <th>Terrain</th>
-        <th>Surface Water</th>
-        <th>Population</th>
-        <th>Films</th>
-        <th>Created</th>
-        <th>Edited</th>
-        <th>URL</th>
-      </tr>
-    </thead>
-  );
+  const renderTableHeader = () => {
+    const headers = Object.keys(data[0]);
+
+    return (
+      <thead>
+        <tr>
+          {
+            headers.map((header) => {
+              if (header !== 'residents') return <th key={ header }>{header}</th>;
+              return null;
+            })
+          }
+        </tr>
+      </thead>
+    );
+  };
+
+  const filterPlanetsByName = () => {
+    const { filterByName: { name } } = filter;
+    if (name) {
+      return data.filter((planet) => planet.name.includes(name));
+    }
+    return data;
+  };
+
+  const filterPlanetsByValues = (planets) => {
+    const { filterByNumericValues: valuesFilter } = filter;
+    return planets.filter((planet) => (
+      planet && valuesFilter.every(({ column, comparison, value }) => {
+        switch (comparison) {
+        case 'maior':
+          return Number(planet[column]) > Number(value);
+        case 'menor':
+          return Number(planet[column]) < Number(value);
+        default:
+          return Number(planet[column]) === Number(value);
+        }
+      })
+    ));
+  };
 
   const renderTableBody = () => {
-    const { filterByName: { name } } = filter;
-    const planets = name ? data.filter((planet) => planet.name.includes(name))
-      : data;
+    const planetsByName = filterPlanetsByName();
+    const planets = filterPlanetsByValues(planetsByName);
 
     return (
       planets.map((planet) => (
@@ -49,7 +69,7 @@ const Table = () => {
         </tr>
       ))
     );
-  }
+  };
 
   if (isLoading) return <p>Loading...</p>;
 

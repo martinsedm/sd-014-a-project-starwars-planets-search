@@ -8,6 +8,7 @@ const Provider = ({ children }) => {
   const [isLoading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [],
   });
 
   const fetchPlanets = async () => {
@@ -27,13 +28,19 @@ const Provider = ({ children }) => {
       },
     });
   };
+  const addNumericFilter = (newFilter) => {
+    setFilter({
+      ...filter,
+      filterByNumericValues: filter.filterByNumericValues.concat(newFilter),
+    });
+  };
 
   useEffect(() => {
     fetchPlanets();
   }, []);
 
   const context = {
-    data, isLoading, filter, changeNameFilter,
+    data, isLoading, filter, changeNameFilter, addNumericFilter,
   };
 
   return (
