@@ -125,7 +125,7 @@ function SWProvider({ children }) {
         setSortMethod,
         sortData,
         errorMsg,
-        resetFilters
+        resetFilters,
       } }
     >
       {children}
