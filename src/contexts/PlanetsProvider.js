@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 import { INITIAL_FILTER, updateFilter } from './useReducerAndActions';
 import PlanetsContext from './PlanetsContext';
+import { numberColumnOpt } from '../helper/optionsAndColumns';
 
 export default function PlanetsProvider({ children }) {
+  const [numColumnOpt, setNumColumnOpt] = useState(numberColumnOpt);
   const [filteredData, setFilteredData] = useState([]);
   const { data, loading } = useFetch('https://swapi-trybe.herokuapp.com/api/planets/');
 
@@ -27,6 +29,8 @@ export default function PlanetsProvider({ children }) {
     if (filterByNumericValues.length) {
       const { column, comparison, value } = filterByNumericValues[0];
 
+      setNumColumnOpt(numColumnOpt.filter((opt) => opt !== column));
+
       const numericFilter = data.filter((planet) => {
         if (comparison === 'maior que') return (1 * planet[column]) > (1 * value);
         if (comparison === 'igual a') return (1 * planet[column]) === (1 * value);
@@ -44,7 +48,7 @@ export default function PlanetsProvider({ children }) {
     // console.log(filterByNumericValues[0].value);
   }, [data, filter]);
 
-  const providerContext = { filteredData, filter, loading, dispatch };
+  const providerContext = { filteredData, filter, loading, numColumnOpt, dispatch };
 
   return (
     <PlanetsContext.Provider value={ providerContext }>

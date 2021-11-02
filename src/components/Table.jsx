@@ -1,25 +1,10 @@
 import React, { useContext } from 'react';
 import { SORT } from '../contexts/useReducerAndActions';
 import PlanetsContext from '../contexts/PlanetsContext';
+import { tableColumns } from '../helper/optionsAndColumns';
 
 export default function Table() {
   const { loading, filteredData, dispatch } = useContext(PlanetsContext);
-
-  const columns = [
-    'Name',
-    'Rotation Period',
-    'Orbital Period',
-    'Diameter',
-    'Climate',
-    'Gravity',
-    'Terrain',
-    'Surface Water',
-    'Population',
-    'Films',
-    'Created',
-    'Edited',
-    'URL',
-  ];
 
   const columnFilter = ({ target }) => {
     const { innerHTML } = target;
@@ -36,7 +21,7 @@ export default function Table() {
       <table>
         <thead>
           <tr>
-            { columns.map((col, i) => (
+            { tableColumns.map((col, i) => (
               <th
                 style={ { cursor: 'pointer' } }
                 key={ i }

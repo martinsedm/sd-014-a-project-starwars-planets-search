@@ -7,7 +7,7 @@ export default function SearchBar() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
-  const { dispatch } = useContext(PlanetsContext);
+  const { dispatch, numColumnOpt } = useContext(PlanetsContext);
 
   const submitHandle = (event) => {
     event.preventDefault();
@@ -25,11 +25,7 @@ export default function SearchBar() {
         onChange={ (e) => setColumn(e.target.value) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { numColumnOpt.map((opt, i) => <option key={ i } value={ opt }>{ opt }</option>) }
       </select>
       <select
         value={ comparison }
