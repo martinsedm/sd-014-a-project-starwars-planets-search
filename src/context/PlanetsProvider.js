@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import fetchPlanets from '../services';
 
-export default function PlanetsProvider({ children }) {
+function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [planets, setPlanets] = useState([]);
+  const { filterByName: { name } } = filters;
 
   useEffect(() => {
     const getPlanetsInfo = async () => {
@@ -14,7 +17,12 @@ export default function PlanetsProvider({ children }) {
     getPlanetsInfo();
   }, []);
 
-  const context = { data };
+  useEffect(() => {
+    const filteredPlanets = data.filter((planet) => planet.name.includes(name));
+    setPlanets(filteredPlanets);
+  }, [filters, data, name]);
+
+  const context = { filters, setFilters, planets, setPlanets };
 
   return (
     <PlanetsContext.Provider value={ context }>
@@ -28,6 +36,8 @@ const { oneOfType, arrayOf, node } = PropTypes;
 PlanetsProvider.propTypes = {
   children: oneOfType([arrayOf(node), node]).isRequired,
 };
+
+export default PlanetsProvider;
 
 // useEffect: https://www.pluralsight.com/guides/fetching-data-updating-state-hooks
 // PropTypes: https://github.com/tryber/sd-014-a-monitoria/blob/context-api-dog-gallery-28-out-2021/context-api-dog-gallery/src/context/Provider.js
