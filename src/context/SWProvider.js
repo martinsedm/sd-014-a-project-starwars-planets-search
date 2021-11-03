@@ -29,18 +29,31 @@ function SWProvider({ children }) {
     });
   };
 
-  const changeNumericValues = (obj) => {
+  const removeFilter = (column) => {
+    setInfo((prev) => ({
+      ...prev,
+      optionCollumns: [column, ...prev.optionCollumns],
+    }));
+    setFilters((prev) => ({
+      ...prev,
+      filterByNumericValues: prev.filterByNumericValues
+        .filter((item) => item.column !== column),
+    }));
+  };
+
+  const changeNumericValues = ({ comparison, column, value }) => {
     setFilters({
       ...filters,
       filterByNumericValues: [
         ...filters.filterByNumericValues,
-        obj.filterByNumericValues,
+        { comparison, column, value },
       ],
     });
+    console.log(comparison, column, value);
     setInfo((prev) => ({
       ...prev,
       optionCollumns: prev.optionCollumns
-        .filter((option) => option !== obj.filterByNumericValues.column),
+        .filter((option) => option !== column),
     }));
   };
 
@@ -56,9 +69,9 @@ function SWProvider({ children }) {
     if (filters.filterByNumericValues.length !== 0) {
       const index = filters.filterByNumericValues.length - 1;
       const { comparison, column, value } = filters.filterByNumericValues[index];
-      setInfo((prev) => ({
+      return setInfo((prev) => ({
         ...prev,
-        arrayFiltered: prev.arrayFiltered.filter((item) => {
+        arrayFiltered: data.filter((item) => {
           switch (comparison) {
           case 'maior que':
             return Number(item[column]) > Number(value);
@@ -71,7 +84,11 @@ function SWProvider({ children }) {
         }),
       }));
     }
-  }, [filters.filterByNumericValues]);
+    return setInfo((prev) => ({
+      ...prev,
+      arrayFiltered: data,
+    }));
+  }, [data, filters.filterByNumericValues]);
 
   useEffect(() => {
     planetsAPI().then((result) => {
@@ -91,7 +108,8 @@ function SWProvider({ children }) {
         changeByNameFilter,
         info,
         changeNumericValues,
-        filters } }
+        filters,
+        removeFilter } }
     >
       {children}
     </SWContext.Provider>

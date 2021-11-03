@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SWContext from '../context/SWContext';
 
 function FilterForm() {
@@ -6,22 +6,22 @@ function FilterForm() {
     filters: { filterByName }, info } = useContext(SWContext);
 
   const [filter, setFilter] = useState({
-    filterByNumericValues:
-      {
-        column: info.optionCollumns[0],
-        comparison: 'maior que',
-        value: 0,
-      },
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
   });
+
+  useEffect(() => {
+    setFilter((prev) => ({
+      ...prev,
+      column: info.optionCollumns[0],
+    }));
+  }, [info.column, info.optionCollumns]);
 
   const handleChange = ({ target: { name, value } }) => {
     setFilter({
-      filterByNumericValues:
-        {
-          ...filter.filterByNumericValues,
-          [name]: value,
-        },
-
+      ...filter,
+      [name]: value,
     });
   };
 
@@ -71,7 +71,7 @@ function FilterForm() {
       <button
         onClick={ () => changeNumericValues(filter) }
         type="button"
-        value={ filter.filterByNumericValues.value }
+        value={ filter.value }
         data-testid="button-filter"
       >
         Filtrar

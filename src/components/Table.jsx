@@ -3,13 +3,26 @@ import SWContext from '../context/SWContext';
 import FilterForm from './FilterForm';
 
 function Table() {
-  const { info: { arrayFiltered, infoIsLoaded, tHead } } = useContext(SWContext);
+  const { info: { arrayFiltered, infoIsLoaded, tHead },
+    filters: { filterByNumericValues }, removeFilter } = useContext(SWContext);
 
   return (
     <main>
       {infoIsLoaded && (
         <div>
           <FilterForm />
+          {filterByNumericValues.map((filter) => (
+            <div key={ filter.column } data-testid="filter">
+              <p>{`${filter.column} ${filter.comparison} ${filter.value}`}</p>
+              <button
+                value={ filter.column }
+                type="button"
+                onClick={ ({ target }) => removeFilter(target.value) }
+              >
+                X
+              </button>
+            </div>
+          ))}
           <table>
             <thead>
               <tr>
