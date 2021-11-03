@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
+const COLUMN_CATEGORIES = ['population',
+  'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
 const PlanetsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,6 +12,7 @@ const PlanetsProvider = ({ children }) => {
   const [column, setColumn] = useState('');
   const [comparasion, setComparasion] = useState('');
   const [value, setValue] = useState('');
+  const [columnCategories, setColumnCategories] = useState(COLUMN_CATEGORIES);
   const [filter, setFilter] = useState({
     filterByName: {
       name: '',
@@ -56,6 +60,8 @@ const PlanetsProvider = ({ children }) => {
         value,
         column,
         comparasion,
+        columnCategories,
+        setColumnCategories,
         setName,
         setFilter,
         setColumn,

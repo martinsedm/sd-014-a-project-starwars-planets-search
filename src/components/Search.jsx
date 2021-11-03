@@ -12,15 +12,21 @@ const Search = () => {
     setComparasion,
     setValue,
     setFilter,
+    columnCategories,
+    setColumnCategories,
     filter } = useContext(PlanetsContext);
 
   const handleClick = () => {
     setFilter({
       ...filter,
       filterByNumericValues: [
+        ...filter.filterByNumericValues,
         { column, value, comparasion },
       ],
     });
+
+    const filteredCategory = columnCategories.filter((category) => category !== column);
+    setColumnCategories(filteredCategory);
   };
 
   return (
@@ -41,11 +47,9 @@ const Search = () => {
         value={ column }
         onChange={ (e) => setColumn(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnCategories.map((category) => (
+          <option key={ category } value={ category }>{ category }</option>
+        )) }
       </select>
       <select
         data-testid="comparison-filter"
