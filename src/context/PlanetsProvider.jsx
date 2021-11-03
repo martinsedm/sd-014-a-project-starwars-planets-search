@@ -5,18 +5,15 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const getPlanets = async () => {
-    const response = await (await fetch('https://swapi-trybe.herokuapp.com/api/planets/')).json();
-    setPlanets(response.results);
-    setLoading(false);
-  };
+  const [filter, setFilter] = useState({});
 
   const value = {
     planets,
     loading,
-    getPlanets,
+    setPlanets,
     setLoading,
+    filter,
+    setFilter,
   };
 
   return (
