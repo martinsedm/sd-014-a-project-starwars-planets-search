@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import planetContext from '.';
 import fetchPlanets from '../services/opendtbAPI';
 
@@ -41,5 +42,9 @@ function Provider({ children }) {
     </div>
   );
 }
+
+Provider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Provider;

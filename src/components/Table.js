@@ -5,16 +5,44 @@ function Table() {
   const { data, getPlanets, filter } = useContext(planetContext);
   const [filteredPlanets, setFilteredPlanets] = useState(null);
   const { name } = filter.filters.filterByName;
+  const { filterByNumericValues: arrayNewFilters } = filter.filters;
 
   useEffect(() => { getPlanets(); }, []);
 
-  // recebe o array da API, e recebe o name do onChange, função atualiza o valor filteredPlanetes novo array para ser renderizado.
+  // recebe o array da API, e recebe o name do onChange na FilterInput, função atualiza o valor filteredPlanetes novo array para ser renderizado.
   useEffect(() => {
     if (data) {
       const searchName = data.filter((planet) => planet.name.includes(name));
       setFilteredPlanets(searchName);
     }
   }, [data, name]);
+
+  // ajuda do colega Marcelo Alves para essa função.
+  useEffect(() => {
+    arrayNewFilters.forEach((e) => {
+      switch (e.comparision) {
+      case 'maior que':
+        setFilteredPlanets(data.filter((planet) => (
+          Number(planet[e.column]) > Number(e.value)
+        )));
+        break;
+      case 'menor que':
+        setFilteredPlanets(data.filter((planet) => (
+          Number(planet[e.column]) < Number(e.value)
+        )));
+        break;
+      case 'igual a':
+        setFilteredPlanets(data.filter((planet) => (
+          Number(planet[e.column]) === Number(e.value)
+        )));
+        break;
+      default:
+        break;
+      }
+    });
+    // arrayNewFilters.map((newFilter) => console.log(newFilter));
+    // data.map((planet) => console.log(planet));
+  }, [arrayNewFilters, data]);
 
   return (
     <table>
