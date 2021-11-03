@@ -2,6 +2,11 @@ import React from 'react';
 import APIContext from '../Context/APIContext';
 
 class Table extends React.Component {
+  filtered() {
+    const { data, filters: { filterByName: { name } } } = this.context;
+    return data.filter((cur) => cur.name.includes(name));
+  }
+
   render() {
     const { data } = this.context;
     return (
@@ -13,7 +18,7 @@ class Table extends React.Component {
             ))}
         </tr>
         {data.length > 0
-        && data.map((atual, indice) => (
+        && this.filtered().map((atual, indice) => (
           <tr key={ indice }>
             <td>{atual.name}</td>
             <td>{atual.rotation_period}</td>
