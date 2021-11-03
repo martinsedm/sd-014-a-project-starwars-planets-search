@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import StarsWarsContext from './StarWarsContext';
 import fetchPlanets from '../services';
@@ -12,7 +12,7 @@ function StarsWarsProvider(props) {
 
   const { children } = props;
 
-  const getPlanets = async () => {
+  const getPlanets = useCallback(async () => {
     try {
       setIsFetching(true);
       const results = await fetchPlanets();
@@ -24,7 +24,7 @@ function StarsWarsProvider(props) {
       setError({ hasError: true, message: err.message });
       setIsFetching(false);
     }
-  };
+  }, []);
 
   const context = {
     planets,

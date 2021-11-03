@@ -1,20 +1,20 @@
-const END_POINT = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const END_POINT = 'https://swapi-trybe.herokuapp.com/api/planets/?format=json';
 const ERRO_FETCH = 'Erro na resposta da requisição';
 const ERRO_FUNCTION = 'Erro na função de requisição';
 
 async function fetchPlanets() {
   try {
-    const response = fetch(END_POINT);
+    const response = await fetch(END_POINT);
     if (response.ok) {
-      const { result } = await response.json();
-      return result;
+      const { results } = await response.json();
+      return results;
     }
-    throw Error(ERRO_FETCH);
+    throw new Error(ERRO_FETCH);
   } catch (err) {
-    if (err.message !== ERRO_FETCH) {
-      throw new Error(ERRO_FUNCTION);
+    if (err.message === ERRO_FETCH) {
+      throw new Error(ERRO_FETCH);
     }
-    return err;
+    throw new Error(ERRO_FUNCTION);
   }
 }
 

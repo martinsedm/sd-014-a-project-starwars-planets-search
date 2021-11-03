@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import Table from 'react-bootstrap/Table';
+import StarsWarsContext from '../contexts/StarWarsContext';
 
 function TableRender() {
-  const { planetsRender } = useContext();
+  const { planetsRender } = useContext(StarsWarsContext);
   return (
     <Table striped bordered hover>
       <thead>
@@ -20,7 +21,7 @@ function TableRender() {
         </tr>
       </thead>
       <tbody>
-        { planetsRender.map(({ planet }) => {
+        { planetsRender.map((planet) => {
           const {
             name,
             rotation_period: rotation,
