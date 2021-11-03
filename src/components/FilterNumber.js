@@ -3,7 +3,7 @@ import Context from '../context/Context';
 
 function FilterNumber() {
   const { data, setData, filter, setFilter, input, setInput, change, setChange,
-  } = useContext(Context);
+    save, setSave } = useContext(Context);
   const { filterByNumericValues: filterValues } = filter;
 
   const handleChange = ({ target }) => {
@@ -19,16 +19,29 @@ function FilterNumber() {
     const { results } = data;
     const { value, column, comparison } = change;
 
-    const filterValue = results.filter((planets) => {
+    const filterValue = results.filter((planet) => {
       switch (comparison) {
       case 'maior que':
-        return Number(planets[column]) > Number(value);
+        return Number(planet[column]) > Number(value);
       case 'menor que':
-        return Number(planets[column]) < Number(value);
+        return Number(planet[column]) < Number(value);
       default:
-        return planets[column] === value;
+        return planet[column] === value;
       }
     });
+
+    const saveResult = results.filter((planets) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planets[column]) <= Number(value);
+      case 'menor que':
+        return Number(planets[column]) >= Number(value);
+      default:
+        return planets[column] !== value;
+      }
+    });
+
+    setSave({ ...save, [change.column]: saveResult });
 
     setData({
       ...data,
@@ -61,7 +74,7 @@ function FilterNumber() {
         data-testid="column-filter"
         onChange={ handleChange }
       >
-        {input.map((column) => <option key={ column }>{column}</option>)}
+        {input.map((colum) => <option key={ colum }>{colum}</option>)}
       </select>
       <select
         name="comparison"

@@ -6,6 +6,8 @@ import ColsultApiPlanets from '../services/ConsultApiPlanets';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
 
+  const [save, setSave] = useState([]);
+
   const [input, setInput] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
@@ -42,6 +44,8 @@ function PlanetsProvider({ children }) {
     setInput,
     change,
     setChange,
+    save,
+    setSave,
   };
 
   return (
