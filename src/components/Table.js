@@ -17,7 +17,7 @@ function Table() {
     }
   }, [data, name]);
 
-  // ajuda do colega Marcelo Alves para essa função.
+  // ajuda do colega Marcelo Alves para essa função que sempre que evento de novo filtro muda o estado.
   useEffect(() => {
     arrayNewFilters.forEach((e) => {
       switch (e.comparision) {

@@ -6,9 +6,10 @@ function SavedFilters() {
 
   const hendleClick = (column) => {
     const filteredByNumVal = filter.filters.filterByNumericValues;
-    setFilter({ filter: { ...filter.filters,
+    setFilter({ filters: {
+      ...filter.filters,
       filterByNumericValues:
-      filteredByNumVal.filter((e) => !Object.values(e).includes(column)) } });
+      filteredByNumVal.filter((value) => !Object.values(value).includes(column)) } });
   };
 
   return (
