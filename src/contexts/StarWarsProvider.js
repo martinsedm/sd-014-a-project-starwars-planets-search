@@ -1,23 +1,35 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import useFilters from '../hooks/useFilters';
 import StarsWarsContext from './StarWarsContext';
 import fetchPlanets from '../services';
 
+const INITIAL_FILTERS = {
+  filterByName: {
+    name: '',
+  },
+  filterByNumericValues: [],
+};
+
 function StarsWarsProvider(props) {
+  const { children } = props;
   const [planets, setPlanets] = useState([]);
-  const [planetsRender, setPlanetsRender] = useState([]);
+  const [planetsRender, applyFilters] = useFilters([]);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
 
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState({ hasError: false, message: '' });
 
-  const { children } = props;
+  useEffect(() => {
+    applyFilters(planets, filters);
+  }, [planets, filters, applyFilters]);
 
   const getPlanets = useCallback(async () => {
     try {
       setIsFetching(true);
       const { results } = await fetchPlanets();
       setPlanets(results);
-      setPlanetsRender([...results]);
+
       setIsFetching(false);
       setError({ hasError: false, message: '' });
     } catch (err) {
@@ -26,11 +38,18 @@ function StarsWarsProvider(props) {
     }
   }, []);
 
+  const handleChange = ({ target }, key) => {
+    const { name, value } = target;
+    setFilters({ ...filters, [key]: { [name]: value } });
+  };
+
   const context = {
     planets,
     planetsRender,
+    filters,
     isFetching,
     error,
+    handleChange,
     getPlanets,
   };
 

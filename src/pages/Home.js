@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
+import FiltersForm from '../components/FiltersForm';
 import TableRender from '../components/TableRender';
 import StarsWarsContext from '../contexts/StarWarsContext';
 
 function Home() {
   const {
-    // planets,
+    planets,
     planetsRender,
     isFetching,
     error,
@@ -16,10 +17,11 @@ function Home() {
   }, [getPlanets]);
 
   const { hasError, message } = error;
-  // (planets);
+
   return (
     <main>
       <Header />
+      { planets.length > 0 && <FiltersForm /> }
       { isFetching && <h3>Carregando...</h3> }
       { !isFetching && planetsRender.length > 0 && <TableRender />}
       { !isFetching && hasError && <p>{ message }</p> }
