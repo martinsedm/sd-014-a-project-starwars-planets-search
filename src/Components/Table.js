@@ -3,12 +3,31 @@ import PlanetContext from '../context/PlanetsContext';
 import TableHeader from './TableHeader';
 
 function Table() {
-  const { data } = useContext(PlanetContext);
+  const { data, filterMethod, filters } = useContext(PlanetContext);
+  const NAME = 'name';
+
+  let planetsToRender = [];
+
+  function getName() {
+    const { filterByName: { name } } = filters;
+    return name;
+  }
+
+  switch (filterMethod) {
+  case NAME:
+    planetsToRender = data.filter(
+      (planet) => (planet.name.toLowerCase().includes(getName().toLowerCase())),
+    );
+    break;
+  default:
+    planetsToRender = data;
+    break;
+  }
   return (
     <table>
       <TableHeader />
       {
-        data.map((planetInfo, id) => (
+        planetsToRender.map((planetInfo, id) => (
           <tr
             key={ id }
           >
