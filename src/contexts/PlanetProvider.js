@@ -3,12 +3,17 @@ import PlanetContext from './PlanetContext';
 
 export default function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([{}]);
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const data = await response.json();
     const { results } = data;
-    results.forEach(element => {
+    results.forEach((element) => {
       delete element.residents;
     });
     setPlanets(results);
@@ -16,7 +21,7 @@ export default function PlanetProvider({ children }) {
 
   return (
     <main>
-      <PlanetContext.Provider value={ { planets, fetchPlanets } }>
+      <PlanetContext.Provider value={ { planets, fetchPlanets, filters, setFilter } }>
         {children}
       </PlanetContext.Provider>
     </main>
