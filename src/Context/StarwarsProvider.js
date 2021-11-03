@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarwarsSearch from './StarwarsContext';
+import PlanetsKeyDeleted from '../service/fetchApi';
 
 function StarwarsProvider({ children }) {
-  // aqui cria os states com valores inciais
+  const [filters, setFilters] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
+    },
+  });
+  const [planetsFiltred, setPlanetsFiltred] = useState([]);
+
+  useEffect(() => {
+    PlanetsKeyDeleted('residents')
+      .then((response) => setPlanetsFiltred(response));
+  }, []);
+
   const contextValue = {
-    testes: 'olá',
+    filters,
+    setFilters,
+    planetsFiltred,
+    setPlanetsFiltred,
   };
   return (
     <StarwarsSearch.Provider value={ contextValue }>
