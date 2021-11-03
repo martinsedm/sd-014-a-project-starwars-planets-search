@@ -3,12 +3,14 @@ import './App.css';
 import PlanetsProvider from './context/PlanetsProvider';
 
 import Table from './pages/Table';
-import Filters from './pages/Filters';
+import FilterName from './components/FilterName';
+import FilterNumber from './components/FilterNumber';
 
 function App() {
   return (
     <PlanetsProvider>
-      <Filters />
+      <FilterName />
+      <FilterNumber />
       <Table />
     </PlanetsProvider>
   );

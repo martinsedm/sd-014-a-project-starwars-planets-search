@@ -11,6 +11,13 @@ function PlanetsProvider({ children }) {
         name: '',
       },
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
 
   useEffect(() => {
@@ -23,6 +30,7 @@ function PlanetsProvider({ children }) {
 
   const value = {
     data,
+    setData,
     filter,
     setFilter,
   };
