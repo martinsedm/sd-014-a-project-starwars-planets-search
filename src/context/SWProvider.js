@@ -11,36 +11,37 @@ function SWProvider({ children }) {
     tHead: [],
     arrayFiltered: [],
     infoIsLoaded: false,
+    optionCollumns: ['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water'],
   });
 
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: '',
-        value: 0,
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   const changeByNameFilter = ({ target: { name, value } }) => {
     setFilters({
       ...filters,
-      filterByName: {
-        ...filters.filterByName,
-        [name]: value,
-      },
+      filterByName: { [name]: value },
     });
   };
 
   const changeNumericValues = (obj) => {
     setFilters({
       ...filters,
-      filterByNumericValues: [obj.filterByNumericValues],
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        obj.filterByNumericValues,
+      ],
     });
+    setInfo((prev) => ({
+      ...prev,
+      optionCollumns: prev.optionCollumns
+        .filter((option) => option !== obj.filterByNumericValues.column),
+    }));
   };
 
   useEffect(() => {
@@ -52,31 +53,35 @@ function SWProvider({ children }) {
   }, [data, filters.filterByName]);
 
   useEffect(() => {
-    const [{ comparison, column, value }] = filters.filterByNumericValues;
-    setInfo((prev) => ({
-      ...prev,
-      arrayFiltered: data.filter((item) => {
-        switch (comparison) {
-        case 'maior que':
-          return Number(item[column]) > Number(value);
-        case 'menor que':
-          return Number(item[column]) < Number(value);
-        case 'igual a':
-          return Number(item[column]) === Number(value);
-        default: return item;
-        }
-      }),
-    }));
-  }, [data, filters.filterByNumericValues]);
+    if (filters.filterByNumericValues.length !== 0) {
+      const index = filters.filterByNumericValues.length - 1;
+      const { comparison, column, value } = filters.filterByNumericValues[index];
+      setInfo((prev) => ({
+        ...prev,
+        arrayFiltered: prev.arrayFiltered.filter((item) => {
+          switch (comparison) {
+          case 'maior que':
+            return Number(item[column]) > Number(value);
+          case 'menor que':
+            return Number(item[column]) < Number(value);
+          case 'igual a':
+            return Number(item[column]) === Number(value);
+          default: return item;
+          }
+        }),
+      }));
+    }
+  }, [filters.filterByNumericValues]);
 
   useEffect(() => {
     planetsAPI().then((result) => {
       setData(result);
-      setInfo({
+      setInfo((prev) => ({
+        ...prev,
         arrayFiltered: result,
         infoIsLoaded: true,
         tHead: makeTheaderArray(result),
-      });
+      }));
     });
   }, []);
 

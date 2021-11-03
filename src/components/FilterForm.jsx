@@ -3,16 +3,15 @@ import SWContext from '../context/SWContext';
 
 function FilterForm() {
   const { changeByNameFilter, changeNumericValues,
-    filters: { filterByName } } = useContext(SWContext);
+    filters: { filterByName }, info } = useContext(SWContext);
 
   const [filter, setFilter] = useState({
     filterByNumericValues:
       {
-        column: 'population',
+        column: info.optionCollumns[0],
         comparison: 'maior que',
         value: 0,
       },
-
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -42,11 +41,15 @@ function FilterForm() {
         id="column"
         data-testid="column-filter"
       >
-        <option name="column" value="population">population</option>
-        <option name="column" value="orbital_period">orbital_period</option>
-        <option name="column" value="diameter">diameter</option>
-        <option name="column" value="rotation_period">rotation_period</option>
-        <option name="column" value="surface_water">surface_water</option>
+        {info.optionCollumns.map((option) => (
+          <option
+            key={ option }
+            name="column"
+            value={ option }
+          >
+            {option}
+          </option>
+        ))}
       </select>
       <select
         onChange={ handleChange }
