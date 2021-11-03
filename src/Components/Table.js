@@ -8,7 +8,6 @@ function Table() {
     fetchAPI();
   }, []);
 
-  console.log(data);
   return (
     <table>
       <thead>
