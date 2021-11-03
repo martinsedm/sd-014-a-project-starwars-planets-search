@@ -5,19 +5,24 @@ import ColsultApiPlanets from '../services/ConsultApiPlanets';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+
+  const [input, setInput] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
+
+  const [change, setChange] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
+
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -33,6 +38,10 @@ function PlanetsProvider({ children }) {
     setData,
     filter,
     setFilter,
+    input,
+    setInput,
+    change,
+    setChange,
   };
 
   return (
