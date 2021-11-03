@@ -5,7 +5,7 @@ export default function Filters() {
   const typeFilter = ['TODOS', 'population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
   const compare = ['TODOS', 'maior que', 'menor que', 'igual a'];
-  const { data, handleChangeColum, handleChangeComparison, handleChangeNumber,
+  const { handleChangeColum, handleChangeComparison, handleChangeNumber,
     filters: { filterByNumericValues } } = useContext(StarWarsContext);
 
   /* const Filters = (coluna, compara, numero) => {
