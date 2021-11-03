@@ -1,5 +1,6 @@
 import React from 'react';
 import NameFilter from './NameFilter';
+import ValueFilter from './ValueFilter';
 
 class Form extends React.Component {
   render() {
@@ -7,6 +8,9 @@ class Form extends React.Component {
       <form>
         <section>
           <NameFilter />
+        </section>
+        <section>
+          <ValueFilter />
         </section>
       </form>
     );

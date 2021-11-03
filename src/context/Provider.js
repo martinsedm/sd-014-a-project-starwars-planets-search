@@ -6,8 +6,12 @@ import planetsApi from '../services/dataAPI';
 function Provider({ children }) {
   const [dataPlanets, setDataPlanets] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [filter, setFilter] = useState({
-    filterByName: { name: '' },
+
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -21,24 +25,30 @@ function Provider({ children }) {
       setLoading(false);
     });
   }, []);
-  // console.log(dataPlanets);
-  // console.log(isLoading);
 
   const changeNameFilter = (name) => {
     setFilter({
-      ...filter,
+      ...filters,
       filterByName: {
-        ...filter.filterByName,
+        ...filters.filterByName,
         name,
       },
+    });
+  };
+
+  const addNumericFilter = (newFilter) => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.concat(newFilter),
     });
   };
 
   const context = {
     dataPlanets,
     isLoading,
-    filter,
+    filters,
     changeNameFilter,
+    addNumericFilter,
   };
 
   return (
