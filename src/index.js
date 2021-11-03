@@ -2,4 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import StarWarsProvider from './context/StarWarsProvider';
+
+ReactDOM.render(
+
+  <StarWarsProvider>
+    <App />
+  </StarWarsProvider>,
+
+  document.getElementById('root'),
+);

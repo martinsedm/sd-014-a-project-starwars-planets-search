@@ -4,6 +4,7 @@ import './App.css';
 import Header from './componets/Header';
 import NameSearch from './componets/NameSearch';
 import SelectSearch from './componets/SelectSearch';
+import Table from './componets/Table';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
       <NameSearch />
       <SelectSearch />
+      <Table />
     </div>
 
   );
