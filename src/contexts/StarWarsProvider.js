@@ -15,7 +15,7 @@ function StarsWarsProvider(props) {
   const getPlanets = useCallback(async () => {
     try {
       setIsFetching(true);
-      const results = await fetchPlanets();
+      const { results } = await fetchPlanets();
       setPlanets(results);
       setPlanetsRender([...results]);
       setIsFetching(false);

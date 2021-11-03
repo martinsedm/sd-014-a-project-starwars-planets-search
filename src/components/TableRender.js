@@ -18,6 +18,9 @@ function TableRender() {
           <th>Suface Water</th>
           <th>Population</th>
           <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>URL</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +36,9 @@ function TableRender() {
             surface_water: water,
             population,
             films,
+            created,
+            edited,
+            url,
           } = planet;
           return (
             <tr key={ name }>
@@ -49,8 +55,10 @@ function TableRender() {
                 { films.map((film) => (
                   <p key={ film }>{ film }</p>
                 )) }
-
               </td>
+              <td>{ created }</td>
+              <td>{ edited }</td>
+              <td>{ url }</td>
             </tr>
           );
         })}

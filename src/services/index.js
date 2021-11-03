@@ -6,8 +6,9 @@ async function fetchPlanets() {
   try {
     const response = await fetch(END_POINT);
     if (response.ok) {
-      const { results } = await response.json();
-      return results;
+      const json = await response.json();
+      json.results.forEach((object) => delete object.residents);
+      return json;
     }
     throw new Error(ERRO_FETCH);
   } catch (err) {

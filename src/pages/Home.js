@@ -5,7 +5,7 @@ import StarsWarsContext from '../contexts/StarWarsContext';
 
 function Home() {
   const {
-    planets,
+    // planets,
     planetsRender,
     isFetching,
     error,
@@ -16,7 +16,7 @@ function Home() {
   }, [getPlanets]);
 
   const { hasError, message } = error;
-  console.log(planets);
+  // (planets);
   return (
     <main>
       <Header />
