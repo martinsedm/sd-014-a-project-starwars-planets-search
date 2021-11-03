@@ -9,6 +9,12 @@ function Table() {
     populatePlanets();
   }, []);
 
+  const renderPlanet = (planet) => Object.keys(planet)
+    .map((key) => key !== 'residents' && <td key={ key }>{ planet[key] }</td>);
+
+  const renderAllPlanets = (planets) => Object.values(planets)
+    .map((planet) => <tr key={ planet.name }>{ renderPlanet(planet) }</tr>);
+
   return (
     <table>
       <thead>
@@ -20,6 +26,11 @@ function Table() {
           }
         </tr>
       </thead>
+      <tbody>
+        {
+          renderAllPlanets(data)
+        }
+      </tbody>
     </table>
   );
 }
