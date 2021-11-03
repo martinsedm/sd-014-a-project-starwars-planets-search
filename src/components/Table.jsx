@@ -3,7 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 
 const Table = () => {
   const { data, filter } = useContext(PlanetsContext);
-  const { filters: { filterByName: { name } } } = filter;
+  const { filterByName: { name } } = filter;
 
   return (
     <div>
@@ -26,7 +26,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          { data.results
+          { data
             .filter((filteredPlanets) => filteredPlanets.name.includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
