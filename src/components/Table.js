@@ -1,21 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context';
-
-const tableHeads = [
-  'Name',
-  'Rotation Period',
-  'Orbital Period',
-  'Diameter',
-  'Climate',
-  'Gravity',
-  'Terrain',
-  'Surface Water',
-  'Population',
-  'Films',
-  'Created',
-  'Edited',
-  'URL',
-];
+import { tableHeads } from '../data';
 
 function Table() {
   const {
