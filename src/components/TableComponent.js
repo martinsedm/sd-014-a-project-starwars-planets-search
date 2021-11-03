@@ -18,9 +18,17 @@ const headers = [
 ];
 
 export default function TableComponent() {
-  const { planetas } = useContext(StarsContext);
+  const { filters, planetas } = useContext(StarsContext);
+
+  const filteredPlanets = planetas.filter((planet) => {
+    if (filters.name) {
+      return planet.name.toLowerCase().includes(filters.name.toLowerCase());
+    }
+    return planetas;
+  });
+
   return (
-    <table>
+    <table className="table table-dark">
       <thead>
         <tr>
           {headers.map((h2) => (
@@ -30,7 +38,7 @@ export default function TableComponent() {
         </tr>
       </thead>
       <tbody>
-        {planetas.map((planeta) => (
+        {filteredPlanets.map((planeta) => (
           <tr key={ planeta.name }>
             <td>{ planeta.name }</td>
             <td>{ planeta.rotation_period }</td>
