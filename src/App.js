@@ -1,22 +1,17 @@
-import React, { useContext, useEffect } from 'react';
-import PlanetsContext from './Context/PlanetsContext';
+import React from 'react';
+import PlanetsContextProvider from './Context/PlanetsContextProvider';
 import './App.css';
 import Header from './Components/Header';
 import Table from './Components/Table';
-import Loading from './Components/Loading';
 
 function App() {
-  const { isLoading, fetchAPI } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
   return (
-    <main>
-      <Header />
-      {isLoading ? <Loading /> : <Table />}
-    </main>
+    <PlanetsContextProvider>
+      <main>
+        <Header />
+        <Table />
+      </main>
+    </PlanetsContextProvider>
   );
 }
 

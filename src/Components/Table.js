@@ -1,8 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, fetchAPI } = useContext(PlanetsContext);
+
+  useEffect(() => {
+    fetchAPI();
+  }, []);
+
   console.log(data);
   return (
     <table>
