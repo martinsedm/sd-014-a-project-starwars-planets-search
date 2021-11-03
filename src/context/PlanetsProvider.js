@@ -4,9 +4,9 @@ import PlanetsContext from './PlanetsContext';
 import fetchPlanets from '../services';
 
 function PlanetsProvider({ children }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [filters, setFilters] = useState({ filterByName: { name: '' },
-    filterByNumericValues: [{ column: '', comparison: '', value: 0 }] });
+    filterByNumericValues: [] });
   const [planets, setPlanets] = useState([]);
 
   const { filterByName: { name },
@@ -15,30 +15,40 @@ function PlanetsProvider({ children }) {
 
   useEffect(() => {
     const getPlanetsInfo = async () => {
-      const { results } = await fetchPlanets();
-      setData(results);
+      const response = await fetchPlanets();
+      setData(response);
     };
     getPlanetsInfo();
   }, []);
 
   useEffect(() => {
-    filterByNumericValues.forEach(({ column, comparison, value }) => {
-      const filteredPlanets = data.filter((planet) => {
-        const filteredByName = planet.name.includes(name);
-        switch (comparison) {
-        case 'maior que':
-          return Number(planet[column]) > Number(value) && filteredByName;
-        case 'menor que':
-          return Number(planet[column]) < Number(value) && filteredByName;
-        case 'igual a':
-          return Number(planet[column]) === Number(value) && filteredByName;
-        default:
-          return filteredByName;
-        }
+    if (data) {
+      setPlanets(data.results);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      const filteredByName = data.results
+        .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
+      let filteredByNameAndColumns = filteredByName;
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        filteredByNameAndColumns = filteredByName.filter((planet) => {
+          switch (comparison) {
+          case 'maior que':
+            return Number(planet[column]) > Number(value) && filteredByName;
+          case 'menor que':
+            return Number(planet[column]) < Number(value) && filteredByName;
+          case 'igual a':
+            return Number(planet[column]) === Number(value) && filteredByName;
+          default:
+            return filteredByName;
+          }
+        });
       });
-      setPlanets(filteredPlanets);
-    });
-  }, [filters, data, filterByNumericValues, name]);
+      setPlanets(filteredByNameAndColumns);
+    }
+  }, [data, filterByNumericValues, name]);
 
   const context = { filters, setFilters, planets, setPlanets };
 

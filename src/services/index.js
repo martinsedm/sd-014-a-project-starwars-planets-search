@@ -2,8 +2,8 @@ const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const fetchPlanets = async () => {
   const request = await fetch(URL);
-  const data = await request.json();
-  return data;
+  const response = await request.json();
+  return response;
 };
 
 export default fetchPlanets;

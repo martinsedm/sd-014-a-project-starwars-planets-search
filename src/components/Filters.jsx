@@ -13,11 +13,11 @@ function Filters() {
     'rotation_period',
     'surface_water']);
 
-  const { filterByName: { name } } = filters;
+  const { filterByName: { name }, filterByNumericValues } = filters;
 
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
 
-  const handleChange = ({ target: { value: changeValue } }) => {
+  const handleNameChange = ({ target: { value: changeValue } }) => {
     setFilters({
       ...filters,
       filterByName: {
@@ -26,19 +26,30 @@ function Filters() {
     });
   };
 
-  const handleFilters = () => {
+  const handleNumericFilters = () => {
     setFilters({
       ...filters,
       filterByNumericValues: [
-        {
+        ...filterByNumericValues, {
           column,
           comparison,
           value,
-        },
-      ],
+        }],
     });
-    setColumnsOptions(columnsOptions
-      .filter((selectedColumn) => selectedColumn !== column));
+    const columnsWithoutFilter = columnsOptions
+      .filter((selectedColumn) => selectedColumn !== column);
+    setColumnsOptions(columnsWithoutFilter);
+    setColumn(columnsWithoutFilter[0]);
+  };
+
+  const removeFilters = (filterValue) => {
+    const updatedFilters = filterByNumericValues
+      .filter(({ column: columnFilter }) => columnFilter !== filterValue);
+    setFilters({
+      ...filters,
+      filterByNumericValues: updatedFilters,
+    });
+    setColumnsOptions(columnsOptions.concat(filterValue));
   };
 
   return (
@@ -49,7 +60,7 @@ function Filters() {
           type="text"
           name="name"
           value={ name }
-          onChange={ handleChange }
+          onChange={ handleNameChange }
           data-testid="name-filter"
         />
       </label>
@@ -91,10 +102,21 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ handleFilters }
+          onClick={ handleNumericFilters }
         >
           Filtrar
         </button>
+        <div>
+          {filterByNumericValues.map((
+            { column: columnFilter, comparison: comparisonFilter, value: valueFilter }, i,
+          ) => (
+            <span key={ i } data-testid="filter">
+              <p>{`${columnFilter} ${comparisonFilter} ${valueFilter}`}</p>
+              <button type="button" onClick={ () => removeFilters(columnFilter) }>
+                X
+              </button>
+            </span>))}
+        </div>
       </label>
     </form>
   );
