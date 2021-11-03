@@ -2,11 +2,15 @@ import React, { useContext, useState, useEffect } from 'react';
 import planetContext from '../context';
 
 function FilterInput() {
-  const { filter, setFilter } = useContext(planetContext);
+  const { setFilter } = useContext(planetContext);
   const [name, setName] = useState('');
 
   useEffect(() => {
-    setFilter({ filters: { ...filter.filters, filterByName: { name } } });
+    // setFilter({ filters: { ...filter.filters, filterByName: { name } } });
+    // passando uma callback como parametro do setState para garantir que está pegando o valor correto do estado global.
+    setFilter((prevFilters) => (
+      { filters: { ...prevFilters.filters, filterByName: { name } } }
+    ));
   }, [name, setFilter]);
 
   return (
