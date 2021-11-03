@@ -6,7 +6,6 @@ function Table() {
 
   if (results) {
     const tableHeader = results.filter((planet) => delete planet.residents);
-    console.log(tableHeader);
 
     return (
       <table>
