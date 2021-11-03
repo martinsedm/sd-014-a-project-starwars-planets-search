@@ -1,12 +1,30 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context';
-import { tableHeads } from '../data';
+
+const tableHeads = [
+  'Name',
+  'Rotation Period',
+  'Orbital Period',
+  'Diameter',
+  'Climate',
+  'Gravity',
+  'Terrain',
+  'Surface Water',
+  'Population',
+  'Films',
+  'Created',
+  'Edited',
+  'URL',
+];
 
 function Table() {
-  const { data, populatePlanets } = useContext(StarWarsContext);
+  const [data, populatePlanets] = useContext(StarWarsContext);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     populatePlanets();
+    setLoading(false);
   }, []);
 
   const renderPlanet = (planet) => Object.keys(planet)
@@ -28,7 +46,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          renderAllPlanets(data)
+          !loading && renderAllPlanets(data)
         }
       </tbody>
     </table>

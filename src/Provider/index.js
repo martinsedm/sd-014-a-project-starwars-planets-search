@@ -11,10 +11,10 @@ function StarWarsProvider({ children }) {
     setData(planets);
   };
 
-  const context = {
+  const context = [
     data,
     populatePlanets,
-  };
+  ];
 
   return (
     <StarWarsContext.Provider value={ context }>
