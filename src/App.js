@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
+import TableComponent from './components/TableComponent';
+import StarsProvider from './context/StarsProvider';
 
 function App() {
   return (
-    <span>Hey, ya!</span>
+    <StarsProvider>
+      {/* <FormComponent /> */}
+      <TableComponent />
+    </StarsProvider>
   );
 }
 
