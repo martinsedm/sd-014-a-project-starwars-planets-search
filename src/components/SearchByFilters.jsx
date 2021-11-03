@@ -5,20 +5,19 @@ import FilterComparison from './FilterComparison';
 import FilterValue from './FilterValue';
 
 export default function SearchByFilters() {
-  const { currentFilters,
+  const {
     filters,
     setFilters,
+    currentFilters,
   } = useContext(PlanetsContext);
 
   const handleClick = () => {
-    const { column, comparison, value } = currentFilters;
     setFilters({
       ...filters,
-      filterByNumericValues: {
-        column,
-        comparison,
-        value,
-      },
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        currentFilters,
+      ],
     });
   };
 

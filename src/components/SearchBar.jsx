@@ -4,10 +4,17 @@ import SearchByName from './SearchByName';
 
 export default function SearchBar() {
   return (
-    <form>
-      <p className="searchBarTitle">Vasculhe a galáxia</p>
-      <SearchByName />
-      <SearchByFilters />
-    </form>
+    <>
+      <form>
+        <p className="searchBarTitle">Vasculhe a galáxia</p>
+        <SearchByName />
+        <SearchByFilters />
+      </form>
+      <button
+        type="button"
+      >
+        X
+      </button>
+    </>
   );
 }

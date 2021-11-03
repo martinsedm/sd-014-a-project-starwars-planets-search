@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../contextAPI/PlanetsContext';
 
 export default function PlanetsTable() {
-  const { data, filters } = useContext(PlanetsContext);
+  const { data, filters, currentFilters } = useContext(PlanetsContext);
 
   const specificFilter = (column, comparison, value) => {
     if (comparison === 'maior que') {
@@ -24,7 +24,7 @@ export default function PlanetsTable() {
 
   const getFilteredPlanets = () => {
     const { filterByName, filterByNumericValues } = filters;
-    const { column, comparison, value } = filterByNumericValues;
+    const { column, comparison, value } = currentFilters;
     if (Object.keys(filterByNumericValues).length) {
       return specificFilter(column, comparison, value);
     }

@@ -13,7 +13,6 @@ export default function FilterComparison() {
   };
 
   const selectOptions = [
-    '',
     'maior que',
     'menor que',
     'igual a',
