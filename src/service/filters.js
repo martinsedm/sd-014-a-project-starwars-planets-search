@@ -3,9 +3,9 @@ const filterName = (listPlanets, name) => {
   return planetsFiltredByName;
 };
 
-const filterByNumeric = (listPlanets, listFilter) => {
+// const filterByNumeric = (listPlanets, listFilter) => {
 // logica para percorrer array que esta em filterByNumericValues e ir filtrando o array.
-};
+// };
 
 const orderPlanets = (listPlanets, orderObj) => {
   const { column, sort } = orderObj;
