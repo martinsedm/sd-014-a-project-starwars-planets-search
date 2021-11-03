@@ -4,7 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 // const ONE_SECOND = 1000;
 
 function Table() {
-  const { planets, getPlanets, isLoading } = useContext(PlanetsContext);
+  const { planets, getPlanets, isLoading, filterNames } = useContext(PlanetsContext);
 
   useEffect(() => {
     getPlanets();
@@ -16,11 +16,13 @@ function Table() {
 
   return (
     <table>
+      {/* HEAD DA TABELA */}
       <tr>
-        {console.log(planets)}
         {Object.keys(planets[0]).map((planet, i) => <th key={ i }>{planet}</th>)}
       </tr>
-      {planets.map((item, i) => (
+
+      {/* CORPO DA TABELA */}
+      {filterNames(planets).map((item, i) => (
         <tr key={ i }>
           {Object.values(item).map((value, j) => (
             <td key={ j }>
