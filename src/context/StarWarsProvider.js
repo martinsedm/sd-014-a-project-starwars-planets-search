@@ -8,8 +8,10 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const planets = getPlanetList();
-    setData(planets);
+    getPlanetList()
+      .then((items) => {
+        setData(items.results);
+      });
   }, []);
 
   const context = {
