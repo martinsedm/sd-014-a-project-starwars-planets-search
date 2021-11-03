@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
+import SelectColumn from './SelectColumn';
 
 function Header() {
   const { data, setFilteredData, filters, setFilters } = useContext(Context);
@@ -52,16 +53,7 @@ function Header() {
       <br />
       <br />
       <br />
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target }) => setColumnName(target.value) }
-      >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-      </select>
+      <SelectColumn setColumnName={ setColumnName } />
       <select
         data-testid="comparison-filter"
         onChange={ ({ target }) => setComparisonName(target.value) }
