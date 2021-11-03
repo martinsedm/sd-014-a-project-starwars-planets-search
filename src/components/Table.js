@@ -18,7 +18,11 @@ const tableHeads = [
 ];
 
 function Table() {
-  const [data, populatePlanets] = useContext(StarWarsContext);
+  const {
+    data,
+    populatePlanets,
+    filteredData,
+    filters: { filterByName: { name } } } = useContext(StarWarsContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,6 +37,16 @@ function Table() {
   const renderAllPlanets = (planets) => Object.values(planets)
     .map((planet) => <tr key={ planet.name }>{ renderPlanet(planet) }</tr>);
 
+  const renderPlanets = () => {
+    if (name.length === 0) {
+      return renderAllPlanets(data);
+    }
+    if (filteredData.length > 0) {
+      return renderAllPlanets(filteredData);
+    }
+    return <h2>No planets found.</h2>;
+  };
+
   return (
     <table>
       <thead>
@@ -46,7 +60,7 @@ function Table() {
       </thead>
       <tbody>
         {
-          !loading && renderAllPlanets(data)
+          !loading && renderPlanets()
         }
       </tbody>
     </table>
