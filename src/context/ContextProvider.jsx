@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import P from 'prop-types';
-import GlobalContext from '.';
+import GlobalContext from './context';
 
 function GlobalContextProvider({ children }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
-    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/?format=json');
+    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const json = await response.json();
     setData(json);
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <GlobalContext.Provider
       value={ {
         data,
+        isLoading,
         getData,
       } }
     >
