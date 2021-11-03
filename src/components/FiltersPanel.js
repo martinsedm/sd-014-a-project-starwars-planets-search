@@ -6,17 +6,43 @@ import SWContext from '../context/SWContext';
 import '../Styles/FiltersPanel.css';
 
 function FiltersPanel() {
-  const { resetFilters } = useContext(SWContext);
+  const { resetFilters, filters, setFilters } = useContext(SWContext);
+
+  const removeFilter = (category) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.filter((f) => f.column
+      !== category),
+    });
+  };
 
   return (
-    <section className="filtersBox">
+    <section>
       <NameFilter />
-      <NumericFilter />
       <br />
-      <SortFilter />
-      <button type="button" onClick={ resetFilters }>
-        Resetar Filtros
-      </button>
+      <div className="filtersBox">
+        <NumericFilter />
+        <button className="resetBtn" type="button" onClick={ resetFilters }>
+          Resetar Filtros
+        </button>
+        <SortFilter />
+      </div>
+      <br />
+      { filters.filterByNumericValues.length > 0
+      && filters.filterByNumericValues.map(({ column, comparison, value }) => (
+        <label data-testid="filter" key={ column } htmlFor={ column }>
+          {`${column} ${comparison} ${value} `}
+          <button
+            id={ column }
+            type="button"
+            onClick={ () => removeFilter(column) }
+          >
+            X
+          </button>
+          <br />
+        </label>
+      ))}
+      <br />
     </section>
   );
 }

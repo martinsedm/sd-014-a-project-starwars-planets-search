@@ -1,9 +1,18 @@
-.header {
-  text-align: center;
-  margin: 1em 0 0.5em 0;
-	color: #EE9B00;
-	font-weight: normal;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+header {
 	font-size: 36px;
 	line-height: 42px;
+	text-align: center;
+	font-weight: normal;
+}
+
+h1 {
+	color: black;
+	margin: 1em 0 0.5em 0;
+	font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	text-shadow: -3px -3px 0 yellow, 3px -3px 0 yellow, -3px 3px 0 yellow, 3px 3px 0 yellow;
+}
+
+h2 {
+	color: yellow;
+	font-size: 80%;
 }

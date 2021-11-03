@@ -1,4 +1,10 @@
 .numericFilter {
   display: flex;
   flex-direction: row;
+  width: 42%;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 35px;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
 }

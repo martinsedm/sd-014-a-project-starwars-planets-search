@@ -1,4 +1,12 @@
 .nameFilter {
-  display: flex;
-  flex-direction: row;
+  margin: auto;
+  text-align: center;
+}
+
+.nameInput {
+  width: 33%;
+  height: 30px;
+  text-align: center-left;
+  font-size: 18px;
+  border-radius: 8px;
 }

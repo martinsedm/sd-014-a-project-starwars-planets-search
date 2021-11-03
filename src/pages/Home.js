@@ -4,6 +4,7 @@ import Loading from '../components/Loading';
 import Header from '../components/Header';
 import Table from '../components/Table';
 import FiltersPanel from '../components/FiltersPanel';
+import '../Styles/Home.css';
 
 function Home() {
   const { fetchData, isLoading, errorMsg } = useContext(SWContext);
@@ -14,9 +15,9 @@ function Home() {
 
   return (
     <>
-      <Header classname="Home_header" />
+      <Header />
       { isLoading ? <Loading /> : (
-        <main>
+        <main className="home">
           <FiltersPanel />
           <Table />
           { errorMsg && <h1>{ errorMsg }</h1> }

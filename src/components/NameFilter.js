@@ -11,16 +11,19 @@ function NameFilter() {
   }, [name]);
 
   return (
-    <label htmlFor="search" className="nameFilter">
-      <input
-        name="search"
-        type="text"
-        value={ name }
-        onChange={ (e) => setName(e.target.value) }
-        placeholder="Filtrar por nome"
-        data-testid="name-filter"
-      />
-    </label>
+    <div className="nameFilter">
+      <label htmlFor="search">
+        <input
+          className="nameInput"
+          name="search"
+          type="text"
+          value={ name }
+          onChange={ (e) => setName(e.target.value) }
+          placeholder="Filtrar por nome"
+          data-testid="name-filter"
+        />
+      </label>
+    </div>
   );
 }
 

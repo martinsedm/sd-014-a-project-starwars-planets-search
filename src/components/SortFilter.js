@@ -19,13 +19,13 @@ function SortFilter() {
   };
 
   return (
-    <section className="sortFilter">
-      <h3>Ordenar</h3>
+    <div className="sortFilter">
       <label htmlFor="categories">
         <select
           name="categories"
           data-testid="column-sort"
           onChange={ (e) => setColumn(e.target.value.toLowerCase()) }
+          className="selectElement"
         >
           { categories.map((cat) => (
             <option
@@ -36,19 +36,23 @@ function SortFilter() {
             </option>
           )) }
         </select>
+      </label>
+      <label htmlFor="sortMethodASC">
         <input
           data-testid="column-sort-input-asc"
           type="radio"
-          name="sortMethod"
+          name="sortMethodASC"
           value="ASC"
           checked={ sortMethod === 'ASC' }
           onChange={ (e) => setSortMethod(e.target.value) }
         />
         Ascendente
+      </label>
+      <label htmlFor="sortMethodDESC">
         <input
           data-testid="column-sort-input-desc"
           type="radio"
-          name="sortMethod"
+          name="sortMethodDESC"
           value="DESC"
           checked={ sortMethod === 'DESC' }
           onChange={ (e) => setSortMethod(e.target.value) }
@@ -58,7 +62,7 @@ function SortFilter() {
       <button type="button" data-testid="column-sort-button" onClick={ onButtonClick }>
         Ordenar
       </button>
-    </section>
+    </div>
   );
 }
 

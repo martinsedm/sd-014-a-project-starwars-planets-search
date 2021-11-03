@@ -1,4 +1,23 @@
-.filterBox {
+.filtersBox {
   display: flex;
-  flex-direction: row;
+  width: auto;
+  justify-content: space-evenly;
+  height: 40px;
+  align-items: center;
+}
+
+.selectElement {
+  height: 25px;
+  width: 140px;
+  border-radius: 8px;
+}
+
+.inputElement {
+  width: 100px;
+  height: 19px;
+  border-radius: 8px;
+}
+
+.resetBtn {
+  background: linear-gradient(to bottom, rgb(0, 255, 234), rgb(10, 0, 65));
 }
