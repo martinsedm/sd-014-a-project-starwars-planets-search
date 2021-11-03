@@ -5,12 +5,22 @@ import fetchAPI from '../services/API';
 
 export default function Provider({ children }) {
   const [project, updateProject] = useState([]);
+  const [value, setValue] = useState('');
+  const [filterColumn, setFilterColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [isLoading, updateIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [filters, setFilters] = useState([{
     filterByName: {
       name: '',
-    } }]);
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ] }]);
 
   useEffect(() => {
     async function fetchA() {
@@ -28,13 +38,41 @@ export default function Provider({ children }) {
     return filterName;
   };
 
+  // lógica do colega Fernando Nascimento Monteiro
+  function tableSearch() {
+    if (filterColumn && comparison && value) {
+      const toCompare = Number(value);
+      const filtro = project.filter((planet) => {
+        const buscaValue = Number(planet[filterColumn]);
+        switch (comparison) {
+        case 'maior que':
+          return buscaValue > toCompare;
+        case 'menor que':
+          return buscaValue < toCompare;
+        case 'igual a':
+          return buscaValue === toCompare;
+        default:
+          return buscaValue;
+        }
+      });
+      updateProject(filtro);
+    }
+  }
+
   useEffect(() => {
     setFilters({
       filterByName: {
         name: searchText,
       },
+      filterByNumericValues: [
+        {
+          column: filterColumn,
+          comparison,
+          value,
+        },
+      ],
     });
-  }, [searchText]);
+  }, [comparison, filterColumn, searchText, value]);
 
   const valuesContext = {
     project,
@@ -43,6 +81,10 @@ export default function Provider({ children }) {
     setSearchText,
     filters,
     filterMap,
+    setValue,
+    setFilterColumn,
+    setComparison,
+    tableSearch,
   };
 
   return (
@@ -51,7 +93,6 @@ export default function Provider({ children }) {
     </Context.Provider>
   );
 }
-
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };

@@ -15,8 +15,6 @@ export const header = ['name',
 function Table() {
   const { project, isLoading, filterMap } = useContext(Context);
 
-  // console.log(valuesContext);
-
   if (isLoading) return <h3>Loading...</h3>;
 
   return (
