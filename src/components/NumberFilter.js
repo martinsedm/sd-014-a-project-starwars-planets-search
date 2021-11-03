@@ -3,7 +3,7 @@ import { numberFilters } from '../data';
 
 function NumberFilter() {
   return (
-    <form>
+    <form onSubmit={ (e) => e.preventDefault() }>
       <select data-testid="column-filter">
         {
           Object.keys(numberFilters)
@@ -23,6 +23,7 @@ function NumberFilter() {
         <option value="even">Igual a</option>
       </select>
       <input type="number" data-testid="value-filter" />
+      <button type="submit">Filtrar</button>
     </form>
   );
 }
