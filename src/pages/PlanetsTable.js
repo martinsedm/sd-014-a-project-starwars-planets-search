@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetsTable() {
-  const { data: { results } } = useContext(PlanetsContext);
+  const { data: { results }, filter: { filters } } = useContext(PlanetsContext);
+  const { filterByName: { name } } = filters;
 
   if (results === undefined) return <h2>Loading....</h2>;
   if (results.length === 0) return <h2>No planets were found </h2>;
@@ -17,11 +18,21 @@ function PlanetsTable() {
         </tr>
       </thead>
       <tbody>
-        { results.map((planets) => (
-          <tr key={ planets.name }>
-            {Object.values(planets).map((value) => <td key={ value }>{value}</td>)}
-          </tr>
-        ))}
+        { name.length === 0
+          ? results.map((planets) => (
+            <tr key={ planets.name }>
+              {Object.values(planets).map((value) => (
+                planets.name === value
+                  ? <td data-testid="planet-name" key={ value }>{value}</td>
+                  : <td key={ value }>{value}</td>))}
+            </tr>
+          )) : results
+            .filter((filter) => filter.name.toLowerCase().includes(name.toLowerCase()))
+            .map((planets) => (
+              <tr key={ planets.name }>
+                {Object.values(planets).map((value) => <td key={ value }>{value}</td>)}
+              </tr>
+            ))}
       </tbody>
     </table>
   );
