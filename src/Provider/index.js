@@ -9,6 +9,13 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   });
 
   const [filteredData, setFilteredData] = useState({});
@@ -29,12 +36,31 @@ function StarWarsProvider({ children }) {
       .filter(({ name: planetName }) => planetName.includes(name)));
   };
 
+  const applyNumberFilter = (column, value) => {
+    setFilteredData(Object.values(data)
+      .filter((planet) => planet[column] !== value));
+  };
+
+  const setFilterByNumber = ({ column, comparison, value }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.concat({
+        column,
+        comparison,
+        value,
+      }),
+    });
+    applyNumberFilter(column, value);
+  };
+
   const context = {
     data,
     populatePlanets,
     filters,
     setFilterByName,
     filteredData,
+    setFilterByNumber,
+    applyNumberFilter,
   };
 
   return (

@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import StarWarsContext from '../context';
 import { numberFilters } from '../data';
 
 function NumberFilter() {
+  const [filters, setNumberFilters] = useState({});
+  const {
+    setFilterByNumber,
+  } = useContext(StarWarsContext);
+
+  const handleChange = (e) => {
+    setNumberFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
-    <form onSubmit={ (e) => e.preventDefault() }>
-      <select data-testid="column-filter">
+    <form
+      onSubmit={ (e) => {
+        e.preventDefault();
+        setFilterByNumber(filters);
+      } }
+    >
+      <select name="column" data-testid="column-filter" onChange={ handleChange }>
         {
           Object.keys(numberFilters)
             .map((key) => (
@@ -17,12 +35,17 @@ function NumberFilter() {
             ))
         }
       </select>
-      <select data-testid="comparison-filter">
-        <option value="more">Maior que</option>
-        <option value="less">Menor que</option>
-        <option value="even">Igual a</option>
+      <select name="comparison" data-testid="comparison-filter" onChange={ handleChange }>
+        <option value="menor que">Maior que</option>
+        <option value="maior que">Menor que</option>
+        <option value="igual a">Igual a</option>
       </select>
-      <input type="number" data-testid="value-filter" />
+      <input
+        name="value"
+        type="number"
+        data-testid="value-filter"
+        onChange={ handleChange }
+      />
       <button type="submit">Filtrar</button>
     </form>
   );
