@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import getApiStarWars from './services/APIStarwars';
 import './App.css';
+import FilterByName from './components/FilterByName';
 
 function App() {
   const [returnAPi, setReturnApi] = useState([]);
@@ -13,6 +14,7 @@ function App() {
   return (
     <div>
       <h1>Projeto Star Wars - Trybe</h1>
+      <FilterByName />
       <table>
         <thead>
           <tr>
