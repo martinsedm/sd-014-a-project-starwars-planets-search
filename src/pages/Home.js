@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header';
-import Table from '../components/Table';
+import TableRender from '../components/TableRender';
 import StarsWarsContext from '../contexts/StarWarsContext';
 
 function Home() {
@@ -8,7 +8,7 @@ function Home() {
   return (
     <main>
       <Header />
-      { planetsRender.length > 0 && <Table />}
+      { planetsRender.length > 0 && <TableRender />}
       <p>Hello world</p>
     </main>
   );

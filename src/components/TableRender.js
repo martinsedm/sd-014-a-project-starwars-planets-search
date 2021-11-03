@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { Table as TableBootStrap } from 'react-bootstrap/Table';
+import Table from 'react-bootstrap/Table';
 
-function Table() {
+function TableRender() {
   const { planetsRender } = useContext();
   return (
-    <TableBootStrap striped bordered hover>
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>Name</th>
@@ -55,8 +55,8 @@ function Table() {
         })}
 
       </tbody>
-    </TableBootStrap>
+    </Table>
   );
 }
 
-export default Table;
+export default TableRender;
