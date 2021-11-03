@@ -7,15 +7,15 @@ function Filters() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [columnsOptions, setColumnsOptions] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
 
   const { filterByName: { name } } = filters;
 
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
-  const columnsOptions = ['population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
 
   const handleChange = ({ target: { value: changeValue } }) => {
     setFilters({
@@ -37,6 +37,8 @@ function Filters() {
         },
       ],
     });
+    setColumnsOptions(columnsOptions
+      .filter((selectedColumn) => selectedColumn !== column));
   };
 
   return (

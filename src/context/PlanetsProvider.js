@@ -19,11 +19,10 @@ function PlanetsProvider({ children }) {
       setData(results);
     };
     getPlanetsInfo();
-  }, [data]);
+  }, []);
 
   useEffect(() => {
-    filterByNumericValues.forEach((filterOption) => {
-      const { column, comparison, value } = filterOption;
+    filterByNumericValues.forEach(({ column, comparison, value }) => {
       const filteredPlanets = data.filter((planet) => {
         const filteredByName = planet.name.includes(name);
         switch (comparison) {
