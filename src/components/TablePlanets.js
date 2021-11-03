@@ -1,13 +1,14 @@
 import React, { useEffect, useContext } from 'react';
-import PlanetsKeyDeleted from '../service/fetchApi';
 import StarwarsSearch from '../Context/StarwarsContext';
+import filterAll from '../service/filters';
 
 function TablePlanets() {
-  const { planetsFiltred, setPlanetsFiltred } = useContext(StarwarsSearch);
+  const { filters, planetsFiltred, planetsResponseApi,
+    setPlanetsFiltred } = useContext(StarwarsSearch);
+
   useEffect(() => {
-    PlanetsKeyDeleted('residents')
-      .then((response) => setPlanetsFiltred(response));
-  }, [setPlanetsFiltred]);
+    filterAll(setPlanetsFiltred, filters, planetsResponseApi);
+  }, [filters, planetsResponseApi, setPlanetsFiltred]);
 
   return (
     <main>
@@ -35,7 +36,6 @@ function TablePlanets() {
           }
         </tbody>
       </table>
-
     </main>
   );
 }
