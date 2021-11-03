@@ -35,15 +35,15 @@ function NumberFilter() {
                 value={ key }
                 key={ key }
               >
-                { numberFilters[key] }
+                { key }
               </option>
             ))
         }
       </select>
       <select name="comparison" data-testid="comparison-filter" onChange={ handleChange }>
-        <option value="maior que">Maior que</option>
-        <option value="mmenor que">Menor que</option>
-        <option value="igual a">Igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         name="value"
