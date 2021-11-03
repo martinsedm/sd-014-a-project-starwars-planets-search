@@ -23,8 +23,8 @@ function Table() {
 
   useEffect(() => {
     setLoading(true);
-    populatePlanets();
-    setLoading(false);
+    populatePlanets()
+      .then(() => setLoading(false));
   }, []);
 
   const renderPlanet = (planet) => Object.keys(planet)
