@@ -19,6 +19,19 @@ function Header() {
     setFilteredData(filtered);
   }
 
+  function numericFilter() {
+    const filtered = data.filter((planet) => {
+      if (comparisonName === 'maior que') {
+        return Number(planet[columnName]) > Number(numericValue);
+      }
+      if (comparisonName === 'menor que') {
+        return Number(planet[columnName]) < Number(numericValue);
+      }
+      return Number(planet[columnName]) === Number(numericValue);
+    });
+    setFilteredData(filtered);
+  }
+
   function handleClick() {
     setFilters({
       ...filters,
@@ -30,16 +43,7 @@ function Header() {
         },
       ],
     });
-    const filtered = data.filter((planet) => {
-      if (comparisonName === 'maior que') {
-        return Number(planet[columnName]) > Number(numericValue);
-      }
-      if (comparisonName === 'menor que') {
-        return Number(planet[columnName]) < Number(numericValue);
-      }
-      return Number(planet[columnName]) === Number(numericValue);
-    });
-    setFilteredData(filtered);
+    numericFilter();
   }
 
   return (
