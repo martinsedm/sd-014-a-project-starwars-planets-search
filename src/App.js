@@ -1,9 +1,18 @@
 import React from 'react';
-import './App.css';
+import Provider from './context/Provider';
+import FilterName from './components/FilterName';
+// import FilterNumber from './components/FilterNumber';
+import Table from './components/Table';
+// import Clearfilters from './components/Clearfilters';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <FilterName />
+      {/* <FilterNumber /> */}
+      <Table />
+      {/* <Clearfilters /> */}
+    </Provider>
   );
 }
 
