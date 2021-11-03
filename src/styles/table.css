@@ -1,0 +1,18 @@
+.table-planets {
+  display: flex;
+  flex-direction: row;
+}
+
+div {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+}
+
+
+tr, td {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  padding: 3px;
+}
