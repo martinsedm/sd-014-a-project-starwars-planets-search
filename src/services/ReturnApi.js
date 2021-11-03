@@ -1,12 +1,12 @@
-const searchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
+// const searchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-const ReturnApi = () => (
-  fetch(searchApi)
-    .then((response) => (
-      response
-        .json()
-        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
-);
+// const ReturnApi = () => (
+//   fetch(searchApi)
+//     .then((response) => (
+//       response
+//         .json()
+//         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
+//     ))
+// );
 
-export default ReturnApi;
+// export default ReturnApi;
