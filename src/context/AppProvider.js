@@ -4,21 +4,46 @@ import AppContext from './AppContext';
 
 export default function AppProvider({ children }) {
   const [data, setData] = useState([]);
-  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets';
+  const [searchInput, setSearchInput] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   async function getData() {
-    const response = await fetch(endpoint);
+    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets');
     const { results } = await response.json();
     const resultsFiltered = results.filter((result) => delete result.residents);
     setData(resultsFiltered);
+  }
+
+  function searchFilter() {
+    const { filterByName: { name } } = filters;
+
+    const filterByText = data
+      .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
+
+    return filterByText;
   }
 
   useEffect(() => {
     getData();
   }, []);
 
+  useEffect(() => {
+    setFilters({
+      filterByName: { name: searchInput },
+    });
+  }, [searchInput]);
+
   const contextValue = {
     data,
+    filters,
+    setFilters,
+    searchInput,
+    setSearchInput,
+    searchFilter,
   };
 
   return (
