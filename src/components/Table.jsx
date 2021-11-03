@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
-function Table() {
+export default function Table() {
   const { data } = useContext(AppContext);
 
-  const tableHead = () => {
+  function tableHead() {
     if (!data.length) return null;
     const columns = Object.keys(data[0]);
-    delete columns.residents;
     return (
       <tr>
         { columns.map((column) => (
@@ -17,9 +16,9 @@ function Table() {
         ))}
       </tr>
     );
-  };
+  }
 
-  const tableCells = () => {
+  function tableCells() {
     if (!data.length) return null;
     return (
       data.map((cell, index) => (
@@ -31,7 +30,7 @@ function Table() {
         </tr>
       ))
     );
-  };
+  }
 
   return (
     <table>
@@ -40,5 +39,3 @@ function Table() {
     </table>
   );
 }
-
-export default Table;

@@ -1,14 +1,12 @@
 import React from 'react';
 import './App.css';
 import Table from './components/Table';
-import Provider from './context/AppProvider';
+import AppProvider from './context/AppProvider';
 
-function App() {
+export default function App() {
   return (
-    <Provider>
+    <AppProvider>
       <Table />
-    </Provider>
+    </AppProvider>
   );
 }
-
-export default App;

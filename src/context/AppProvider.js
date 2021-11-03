@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
-function Provider({ children }) {
+export default function AppProvider({ children }) {
   const [data, setData] = useState([]);
+  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets';
 
-  const getData = async () => {
-    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets');
+  async function getData() {
+    const response = await fetch(endpoint);
     const { results } = await response.json();
     const resultsFiltered = results.filter((result) => delete result.residents);
-    return setData(resultsFiltered);
-  };
+    setData(resultsFiltered);
+  }
 
-  useEffect(() => getData(), []);
+  useEffect(() => {
+    getData();
+  }, []);
 
   const contextValue = {
     data,
@@ -20,13 +23,11 @@ function Provider({ children }) {
 
   return (
     <AppContext.Provider value={ contextValue }>
-      {children}
+      { children }
     </AppContext.Provider>
   );
 }
 
-export default Provider;
-
-Provider.propTypes = {
+AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
