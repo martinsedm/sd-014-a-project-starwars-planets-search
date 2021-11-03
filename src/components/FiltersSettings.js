@@ -26,10 +26,6 @@ function FiltersSettings() {
     });
   };
 
-  // const removeColumn = columnArrayVal.filter((item) => item !== filter.filters.filterByNumericValues.column)
-  //   // comparar dois arrays
-  //   console.log(filter.filters.filterByNumericValues[0])
-
   return (
     <div>
       <form onSubmit={ (e) => handleSubmit(e) }>

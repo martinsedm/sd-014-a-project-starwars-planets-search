@@ -2,12 +2,10 @@ import React, { useEffect, useContext, useState } from 'react';
 import planetContext from '../context';
 
 function Table() {
-  const { data, getPlanets, filter } = useContext(planetContext);
+  const { data, filter } = useContext(planetContext);
   const [filteredPlanets, setFilteredPlanets] = useState(null);
   const { name } = filter.filters.filterByName;
   const { filterByNumericValues: arrayNewFilters } = filter.filters;
-
-  useEffect(() => { getPlanets(); }, []);
 
   // recebe o array da API, e recebe o name do onChange na FilterInput, função atualiza o valor filteredPlanetes novo array para ser renderizado.
   useEffect(() => {
@@ -19,27 +17,30 @@ function Table() {
 
   // ajuda do colega Marcelo Alves para essa função que sempre que evento de novo filtro muda o estado.
   useEffect(() => {
+    let newData = data;
     arrayNewFilters.forEach((e) => {
       switch (e.comparision) {
       case 'maior que':
-        setFilteredPlanets(data.filter((planet) => (
+        newData = newData.filter((planet) => (
           Number(planet[e.column]) > Number(e.value)
-        )));
+        ));
         break;
       case 'menor que':
-        setFilteredPlanets(data.filter((planet) => (
+        newData = newData.filter((planet) => (
           Number(planet[e.column]) < Number(e.value)
-        )));
+        ));
         break;
       case 'igual a':
-        setFilteredPlanets(data.filter((planet) => (
+        newData = newData.filter((planet) => (
           Number(planet[e.column]) === Number(e.value)
-        )));
+        ));
         break;
       default:
         break;
       }
     });
+    console.log(newData);
+    setFilteredPlanets(newData);
     // arrayNewFilters.map((newFilter) => console.log(newFilter));
     // data.map((planet) => console.log(planet));
   }, [arrayNewFilters, data]);

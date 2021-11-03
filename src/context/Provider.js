@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import planetContext from '.';
 import fetchPlanets from '../services/opendtbAPI';
@@ -26,10 +26,11 @@ function Provider({ children }) {
     setLoading(false);
   };
 
+  useEffect(() => { getPlanets(); }, []);
+
   const value = {
     data,
     loading,
-    getPlanets,
     filter,
     setFilter,
   };
