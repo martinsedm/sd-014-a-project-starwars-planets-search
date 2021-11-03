@@ -26,13 +26,13 @@ function Table() {
     .map((planet) => <tr key={ planet.name }>{ renderPlanet(planet) }</tr>);
 
   const renderPlanets = () => {
-    if (name.length === 0 && filterByNumericValues.length === 1) {
+    if (name.length === 0 && filterByNumericValues.length === 0) {
       return renderAllPlanets(data);
     }
     if (filteredData.length > 0) {
       return renderAllPlanets(filteredData);
     }
-    return <h2>No planets found.</h2>;
+    return <tr><td>No planets found.</td></tr>;
   };
 
   return (

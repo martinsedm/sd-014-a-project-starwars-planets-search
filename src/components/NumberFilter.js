@@ -3,7 +3,12 @@ import StarWarsContext from '../context';
 import { numberFilters } from '../data';
 
 function NumberFilter() {
-  const [filters, setNumberFilters] = useState({});
+  const [filters, setNumberFilters] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
+
   const {
     setFilterByNumber,
   } = useContext(StarWarsContext);
@@ -36,8 +41,8 @@ function NumberFilter() {
         }
       </select>
       <select name="comparison" data-testid="comparison-filter" onChange={ handleChange }>
-        <option value="menor que">Maior que</option>
-        <option value="maior que">Menor que</option>
+        <option value="maior que">Maior que</option>
+        <option value="mmenor que">Menor que</option>
         <option value="igual a">Igual a</option>
       </select>
       <input

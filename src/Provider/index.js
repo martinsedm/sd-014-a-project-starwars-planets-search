@@ -9,13 +9,7 @@ function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   const [filteredData, setFilteredData] = useState({});
@@ -36,9 +30,18 @@ function StarWarsProvider({ children }) {
       .filter(({ name: planetName }) => planetName.includes(name)));
   };
 
-  const applyNumberFilter = (column, value) => {
+  const applyNumberFilter = (column, comparison, value) => {
     setFilteredData(Object.values(data)
-      .filter((planet) => planet[column] !== value));
+      .filter((planet) => {
+        switch (comparison) {
+        case 'igual a':
+          return planet[column] === value;
+        case 'menor que':
+          return +planet[column] < +value;
+        default:
+          return +planet[column] > +value;
+        }
+      }));
   };
 
   const setFilterByNumber = ({ column, comparison, value }) => {
@@ -50,7 +53,7 @@ function StarWarsProvider({ children }) {
         value,
       }),
     });
-    applyNumberFilter(column, value);
+    applyNumberFilter(column, comparison, value);
   };
 
   const context = {
