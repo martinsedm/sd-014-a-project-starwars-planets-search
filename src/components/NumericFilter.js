@@ -1,13 +1,9 @@
 import React, { useState, useContext } from 'react';
 import SWContext from '../context/SWContext';
+import '../Styles/NumericFilter.css';
 
 function NumericFilter() {
-  const {
-    filters,
-    setFilters,
-    categories,
-  } = useContext(SWContext);
-
+  const { filters, setFilters, categories } = useContext(SWContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
@@ -22,16 +18,15 @@ function NumericFilter() {
   };
 
   const removeFilter = (category) => {
-    let updatedFilter = filters.filterByNumericValues;
-    updatedFilter = updatedFilter.filter((f) => f.column !== category);
     setFilters({
       ...filters,
-      filterByNumericValues: updatedFilter,
+      filterByNumericValues: filters.filterByNumericValues.filter((f) => f.column
+      !== category),
     });
   };
 
   return (
-    <section>
+    <section className="numericFilter">
       <label htmlFor="column">
         <select
           name="column"
@@ -73,7 +68,6 @@ function NumericFilter() {
           {`${filter.column} ${filter.comparison} ${filter.value} `}
           <button
             id={ filter.column }
-            name={ filter.column }
             type="button"
             onClick={ () => removeFilter(filter.column) }
           >

@@ -13,8 +13,8 @@ function Home() {
   }, []);
 
   return (
-    <div>
-      <Header />
+    <>
+      <Header classname="Home_header" />
       { isLoading ? <Loading /> : (
         <main>
           <FiltersPanel />
@@ -22,7 +22,7 @@ function Home() {
           { errorMsg && <h1>{ errorMsg }</h1> }
         </main>
       )}
-    </div>
+    </>
   );
 }
 

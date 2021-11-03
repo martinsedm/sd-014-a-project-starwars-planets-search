@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import SWContext from '../context/SWContext';
+import '../Styles/SortFilter.css';
 
 import { ALL_CATEGORIES as categories } from '../info';
 
@@ -18,7 +19,7 @@ function SortFilter() {
   };
 
   return (
-    <section>
+    <section className="sortFilter">
       <h3>Ordenar</h3>
       <label htmlFor="categories">
         <select

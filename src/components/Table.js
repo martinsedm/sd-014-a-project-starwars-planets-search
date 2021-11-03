@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import SWContext from '../context/SWContext';
 import { ALL_CATEGORIES } from '../info';
+import '../Styles/Table.css';
 
 function Table() {
   const { filteredData, sortData } = useContext(SWContext);

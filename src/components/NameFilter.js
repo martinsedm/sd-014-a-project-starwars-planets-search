@@ -1,12 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import SWContext from '../context/SWContext';
+import '../Styles/NameFilter.css';
 
 function NameFilter() {
-  const {
-    filters,
-    setFilters,
-  } = useContext(SWContext);
-
+  const { filters, setFilters } = useContext(SWContext);
   const [name, setName] = useState('');
 
   useEffect(() => {
@@ -14,7 +11,7 @@ function NameFilter() {
   }, [name]);
 
   return (
-    <label htmlFor="search">
+    <label htmlFor="search" className="nameFilter">
       <input
         name="search"
         type="text"

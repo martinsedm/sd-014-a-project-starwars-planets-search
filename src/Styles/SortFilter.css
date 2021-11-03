@@ -1,0 +1,11 @@
+body {
+  color: white;
+}
+
+.sortFilter {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  flex-direction: row;
+}

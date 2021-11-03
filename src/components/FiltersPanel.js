@@ -3,14 +3,13 @@ import NameFilter from './NameFilter';
 import NumericFilter from './NumericFilter';
 import SortFilter from './SortFilter';
 import SWContext from '../context/SWContext';
+import '../Styles/FiltersPanel.css';
 
 function FiltersPanel() {
-  const {
-    resetFilters,
-  } = useContext(SWContext);
+  const { resetFilters } = useContext(SWContext);
 
   return (
-    <section>
+    <section className="filtersBox">
       <NameFilter />
       <NumericFilter />
       <br />
