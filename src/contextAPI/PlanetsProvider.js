@@ -9,7 +9,12 @@ export default function PlanetsProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
+
   const [currentFilters, setCurrentFilters] = useState([{
     colunm: '',
     comparison: '',

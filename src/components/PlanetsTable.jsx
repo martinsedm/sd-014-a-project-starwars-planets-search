@@ -24,15 +24,33 @@ export default function PlanetsTable() {
     ));
   };
 
-  const getFilteredPlanets = () => {
-    const { filterByName, filterByNumericValues } = filters;
-    const { column, comparison, value } = currentFilters;
-    if (Object.keys(filterByNumericValues).length) {
-      return specificFilter(column, comparison, value);
+  const sortResults = (results, type, columnHead) => {
+    switch (type) {
+    case 'ASC':
+      return results.sort((a, b) => (
+        a[columnHead].localeCompare(b[columnHead], undefined, { numeric: true })));
+    case 'DESC':
+      return results.sort((a, b) => (
+        b[columnHead].localeCompare(a[columnHead], undefined, { numeric: true })));
+    default:
+      break;
     }
-    return data.filter(({ name }) => (
-      name.toLowerCase().includes(filterByName.name.toLowerCase())
-    ));
+  };
+
+  const getFilteredPlanets = () => {
+    const { filterByName, filterByNumericValues, order } = filters;
+    const { column, comparison, value } = currentFilters;
+    let filterName;
+
+    if (Object.keys(filterByNumericValues).length) {
+      filterName = specificFilter(column, comparison, value);
+    } else {
+      filterName = data.filter(({ name }) => (
+        name.toLowerCase().includes(filterByName.name.toLowerCase())
+      ));
+    }
+
+    return sortResults(filterName, order.sort, order.column);
   };
 
   const tblHeaders = () => {

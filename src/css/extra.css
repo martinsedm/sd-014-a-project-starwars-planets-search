@@ -169,3 +169,11 @@ input, select {
   color: white;
   text-decoration: none;
 }
+
+.filter-order {
+  display: flex;
+}
+
+.filter-order p {
+  margin-left: 10px;
+}
