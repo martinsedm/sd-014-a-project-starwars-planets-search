@@ -6,7 +6,7 @@ export default function FilterColumn() {
     currentFilters,
     setCurrentFilters,
     filters: { filterByNumericValues },
-} = useContext(PlanetsContext);
+  } = useContext(PlanetsContext);
 
   const handleChange = ({ target }) => {
     const { value } = target;

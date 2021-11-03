@@ -23,6 +23,16 @@ header {
   width: 98%;
 }
 
+button {
+  background-color: rgb(255, 217, 0);
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-weight: 600;
+  margin: 0 10px;
+  padding: 0 8px;
+}
+
 .logo-header {
   display: flex;
   height: 70px;
@@ -82,6 +92,14 @@ tr {
   margin: 1px solid white;
 }
 
+tr :hover {
+  background-color: rgba(255, 255, 255, 0.103);
+}
+
+th {
+  text-transform: uppercase;
+}
+
 table, form {
   margin-top: 45px;
 }
@@ -92,9 +110,11 @@ form {
   padding: 10px;
 }
 
-input {
+input, select {
+  border: none;
+  border-radius: 5px;
   margin: 0 5px;
-  padding: 3px 5px;
+  padding: 3px 8px;
 }
 
 .searchBarTitle {
@@ -117,10 +137,6 @@ input {
   margin-right: 5px;
 }
 
-button {
-  padding: 0 5px;
-}
-
 .chewie {
   background-image: url('../css/chewie.png');
   background-repeat: no-repeat;
@@ -129,4 +145,27 @@ button {
   height: 90px;
   position: absolute;
   width: 100%;
+}
+
+.used-filters {
+  display: block;
+  margin-top: 15px;
+}
+
+.used-filters p {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.single-filter {
+  margin: 5px 0;
+}
+
+.film-item {
+  margin: 3px 0;
+}
+
+.film-link {
+  color: white;
+  text-decoration: none;
 }

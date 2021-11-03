@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../contextAPI/PlanetsContext';
+import columnName from '../random/columnName';
+import breakParagraphs from '../random/breakParagraphs';
 
 export default function PlanetsTable() {
   const { data, filters, currentFilters } = useContext(PlanetsContext);
@@ -36,10 +38,10 @@ export default function PlanetsTable() {
   const tblHeaders = () => {
     const headers = Object.keys(data[0]);
     return headers.filter((tblHead) => tblHead !== 'residents')
-      .map((tblHead) => tblHead.replace('_', ' '))
+      .map((tblHead) => columnName(tblHead))
       .map((tblHead) => (
         <th key={ tblHead }>
-          { tblHead.toUpperCase() }
+          { tblHead }
         </th>
       ));
   };
@@ -57,7 +59,7 @@ export default function PlanetsTable() {
         <td>{colunm.terrain}</td>
         <td>{colunm.surface_water}</td>
         <td>{colunm.population}</td>
-        <td>{colunm.films}</td>
+        <td>{breakParagraphs(colunm.films)}</td>
         <td>{colunm.created}</td>
         <td>{colunm.edited}</td>
         <td>{colunm.url}</td>
