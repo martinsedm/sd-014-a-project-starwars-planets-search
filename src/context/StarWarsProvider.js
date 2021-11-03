@@ -2,16 +2,17 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
-import { getPlanetList } from '../services/planetsAPI';
-
-function Provider({ children }) {
+function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
 
+  const fetchPlanets = async () => {
+    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+    const responseJson = await response.json();
+    setData(responseJson.results);
+  };
+
   useEffect(() => {
-    getPlanetList()
-      .then((items) => {
-        setData(items.results);
-      });
+    fetchPlanets();
   }, []);
 
   const context = {
@@ -24,8 +25,8 @@ function Provider({ children }) {
   );
 }
 
-Provider.propTypes = {
+StarWarsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default Provider;
+export default StarWarsProvider;
