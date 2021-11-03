@@ -51,7 +51,7 @@ function NumberFilter() {
         data-testid="value-filter"
         onChange={ handleChange }
       />
-      <button type="submit">Filtrar</button>
+      <button type="submit" data-testid="button-filter">Filtrar</button>
     </form>
   );
 }
