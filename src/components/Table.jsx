@@ -52,7 +52,9 @@ export class Table extends Component {
               {({ contextValue: {
                 filters:
                   { filterByName:
-                    { name } }, count, updateCount } }) => (this.updateList(name, count, updateCount))}
+                    { name } },
+                count,
+                updateCount } }) => (this.updateList(name, count, updateCount))}
             </MyContext.Consumer>
             <table>
               <thead>
