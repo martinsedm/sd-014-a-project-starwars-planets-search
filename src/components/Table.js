@@ -1,14 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context';
+import { tableHeads } from '../data';
 
 function Table() {
   const { data, populatePlanets } = useContext(StarWarsContext);
 
+  useEffect(() => {
+    populatePlanets();
+  }, []);
+
   return (
     <table>
-      <tr>
-        <th>I&apos;m a table</th>
-      </tr>
+      <thead>
+        <tr>
+          {
+            tableHeads.map((heading, index) => (
+              <th key={ index }>{ heading }</th>
+            ))
+          }
+        </tr>
+      </thead>
     </table>
   );
 }
