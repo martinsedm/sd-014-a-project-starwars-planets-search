@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
+import PlanetsKeyDeleted from '../service/fetchApi';
 import StarwarsSearch from '../Context/StarwarsContext';
 
 function TablePlanets() {
-  const { planetsFiltred } = useContext(StarwarsSearch);
-  const itemsHeader = planetsFiltred[0] === undefined ? []
-    : Object.keys(planetsFiltred[0]); // utilize uma função que retorne todas chaves de um objeto em arrays
-  console.log(itemsHeader);
+  const { planetsFiltred, setPlanetsFiltred } = useContext(StarwarsSearch);
+  useEffect(() => {
+    PlanetsKeyDeleted('residents')
+      .then((response) => setPlanetsFiltred(response));
+  }, [setPlanetsFiltred]);
+
   return (
     <main>
       {
@@ -14,11 +17,22 @@ function TablePlanets() {
       <table>
         <tbody>
           <tr>
-            {itemsHeader.map((item) => <th key={ item }>{item}</th>)}
+            {
+              planetsFiltred.length > 0 && Object.keys(planetsFiltred[0]).map((item) => (
+                <th key={ item }>
+                  {item}
+                </th>))
+            }
           </tr>
-          <tr>
-            <td> testes </td>
-          </tr>
+          {
+            planetsFiltred.length > 0
+              && planetsFiltred.map((planet) => (
+                <tr key={ planet.name }>
+                  {Object.values(planet)
+                    .map((valueColumn) => <td key={ valueColumn }>{valueColumn}</td>)}
+                </tr>
+              ))
+          }
         </tbody>
       </table>
 
