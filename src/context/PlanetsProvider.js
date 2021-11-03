@@ -1,10 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
 const PlanetsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState('');
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -15,8 +23,20 @@ const PlanetsProvider = ({ children }) => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    setFilter({ ...filter, filters: { filterByName: { name } } });
+  }, [name]);
+
   return (
-    <PlanetsContext.Provider value={ { loading, data, fetchData } }>
+    <PlanetsContext.Provider
+      value={ {
+        loading,
+        data,
+        name,
+        filter,
+        setName,
+        fetchData } }
+    >
       { children }
     </PlanetsContext.Provider>
   );
