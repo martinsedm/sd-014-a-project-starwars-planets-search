@@ -2,14 +2,19 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../context/context';
 
 function TableBody() {
-  const { data, isLoading } = useContext(GlobalContext);
+  const { data, isLoading, filters } = useContext(GlobalContext);
+
+  const filtred = () => {
+    const { name } = filters.filterByName;
+    return data.results.filter((planet) => planet.name.includes(name));
+  };
 
   return (
     <tbody>
       {
         isLoading
           ? <p>Carregando</p>
-          : data.results.map((planet) => (
+          : filtred().map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

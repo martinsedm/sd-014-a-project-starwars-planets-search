@@ -4,6 +4,11 @@ import GlobalContext from './context';
 
 function GlobalContextProvider({ children }) {
   const [data, setData] = useState();
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
@@ -23,6 +28,8 @@ function GlobalContextProvider({ children }) {
         data,
         isLoading,
         getData,
+        filters,
+        setFilters,
       } }
     >
       {children}
