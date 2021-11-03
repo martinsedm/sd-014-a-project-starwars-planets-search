@@ -3,7 +3,7 @@ import SWContext from '../context/SWContext';
 import FilterForm from './FilterForm';
 
 function Table() {
-  const { arrayFiltered, infoIsLoaded, thead } = useContext(SWContext);
+  const { info: { arrayFiltered, infoIsLoaded, tHead } } = useContext(SWContext);
 
   return (
     <main>
@@ -13,7 +13,7 @@ function Table() {
           <table>
             <thead>
               <tr>
-                {thead.map((item) => <th key={ item }>{item}</th>)}
+                {tHead.map((item) => <th key={ item }>{item}</th>)}
               </tr>
             </thead>
             <tbody>
