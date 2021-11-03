@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
+import Home from './page/Home';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <span>
+      <Home />
+    </span>
   );
 }
 
 export default App;
-
-// teste
