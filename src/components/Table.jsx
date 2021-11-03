@@ -4,7 +4,9 @@ import SearchHeader from './SearchHeader';
 
 function Table() {
   const { loading, planets, setPlanets, setLoading, filter } = useContext(PlanetsContext);
+  const { filterByName, filterByNumericValue } = filter;
 
+  // Faz a requisição à API assim que o componente é montado
   useEffect(() => {
     const getPlanets = async () => {
       const response = await (await fetch('https://swapi-trybe.herokuapp.com/api/planets/')).json();
@@ -14,11 +16,28 @@ function Table() {
     getPlanets();
   }, [setPlanets, setLoading]);
 
+  // Filtra os planetas de acordo com os filtros
+  // Lógica da pessoa colega Filipe Brochier
   const filteredPlanets = planets.filter((planet) => {
-    if (filter.filterByName) {
-      return planet.name.toLowerCase().includes(filter.filterByName.name);
+    if (filterByName) {
+      planet = planet.name.toLowerCase().includes(filter.filterByName.name);
     }
     return planet;
+  }).filter((planet) => {
+    if (filterByNumericValue) {
+      if (filterByNumericValue[0].comparison === 'maior que') {
+        return Number(planet[filterByNumericValue[0].column])
+          > filterByNumericValue[0].value;
+      }
+      if (filterByNumericValue[0].comparison === 'menor que') {
+        return Number(planet[filterByNumericValue[0].column])
+          < filterByNumericValue[0].value;
+      }
+      return Number(planet[filterByNumericValue[0].column])
+         === filterByNumericValue[0].value;
+    }
+
+    return true;
   });
 
   if (loading) return <p>Loading...</p>;
