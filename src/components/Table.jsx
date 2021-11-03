@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import Context from '../context/Context';
 
-function Table({ data }) {
+function Table() {
   //  console.log(data);
+  const { data } = useContext(Context);
 
   return (
     <table>
@@ -49,9 +50,5 @@ function Table({ data }) {
     </table>
   );
 }
-
-Table.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default Table;
