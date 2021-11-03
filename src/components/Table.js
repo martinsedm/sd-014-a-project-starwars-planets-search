@@ -7,7 +7,10 @@ function Table() {
     data,
     populatePlanets,
     filteredData,
-    filters: { filterByName: { name } } } = useContext(StarWarsContext);
+    filters: {
+      filterByName: { name },
+      filterByNumericValues,
+    } } = useContext(StarWarsContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ function Table() {
     .map((planet) => <tr key={ planet.name }>{ renderPlanet(planet) }</tr>);
 
   const renderPlanets = () => {
-    if (name.length === 0) {
+    if (name.length === 0 && filterByNumericValues.length === 1) {
       return renderAllPlanets(data);
     }
     if (filteredData.length > 0) {
