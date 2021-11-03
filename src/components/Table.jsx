@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets, isLoading } = useContext(PlanetsContext);
+  const { planets, isLoading, displayFilteredPlanets } = useContext(PlanetsContext);
 
   const renderHeader = () => {
     const headerContent = Object.keys(planets[0]);
@@ -20,7 +20,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet, index) => (
+        { displayFilteredPlanets.map((planet, index) => (
           <tr key={ index }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
