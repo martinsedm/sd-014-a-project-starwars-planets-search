@@ -1,9 +1,14 @@
 import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Home from './pages/Home';
 import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Switch>
+      <Route exact path="/"><Home /></Route>
+      <Route><Redirect to="/" /></Route>
+    </Switch>
   );
 }
 
