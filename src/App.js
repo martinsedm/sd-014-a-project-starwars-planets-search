@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
 
-function App() {
+import Table from './components/Table';
+import Provider from './context/Provider';
+
+export default function App() {
   return (
-    <span>Starwars Planets Search! - Initial Commit</span>
+    <Provider>
+      <h1 className="font-semibold text-4xl text-center mt-4">Starwars Planets Search</h1>
+      <Table />
+    </Provider>
   );
 }
-
-export default App;
