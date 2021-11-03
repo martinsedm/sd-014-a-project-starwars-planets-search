@@ -4,7 +4,6 @@ import StarsContext from '../context/myContext';
 function textFilter() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { filters, setFilter } = useContext(StarsContext);
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [name, setName] = useState('');
 
