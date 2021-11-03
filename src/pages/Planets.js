@@ -1,4 +1,5 @@
 import React from 'react';
+import ClearValueFilter from '../components/ClearValueFilter';
 import Form from '../components/Form';
 import Header from '../components/Header';
 import Table from '../components/Table';
@@ -12,6 +13,9 @@ function Planets() {
       <main>
         <section>
           <Form />
+        </section>
+        <section>
+          <ClearValueFilter />
         </section>
         <section>
           <Table />

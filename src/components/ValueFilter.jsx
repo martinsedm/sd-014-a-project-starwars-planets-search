@@ -7,6 +7,10 @@ function ValueFilter() {
   const [comparison, setComparison] = useState('maior');
   const [value, setValue] = useState(0);
 
+  // console.log(column);
+  // console.log(comparison);
+  // console.log(value);
+
   const { filters, addNumericFilter } = useContext(planetsContext);
 
   const renderOption = () => {

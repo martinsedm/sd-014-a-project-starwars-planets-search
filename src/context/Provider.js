@@ -43,12 +43,23 @@ function Provider({ children }) {
     });
   };
 
+  // o valor de column esta vindo do component ClearValu...
+  const clearFilterSelected = (column) => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues.filter(
+        (dadosFilterselected) => dadosFilterselected.column !== column,
+      ),
+    });
+  };
+
   const context = {
     dataPlanets,
     isLoading,
     filters,
     changeNameFilter,
     addNumericFilter,
+    clearFilterSelected,
   };
 
   return (
