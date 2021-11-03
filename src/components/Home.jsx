@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import Context from '../context/Context';
+import Header from './Header';
 import Table from './Table';
 
 function Home() {
-  const { data, setData } = useContext(Context);
+  const { data, setData, setFilteredData } = useContext(Context);
 
   useEffect(() => {
     async function fetchData() {
@@ -11,6 +12,7 @@ function Home() {
       const json = await response.json();
       const objectConverted = Object.values(json.results);
       setData(objectConverted);
+      setFilteredData(objectConverted);
     }
     fetchData();
   }, []);
@@ -18,7 +20,10 @@ function Home() {
   if (data.length <= 0) return <h1>Loading ...</h1>;
 
   return (
-    <Table />
+    <>
+      <Header />
+      <Table />
+    </>
   );
 }
 
