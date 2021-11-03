@@ -22,6 +22,8 @@ function Home() {
   return (
     <>
       <Header />
+      <br />
+      <br />
       <Table />
     </>
   );
