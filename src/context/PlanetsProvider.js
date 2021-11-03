@@ -6,6 +6,7 @@ const { Provider } = PlanetsContext;
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function PlanetsProvider({ children }) {
+  const [filters, setFilters] = useState({});
   const [planets, setPlanets] = useState([]);
 
   const getPlanets = async () => {
@@ -14,7 +15,7 @@ function PlanetsProvider({ children }) {
     setPlanets(results);
   };
 
-  const context = { getPlanets, planets };
+  const context = { filters, getPlanets, planets, setFilters };
 
   return <Provider value={ context }>{children}</Provider>;
 }

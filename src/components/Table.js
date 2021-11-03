@@ -18,12 +18,20 @@ const tableHeaders = [
 ];
 
 function Table() {
-  const { getPlanets, planets } = useContext(PlanetsContext);
+  const { filters, getPlanets, planets } = useContext(PlanetsContext);
 
   useEffect(() => {
     getPlanets();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const planetsToDisplay = planets.filter((planet) => {
+    if (filters.name) {
+      return planet.name.toLowerCase().includes(filters.name.toLowerCase());
+      // Make case insensitive
+    }
+    return true;
+  });
 
   return (
     <table>
@@ -35,7 +43,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
+        {planetsToDisplay.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
