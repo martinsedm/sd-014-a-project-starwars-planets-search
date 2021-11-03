@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 import filterContext from './filterContext';
 
 function FilterProvider(props) {
-  const [name, setName] = useState('');
+  const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  });
   const { children } = props;
+  const filtroEApi = { filters, setFilters, data, setData };
   return (
     <filterContext.Provider
-      value={
-        { name, setName }
-      }
+      value={ filtroEApi }
     >
       {children}
     </filterContext.Provider>
@@ -17,10 +22,7 @@ function FilterProvider(props) {
 }
 
 FilterProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default FilterProvider;
