@@ -5,6 +5,13 @@ import ColsultApiPlanets from '../services/ConsultApiPlanets';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -14,8 +21,14 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
+  const value = {
+    data,
+    filter,
+    setFilter,
+  };
+
   return (
-    <Context.Provider value={ data }>
+    <Context.Provider value={ value }>
       {children}
     </Context.Provider>
   );
