@@ -9,7 +9,6 @@ function textFilter() {
 
   function handleChange({ target }) {
     const { value } = target;
-
     setFilter({
       ...filters,
       name: value });
