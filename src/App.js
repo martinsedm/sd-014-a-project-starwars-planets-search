@@ -1,3 +1,4 @@
+import './App.css';
 import React from 'react';
 import PlanetsSearchProvider from './context/PlanetsSearchProvider';
 import PlanetsTable from './components/PlanetsTable';
