@@ -4,12 +4,14 @@ import Loading from './Loading';
 
 export default function Table() {
   const { planets, isLoading, searchedPlanets } = useContext(PlanetsContext);
+
   const handleTitles = () => (Object.keys(planets[0])
     .filter((title) => title !== 'residents')
     .map((title, index) => (
       <th key={ index }>
         { title.charAt(0).toUpperCase() + title.slice(1).replace('_', ' ') }
       </th>)));
+    // ref https://www.codegrepper.com/code-examples/javascript/return+string.charAt%280%29.toUpperCase%28%29+%2B+string.slice%281%29%3B
 
   return (
     isLoading ? <Loading /> : (

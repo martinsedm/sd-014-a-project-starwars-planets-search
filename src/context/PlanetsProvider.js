@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { INITIAL_STATE } from '../data/data';
 import fetchPlanets from '../services/fetchPlanets';
 import PlanetsContext from './PlanetsContext';
 
-function PlanetsProvider({ children }) {
-  const INITIAL_STATE = {
-    filterByName: { name: '' },
-  };
-
+export default function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [name, setName] = useState('');
   const [filters, setFilters] = useState(INITIAL_STATE);
 
   const getPlanets = async () => {
@@ -20,19 +16,23 @@ function PlanetsProvider({ children }) {
     setIsLoading(false);
   };
 
+  const searchedPlanets = planets.filter((planet) => planet.name.toLowerCase()
+    .includes(filters.filterByName.name.toLowerCase()));
+
+  // const filterPlanets = (column, comparison, value) => {
+  // };
+
   useEffect(() => {
     getPlanets();
   }, []);
 
-  const searchedPlanets = planets.filter((planet) => planet.name.toLowerCase()
-    .includes(filters.filterByName.name.toLowerCase()));
-
-  const handleChange = ({ target: { value } }) => {
-    setName(value);
-    setFilters({ ...filters, filterByName: { name: value } });
+  const context = {
+    planets,
+    isLoading,
+    filters,
+    setFilters,
+    searchedPlanets,
   };
-
-  const context = { planets, isLoading, handleChange, name, searchedPlanets };
 
   return (
     <PlanetsContext.Provider value={ context }>
@@ -44,5 +44,3 @@ function PlanetsProvider({ children }) {
 PlanetsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export default PlanetsProvider;
