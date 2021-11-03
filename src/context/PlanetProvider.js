@@ -5,19 +5,22 @@ import fetchApiPlanets from '../services/Api';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
+  const [options, setOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
+
+  const [change, setChange] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -33,6 +36,10 @@ function PlanetProvider({ children }) {
     setData,
     filter,
     setFilter,
+    options,
+    setOptions,
+    change,
+    setChange,
   };
 
   return (
