@@ -1,15 +1,36 @@
 import React, { useContext, useState } from 'react';
 import filterContext from '../context/filterContext';
+import getApiStarWars from '../services/APIStarwars';
 
 const FilterByNum = () => {
-  const { filters, setFilters } = useContext(filterContext);
+  const { filters, setFilters, setData, data } = useContext(filterContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
+  const retAPi = [...data];
 
-  //   handleClick(){
-
-  //   }
+  const handleClick = async (coluna, comparacao, valor) => {
+    if (coluna && comparacao && valor) {
+      const filterPlanets = retAPi.filter((planet) => {
+        const planetNumber = Number(planet[coluna]);
+        const valueComparison = Number(valor);
+        switch (comparacao) {
+        case 'maior que':
+          return planetNumber > valueComparison;
+        case 'menor que':
+          return planetNumber < valueComparison;
+        case 'igual a':
+          return planetNumber === valueComparison;
+        default:
+          return planetNumber;
+        }
+      });
+      setData(filterPlanets);
+    } else {
+      await getApiStarWars('https://swapi-trybe.herokuapp.com/api/planets/')
+        .then((result) => setData(result));
+    }
+  };
 
   return (
     <>
@@ -49,7 +70,7 @@ const FilterByNum = () => {
             filterByNumericValues: [...filters.filterByNumericValues,
               { column, comparison, value }],
           });
-        //   handleClick();
+          handleClick(column, comparison, value);
         } }
       >
         Filtrar
