@@ -24,7 +24,6 @@ function PlanetsProvider({ children }) {
 
   const fetchPlanets = async () => {
     const { results } = await planetsApi(); // pegando apenas a chave "results" da resposta da API
-    console.log(results);
     setData(results);
     setIsLoading(false);
   };

@@ -14,11 +14,11 @@ function NumericFilters() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
 
-  // const removeFilterOptions = (selectedColumn) => {
-  //   const newOptions = [...filterOptions];
-  //   newOptions.splice(newOptions.indexOf(selectedColumn), 1);
-  //   setFilterOptions(newOptions);
-  // };
+  const removeFilterOptions = (selectedColumn) => {
+    const newOptions = [...filterOptions];
+    newOptions.splice(newOptions.indexOf(selectedColumn), 1);
+    setFilterOptions(newOptions);
+  };
   // Source1: 'https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/splice'
   // Source 2: 'https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf'
 
@@ -67,10 +67,13 @@ function NumericFilters() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilters({
-          ...filters,
-          filterByNumericValues: [filterByNumericValues],
-        }) }
+        onClick={ () => {
+          setFilters({
+            ...filters,
+            filterByNumericValues: [filterByNumericValues],
+          });
+          removeFilterOptions(filterByNumericValues.column);
+        } }
       >
         Filtrar
       </button>
