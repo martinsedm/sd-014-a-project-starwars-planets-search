@@ -5,6 +5,8 @@ import getPlanets from '../services/planetsAPI';
 import { filterByName, filterByNumericValues } from '../services/filterPlanets';
 
 function PlanetsProvider({ children }) {
+  const columFilter = document.getElementById('colum-filter');
+
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
@@ -44,7 +46,9 @@ function PlanetsProvider({ children }) {
     const result = filterByNumericValues(
       planets, filterColum, comparisonFilter, valueFilter,
     );
-    console.log(result);
+    columFilter.childNodes.forEach((child) => {
+      if (child.value === filterColum) child.remove();
+    });
     setFilteredPlanets(result);
     // array, colum, comparison, value
   };

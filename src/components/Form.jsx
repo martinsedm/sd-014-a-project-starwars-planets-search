@@ -19,6 +19,7 @@ export default function Form() {
         name="colum-filter"
         data-testid="column-filter"
         onChange={ onChangeColumFilter }
+        id="colum-filter"
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
