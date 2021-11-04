@@ -1,20 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { columnOptions, comparisonOptions } from '../data/data';
 
 export default function Filters() {
-  const { filters, setFilters } = useContext(PlanetsContext);
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('100000');
-
-  const handleClick = () => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [
-        ...filters.filterByNumericValues, { column, comparison, value }],
-    });
-  };
+  const { handleClick, setColumn, setComparison, setValue } = useContext(PlanetsContext);
 
   return (
     <form>

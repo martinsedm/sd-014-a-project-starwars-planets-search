@@ -3,10 +3,10 @@ import PlanetsContext from '../context/PlanetsContext';
 import Loading from './Loading';
 
 export default function Table() {
-  const { planets, isLoading, searchedPlanets } = useContext(PlanetsContext);
+  const { planets, isLoading, renderPlanets } = useContext(PlanetsContext);
 
   const handleTitles = () => (Object.keys(planets[0])
-    .filter((title) => title !== 'residents')
+    .filter((key) => key !== 'residents')
     .map((title, index) => (
       <th key={ index }>
         { title.charAt(0).toUpperCase() + title.slice(1).replace('_', ' ') }
@@ -22,7 +22,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          { searchedPlanets.map((planet, index) => (
+          { renderPlanets.map((planet, index) => (
             <tr key={ index }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

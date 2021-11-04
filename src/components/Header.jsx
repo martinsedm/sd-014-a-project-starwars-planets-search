@@ -1,15 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Filters from './Filters';
 
 export default function Header() {
-  const { filters, setFilters } = useContext(PlanetsContext);
-  const [name, setName] = useState('');
-
-  const handleChange = ({ target: { value } }) => {
-    setName(value);
-    setFilters({ ...filters, filterByName: { name: value } });
-  };
+  const { handleChange } = useContext(PlanetsContext);
 
   return (
     <div>
@@ -19,7 +13,6 @@ export default function Header() {
           <input
             id="search"
             type="text"
-            value={ name }
             onChange={ handleChange }
             data-testid="name-filter"
           />
