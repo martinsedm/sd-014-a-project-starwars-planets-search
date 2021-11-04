@@ -1,9 +1,16 @@
 import React from 'react';
+
 import './App.css';
+import Home from './components/Home';
+import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
   return (
-    <span>Hello, 6amzzz´s StarWars Planet Search Project  !</span>
+    <div className="App">
+      <PlanetsProvider>
+        <Home />
+      </PlanetsProvider>
+    </div>
   );
 }
 
