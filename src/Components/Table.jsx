@@ -2,11 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../ContextAPI/PlanetsContext';
 
 function Table() {
-  const { data, PlanetFetch } = useContext(PlanetsContext);
+  const { data, PlanetFetch, filtrado } = useContext(PlanetsContext);
 
   useEffect(() => {
     PlanetFetch();
   }, []);
+
+  const filt = () => {
+    if (filtrado.length > 0) {
+      return filtrado;
+    }
+    return data;
+  };
 
   return (
     <table>
@@ -28,7 +35,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
+        {filt().map((item) => (
           <tr key={ item.name }>
             <td>{item.name}</td>
             <td>{item.rotation_period}</td>

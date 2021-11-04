@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropType from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
@@ -19,17 +19,18 @@ function Provide({ children }) {
     setData(dataResults.results);
   };
 
+  const { name } = filter.filters.filterByName;
   // Realizando o filtro pelo texto digitado
-  const filterByName = () => {
-
-  };
+  useEffect(() => {
+    const nameFilter = data.filter((item) => item.name.includes(name));
+    setFiltrado(nameFilter);
+  }, [name]);
 
   const context = {
     data,
     PlanetFetch,
     filter,
     setFilter,
-    filterByName,
     filtrado,
   };
 
