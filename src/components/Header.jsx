@@ -3,7 +3,7 @@ import Context from '../context/Context';
 import SelectColumn from './SelectColumn';
 
 function Header() {
-  const { data, setFilteredData, filters, setFilters } = useContext(Context);
+  const { data, setFilteredData, filters, setFilters, arrayFilters, setArrayFilters } = useContext(Context);
   const [columnName, setColumnName] = useState('population');
   const [comparisonName, setComparisonName] = useState('maior que');
   const [numericValue, setNumericValue] = useState(0);
@@ -36,6 +36,7 @@ function Header() {
     setFilters({
       ...filters,
       filterByNumericValues: [
+        ...filters.filterByNumericValues,
         {
           column: columnName,
           comparison: comparisonName,
@@ -44,6 +45,7 @@ function Header() {
       ],
     });
     numericFilter();
+    setArrayFilters([...arrayFilters, `${columnName} ${comparisonName} ${numericValue}`]);
   }
 
   return (

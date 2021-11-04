@@ -8,15 +8,10 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: 0,
-      },
-    ],
+    filterByNumericValues: [],
   });
   const [filteredData, setFilteredData] = useState([]);
+  const [arrayFilters, setArrayFilters] = useState([]);
 
   const contextValue = {
     data: [...data],
@@ -25,6 +20,8 @@ function Provider({ children }) {
     setFilteredData,
     filters: { ...filters },
     setFilters,
+    arrayFilters: [...arrayFilters],
+    setArrayFilters,
   };
 
   return (
