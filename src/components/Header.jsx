@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Header() {
-  const { name, handleChange } = useContext(PlanetsContext);
+  const { filters, setFilters } = useContext(PlanetsContext);
 
   return (
     <header>
@@ -13,8 +13,12 @@ function Header() {
           id="filterByName"
           data-testid="name-filter"
           placeholder="filtrar por nome"
-          value={ name }
-          onChange={ handleChange }
+          onChange={ (event) => setFilters({
+            ...filters,
+            filterByName: {
+              name: event.target.value,
+            },
+          }) }
         />
       </label>
     </header>

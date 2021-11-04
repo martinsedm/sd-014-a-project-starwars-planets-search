@@ -9,16 +9,23 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
   };
 
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [name, setName] = useState('');
   const [filters, setFilters] = useState(INITIAL_STATE);
 
   const fetchPlanets = async () => {
     const { results } = await planetsApi(); // pegando apenas a chave "results" da resposta da API
-    setPlanets(results);
+    console.log(results);
+    setData(results);
     setIsLoading(false);
   };
 
@@ -26,26 +33,16 @@ function PlanetsProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  const handleChange = ({ target: { value } }) => {
-    setFilters({
-      ...filters,
-      filterByName: {
-        name: value,
-      },
-    });
-    setName(value);
-  };
-
-  const displayFilteredPlanets = planets.filter((planet) => (
+  const displayFilteredPlanets = data.filter((planet) => (
     planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
   ));
 
   const context = {
-    planets,
+    data,
     isLoading,
-    name,
-    handleChange,
     displayFilteredPlanets,
+    filters,
+    setFilters,
   };
 
   return (
