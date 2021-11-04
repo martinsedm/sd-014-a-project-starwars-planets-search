@@ -40,76 +40,73 @@
   }
 }
 
-
+body {
+  background-color: #29477f;
+}
 
 .title-initial {
+  background-color: #fb0;
   color: #081073;
-  background-color: #FFBB00;
-  height: 80px;
   font-size: 50px;
-  text-align: center;
+  height: 80px;
   padding-top: 30px;
-
+  text-align: center;
 }
 
 .headers {
-  background-color: #24577B;
-  height: 50px; 
+  background-color: #24577b;
   color: #f3ecd9;
+  height: 50px;
 }
 
 .filters {
-  height: 100px;
-  width: 100%;
+  align-items: center;
   background-color: #020641;
   display: flex;
-  align-items: center;
+  height: 100px;
   padding: 30px;
+  width: 100%;
 }
 
-form{
-  padding: 10%;
+form {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: nowrap;
   justify-content: space-around;
+  padding: 10%;
 }
-.column{
-  height: 30px;
-  width: 200px;
-  margin: 15px;
-  border-radius: 4px;
+
+p {
+  color: aliceblue;
 }
-.maior-menor{
-  height: 30px;
-  width: 200px;
-  margin: 15px;
+
+.column {
   border-radius: 4px;
+  height: 30px;
+  margin: 15px;
+  width: 200px;
+}
+
+.maior-menor {
+  border-radius: 4px;
+  height: 30px;
+  margin: 15px;
+  width: 200px;
 }
 
 .number {
-  height: 26px;
-  width: 200px;
-  margin: 15px;
   border-radius: 4px;
-
-}
-
-
-body{
-  background-color:#29477F;
-
+  height: 26px;
+  margin: 15px;
+  width: 200px;
 }
 
 .pesquisar {
-  height: 30px;
-  width: 100%;
-  margin: 20px;
-  display: flex;
   align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  display: flex;
+  height: 30px;
   justify-content: space-around;
+  margin: 20px;
+  width: 100%;
 }
 
 .name-filter {
@@ -120,20 +117,16 @@ body{
 
 .btn-filter {
   border-radius: 5px;
+  height: 33px;
   margin: 15px;
   width: 110px;
-  height: 33px;
 }
 
-.formulario{
-  width: 100%;
+.formulario {
   height: auto;
-
+  width: 100%;
 }
 
-p{
-  color: aliceblue;
-}
 .btn {
   display: flex;
   flex-direction: row;
@@ -143,7 +136,7 @@ p{
 
 .btn-x {
   border-radius: 5px;
+  height: 33px;
   margin: 15px;
   width: 25px;
-  height: 33px;
 }
