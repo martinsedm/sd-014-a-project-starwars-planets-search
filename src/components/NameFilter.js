@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../provider/GlobalContext';
 
-function Filter() {
+function NameFilter() {
   const { filterByName } = useContext(GlobalContext);
   const filtering = (name) => {
     filterByName(name.toLowerCase());
@@ -22,4 +22,4 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default NameFilter;

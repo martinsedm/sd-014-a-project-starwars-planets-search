@@ -28,6 +28,10 @@ function PlanetProvider({ children }) {
     setFiltred(newData);
   };
 
+  /* const filterByNumericValue = (column, comparison, value) => {
+    const
+  } */
+
   const contextState = {
     data,
     filtred,
