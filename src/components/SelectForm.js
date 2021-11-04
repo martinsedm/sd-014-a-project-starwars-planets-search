@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 function SelectForm({ setup }) {
-  const [array, label, name, value, handleChange, key] = setup;
+  const [array, label, testid, name, value, handleChange] = setup;
   return (
     <FloatingLabel
       className="mb-3"
@@ -14,9 +14,9 @@ function SelectForm({ setup }) {
       <Form.Select
         name={ name }
         id={ `${name}-id` }
-        data-testid={ `${name}-filter` }
+        data-testid={ testid }
         value={ value }
-        onChange={ (e) => handleChange(e, key) }
+        onChange={ (e) => handleChange(e) }
         required
       >
         {/* <option value="" hidden disabled>Selecione</option> */}

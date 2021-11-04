@@ -42,7 +42,7 @@ function TableRender() {
           } = planet;
           return (
             <tr key={ name }>
-              <td>{ name }</td>
+              <td data-testid="planet-name">{ name }</td>
               <td>{ rotation }</td>
               <td>{ period }</td>
               <td>{ diameter }</td>

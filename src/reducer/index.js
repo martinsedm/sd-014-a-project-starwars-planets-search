@@ -1,6 +1,10 @@
+// import { ASC, DES } from '../hooks/useFilters';
+
 export const ADD_NAME_FILTER = 'ADD_NAME';
 export const ADD_NUM_FILTER = 'ADD_NUM_FILTER';
 export const REMOVE_NUM_FILTER = 'REMOVE_NUM_FILTER';
+export const ORDER = 'ORDER';
+
 export const RESET = 'RESET';
 
 export function isEquivalent(obj1, obj2) {
@@ -17,6 +21,10 @@ export const INITIAL_STATE_FILTER = {
     name: '',
   },
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 export function init(initialSate) {
@@ -58,6 +66,15 @@ export function filterReducer(state, action) {
       filterByNumericValues: [...filterUpdated],
     };
   }
+
+  case ORDER:
+    return {
+      ...state,
+      order: {
+        sort: action.payload.order,
+        column: action.payload.column,
+      },
+    };
 
   case RESET:
     return init(INITIAL_STATE_FILTER);
