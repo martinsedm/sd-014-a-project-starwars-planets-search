@@ -10,6 +10,13 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
   }); // ideia do estado por RODAUM
 
   const getPlanets = async () => {
@@ -25,13 +32,42 @@ function PlanetsProvider({ children }) {
   };
 
   // Filtragem do meu senhor, Rod.
-  const filterNames = () => {
+  const namesFilter = () => {
     if (filters.filterByName.name) {
       return planets.filter(
         ({ name }) => name.toLowerCase().includes(filters.filterByName.name),
       );
     }
     return planets;
+  };
+
+  const numericValuesFilter = () => {
+    const { column, comparison, value } = filters.filterByNumericValues[0];
+
+    let newArr = [...planets];
+    if (filters.filterByNumericValues) {
+      switch (comparison) {
+      case 'menor que':
+        newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
+        break;
+
+      case 'igual a':
+        newArr = planets.filter((planet) => Number(planet[column]) === Number(value));
+        break;
+
+      case 'maior que':
+        newArr = planets.filter((planet) => Number(planet[column]) > Number(value));
+        break;
+
+      default:
+        break;
+      }
+      console.log(column);
+    }
+    console.log(newArr);
+    setPlanets([...newArr]);
+
+    console.log(column);
   };
 
   return (
@@ -42,7 +78,8 @@ function PlanetsProvider({ children }) {
         isLoading,
         filters,
         setFilters,
-        filterNames,
+        namesFilter,
+        numericValuesFilter,
       } }
     >
       {children}

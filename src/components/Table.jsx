@@ -4,10 +4,11 @@ import PlanetsContext from '../context/PlanetsContext';
 // const ONE_SECOND = 1000;
 
 function Table() {
-  const { planets, getPlanets, isLoading, filterNames } = useContext(PlanetsContext);
+  const { planets, getPlanets, isLoading, namesFilter } = useContext(PlanetsContext);
 
   useEffect(() => {
     getPlanets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -17,20 +18,23 @@ function Table() {
   return (
     <table>
       {/* HEAD DA TABELA */}
-      <tr>
-        {Object.keys(planets[0]).map((planet, i) => <th key={ i }>{planet}</th>)}
-      </tr>
-
+      <thead>
+        <tr>
+          {Object.keys(planets[0]).map((planet, i) => <th key={ i }>{planet}</th>)}
+        </tr>
+      </thead>
       {/* CORPO DA TABELA */}
-      {filterNames(planets).map((item, i) => (
-        <tr key={ i }>
-          {Object.values(item).map((value, j) => (
-            <td key={ j }>
-              {value}
-            </td>
-          ))}
-        </tr> // AJUDA DO FILIPAO E ISAAC MONSTROSOS COM O MAP
-      ))}
+      <tbody>
+        {namesFilter(planets).map((item, i) => (
+          <tr key={ i }>
+            {Object.values(item).map((value, j) => (
+              <td key={ j }>
+                {value}
+              </td>
+            ))}
+          </tr> // AJUDA DO FILIPAO E ISAAC MONSTROSOS COM O MAP
+        ))}
+      </tbody>
     </table>
   );
 }

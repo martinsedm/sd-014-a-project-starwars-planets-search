@@ -5,11 +5,13 @@ function FilterByName() {
   const { filters, setFilters } = useContext(PlanetsContext);
 
   const handleChange = ({ target: { value } }) => {
-    setFilters({
-      filterByName: {
-        name: value,
+    setFilters(
+      { ...filters, // isac ajudou a nao quebrar qd os numeros são filtrados
+        filterByName: {
+          name: value,
+        },
       },
-    });
+    );
   };
 
   return (
