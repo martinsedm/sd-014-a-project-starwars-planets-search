@@ -3,7 +3,7 @@ export const INITIAL_STATE = {
   filterByNumericValues: [],
 };
 
-export const columnOptions = [
+export const INITIAL_COLUMNS = [
   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
 ];
 

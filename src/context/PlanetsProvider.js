@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { INITIAL_STATE } from '../data/data';
+import { INITIAL_COLUMNS, INITIAL_STATE } from '../data/data';
 import fetchPlanets from '../services/fetchPlanets';
 import PlanetsContext from './PlanetsContext';
 
@@ -12,6 +12,7 @@ export default function PlanetsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('100000');
+  const [columnOptions, setColumnOptions] = useState(INITIAL_COLUMNS);
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
@@ -29,7 +30,6 @@ export default function PlanetsProvider({ children }) {
     setFilters({ ...filters, filterByName: { name: target.value } });
     const filteredPlanets = planets.filter((planet) => (
       planet.name.toLowerCase().includes(target.value)));
-    console.log(filteredPlanets);
     setRenderPlanets(filteredPlanets);
   };
 
@@ -48,6 +48,17 @@ export default function PlanetsProvider({ children }) {
     });
     setRenderPlanets(filtered);
   };
+
+  useEffect(() => {
+    const updateOptions = () => {
+      const { filterByNumericValues } = filters;
+      const usedColumns = filterByNumericValues.map((filter) => filter.column);
+      const updatedOptions = INITIAL_COLUMNS
+        .filter((option) => !usedColumns.includes(option));
+      setColumnOptions(updatedOptions);
+    };
+    updateOptions();
+  }, [filters]);
 
   const handleClick = () => {
     setFilters({
@@ -70,6 +81,7 @@ export default function PlanetsProvider({ children }) {
     setColumn,
     setComparison,
     setValue,
+    columnOptions,
   };
 
   return (

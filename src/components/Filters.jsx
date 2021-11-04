@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import { columnOptions, comparisonOptions } from '../data/data';
+import { comparisonOptions } from '../data/data';
 
 export default function Filters() {
-  const { handleClick, setColumn, setComparison, setValue } = useContext(PlanetsContext);
+  const { handleClick, setColumn,
+    setComparison, setValue, columnOptions } = useContext(PlanetsContext);
 
   return (
     <form>
@@ -13,7 +14,13 @@ export default function Filters() {
         onChange={ ({ target }) => setColumn(target.value) }
       >
         { columnOptions.map((option) => (
-          <option key={ option } value={ option }>{ option }</option>
+          <option
+            key={ option }
+            id={ option }
+            value={ option }
+          >
+            { option }
+          </option>
         )) }
       </select>
       <select
