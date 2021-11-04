@@ -3,7 +3,7 @@ import PlanetsContext from './context/PlanetsContext';
 import './Table.css';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, filter } = useContext(PlanetsContext);
 
   const tableHeadMaker = () => (
     <tr>
@@ -24,7 +24,11 @@ function Table() {
   );
 
   const tableBodyMaker = () => {
-    const planetData = data.map((planet) => (
+    const { name } = filter.filterByName;
+    console.log(name);
+    const filteredPlanets = data.filter((planet) => planet.name.toLowerCase()
+      .includes(name.toLowerCase()));
+    const planetData = filteredPlanets.map((planet) => (
       <tr key={ planet }>
         { Object.values(planet).map((info) => <td key={ info }>{info}</td>) }
       </tr>

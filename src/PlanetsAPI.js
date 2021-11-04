@@ -5,7 +5,7 @@ const planetFetcher = async () => {
     delete planet.residents;
     return planet;
   });
-  console.log(planetList);
+  // console.log(planetList);
   return planetList;
   // return convertFetch.results;
 };
