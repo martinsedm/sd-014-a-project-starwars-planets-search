@@ -11,6 +11,13 @@ function PlanetsProvider({ children }) {
         name: '',
       },
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   };
 
   const [data, setData] = useState([]);
@@ -26,6 +33,7 @@ function PlanetsProvider({ children }) {
 
   const state = {
     data,
+    setData,
     filter,
     setFilter,
   };
