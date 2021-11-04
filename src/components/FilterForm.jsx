@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SWContext from '../context/SWContext';
+import Order from './Order';
 
 function FilterForm() {
-  const { changeByNameFilter, changeNumericValues,
-    filters: { filterByName }, info } = useContext(SWContext);
+  const { changeByNameFilter, addComparisonFilter,
+    filters: { filterByName }, optionColumns } = useContext(SWContext);
 
   const [filter, setFilter] = useState({
     column: 'population',
@@ -14,9 +15,9 @@ function FilterForm() {
   useEffect(() => {
     setFilter((prev) => ({
       ...prev,
-      column: info.optionCollumns[0],
+      column: optionColumns[0],
     }));
-  }, [info.column, info.optionCollumns]);
+  }, [optionColumns]);
 
   const handleChange = ({ target: { name, value } }) => {
     setFilter({
@@ -41,7 +42,7 @@ function FilterForm() {
         id="column"
         data-testid="column-filter"
       >
-        {info.optionCollumns.map((option) => (
+        {optionColumns.map((option) => (
           <option
             key={ option }
             name="column"
@@ -64,18 +65,20 @@ function FilterForm() {
       <input
         onChange={ handleChange }
         type="number"
+        value={ filter.value }
         data-testid="value-filter"
         name="value"
         id="value"
       />
       <button
-        onClick={ () => changeNumericValues(filter) }
+        onClick={ () => addComparisonFilter(filter) }
         type="button"
         value={ filter.value }
         data-testid="button-filter"
       >
         Filtrar
       </button>
+      <Order />
     </section>
   );
 }

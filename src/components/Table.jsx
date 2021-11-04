@@ -1,38 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SWContext from '../context/SWContext';
+import makeTheaderArray from '../helpers';
 import FilterForm from './FilterForm';
+import RemoveBtn from './RemoveBtn';
 
 function Table() {
-  const { info: { arrayFiltered, infoIsLoaded, tHead },
-    filters: { filterByNumericValues }, removeFilter } = useContext(SWContext);
+  const { data, arrayFiltered } = useContext(SWContext);
+
+  const [tableInfo, setTableInfo] = useState({ tHead: [], infoIsLoaded: false });
+
+  useEffect(() => {
+    if (data.length !== 0) {
+      setTableInfo({
+        tHead: makeTheaderArray(data), infoIsLoaded: true,
+      });
+    }
+  }, [data]);
 
   return (
     <main>
-      {infoIsLoaded && (
+      {tableInfo.infoIsLoaded && (
         <div>
           <FilterForm />
-          {filterByNumericValues.map((filter) => (
-            <div key={ filter.column } data-testid="filter">
-              <p>{`${filter.column} ${filter.comparison} ${filter.value}`}</p>
-              <button
-                value={ filter.column }
-                type="button"
-                onClick={ ({ target }) => removeFilter(target.value) }
-              >
-                X
-              </button>
-            </div>
-          ))}
+          <RemoveBtn />
           <table>
             <thead>
               <tr>
-                {tHead.map((item) => <th key={ item }>{item}</th>)}
+                {tableInfo.tHead.map((item) => <th key={ item }>{item}</th>)}
               </tr>
             </thead>
             <tbody>
               {arrayFiltered.map((planet) => (
                 <tr key={ planet.orbital_period }>
-                  {Object.values(planet).map((value) => <td key={ value }>{value}</td>)}
+                  {Object.values(planet).map((value, index) => (
+                    <td
+                      data-testid={ index === 0 && 'planet-name' }
+                      key={ value }
+                    >
+                      { value }
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
