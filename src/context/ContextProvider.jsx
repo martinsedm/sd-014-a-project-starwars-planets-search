@@ -8,6 +8,13 @@ function GlobalContextProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
   });
   const [isLoading, setIsLoading] = useState(true);
 
