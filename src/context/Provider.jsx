@@ -17,7 +17,11 @@ function Provider({ children }) {
   );
 }
 
-Provider.defaultTypes = {
+Provider.propTypes = {
+  children: PropTypes.node,
+};
+
+Provider.defaultProps = {
   children: PropTypes.node,
 };
 
