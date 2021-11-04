@@ -3,9 +3,9 @@ body {
 }
 
 button {
-  background: linear-gradient(to right, rgb(0, 255, 242), rgb(0, 247, 21));
+  background: linear-gradient(to bottom, black, #fff7);
   background-color: white;
-  border-radius: 8px;
+  border-radius: 2px;
   color: black;
   font-weight: 200;
   height: 30px;
