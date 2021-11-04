@@ -1,0 +1,6 @@
+table, th, td {
+  background-color: rgb(24, 22, 22);
+  border: 1px solid rgb(204, 204, 204);
+  padding: 7px;
+  text-align: center;
+}
