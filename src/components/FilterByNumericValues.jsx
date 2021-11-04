@@ -47,12 +47,12 @@ function FilterByNumericValues() {
   };
 
   const handleClick = () => {
-    setFilters({
+    /* setFilters({
       ...filters,
       filterByNumericValues: {
         ...filters.filterByNumericValues[0],
       },
-    });
+    }); */
     numericValuesFilter();
   };
 
