@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from '../context';
 import requestPlanets from '../util/starWarsAPI';
+import { comparisonOptions, numberFilters } from '../data';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState({});
@@ -10,6 +11,11 @@ function StarWarsProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+  });
+
+  const [renderOptions, setRenderOptions] = useState({
+    columns: numberFilters,
+    comparison: comparisonOptions,
   });
 
   const [filteredData, setFilteredData] = useState({});
@@ -64,6 +70,8 @@ function StarWarsProvider({ children }) {
     filteredData,
     setFilterByNumber,
     applyNumberFilter,
+    renderOptions,
+    setRenderOptions,
   };
 
   return (

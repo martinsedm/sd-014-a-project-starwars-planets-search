@@ -14,10 +14,16 @@ export const tableHeads = [
   'URL',
 ];
 
-export const numberFilters = {
-  population: 'Population',
-  orbital_period: 'Orbital Period',
-  diameter: 'Diameter',
-  rotation_period: 'Rotation Period',
-  surface_water: 'Surface Water',
-};
+export const numberFilters = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+export const comparisonOptions = [
+  'maior que',
+  'menor que',
+  'igual a',
+];

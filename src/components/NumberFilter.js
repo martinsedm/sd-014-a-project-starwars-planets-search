@@ -1,21 +1,25 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context';
-import { numberFilters } from '../data';
 
 function NumberFilter() {
-  const [filters, setNumberFilters] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '0',
-  });
-
   const {
     setFilterByNumber,
+    renderOptions,
+    setRenderOptions,
+    filters: { filterByNumericValues },
   } = useContext(StarWarsContext);
 
+  const isFilter = filterByNumericValues.length > 0;
+
+  const [numberFilters, setNumbernumberFilters] = useState({
+    column: isFilter && filterByNumericValues[0].column,
+    comparison: isFilter && filterByNumericValues[0].comparison,
+    value: isFilter && filterByNumericValues[0].value,
+  });
+
   const handleChange = (e) => {
-    setNumberFilters({
-      ...filters,
+    setNumbernumberFilters({
+      ...numberFilters,
       [e.target.name]: e.target.value,
     });
   };
@@ -24,12 +28,18 @@ function NumberFilter() {
     <form
       onSubmit={ (e) => {
         e.preventDefault();
-        setFilterByNumber(filters);
+        setFilterByNumber(numberFilters);
+        const { columns, comparison: comparisonOptions } = renderOptions;
+        const { column, comparison } = numberFilters;
+        setRenderOptions({
+          columns: columns.filter((option) => option !== column),
+          comparison: comparisonOptions.filter((option) => option !== comparison),
+        });
       } }
     >
       <select name="column" data-testid="column-filter" onChange={ handleChange }>
         {
-          Object.keys(numberFilters)
+          renderOptions.columns
             .map((key) => (
               <option
                 value={ key }
@@ -41,9 +51,17 @@ function NumberFilter() {
         }
       </select>
       <select name="comparison" data-testid="comparison-filter" onChange={ handleChange }>
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        {
+          renderOptions.comparison
+            .map((comparison) => (
+              <option
+                value={ comparison }
+                key={ comparison }
+              >
+                { comparison }
+              </option>
+            ))
+        }
       </select>
       <input
         name="value"
