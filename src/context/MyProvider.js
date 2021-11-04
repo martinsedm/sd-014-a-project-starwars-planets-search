@@ -4,6 +4,12 @@ import myContext from './myContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([{}]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+  const [filter, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const fecthAPI = async () => {
@@ -17,9 +23,24 @@ function MyProvider({ children }) {
     fecthAPI();
   }, []);
 
+  const byName = (name) => {
+    setFilters({
+      filterByName: {
+        name,
+      },
+    });
+    const filteredNames = data.filter((planet) => planet.name.includes(name));
+    setDataFiltered(filteredNames);
+    if (name === '') setDataFiltered([]);
+  };
+
   const context = {
     data,
-    teste: 'teste',
+    filter,
+    filterFuncs: {
+      byName,
+    },
+    dataFiltered,
   };
 
   return (

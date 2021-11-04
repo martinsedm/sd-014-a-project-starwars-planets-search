@@ -8,10 +8,19 @@ function Table() {
     const capitalizedWords = capitalize.join(' ');
     return capitalizedWords;
   }
-  const { data } = useContext(myContext);
+  const { data, dataFiltered } = useContext(myContext);
   const headers = Object.keys(data[0]).filter((header) => header !== 'residents');
   const formattedHeaders = headers
     .map((header) => capitalizeFirstLetter(header.replace(/_/g, ' ')));
+
+  const returnDataInfo = (dataChosen) => (
+    <tbody>
+      {dataChosen.map((planet, i) => (
+        <tr key={ i }>
+          {headers.map((header, indx) => (<td key={ indx }>{planet[header]}</td>))}
+        </tr>))}
+    </tbody>
+  );
   return (
     <table>
       <thead>
@@ -19,12 +28,7 @@ function Table() {
           {formattedHeaders.map((header, i) => (<th key={ i }>{ header }</th>))}
         </tr>
       </thead>
-      <tbody>
-        {data.map((planet, i) => (
-          <tr key={ i }>
-            {headers.map((header, indx) => (<td key={ indx }>{planet[header]}</td>))}
-          </tr>))}
-      </tbody>
+      {dataFiltered.length === 0 ? returnDataInfo(data) : returnDataInfo(dataFiltered)}
     </table>
   );
 }
