@@ -3,7 +3,7 @@ import PlanetsContext from './context/PlanetsContext';
 import './Table.css';
 
 function Table() {
-  const { data, filter } = useContext(PlanetsContext);
+  const { data, filters } = useContext(PlanetsContext);
 
   const tableHeadMaker = () => (
     <tr>
@@ -24,14 +24,38 @@ function Table() {
   );
 
   const tableBodyMaker = () => {
-    const { name } = filter.filterByName;
-    console.log(name);
-    const filteredPlanets = data.filter((planet) => planet.name.toLowerCase()
-      .includes(name.toLowerCase()));
+    const { name } = filters.filterByName;
+    const { column, comparison, value } = filters.filterByNumericValues;
+    // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
+
+    const filteredPlanets = data
+      .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
+      .filter((planet) => {
+        switch (comparison) {
+        case 'maior que':
+          // return planet[column] >= value ?;
+          if (parseInt(planet[column], 10) > value) return true;
+          break;
+        case 'menor que':
+          if (parseInt(planet[column], 10) < value) return true;
+          break;
+        case 'igual a':
+          if (parseInt(planet[column], 10) === parseInt(value, 10)) return true;
+          break;
+        case '':
+          return true;
+        default:
+          break;
+        }
+        return false;
+      });
+
     const planetData = filteredPlanets.map((planet) => (
-      <tr key={ planet }>
-        { Object.values(planet).map((info) => <td key={ info }>{info}</td>) }
+      <tr key={ planet.name }>
+        { Object.values(planet)
+          .map((info) => <td key={ `${planet.name}-${info}` }>{info}</td>) }
       </tr>
+
     ));
     return planetData;
   };
