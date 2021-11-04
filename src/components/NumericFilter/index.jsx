@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import GlobalContext from '../../context/context';
 
 function NumericFilter() {
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
 
   const { setFilters } = useContext(GlobalContext);

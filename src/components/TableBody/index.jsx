@@ -4,8 +4,11 @@ import GlobalContext from '../../context/context';
 function TableBody() {
   const { data, isLoading, filters } = useContext(GlobalContext);
 
-  const numericFilter = (planets, filterByNumeric, name) => {
-    const { column, comparison, value } = filterByNumeric;
+  const filtred = () => {
+    const { filterByName: { name }, filterByNumericValues } = filters;
+    const { results: planets } = data;
+    const index = filterByNumericValues.length - 1;
+    const { column, comparison, value } = filterByNumericValues[index];
     if (comparison === 'maior que') {
       return planets.filter((planet) => Number(planet[column]) > Number(value));
     }
@@ -17,11 +20,6 @@ function TableBody() {
     }
     return planets
       .filter((planet) => planet.name.includes(name));
-  };
-
-  const filtred = () => {
-    const { filterByName: { name }, filterByNumericValues } = filters;
-    return numericFilter(data.results, filterByNumericValues[0], name);
   };
 
   return (
