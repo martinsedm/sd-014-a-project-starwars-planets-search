@@ -11,9 +11,7 @@ function Table() {
         <table>
           <thead>
             <tr>
-              {Object.keys(data[0]).filter(
-                (item) => item !== 'residents',
-              ).map((element) => (
+              {Object.keys(data[0]).map((element) => (
                 <th key={ element }>
                   {element.replace('_', ' ')}
                 </th>))}
