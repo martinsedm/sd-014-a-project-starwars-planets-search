@@ -13,8 +13,6 @@ export default function Filter() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
-  const optFilter = filters.filterByNumericValues;
-
   const handleChange = ({ target }) => {
     if (target.id === 'setColumn') setColumn(target.value);
     if (target.id === 'setComparison') setComparison(target.value);
@@ -27,7 +25,6 @@ export default function Filter() {
       if (element.value === column) {
         element.remove();
       }
-
     });
   };
 
@@ -44,14 +41,23 @@ export default function Filter() {
   return (
     <div>
       <Name />
-      <select onChange={ handleChange } id="setColumn" data-testid="column-filter" value={ column }>
+      <select
+        onChange={ handleChange }
+        id="setColumn"
+        data-testid="column-filter"
+        value={ column }
+      >
         <option className="column" value="population">population</option>
         <option className="column" value="orbital_period">orbital_period</option>
         <option className="column" value="diameter">diameter</option>
         <option className="column" value="rotation_period">rotation_period</option>
         <option className="column" value="surface_water">surface_water</option>
       </select>
-      <select onChange={ handleChange } id="setComparison" data-testid="comparison-filter">
+      <select
+        onChange={ handleChange }
+        id="setComparison"
+        data-testid="comparison-filter"
+      >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
@@ -62,7 +68,13 @@ export default function Filter() {
         id="setValue"
         data-testid="value-filter"
       />
-      <button type="button" onClick={ handleClick } data-testid="button-filter">Filtrar</button>
+      <button
+        type="button"
+        onClick={ handleClick }
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
     </div>
   );
 }

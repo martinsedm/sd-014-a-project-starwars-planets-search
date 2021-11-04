@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import PlanetContext from './PlanetContext';
 
 export default function PlanetProvider({ children }) {
@@ -24,9 +25,11 @@ export default function PlanetProvider({ children }) {
   const filterPlanets = () => {
     let newArr = [...planets];
     if (filters.filterByNumericValues[0]) {
-
       const { filterByNumericValues } = filters;
-      const { comparison, column, value } = filterByNumericValues[filterByNumericValues.length - 1];
+      const {
+        comparison,
+        column,
+        value } = filterByNumericValues[filterByNumericValues.length - 1];
       switch (comparison) {
       case 'menor que':
         newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
@@ -50,9 +53,21 @@ export default function PlanetProvider({ children }) {
 
   return (
     <main>
-      <PlanetContext.Provider value={ { planets, fetchPlanets, filters, setFilter, filterPlanets } }>
+      <PlanetContext.Provider
+        value={ {
+          planets,
+          fetchPlanets,
+          filters,
+          setFilter,
+          filterPlanets,
+        } }
+      >
         {children}
       </PlanetContext.Provider>
     </main>
   );
 }
+
+PlanetProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
