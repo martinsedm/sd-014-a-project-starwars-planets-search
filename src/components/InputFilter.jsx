@@ -3,7 +3,7 @@ import ContextPlanet from '../Context/ContextPlanet';
 
 export default function InputFilter() {
   const context = useContext(ContextPlanet);
-  const { inputFilter, setInputFilter } = context;
+  const { setInputFilter } = context;
 
   return (
     <div>
