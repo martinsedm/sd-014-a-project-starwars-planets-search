@@ -69,7 +69,9 @@ export default function SearchHeader() {
         onClick={
           () => (setFilters(
             { ...filters,
-              filterByNumericValue: [{ column, comparison, value }] },
+              filterByNumericValue: [
+                ...filters.filterByNumericValue, { column, comparison, value },
+              ] },
           ))
         }
       >
