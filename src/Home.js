@@ -6,6 +6,7 @@ export default function Home() {
   const { FetchApi, isLoading } = useContext(DataContext);
   useEffect(() => {
     FetchApi();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
