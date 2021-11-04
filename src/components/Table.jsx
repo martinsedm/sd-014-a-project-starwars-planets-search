@@ -7,7 +7,8 @@ export default function Table() {
 
   useEffect(() => {
     fetchPlanets();
-  }, [fetchPlanets]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filterNames = () => {
     if (filters.filterByName.name) {
