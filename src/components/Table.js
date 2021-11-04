@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../provider/GlobalContext';
 
 function Table() {
-  const { data: { results }, isLoading } = useContext(GlobalContext);
+  const { filtred, isLoading } = useContext(GlobalContext);
 
   if (isLoading) return <span>Loading...</span>;
 
@@ -26,7 +26,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { results.map((planet) => (
+        { filtred.map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

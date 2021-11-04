@@ -4,6 +4,7 @@ import GlobalContext from './GlobalContext';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]); // guarda info dos planetas;
+  const [filtred, setFiltred] = useState([]); // guarda info filtrada dos planetas;
   const [isLoading, setLoading] = useState(true);
 
   const fetchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -11,7 +12,8 @@ function PlanetProvider({ children }) {
   const planetData = async () => {
     const fetchPlanets = await fetch(fetchApi);
     const info = await fetchPlanets.json();
-    setData(info);
+    setData(info.results);
+    setFiltred(info.results);
     setLoading(false);
   };
 
@@ -20,9 +22,17 @@ function PlanetProvider({ children }) {
     planetData();
   }, []);
 
+  // função que filtra por nome os resultados do { data } e guarda no estado { filtred };
+  const filterByName = (name) => {
+    const newData = data.filter((planet) => ((planet.name).toLowerCase()).includes(name));
+    setFiltred(newData);
+  };
+
   const contextState = {
     data,
+    filtred,
     isLoading,
+    filterByName,
   };
 
   return (
