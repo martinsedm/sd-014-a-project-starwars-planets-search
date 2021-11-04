@@ -13,7 +13,10 @@ function RenderFilters() {
         { filterByNumericValues.map((filter, index) => {
           const { column, comparison, value } = filter;
           return (
-            <ListGroup.Item key={ index }>
+            <ListGroup.Item
+              key={ index }
+              data-testid="filter"
+            >
               {`${column} ${comparison} ${value}` }
               <Button
                 variant="danger"
