@@ -3,9 +3,28 @@ const filterName = (listPlanets, name) => {
   return planetsFiltredByName;
 };
 
-// const filterByNumeric = (listPlanets, listFilter) => {
-// logica para percorrer array que esta em filterByNumericValues e ir filtrando o array.
-// };
+const filterByNumeric = (listPlanets, listFilterNumeric) => {
+  let planets = listPlanets;
+  listFilterNumeric.forEach((filter) => {
+    switch (filter.comparison) {
+    case 'maior que':
+      planets = planets.filter((planet) => (
+        Number(planet[filter.column]) > Number(filter.value)));
+      break;
+    case 'menor que':
+      planets = planets.filter((planet) => (
+        Number(planet[filter.column]) < Number(filter.value)));
+      break;
+    case 'igual a':
+      planets = planets.filter((planet) => (
+        Number(planet[filter.column]) === Number(filter.value)));
+      break;
+    default:
+      break;
+    }
+  });
+  return planets;
+};
 
 const orderPlanets = (listPlanets, orderObj) => {
   const { column, sort } = orderObj;
@@ -36,12 +55,16 @@ const orderPlanets = (listPlanets, orderObj) => {
   }
 };
 
-const filterAll = (setPlannet, objFilter, list) => {
+export const filterAll = (setPlannet, objFilter, list) => {
   const { filterByName } = objFilter;
   const filtredByName = filterName([...list], filterByName.name);
-  // filter by numericValues
-  const PlanetsFiltredOrderly = orderPlanets(filtredByName, objFilter.order);
+  const filtredNumeric = filterByNumeric(filtredByName, objFilter.filterByNumericValues);
+  const PlanetsFiltredOrderly = orderPlanets(filtredNumeric, objFilter.order);
   setPlannet(PlanetsFiltredOrderly);
 };
 
-export default filterAll;
+export const getKeysNumeric = (obj) => {
+  const objKeys = Object.keys(obj);
+  const keysListNumeric = objKeys.filter((keyObj) => Number(obj[keyObj]));
+  return keysListNumeric;
+};

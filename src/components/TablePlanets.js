@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import StarwarsSearch from '../Context/StarwarsContext';
-import filterAll from '../service/filters';
+import { filterAll } from '../service/filters';
 
 function TablePlanets() {
   const { filters, planetsFiltred, planetsResponseApi,

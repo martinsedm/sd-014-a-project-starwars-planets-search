@@ -11,9 +11,8 @@ function FormOrderFilter() {
       <Select
         name="ColunasNumericas"
         setState={ (value) => console.log(value) }
-        testId="column-filter"
         options={ colunsOrder }
-        value="option 2" // valor do state, no valor inincial deve estar o valor padrao
+        value="option3" // valor do state, no valor inincial deve estar o valor padrao
       />
       <Input
         type="radio"

@@ -17,10 +17,8 @@ function Select(props) {
         onChange={ handleChange }
         data-testid={ testId }
       >
-        {options
-          .map((option, index) => (index === 0
-            ? <option selected key={ option }>{option}</option>
-            : <option key={ option }>{option}</option>))}
+        {options.length > 0
+        && options.map((option) => <option key={ option }>{option}</option>)}
       </select>
     </label>
   );
