@@ -11,7 +11,7 @@ export default function InputFilter() {
         data-testid="name-filter"
         type="text"
         onChange={ (e) => setInputFilter(e.target.value) }
-        placeholder="Filter by name"
+        placeholder="Search"
       />
     </div>
   );
