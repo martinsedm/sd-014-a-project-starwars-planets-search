@@ -17,6 +17,7 @@ function StarwarsProvider({ children }) {
   });
   const [planetsFiltred, setPlanetsFiltred] = useState([]);
   const [planetsResponseApi, setPlanetsResponse] = useState([]);
+  const [columnsNumeric, setColumnsNumeric] = useState([]);
 
   useEffect(() => {
     PlanetsKeyDeleted('residents')
@@ -29,6 +30,8 @@ function StarwarsProvider({ children }) {
     planetsFiltred,
     setPlanetsFiltred,
     planetsResponseApi,
+    columnsNumeric,
+    setColumnsNumeric,
   };
 
   return (

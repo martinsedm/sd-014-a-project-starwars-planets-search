@@ -12,12 +12,14 @@ function FormValueNumeric() {
     comparison: '',
     value: '',
   });
-  const [columnsNumeric, setColumnsNumeric] = useState([]);
 
-  const { planetsResponseApi,
+  const {
+    planetsResponseApi,
     setFilters,
     filters: { filterByNumericValues },
-    filters } = useContext(StarwarsSearch);
+    filters,
+    columnsNumeric,
+    setColumnsNumeric } = useContext(StarwarsSearch);
 
   useEffect(() => {
     if (planetsResponseApi.length > 0) {

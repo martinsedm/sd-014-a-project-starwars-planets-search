@@ -15,7 +15,7 @@ function Button(props) {
 }
 
 Button.defaultProps = {
-  testId: 'teste',
+  testId: '',
 };
 
 Button.propTypes = {
