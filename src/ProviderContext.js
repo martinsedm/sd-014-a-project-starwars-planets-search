@@ -7,6 +7,16 @@ function ProviderContext({ children }) {
   const [planets, setPlanets] = useState();
   const [loading, setLoading] = useState(true);
 
+  const stateFilter = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  };
+
+  const [filtros, setFiltros] = useState(stateFilter);
+
   const fetchPlanets = async () => {
     const apiData = await planetsAPI();
     setPlanets(apiData.results);
@@ -18,7 +28,7 @@ function ProviderContext({ children }) {
   }, []);
 
   return (
-    <myContext.Provider value={ { planets, loading } }>
+    <myContext.Provider value={ { planets, loading, filtros, setFiltros } }>
       { children }
     </myContext.Provider>
   );

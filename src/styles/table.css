@@ -3,16 +3,36 @@
   flex-direction: row;
 }
 
+.title {
+  color: white;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: 700;
+}
+
 div {
   display: flex;
   flex-direction: row;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
+table {
+  background-color: black;
+}
 
-tr, td {
-  display: flex;
-  flex-direction: column;
+tr {
+  color: white;
+  /* border: 1px solid black; */
   margin: 5px;
   padding: 3px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+td {
+  color: white;
+  margin: 5px;
+}
+
+tr:hover {
+  background-color: rgb(150, 149, 149);
 }
