@@ -3,11 +3,15 @@ import planetsContext from '../context/PlanetsContext';
 import TableRow from './TableRow';
 
 function TableBody() {
-  const { planets } = useContext(planetsContext);
-  console.log(planets);
+  const { planets, filteredPlanets } = useContext(planetsContext);
+  const filteredIsEmpty = filteredPlanets.length !== 0 ? filteredPlanets : planets;
+
   return (
-    planets.map((planet, i) => (
-      <TableRow key={ i } contents={ Object.values(planet) } />
+    filteredIsEmpty.map((planet, i) => (
+      <TableRow
+        key={ i }
+        contents={ Object.values(planet) }
+      />
     ))
   );
 }

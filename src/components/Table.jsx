@@ -5,6 +5,7 @@ import TableHead from './TableHead';
 
 export default function Table() {
   const { loading, callGetPlanets } = useContext(PlanetsContext);
+
   useEffect(() => {
     callGetPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps

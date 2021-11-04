@@ -4,7 +4,6 @@ import TableRow from './TableRow';
 
 function TableHead() {
   const { planets } = useContext(planetsContext);
-  console.log(planets);
   return (
     <TableRow contents={ planets[0] } head />
   );
