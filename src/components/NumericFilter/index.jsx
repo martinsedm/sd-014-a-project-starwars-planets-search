@@ -16,6 +16,34 @@ function NumericFilter() {
     'surface_water',
   ];
 
+  const handleClickDelete = (param) => {
+    setFilters((pState) => ({
+      ...pState,
+      filterByNumericValues: pState.filterByNumericValues.filter((filter) => (
+        filter.column !== param
+      )),
+    }));
+  };
+
+  const renderFilters = () => (
+    filters.filterByNumericValues.map((filter) => (
+      <div key={ filter.column } data-testid="filter">
+        { filter.column }
+        {' '}
+        { filter.comparison }
+        {' '}
+        { filter.value }
+        {' '}
+        <button
+          onClick={ () => handleClickDelete(filter.column) }
+          type="button"
+        >
+          X
+        </button>
+      </div>
+    ))
+  );
+
   const handleClick = () => {
     setFilters((prevState) => ({
       ...prevState,
@@ -66,6 +94,7 @@ function NumericFilter() {
       >
         Filtrar
       </button>
+      {renderFilters()}
     </div>
   );
 }
