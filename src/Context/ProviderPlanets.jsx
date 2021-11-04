@@ -5,11 +5,31 @@ import ContextPlanet from './ContextPlanet';
 export default function ProviderPlanets({ children }) {
   const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  });
+
+  function setInputFilter(name) {
+    setFilter({
+      ...filters, filterByName: { name },
+    });
+  }
 
   const context = {
     data,
     setPlanets,
     loading,
+    setInputFilter,
+    filters,
   };
 
   useEffect(() => {
