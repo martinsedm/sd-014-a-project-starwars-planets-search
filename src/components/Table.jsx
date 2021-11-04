@@ -1,16 +1,27 @@
 import React, { useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Loading from './Loading';
 
 import AppContext from '../context/AppContext';
 
+import Loading from './Loading';
+
 export default function Table() {
-  const { data, getData, loading } = useContext(AppContext);
+  const { data, getData, filters } = useContext(AppContext);
+  const { filterByName } = filters;
 
   useEffect(() => {
     getData();
   }, []);
 
+  /* Lógica da pessoa colega Leonardo Bermejo */
+  const filteredData = data.filter((planet) => {
+    if (filterByName) {
+      return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
+    }
+    return planet;
+  });
+
+  const { loading } = useContext(AppContext);
   if (loading) return <Loading />;
   return (
     <table>
@@ -24,7 +35,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody className="mt-2">
-        {data.map((planet) => {
+        {filteredData.map((planet) => {
           const planetInfo = Object.values(planet);
           return (
             <tr key={ uuidv4() }>

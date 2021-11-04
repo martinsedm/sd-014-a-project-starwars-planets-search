@@ -3,11 +3,12 @@ import './App.css';
 
 import Table from './components/Table';
 import Provider from './context/Provider';
+import Header from './components/Header';
 
 export default function App() {
   return (
     <Provider>
-      <h1 className="font-semibold text-4xl text-center mt-4">Starwars Planets Search</h1>
+      <Header />
       <Table />
     </Provider>
   );

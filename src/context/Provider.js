@@ -7,6 +7,7 @@ import fetchData from '../services/fetchData';
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({});
 
   async function getData() {
     const results = await fetchData();
@@ -18,11 +19,20 @@ export default function Provider({ children }) {
     setLoading(false);
   }
 
-  const context = { data, getData, loading };
+  function changeName(name) {
+    setFilters({
+      ...filters,
+      filterByName: { name },
+    });
+  }
+
+  const context = { data, getData, loading, changeName, filters };
 
   return (
     <AppContext.Provider value={ context }>
-      { children }
+      <div className="bg-black text-gray-500">
+        { children }
+      </div>
     </AppContext.Provider>
   );
 }
