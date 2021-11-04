@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
-import PlanetContext from './context/PlanetContext';
+import React from 'react';
 import './App.css';
 import Table from './components/Table';
+import PlanetProvider from './context/PlanetProvider';
 
 function App() {
-  const { isLoading } = useContext(PlanetContext);
   return (
-    <div>
-      {!isLoading && <Table />}
-    </div>
-
+    <PlanetProvider>
+      <Table />
+    </PlanetProvider>
   );
 }
 
