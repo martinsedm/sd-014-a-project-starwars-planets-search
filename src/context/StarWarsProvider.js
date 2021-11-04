@@ -10,10 +10,11 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     fetch(END_POINT)
       .then((response) => response.json())
-      .then(({ results }) => {
-        results.forEach((object) => object.delete('residents'));
-        setPlanets(results);
-      });
+      .then((json) => {
+        json.results.forEach((object) => delete object.residents);
+        return json;
+      })
+      .then((object) => setPlanets(object.results));
   }, []);
 
   return (

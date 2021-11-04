@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-
-import StarWarsProvider from './context/StarWarsProvider';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
 
-  <StarWarsProvider>
-    <App />
-  </StarWarsProvider>,
+  <App />,
 
   document.getElementById('root'),
 );
