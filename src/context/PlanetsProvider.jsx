@@ -5,6 +5,10 @@ import fetchPlanetApi from '../services/fetchApi';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const filter = {
+    filterByName: '',
+  };
+  const [filters, setFilters] = useState(filter);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -14,9 +18,24 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
+  const filterPlanets = async (name) => {
+    if (name) {
+      const filterPlanet = planets.filter(
+        (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+      );
+      setPlanets(filterPlanet);
+    } else {
+      const api = await fetchPlanetApi();
+      setPlanets(api.results);
+    }
+  };
+
   const context = {
     planets,
     setPlanets,
+    filters,
+    setFilters,
+    filterPlanets,
   };
 
   return (
