@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
-// eslint-disable-next-line react/prop-types
-function Provider({ children }) {
+function AppProvider({ children }) {
   const [results, setResults] = useState([]);
   const contextValue = {
     results,
@@ -17,12 +16,12 @@ function Provider({ children }) {
   );
 }
 
-Provider.propTypes = {
+AppProvider.propTypes = {
   children: PropTypes.node,
 };
 
-Provider.defaultProps = {
+AppProvider.defaultProps = {
   children: PropTypes.node,
 };
 
-export default Provider;
+export default AppProvider;
