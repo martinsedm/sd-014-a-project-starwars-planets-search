@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import PlanetContext from './PlanetContext';
 
 function PlanetProvider({ children }) {
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
   const initialStates = {
     filterByName: {
       name: '',
@@ -13,16 +10,27 @@ function PlanetProvider({ children }) {
     filterByNumericValues: [],
     order: { column: 'name', sort: 'ASC' },
   };
-  const [filters, setFilters] = useState(initialStates);
 
-  const initialColumns = [
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [filters, setFilters] = useState(initialStates);
+  const [array, setArray] = useState([]);
+
+  // const btnRemove = () => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues:
+  //     [...filters, filterByNumericValues,
+  //       { column, comparison, value }],
+  //   });
+  // };
+
+  const [columns, setColumns] = useState([
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'];
-
-  const [columns, setColumns] = useState(initialColumns);
+    'surface_water']);
 
   const searchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -57,19 +65,27 @@ function PlanetProvider({ children }) {
   };
 
   const removeColumn = (column) => {
-    const newColumns = columns.filter((c) => c !== column);
-    setColumns(newColumns);
+    const columnsRmv = columns.filter((c) => c !== column);
+    setColumns(columnsRmv);
   };
 
   const addColumn = (column) => {
-    const newColumns = [...columns, column];
-    setColumns(newColumns);
+    const columnsAdd = [...columns, column];
+    setColumns(columnsAdd);
   };
 
-  const removeFilterByNum = (column) => {
+  // const btnRemove = () => {
+  //   setFilters({
+  //     ...filters,
+  //     filterByNumericValues:
+  //     [...filters, filterByNumericValues,
+  //       { column, comparison, value }],
+  //   });
+  // };
+  const removeFilterByNumericValues = (column) => {
     const newFilters = { ...filters };
     newFilters.filterByNumericValues = filters.filterByNumericValues.filter(
-      (f) => f.column !== column,
+      (filter) => filter.column !== column,
     );
     setFilters(newFilters);
   };
@@ -77,16 +93,16 @@ function PlanetProvider({ children }) {
   const filterPlanetsByNumericValues = (column, comparison, value) => {
     removeColumn(column);
     if (column && comparison && value) {
-      const valueToCompare = Number(value);
+      const compareValue = Number(value);
       const filteredPlanets = data.filter((planet) => {
         const planetValue = Number(planet[column]);
         switch (comparison) {
         case 'maior que':
-          return planetValue > valueToCompare;
+          return planetValue > compareValue;
         case 'menor que':
-          return planetValue < valueToCompare;
+          return planetValue < compareValue;
         case 'igual a':
-          return planetValue === valueToCompare;
+          return planetValue === compareValue;
         default:
           return planetValue;
         }
@@ -98,7 +114,7 @@ function PlanetProvider({ children }) {
   };
 
   const resetFilters = () => {
-    setData(allPlanets);
+    setArray(array);
   };
 
   const context = {
@@ -111,7 +127,7 @@ function PlanetProvider({ children }) {
     nameFilters,
     filterPlanetsByName,
     filterPlanetsByNumericValues,
-    removeFilterByNum,
+    removeFilterByNumericValues,
     addColumn,
   };
 

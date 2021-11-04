@@ -8,9 +8,11 @@ import FilterNumbers from './componentes/FilterNumbers';
 function App() {
   return (
     <PlanetProvider>
-      <h1>StarWalls Planets</h1>
+      <h1 className="title-initial">StarWalls Planets</h1>
       <Filter />
-      <FilterNumbers />
+      <div className="filters">
+        <FilterNumbers />
+      </div>
       <Table />
     </PlanetProvider>
   );

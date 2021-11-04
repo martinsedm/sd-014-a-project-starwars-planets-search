@@ -11,15 +11,18 @@ function Filter() {
   };
 
   return (
-    <section>
-      <input
-        type="text"
-        data-testid="name-filter"
-        placeholder="Pesquisar..."
-        value={ filters.filterByName.name }
-        onChange={ handleChange }
-      />
-    </section>
+    <div className="pesquisar">
+      <section>
+        <input
+          className="name-filter"
+          type="text"
+          data-testid="name-filter"
+          placeholder="Pesquisar..."
+          value={ filters.filterByName.name }
+          onChange={ handleChange }
+        />
+      </section>
+    </div>
   );
 }
 

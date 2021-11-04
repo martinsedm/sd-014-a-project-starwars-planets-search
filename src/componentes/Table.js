@@ -16,7 +16,7 @@ function Table() {
     <div>
       <table>
         <tbody>
-          <tr>
+          <tr className="headers">
             { headers.map((title) => <th key={ title }>{title}</th>) }
           </tr>
           { data.map((planet) => (
