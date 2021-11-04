@@ -33,9 +33,22 @@ function PlanetsProvider({ children }) {
     });
   };
 
+  const getFilterRemoval = (index) => {
+    const { filterByNumericValues } = filters;
+    const newFilterList = filterByNumericValues
+      .filter((_elem, ind) => parseInt(ind, 10) !== parseInt(index, 10));
+
+    setFilter({
+      ...filters,
+      filterByNumericValues: newFilterList,
+    });
+  };
+
   return (
     <main>
-      <PlanetsContext.Provider value={ { data, filters, getNameFilter, getValueFilter } }>
+      <PlanetsContext.Provider
+        value={ { data, filters, getNameFilter, getValueFilter, getFilterRemoval } }
+      >
         {children}
       </PlanetsContext.Provider>
     </main>

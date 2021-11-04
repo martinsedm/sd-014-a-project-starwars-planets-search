@@ -1,9 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from './context/PlanetsContext';
+import './FilterField.css';
 
 function FilterField() {
-  const { getNameFilter, getValueFilter } = useContext(PlanetsContext);
+  const {
+    getNameFilter, getValueFilter, filters, getFilterRemoval,
+  } = useContext(PlanetsContext);
   const [numFilter, setNumFilter] = useState({}); // THERE'S A PECULIARITY HERE *** MORE AT THE END OF THE PAGE
+  // const firstUnspentFilter = Object.keys(spentFilters).find((elem) => !spentFilters[elem]);
+  // const [firstAbleFilter, setAbleFilter] = useState(Object.keys(spentFilters).find((elem) => !spentFilters[elem]));
   const [spentFilters, setSpentFilters] = useState({
     population: false,
     orbital_period: false,
@@ -11,9 +16,6 @@ function FilterField() {
     diameter: false,
     surface_water: false,
   });
-  // const firstUnspentFilter = Object.keys(spentFilters).find((elem) => !spentFilters[elem]);
-  // const [firstAbleFilter, setAbleFilter] = useState(Object.keys(spentFilters).find((elem) => !spentFilters[elem]));
-  // const [numFilter, setNumFilter] = useState({ column: firstAbleFilter });
 
   const handleChange = ({ target }) => {
     setNumFilter({
@@ -21,12 +23,6 @@ function FilterField() {
       [target.name]: target.value,
     });
   };
-
-  // const updateSpentFilters = async () => {
-  //  await setAbleFilter(Object.keys(spentFilters).find((elem) => !spentFilters[elem]));
-  //   console.log(spentFilters);
-  //  await setNumFilter({ column: firstAbleFilter });
-  // };
 
   const submitFilter = () => {
     const { column, comparison, value } = numFilter;
@@ -38,7 +34,6 @@ function FilterField() {
         ...spentFilters,
         [column]: true,
       });
-      // updateSpentFilters();
     }
   };
 
@@ -58,8 +53,25 @@ function FilterField() {
     return columnRender;
   };
 
-  useEffect(() => {
-  });
+  const filterDelete = ({ target }) => {
+    const { name } = target;
+    getFilterRemoval(name);
+  };
+
+  const filterGroups = () => {
+    const { filterByNumericValues } = filters;
+    const allGroups = filterByNumericValues.map((curFilt, index) => {
+      if (index === 0) return false;
+      const { column, comparison, value } = curFilt;
+      return (
+        <div key={ `${column}-${index}` } className="filterGroup" data-testid="filter">
+          <p>{`${column} ${comparison} ${value}`}</p>
+          <button type="button" name={ index } onClick={ filterDelete }>X</button>
+        </div>
+      );
+    });
+    return allGroups;
+  };
 
   return (
     <>
@@ -104,10 +116,12 @@ function FilterField() {
           Filter
         </button>
       </div>
+      <br />
+      {filterGroups()}
     </>
   );
 }
 
 export default FilterField;
 
-// **** OBSERVATION: Because the tests from req 4 WANT to see exactly 4 choices after spending one filter, I can't use my placeholder, or it will count as one more than it should everytime. Which means that in the app you'll either have to reselect the column if you want the default (e.g. population, if it's not spent), or you'll end up with a bug that keeps counting it as population if I don't ever choose anything else, despite it being disabled by that point.
+// **** OBSERVATION: Because the tests from req 4 WANT to see exactly 4 choices after spending one filter, I can't use my placeholder, or it will count as one more than it should everytime. Which means that in the app you'll either have to reselect the column if you want the default (e.g. population, if it's not spent), or you'll end up with a bug that keeps counting it as population if I don't ever choose anything else, despite it being disabled by that point. I chose the former.
