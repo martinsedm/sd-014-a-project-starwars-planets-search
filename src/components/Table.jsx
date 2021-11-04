@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
@@ -20,20 +21,26 @@ function Table() {
       {/* HEAD DA TABELA */}
       <thead>
         <tr>
-          {Object.keys(planets[0]).map((planet, i) => <th key={ i }>{planet}</th>)}
+          {
+            planets[0]
+              ? Object.keys(planets[0]).map((planet, i) => <th key={ i }>{planet}</th>)
+              : window.alert('Dados não encontrados') + document.location.reload(true)
+          }
         </tr>
       </thead>
       {/* CORPO DA TABELA */}
       <tbody>
-        {namesFilter(planets).map((item, i) => (
-          <tr key={ i }>
-            {Object.values(item).map((value, j) => (
-              <td key={ j }>
-                {value}
-              </td>
-            ))}
-          </tr> // AJUDA DO FILIPAO E ISAAC MONSTROSOS COM O MAP
-        ))}
+        {
+          namesFilter(planets).map((item, i) => (
+            <tr key={ i }>
+              {Object.values(item).map((value, j) => (
+                <td key={ j }>
+                  {value}
+                </td>
+              ))}
+            </tr> // AJUDA DO FILIPAO E ISAAC MONSTROSOS COM O MAP
+          ))
+        }
       </tbody>
     </table>
   );

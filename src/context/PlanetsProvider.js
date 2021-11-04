@@ -45,32 +45,29 @@ function PlanetsProvider({ children }) {
     const { column, comparison, value } = filters.filterByNumericValues[0];
 
     let newArr = [...planets];
-    if (filters.filterByNumericValues) {
-      switch (comparison) {
-      case 'menor que':
-        newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
-        break;
 
-      case 'igual a':
-        newArr = planets.filter((planet) => Number(planet[column]) === Number(value));
-        break;
+    switch (comparison) {
+    case 'menor que':
+      newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
+      break;
 
-      case 'maior que':
-        newArr = planets.filter((planet) => Number(planet[column]) > Number(value));
-        break;
+    case 'igual a':
+      newArr = planets.filter((planet) => Number(planet[column]) === Number(value));
+      break;
 
-      default:
-        break;
-      }
-      // console.log(column);
+    case 'maior que':
+      newArr = planets.filter((planet) => Number(planet[column]) > Number(value));
+      break;
+
+    default:
+      break;
     }
-    // console.log(newArr);
+    console.log(newArr);
     setPlanets([...newArr]);
   };
 
   const removeOption = () => {
     const { column } = filters.filterByNumericValues[0];
-    console.log(column);
 
     const select = document.querySelector('#columnFilter');
 
