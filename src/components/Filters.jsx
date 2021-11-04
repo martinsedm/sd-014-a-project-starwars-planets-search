@@ -17,11 +17,11 @@ function Filters() {
 
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
 
-  const handleNameChange = ({ target: { value: changeValue } }) => {
+  const handleNameChange = ({ target: { value: nameValue } }) => {
     setFilters({
       ...filters,
       filterByName: {
-        name: changeValue,
+        name: nameValue,
       },
     });
   };

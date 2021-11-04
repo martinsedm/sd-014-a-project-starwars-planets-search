@@ -36,11 +36,11 @@ function PlanetsProvider({ children }) {
         filteredByNameAndColumns = filteredByName.filter((planet) => {
           switch (comparison) {
           case 'maior que':
-            return Number(planet[column]) > Number(value) && filteredByName;
+            return Number(planet[column]) > Number(value);
           case 'menor que':
-            return Number(planet[column]) < Number(value) && filteredByName;
+            return Number(planet[column]) < Number(value);
           case 'igual a':
-            return Number(planet[column]) === Number(value) && filteredByName;
+            return Number(planet[column]) === Number(value);
           default:
             return filteredByName;
           }
