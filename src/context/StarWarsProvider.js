@@ -37,14 +37,6 @@ function StarWarsProvider({ children }) {
     fetchData();
   }, []);
 
-  /* useEffect(() => {
-    filt();
-  }, [name]);
-
-  useEffect(() => {
-    setData(Filters(colum, compare, number));
-  }, [colum, compare, number]); */
-
   const contextValue = {
     filters: {
       filterByName: {

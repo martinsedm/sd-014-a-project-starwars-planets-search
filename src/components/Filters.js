@@ -1,26 +1,25 @@
-import React, { useContext } from 'react';
+/* import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Filters() {
-  const typeFilter = ['TODOS', 'population', 'orbital_period', 'diameter',
+  const typeFilter = ['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
-  const compare = ['TODOS', 'maior que', 'menor que', 'igual a'];
+  const compare = ['maior que', 'menor que', 'igual a'];
   const { handleChangeColum, handleChangeComparison, handleChangeNumber,
     filters: { filterByNumericValues } } = useContext(StarWarsContext);
 
-  /* const Filters = (coluna, compara, numero) => {
+  const Filters = (coluna, compara, numero) => {
     switch (compara) {
     case 'maior que':
       return data.filter((planet) => Number(planet[coluna]) > Number(numero));
     case 'menor que':
       return data.filter((planet) => Number(planet[coluna]) < Number(numero));
     case 'igual a':
-      filteredNerics = datau
-        .filter((planet) => Number(planet[coluna]) === Number(numero));
+      return data.filter((planet) => Number(planet[coluna]) === Number(numero));
     default:
-      return filteredNumerics;
+      return data;
     }
-  }; */
+  };
 
   return (
     <div>
@@ -52,3 +51,4 @@ export default function Filters() {
     </div>
   );
 }
+ */
