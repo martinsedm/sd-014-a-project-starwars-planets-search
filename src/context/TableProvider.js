@@ -21,6 +21,7 @@ function TableProvider({ children }) {
   };
 
   const removeColum = () => {
+    // https://developer.mozilla.org/pt-BR/docs/Web/API/Node/childNodes
     const colums = document.querySelector('#colum-id');
     colums.childNodes.forEach((option) => {
       if (option.innerHTML === colum) option.remove();
