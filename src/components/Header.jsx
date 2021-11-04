@@ -1,9 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import SelectColumn from './SelectColumn';
 
 function Header() {
-  const { data, setFilteredData, filters, setFilters, arrayFilters, setArrayFilters } = useContext(Context);
+  const {
+    data,
+    setFilteredData,
+    filters,
+    setFilters,
+    arrayFilters,
+    setArrayFilters,
+  } = useContext(Context);
   const [columnName, setColumnName] = useState('population');
   const [comparisonName, setComparisonName] = useState('maior que');
   const [numericValue, setNumericValue] = useState(0);
@@ -19,21 +26,71 @@ function Header() {
     setFilteredData(filtered);
   }
 
-  function numericFilter() {
-    const filtered = data.filter((planet) => {
-      if (comparisonName === 'maior que') {
-        return Number(planet[columnName]) > Number(numericValue);
-      }
-      if (comparisonName === 'menor que') {
-        return Number(planet[columnName]) < Number(numericValue);
-      }
-      return Number(planet[columnName]) === Number(numericValue);
-    });
-    setFilteredData(filtered);
+  function verifyBigger(planet, column, value) {
+    if (Number(planet[column]) > Number(value)) {
+      return 1;
+    }
+    return 0;
   }
 
-  function handleClick() {
-    setFilters({
+  function verifyLesser(planet, column, value) {
+    if (Number(planet[column]) < Number(value)) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function verifyEqual(planet, column, value) {
+    if (Number(planet[column]) === Number(value)) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function numericFilter() {
+    const { filterByNumericValues } = filters;
+    //  console.log(filters);
+    const filtered = data.filter((planet) => {
+      //  console.log('filter');
+      let result = 0;
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        //  console.log('forEach');
+        if (comparison === 'maior que') {
+          result += verifyBigger(planet, column, value);
+          //  console.log('maior');
+        }
+        if (comparison === 'menor que') {
+          result += verifyLesser(planet, column, value);
+          //  console.log('menor');
+        }
+        if (comparison === 'igual a') {
+          result += verifyEqual(planet, column, value);
+          // console.log('igual');
+        }
+        /*  if (comparison === 'maior que') {
+          if (Number(planet[column]) <= Number(value)) result = false;
+          //  console.log('maior');
+        }
+        if (comparison === 'menor que') {
+          if (Number(planet[column]) >= Number(value)) result = false;
+          //  console.log('menor');
+        }
+        if (comparison === 'igual a') {
+          if (Number(planet[column]) !== Number(value)) result = false;
+          // console.log('igual');
+        } */
+      });
+      //  console.log(result);
+      return result === filterByNumericValues.length;
+    });
+    setFilteredData(filtered);
+    //  console.log(filters);
+  }
+
+  useEffect(() => numericFilter(), [filters.filterByNumericValues]);
+
+  async function handleClick() {
+    await setFilters({
       ...filters,
       filterByNumericValues: [
         ...filters.filterByNumericValues,
@@ -44,7 +101,6 @@ function Header() {
         },
       ],
     });
-    numericFilter();
     setArrayFilters([...arrayFilters, `${columnName} ${comparisonName} ${numericValue}`]);
   }
 
