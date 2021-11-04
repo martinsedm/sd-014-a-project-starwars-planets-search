@@ -7,6 +7,9 @@ function TableBody() {
   const filtred = () => {
     const { filterByName: { name }, filterByNumericValues } = filters;
     const { results: planets } = data;
+    if (filterByNumericValues.length === 0) {
+      return planets.filter((planet) => planet.name.includes(name));
+    }
     const index = filterByNumericValues.length - 1;
     const { column, comparison, value } = filterByNumericValues[index];
     if (comparison === 'maior que') {

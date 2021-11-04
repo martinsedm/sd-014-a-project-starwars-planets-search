@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import GlobalContext from '../../context/context';
 
 function NumericFilter() {
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
 
-  const { setFilters } = useContext(GlobalContext);
+  const { setFilters, filters } = useContext(GlobalContext);
 
   const columnArr = [
     'population',
@@ -20,6 +20,7 @@ function NumericFilter() {
     setFilters((prevState) => ({
       ...prevState,
       filterByNumericValues: [
+        ...prevState.filterByNumericValues,
         {
           column,
           comparison,
@@ -29,15 +30,21 @@ function NumericFilter() {
     }));
   };
 
+  // Aqui faço a verificação se já existe no estado algum filtro numérico que possui
+  // o mesma coluna.
+  const toRender = (arr) => {
+    const test = filters.filterByNumericValues.map((filter) => filter.column);
+    const render = arr.filter((option) => !test.includes(option));
+    return render.map((opt) => <option key={ opt } value={ opt }>{opt}</option>);
+  };
+
   return (
     <div>
       <select
         data-testid="column-filter"
         onChange={ ({ target }) => { setColumn(target.value); } }
       >
-        {columnArr.map((opt) => (
-          <option key={ opt } value={ opt }>{opt}</option>
-        ))}
+        {toRender(columnArr)}
       </select>
       <select
         data-testid="comparison-filter"
