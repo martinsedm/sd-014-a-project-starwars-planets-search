@@ -62,12 +62,23 @@ function PlanetsProvider({ children }) {
       default:
         break;
       }
-      console.log(column);
+      // console.log(column);
     }
-    console.log(newArr);
+    // console.log(newArr);
     setPlanets([...newArr]);
+  };
 
+  const removeOption = () => {
+    const { column } = filters.filterByNumericValues[0];
     console.log(column);
+
+    const select = document.querySelector('#columnFilter');
+
+    select.childNodes.forEach((option) => {
+      if (option.innerHTML === column) {
+        option.remove();
+      }
+    });
   };
 
   return (
@@ -80,6 +91,7 @@ function PlanetsProvider({ children }) {
         setFilters,
         namesFilter,
         numericValuesFilter,
+        removeOption,
       } }
     >
       {children}

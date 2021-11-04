@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterByNumericValues() {
-  const { filters, setFilters, numericValuesFilter } = useContext(PlanetsContext);
+  const {
+    filters,
+    setFilters,
+    numericValuesFilter,
+    removeOption,
+  } = useContext(PlanetsContext);
 
   const handleColumn = ({ target: { value } }) => {
     setFilters(
@@ -47,19 +52,15 @@ function FilterByNumericValues() {
   };
 
   const handleClick = () => {
-    /* setFilters({
-      ...filters,
-      filterByNumericValues: {
-        ...filters.filterByNumericValues[0],
-      },
-    }); */
     numericValuesFilter();
+    removeOption();
   };
 
   return (
     <form>
       <select
         data-testid="column-filter"
+        id="columnFilter"
         value={ filters.filterByNumericValues.column }
         onChange={ handleColumn }
       >
