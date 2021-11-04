@@ -1,43 +1,48 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import APIContext from '../Context/APIContext';
 
-class Table extends React.Component {
-  filtered() {
-    const { data, filters: { filterByName: { name } } } = this.context;
-    return data.filter((cur) => cur.name.includes(name));
-  }
+function Table() {
+  // const [data, setData] = useState([]);
+  // const [isLoad, setLoad] = useState(true);
+  // const [headers, setheaders] = useState([]);
+  const { setData,
+    setLoad, setheaders, isLoad, headers, planetasFiltrados } = useContext(APIContext);
 
-  render() {
-    const { data } = this.context;
-    return (
-      <table>
-        <tr>
-          {data.length > 0
-            && Object.keys(data[0]).map((atual, indice) => (
-              atual !== 'url' ? <th key={ `chave-${indice}` }>{atual}</th> : null
-            ))}
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const result = await response.json();
+      setheaders(Object.keys(result.results[0]).filter((cur) => cur !== 'url'));
+      setData(result.results);
+      setLoad(false);
+    }
+    fetchData();
+  }, [setData, setLoad, setheaders]);
+
+  return (
+    <table>
+      <tr>
+        {!isLoad && headers.map((cur, i) => <th key={ `th-${i}` }>{cur}</th>)}
+      </tr>
+      {!isLoad && planetasFiltrados().map((cur, i) => (
+        <tr key={ `${cur.name}-${i}` }>
+          <td>{cur.name}</td>
+          <td>{cur.rotation_period}</td>
+          <td>{cur.orbital_period}</td>
+          <td>{cur.diameter}</td>
+          <td>{cur.climate}</td>
+          <td>{cur.gravity}</td>
+          <td>{cur.terrain}</td>
+          <td>{cur.surface_water}</td>
+          <td>{cur.population}</td>
+          <td>{cur.residents}</td>
+          <td>{cur.films}</td>
+          <td>{cur.created}</td>
+          <td>{cur.edited}</td>
         </tr>
-        {data.length > 0
-        && this.filtered().map((atual, indice) => (
-          <tr key={ indice }>
-            <td>{atual.name}</td>
-            <td>{atual.rotation_period}</td>
-            <td>{atual.orbital_period}</td>
-            <td>{atual.diameter}</td>
-            <td>{atual.climate}</td>
-            <td>{atual.gravity}</td>
-            <td>{atual.terrain}</td>
-            <td>{atual.surface_water}</td>
-            <td>{atual.population}</td>
-            <td>{atual.residents}</td>
-            <td>{atual.films}</td>
-            <td>{atual.created}</td>
-            <td>{atual.edited}</td>
-          </tr>
-        ))}
-      </table>
-    );
-  }
+      ))}
+    </table>
+  );
 }
 Table.contextType = APIContext;
 export default Table;
