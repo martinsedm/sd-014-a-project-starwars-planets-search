@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../contexts/PlanetContext';
+import FilterCard from './filters/FilterCard';
 import Name from './filters/Name';
 
 export default function Filter() {
-  const { filters, setFilter, filterPlanets } = useContext(PlanetContext);
+  const { filters, setFilter } = useContext(PlanetContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
 
   useEffect(() => {
-    filterPlanets();
+    // filterPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
@@ -26,6 +27,7 @@ export default function Filter() {
         element.remove();
       }
     });
+    setColumn(select.firstChild.value);
   };
 
   const handleClick = () => {
@@ -35,7 +37,7 @@ export default function Filter() {
         { column, comparison, value }],
     });
     disabledOpt();
-    filterPlanets();
+    // filterPlanets();
   };
 
   return (
@@ -75,6 +77,7 @@ export default function Filter() {
       >
         Filtrar
       </button>
+      <FilterCard />
     </div>
   );
 }

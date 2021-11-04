@@ -22,35 +22,6 @@ export default function PlanetProvider({ children }) {
     setPlanets(results);
   };
 
-  const filterPlanets = () => {
-    let newArr = [...planets];
-    if (filters.filterByNumericValues[0]) {
-      const { filterByNumericValues } = filters;
-      const {
-        comparison,
-        column,
-        value } = filterByNumericValues[filterByNumericValues.length - 1];
-      switch (comparison) {
-      case 'menor que':
-        newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
-        break;
-
-      case 'igual a':
-        newArr = planets.filter((planet) => Number(planet[column]) === Number(value));
-        break;
-
-      case 'maior que':
-        newArr = planets.filter((planet) => Number(planet[column]) > Number(value));
-        break;
-
-      default:
-        break;
-      }
-    }
-    console.log(newArr);
-    setPlanets([...newArr]);
-  };
-
   return (
     <main>
       <PlanetContext.Provider
@@ -59,7 +30,6 @@ export default function PlanetProvider({ children }) {
           fetchPlanets,
           filters,
           setFilter,
-          filterPlanets,
         } }
       >
         {children}
