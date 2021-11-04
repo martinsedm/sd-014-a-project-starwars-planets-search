@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/Context';
+import FilterNumeric from './FilterNumeric';
 
 function Table() {
   const { data, filters } = useContext(MyContext);
@@ -11,6 +12,7 @@ function Table() {
   return (
     <div>
       <h1>Star Wars</h1>
+      <FilterNumeric />
       <table>
         <thead>
           <tr>
