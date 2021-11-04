@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import StarwarsSearch from '../Context/StarwarsContext';
 import Input from './generic/Input';
 import Select from './generic/Select';
@@ -12,13 +12,36 @@ function FormValueNumeric() {
     comparison: 'maior que',
     value: '100000',
   });
-  const { planetsResponseApi, setFilters, filters } = useContext(StarwarsSearch);
+  const [columnsNumeric, setColumnsNumeric] = useState([]);
 
-  const testeOptionsOperadores = ['maior que', 'menor que', 'igual a'];
+  const { planetsResponseApi,
+    setFilters,
+    filters: { filterByNumericValues },
+    filters } = useContext(StarwarsSearch);
+
+  useEffect(() => {
+    if (planetsResponseApi.length > 0) {
+      setColumnsNumeric(getKeysNumeric(planetsResponseApi[0]));
+    }
+  }, [planetsResponseApi]);
+
+  const handleClick = () => {
+    // const filtersApart = filterByNumericValues.filter((filter) => (
+    //  filter.column !== filterNumeric.column));
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterByNumericValues, filterNumeric],
+    });
+    const columnsFiltred = columnsNumeric
+      .filter((column) => column !== filterNumeric.column);
+    setColumnsNumeric(columnsFiltred);
+  };
+
+  const optionsOperadores = ['maior que', 'menor que', 'igual a'];
   return (
     <form>
       {
-        planetsResponseApi.length > 0
+        columnsNumeric.length > 0
         && <Select
           name="ColunasNumericas"
           setState={ (column) => setFilterNumeric({
@@ -26,7 +49,7 @@ function FormValueNumeric() {
             column,
           }) }
           testId="column-filter"
-          options={ getKeysNumeric(planetsResponseApi[0]) }
+          options={ columnsNumeric }
           value={ filterNumeric.column }
         />
       }
@@ -37,7 +60,7 @@ function FormValueNumeric() {
           comparison,
         }) }
         testId="comparison-filter"
-        options={ testeOptionsOperadores }
+        options={ optionsOperadores }
         value={ filterNumeric.comparison } // valor do state, no valor inincial deve estar o valor padrao
       />
       <Input
@@ -52,10 +75,7 @@ function FormValueNumeric() {
       />
       <Button
         testId="button-filter"
-        onClick={ () => setFilters({
-          ...filters,
-          filterByNumericValues: [...filters.filterByNumericValues, filterNumeric],
-        }) }
+        onClick={ handleClick }
         text="Filtrar"
       />
     </form>
