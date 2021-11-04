@@ -5,8 +5,17 @@ import fetchAPI from '../services/API';
 
 export default function Provider({ children }) {
   const [project, updateProject] = useState([]);
+  const [newColumn, setNewColumn] = useState([
+    {
+      column: '',
+      comparison: '',
+      value: '',
+    },
+  ]);
+  const [options, setOptions] = useState(['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water']);
   const [value, setValue] = useState('');
-  const [filterColumn, setFilterColumn] = useState('');
+  const [column, setFilterColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [isLoading, updateIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -38,12 +47,19 @@ export default function Provider({ children }) {
     return filterName;
   };
 
+  function addRemoveColumn() {
+    const newColumns = [...filters.filterByNumericValues];
+    setNewColumn(newColumns);
+    const removeFilter = options.filter((e) => e !== column);
+    setOptions(removeFilter);
+  }
+
   // lógica do colega Fernando Nascimento Monteiro
   function tableSearch() {
-    if (filterColumn && comparison && value) {
+    if (column && comparison && value) {
       const toCompare = Number(value);
       const filtro = project.filter((planet) => {
-        const buscaValue = Number(planet[filterColumn]);
+        const buscaValue = Number(planet[column]);
         switch (comparison) {
         case 'maior que':
           return buscaValue > toCompare;
@@ -66,13 +82,15 @@ export default function Provider({ children }) {
       },
       filterByNumericValues: [
         {
-          column: filterColumn,
+          column,
           comparison,
           value,
+
         },
+        { newColumn },
       ],
     });
-  }, [comparison, filterColumn, searchText, value]);
+  }, [comparison, column, newColumn, searchText, value]);
 
   const valuesContext = {
     project,
@@ -85,6 +103,8 @@ export default function Provider({ children }) {
     setFilterColumn,
     setComparison,
     tableSearch,
+    addRemoveColumn,
+    options,
   };
 
   return (
@@ -93,6 +113,7 @@ export default function Provider({ children }) {
     </Context.Provider>
   );
 }
+
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };

@@ -2,19 +2,24 @@ import React, { useContext } from 'react';
 import Context from '../Context/Context';
 
 function Filter() {
-  const { setValue, setFilterColumn, setComparison,
-    tableSearch, comparison } = useContext(Context);
-  const columns = ['', 'population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
+  const { setValue, options, setFilterColumn, setComparison,
+    tableSearch, addRemoveColumn, comparison } = useContext(Context);
+  // const { filterByNumericValues:
+  //     {
+  //       column,
+  //       comparison,
+  //       value,
+  //     },
+  // } = filters;
   return (
     <section>
       <select
         data-testid="column-filter"
         onChange={ ({ target }) => setFilterColumn(target.value) }
       >
-        {columns.map((op) => (<option value={ op } key={ op }>{op}</option>))}
-      </select>
+        {options.map((op) => (<option value={ op } key={ op }>{op}</option>))}
 
+      </select>
       <select
         name={ comparison }
         data-testid="comparison-filter"
@@ -27,6 +32,7 @@ function Filter() {
       </select>
 
       <input
+        placeholder="number to look for"
         data-testid="value-filter"
         type="number"
         onChange={ (e) => setValue(e.target.value) }
@@ -35,10 +41,11 @@ function Filter() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => tableSearch() }
+        onClick={ () => { tableSearch(); addRemoveColumn(); } }
       >
         Filtrar
       </button>
+
     </section>
   );
 }

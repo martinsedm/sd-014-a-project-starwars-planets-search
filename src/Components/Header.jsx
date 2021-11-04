@@ -7,7 +7,7 @@ function Header() {
   return (
     <input
       type="text"
-      placeholder="Filtrar Planetas"
+      placeholder="filter by name"
       data-testid="name-filter"
       name="name"
       value={ searchText }
