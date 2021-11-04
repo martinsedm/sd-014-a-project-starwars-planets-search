@@ -4,8 +4,7 @@ import { Table } from 'react-bootstrap';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Tables() {
-  const { planets } = useContext(StarWarsContext);
-  console.log(planets);
+  const { filteredPlanets } = useContext(StarWarsContext);
   return (
     <div>
       <Table striped bordered hover size="sm">
@@ -27,7 +26,7 @@ function Tables() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet, index) => (
+          {filteredPlanets.map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

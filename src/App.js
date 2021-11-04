@@ -1,19 +1,12 @@
-import React, { useContext } from 'react';
-import './App.css';
+import React from 'react';
 
-import Header from './componets/Header';
-import NameSearch from './componets/NameSearch';
-import SelectSearch from './componets/SelectSearch';
-import Tables from './componets/Tables';
 import StarWarsProvider from './context/StarWarsProvider';
+import Page from './Page';
 
 function App() {
   return (
     <StarWarsProvider>
-      <Header />
-      <NameSearch />
-      <SelectSearch />
-      <Tables />
+      <Page />
     </StarWarsProvider>
   );
 }

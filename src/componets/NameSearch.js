@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Form } from 'react-bootstrap';
 
+import StarWarsContext from '../context/StarWarsContext';
+
 function NameSearch() {
-  const [nameSearch, setNameSearch] = useState('');
+  const { filters, setFilters } = useContext(StarWarsContext);
+
+  const handleChange = ({ target }) => {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  };
   return (
     <form action="search">
       <label htmlFor="nameSearch">
@@ -12,7 +18,7 @@ function NameSearch() {
           id="nameSearch"
           placeholder="Filtrar por nome"
           data-testid="name-filter"
-          onChange={ (event) => (setNameSearch(event.target.value)) }
+          onChange={ handleChange }
         />
         {/* <input
           type="text"
