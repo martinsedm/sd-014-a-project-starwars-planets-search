@@ -25,34 +25,38 @@ function TableBody() {
       .filter((planet) => planet.name.includes(name));
   };
 
-  return (
+  const renderTable = () => (
     <tbody>
       {
-        isLoading
-          ? <p>Carregando</p>
-          : filtred().map((planet) => (
-            <tr key={ planet.name }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.population}</td>
-              <td>
-                {planet.films.map((film) => (
-                  <p key={ film }>{film}</p>
-                ))}
-              </td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))
+        filtred().map((planet) => (
+          <tr key={ planet.name }>
+            <td>{planet.name}</td>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>
+              {planet.films.map((film) => (
+                <p key={ film }>{film}</p>
+              ))}
+            </td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.url}</td>
+          </tr>
+        ))
       }
     </tbody>
+  );
+
+  return (
+    isLoading
+      ? <p>Carregando</p>
+      : renderTable()
   );
 }
 
