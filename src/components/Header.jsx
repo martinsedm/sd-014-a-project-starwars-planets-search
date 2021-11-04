@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import SelectColumn from './SelectColumn';
+import UsedFilters from './UsedFilters';
 
 function Header() {
   const {
@@ -49,42 +50,22 @@ function Header() {
 
   function numericFilter() {
     const { filterByNumericValues } = filters;
-    //  console.log(filters);
     const filtered = data.filter((planet) => {
-      //  console.log('filter');
       let result = 0;
       filterByNumericValues.forEach(({ column, comparison, value }) => {
-        //  console.log('forEach');
         if (comparison === 'maior que') {
           result += verifyBigger(planet, column, value);
-          //  console.log('maior');
         }
         if (comparison === 'menor que') {
           result += verifyLesser(planet, column, value);
-          //  console.log('menor');
         }
         if (comparison === 'igual a') {
           result += verifyEqual(planet, column, value);
-          // console.log('igual');
         }
-        /*  if (comparison === 'maior que') {
-          if (Number(planet[column]) <= Number(value)) result = false;
-          //  console.log('maior');
-        }
-        if (comparison === 'menor que') {
-          if (Number(planet[column]) >= Number(value)) result = false;
-          //  console.log('menor');
-        }
-        if (comparison === 'igual a') {
-          if (Number(planet[column]) !== Number(value)) result = false;
-          // console.log('igual');
-        } */
       });
-      //  console.log(result);
       return result === filterByNumericValues.length;
     });
     setFilteredData(filtered);
-    //  console.log(filters);
   }
 
   useEffect(() => numericFilter(), [filters.filterByNumericValues]);
@@ -136,6 +117,11 @@ function Header() {
       >
         Filtrar
       </button>
+      <br />
+      <br />
+      <br />
+      <UsedFilters />
+      <br />
     </header>
   );
 }
