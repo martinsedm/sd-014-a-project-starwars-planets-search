@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function SearchHeader() {
-  const { filter, setFilter } = useContext(PlanetsContext);
+  const { filters, setFilters } = useContext(PlanetsContext);
+  const { filterByNumericValue } = filters;
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -10,8 +11,12 @@ export default function SearchHeader() {
 
   const handleNameChange = ({ target }) => {
     setName(target.value);
-    setFilter({ ...filter, filterByName: { name: target.value.toLowerCase() } });
+    setFilters({ ...filters, filterByName: { name: target.value.toLowerCase() } });
   };
+
+  const columns = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
 
   return (
     <fieldset>
@@ -28,11 +33,17 @@ export default function SearchHeader() {
         onChange={ (e) => setColumn(e.target.value) }
         value={ column }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columns.filter((option) => {
+          const selectedFilters = filterByNumericValue
+            .map(({ column: activeFilter }) => activeFilter);
+
+          return !selectedFilters.includes(option);
+        }).map((option) => (
+          <option key={ option } value={ option }>
+            { option }
+          </option>
+        )) }
+
       </select>
 
       <select
@@ -56,8 +67,8 @@ export default function SearchHeader() {
         type="button"
         data-testid="button-filter"
         onClick={
-          () => (setFilter(
-            { ...filter,
+          () => (setFilters(
+            { ...filters,
               filterByNumericValue: [{ column, comparison, value }] },
           ))
         }

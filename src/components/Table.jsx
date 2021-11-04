@@ -3,8 +3,10 @@ import PlanetsContext from '../context/PlanetsContext';
 import SearchHeader from './SearchHeader';
 
 function Table() {
-  const { loading, planets, setPlanets, setLoading, filter } = useContext(PlanetsContext);
-  const { filterByName, filterByNumericValue } = filter;
+  const {
+    loading,
+    planets, setPlanets, setLoading, filters, filteredPlanets, filterPlanets,
+  } = useContext(PlanetsContext);
 
   // Faz a requisição à API assim que o componente é montado
   useEffect(() => {
@@ -12,33 +14,14 @@ function Table() {
       const response = await (await fetch('https://swapi-trybe.herokuapp.com/api/planets/')).json();
       setPlanets(response.results);
       setLoading(false);
+      console.log('fazendo requisição');
     };
     getPlanets();
   }, [setPlanets, setLoading]);
 
-  // Filtra os planetas de acordo com os filtros
-  // Lógica da pessoa colega Filipe Brochier
-  const filteredPlanets = planets.filter((planet) => {
-    if (filterByName) {
-      planet = planet.name.toLowerCase().includes(filter.filterByName.name);
-    }
-    return planet;
-  }).filter((planet) => {
-    if (filterByNumericValue) {
-      if (filterByNumericValue[0].comparison === 'maior que') {
-        return Number(planet[filterByNumericValue[0].column])
-          > filterByNumericValue[0].value;
-      }
-      if (filterByNumericValue[0].comparison === 'menor que') {
-        return Number(planet[filterByNumericValue[0].column])
-          < filterByNumericValue[0].value;
-      }
-      return Number(planet[filterByNumericValue[0].column])
-         === filterByNumericValue[0].value;
-    }
-
-    return true;
-  });
+  useEffect(() => {
+    filterPlanets();
+  }, [planets, filters]);
 
   if (loading) return <p>Loading...</p>;
   return (
