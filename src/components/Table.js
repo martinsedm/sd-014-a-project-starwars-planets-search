@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
+import Filter from './Filter';
 
 const Table = () => {
-  const { data } = useContext(DataContext);
+  const { data, filter: { filters } } = useContext(DataContext);
+  const { filterByName: { name } } = filters;
 
   return (
-    <div>
+    <main>
+      <Filter />
       <table>
         <thead>
           <tr>
@@ -26,6 +29,7 @@ const Table = () => {
         </thead>
         <tbody>
           { data
+            .filter((value) => value.name.toLowerCase().includes(name.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
@@ -45,7 +49,7 @@ const Table = () => {
             )) }
         </tbody>
       </table>
-    </div>
+    </main>
   );
 };
 

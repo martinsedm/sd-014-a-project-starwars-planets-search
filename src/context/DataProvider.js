@@ -1,23 +1,31 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DataContext from './DataContext';
+import FetchApi from '../services/FetchApi';
 
 const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
-  const FetchApi = async () => {
+  useEffect(() => {
     setIsLoading(true);
-    const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-    const planets = await response.json();
-    const resultsApi = planets.results;
-
-    setData(resultsApi);
-    setIsLoading(false);
-  };
+    const ApiStarWars = async () => {
+      const resultsApi = await FetchApi();
+      setData(resultsApi.results);
+      setIsLoading(false);
+    };
+    ApiStarWars();
+  }, []);
 
   return (
-    <DataContext.Provider value={ { data, isLoading, FetchApi } }>
+    <DataContext.Provider value={ { data, isLoading, FetchApi, filter, setFilter } }>
       { children }
     </DataContext.Provider>
   );
