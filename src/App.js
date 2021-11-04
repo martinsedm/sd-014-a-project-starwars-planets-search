@@ -1,9 +1,13 @@
 import React from 'react';
+import DataProvider from './context/DataProvider';
 import './App.css';
+import Home from './Home';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <DataProvider>
+      <Home />
+    </DataProvider>
   );
 }
 
