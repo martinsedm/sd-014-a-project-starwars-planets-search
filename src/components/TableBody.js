@@ -2,9 +2,19 @@ import React, { useContext } from 'react';
 import MyContext from '../context';
 
 export default function TableBody() {
-  const { state: { results } } = useContext(MyContext);
+  const { state: { results }, filterContext:
+    { filters: { filterByName: { name } } } } = useContext(MyContext);
+
+  const Planets = () => {
+    if (name) {
+      return results.filter((planet) => planet.name.toLowerCase()
+        .includes(name.toLowerCase()));
+    }
+    return results;
+  };
+
   return (
-    results.map((result) => (
+    Planets().map((result) => (
       <tr key={ result.name }>
         <td>{result.name}</td>
         <td>{result.rotation_period}</td>

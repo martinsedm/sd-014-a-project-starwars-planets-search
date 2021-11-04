@@ -6,6 +6,15 @@ function Provider({ children }) {
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [state, setState] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState('');
+  const filterContext = {
+    filters: {
+      filterByName: {
+        name,
+        setName,
+      },
+    },
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -19,7 +28,7 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <MyContext.Provider value={ { state, loading } }>
+    <MyContext.Provider value={ { state, loading, filterContext } }>
       {children}
     </MyContext.Provider>
   );
