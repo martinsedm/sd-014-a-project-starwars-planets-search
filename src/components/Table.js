@@ -1,21 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-
-const TABLEHEADERS = ['Name', 'Rotation Period',
-  'Orbital Period', 'Diameter', 'Climate', 'Gravity',
-  'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
-
-const TYPEFILTER = ['population', 'orbital_period', 'diameter',
-  'rotation_period', 'surface_water'];
-
-const COMPARE = ['maior que', 'menor que', 'igual a'];
+import { TYPEFILTER, COMPARE, TABLEHEADERS } from '../data/data';
 
 export default function Table() {
-  const { data, handleChangeColum, handleChangeComparison,
-    handleChangeNumber, filters: { filterByNumericValues },
-    filters: { filterByName: { name } } } = useContext(StarWarsContext);
+  const { data, name, filters, setFilters } = useContext(StarWarsContext);
 
   const [filterPlanetName, setFilterPlanetName] = useState([]);
+  const [typeOfFilters, setTypeOfFilters] = useState(TYPEFILTER);
+  const [tableForm, setTableForm] = useState(
+    { column: 'population', comparison: 'maior que', value: null },
+  );
+
+  const handleTableForm = ({ target }) => {
+    const { name: nameTable, value } = target;
+    setTableForm({ ...tableForm, [nameTable]: value });
+  };
 
   const filterPlanet = () => {
     const lowerName = name.toLowerCase();
@@ -42,22 +41,32 @@ export default function Table() {
     }
   };
 
+  const removeTypeFilter = (coluna, compara, numero) => {
+    filterNumericValue(coluna, compara, numero);
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, tableForm] });
+    return typeOfFilters.includes(coluna)
+      ? setTypeOfFilters(typeOfFilters.filter((type) => type !== coluna)) : typeOfFilters;
+  };
+
   return (
     <>
       <div>
         <select
           data-testid="column-filter"
-          onChange={ handleChangeColum }
-          value={ filterByNumericValues[0].colum }
+          onChange={ ({ target }) => handleTableForm({ target }) }
+          value={ tableForm.column }
+          name="column"
         >
-          {TYPEFILTER.map((types) => (
+          {typeOfFilters.map((types) => (
             <option key={ types }>{types}</option>
           ))}
         </select>
         <select
           data-testid="comparison-filter"
-          onChange={ handleChangeComparison }
-          value={ filterByNumericValues[0].compare }
+          onChange={ ({ target }) => handleTableForm({ target }) }
+          value={ tableForm.comparison }
+          name="comparison"
         >
           {COMPARE.map((comparison) => (
             <option key={ comparison }>{comparison}</option>
@@ -65,20 +74,28 @@ export default function Table() {
         </select>
         <input
           type="number"
-          value={ filterByNumericValues[0].number }
+          name="value"
+          value={ tableForm.value }
           data-testid="value-filter"
-          onChange={ handleChangeNumber }
+          onChange={ ({ target }) => handleTableForm({ target }) }
         />
         <button
           type="button"
           data-testid="button-filter"
           value="Filtrar"
-          onClick={ () => filterNumericValue(filterByNumericValues[0].colum,
-            filterByNumericValues[0].compare, filterByNumericValues[0].number) }
+          onClick={ () => removeTypeFilter(tableForm.column, tableForm.comparison,
+            tableForm.value) }
         >
           Filtrar
         </button>
       </div>
+      {filters.filterByNumericValues.length > 0 && (
+        filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
+          <div key={ index }>
+            <p>{`${column} ${comparison} ${value} `}</p>
+          </div>
+        ))
+      )}
       <table>
         <thead>
           <tr>

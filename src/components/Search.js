@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Search() {
-  const { handleChangeName,
-    filters: { filterByName: { name } } } = useContext(StarWarsContext);
+  const { setName, name } = useContext(StarWarsContext);
 
   return (
     <div>
@@ -12,7 +11,7 @@ export default function Search() {
         placeholder="Filter by name"
         data-testid="name-filter"
         value={ name }
-        onChange={ handleChangeName }
+        onChange={ (e) => setName(e.target.value) }
       />
     </div>
   );
