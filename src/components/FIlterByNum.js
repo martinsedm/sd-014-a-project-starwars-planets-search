@@ -7,6 +7,13 @@ const FilterByNum = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
+  const [selectColumns, setSelectColumns] = useState(columns);
   const retAPi = [...data];
 
   const handleClick = async (coluna, comparacao, valor) => {
@@ -26,6 +33,7 @@ const FilterByNum = () => {
         }
       });
       setData(filterPlanets);
+      setSelectColumns(selectColumns.filter((col) => col !== coluna));
     } else {
       await getApiStarWars('https://swapi-trybe.herokuapp.com/api/planets/')
         .then((result) => setData(result));
@@ -38,11 +46,7 @@ const FilterByNum = () => {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {selectColumns.map((col) => <option key={ col }>{col}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
