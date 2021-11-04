@@ -13,26 +13,43 @@ export default function Filter() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
+  const optFilter = filters.filterByNumericValues;
+
   const handleChange = ({ target }) => {
     if (target.id === 'setColumn') setColumn(target.value);
     if (target.id === 'setComparison') setComparison(target.value);
     if (target.id === 'setValue') setValue(target.value);
   };
 
+  const disabledOpt = () => {
+    const select = document.getElementById('setColumn');
+    select.childNodes.forEach((element) => {
+      if (element.value === column) {
+        element.remove();
+      }
+
+    });
+  };
+
   const handleClick = () => {
-    setFilter({ ...filters, filterByNumericValues: { column, comparison, value } });
+    setFilter({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues,
+        { column, comparison, value }],
+    });
+    disabledOpt();
     filterPlanets();
   };
 
   return (
     <div>
       <Name />
-      <select onChange={ handleChange } id="setColumn" data-testid="column-filter">
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+      <select onChange={ handleChange } id="setColumn" data-testid="column-filter" value={ column }>
+        <option className="column" value="population">population</option>
+        <option className="column" value="orbital_period">orbital_period</option>
+        <option className="column" value="diameter">diameter</option>
+        <option className="column" value="rotation_period">rotation_period</option>
+        <option className="column" value="surface_water">surface_water</option>
       </select>
       <select onChange={ handleChange } id="setComparison" data-testid="comparison-filter">
         <option value="maior que">maior que</option>

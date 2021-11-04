@@ -7,6 +7,7 @@ export default function PlanetProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const fetchPlanets = async () => {
@@ -22,8 +23,10 @@ export default function PlanetProvider({ children }) {
 
   const filterPlanets = () => {
     let newArr = [...planets];
-    if (filters.filterByNumericValues) {
-      const { filterByNumericValues: { comparison, column, value } } = filters;
+    if (filters.filterByNumericValues[0]) {
+
+      const { filterByNumericValues } = filters;
+      const { comparison, column, value } = filterByNumericValues[filterByNumericValues.length - 1];
       switch (comparison) {
       case 'menor que':
         newArr = planets.filter((planet) => Number(planet[column]) < Number(value));
