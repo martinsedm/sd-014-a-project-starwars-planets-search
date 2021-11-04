@@ -20,6 +20,7 @@ function Starwars() {
           type="text"
           id="input"
           value={ input }
+          data-testid="name-filter"
           onChange={ handleChange }
         />
       </label>
@@ -32,6 +33,7 @@ function Starwars() {
         </thead>
         <tbody>
           { starwars.length !== 0 && starwars
+            .filter((planet) => planet.name.toLowerCase().includes(input))
             .map((star) => (
               <tr key={ star.name }>
                 <td>{ star.name }</td>
