@@ -1,44 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import filterContext from '../context/filterContext';
-import getApiStarWars from '../services/APIStarwars';
+import LineFilter from './LineFilter';
 
 const FilterByNum = () => {
-  const { filters, setFilters, setData, data } = useContext(filterContext);
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('');
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water'];
-  const [selectColumns, setSelectColumns] = useState(columns);
-  const retAPi = [...data];
-
-  const handleClick = async (coluna, comparacao, valor) => {
-    if (coluna && comparacao && valor) {
-      const filterPlanets = retAPi.filter((planet) => {
-        const planetNumber = Number(planet[coluna]);
-        const valueComparison = Number(valor);
-        switch (comparacao) {
-        case 'maior que':
-          return planetNumber > valueComparison;
-        case 'menor que':
-          return planetNumber < valueComparison;
-        case 'igual a':
-          return planetNumber === valueComparison;
-        default:
-          return planetNumber;
-        }
-      });
-      setData(filterPlanets);
-      setSelectColumns(selectColumns.filter((col) => col !== coluna));
-    } else {
-      await getApiStarWars('https://swapi-trybe.herokuapp.com/api/planets/')
-        .then((result) => setData(result));
-    }
-  };
+  const {
+    selectColumns,
+    filters,
+    setFilters,
+    handleClick,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue } = useContext(filterContext);
 
   return (
     <>
@@ -79,6 +54,8 @@ const FilterByNum = () => {
       >
         Filtrar
       </button>
+      <br />
+      <LineFilter />
     </>
   );
 };

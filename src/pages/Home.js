@@ -6,14 +6,17 @@ import filterContext from '../context/filterContext';
 import FilterByNum from '../components/FIlterByNum';
 
 function Home() {
-  const { data, setData } = useContext(filterContext);
+  const { setData, setDataFilt, dataFilt } = useContext(filterContext);
 
   const indexResidents = 9;
 
   useEffect(() => {
     getApiStarWars('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then((result) => setData(result));
-  }, [setData]);
+      .then((result) => {
+        setData(result);
+        setDataFilt(result);
+      });
+  }, [setData, setDataFilt]);
   return (
     <div>
       <h1>Projeto Star Wars - Trybe</h1>
@@ -23,11 +26,11 @@ function Home() {
       <table>
         <thead>
           <tr>
-            { data.length > 0
-          && Object.keys(data[0]).map((item, index) => (
+            { dataFilt.length > 0
+          && Object.keys(dataFilt[0]).map((item) => (
             item !== 'residents'
             && (
-              <th key={ index }>
+              <th key={ item }>
                 {item.split('_').join(' ')}
               </th>
             )
@@ -35,9 +38,9 @@ function Home() {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0
-        && data.map((planet, index) => (
-          <tr key={ index }>
+          {dataFilt.length > 0
+        && dataFilt.map((planet) => (
+          <tr key={ planet.name }>
             {Object.values(planet).map((value, i) => (
               i !== indexResidents
               && (
