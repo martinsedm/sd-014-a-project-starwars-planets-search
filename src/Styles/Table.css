@@ -9,31 +9,27 @@ table, th, td {
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
   background-color: #4adb37;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 th, td {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+  border: 3px solid black;
+  letter-spacing: 0.2px;
   padding: 3.5px;
   text-align: center;
-  letter-spacing: 0.2px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-  border: 3px solid black;
 }
 
 th {
   text-shadow: 0.5px 0.5px 0.5px 001219;
 }
 
-tbody tr:nth-child(odd) {
+tbody tr:nth-child( odd ) {
   background-color: rgb(255, 218, 149);
 }
 
-tbody tr:nth-child(even) {
-  background-color:rgb(243, 179, 60);
-}
-
-tbody tr {
-  
+tbody tr:nth-child( even ) {
+  background-color: rgb(243, 179, 60);
 }

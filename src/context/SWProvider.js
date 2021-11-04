@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SWContext from './SWContext';
 import { NUMERIC_CATEGORIES, INITIAL_FILTERS } from '../info';
@@ -52,9 +52,10 @@ function SWProvider({ children }) {
   };
 
   const fetchData = async () => {
+    const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     try {
       setIsLoading(true);
-      const newData = await (await fetch('https://swapi-trybe.herokuapp.com/api/planets/')).json();
+      const newData = await (await fetch(URL)).json();
       delete newData.residents;
       setData(newData.results);
       setFilteredData(newData.results);
@@ -62,33 +63,6 @@ function SWProvider({ children }) {
     } catch (error) {
       setErrorMsg(error);
     }
-  };
-
-  const filterData = () => {
-    const { filterByNumericValues } = filters;
-    let newData = data.filter((planet) => (
-      (planet.name).toLowerCase()).includes(filters.filterByName));
-    if (filterByNumericValues.length > 0) {
-      filterByNumericValues.forEach(({ column, comparison, value }) => {
-        switch (comparison) {
-        case 'maior que':
-          newData = newData.filter((planet) => Number(planet[column])
-          > Number(value));
-          break;
-        case 'menor que':
-          newData = newData.filter((planet) => Number(planet[column])
-          < Number(value));
-          break;
-        case 'igual a':
-          newData = newData.filter((planet) => Number(planet[column])
-          === Number(value));
-          break;
-        default:
-          break;
-        }
-      });
-    }
-    sortData(newData);
   };
 
   const resetFilters = () => {
@@ -107,14 +81,10 @@ function SWProvider({ children }) {
     setCategories(updatedCategories);
   };
 
-  useEffect(() => {
-    filterData();
-    updateCategories();
-  }, [filters]);
-
   return (
     <SWContext.Provider
       value={ {
+        data,
         filteredData,
         isLoading,
         fetchData,
@@ -126,6 +96,7 @@ function SWProvider({ children }) {
         sortData,
         errorMsg,
         resetFilters,
+        updateCategories,
       } }
     >
       {children}
