@@ -8,9 +8,9 @@ import { getKeysNumeric } from '../service/filters';
 
 function FormValueNumeric() {
   const [filterNumeric, setFilterNumeric] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '100000',
+    column: '',
+    comparison: '',
+    value: '',
   });
   const [columnsNumeric, setColumnsNumeric] = useState([]);
 
@@ -49,7 +49,7 @@ function FormValueNumeric() {
             column,
           }) }
           testId="column-filter"
-          options={ columnsNumeric }
+          options={ [...columnsNumeric] } // colocar uma option vazia para corriger um bug
           value={ filterNumeric.column }
         />
       }
@@ -71,7 +71,7 @@ function FormValueNumeric() {
         }) }
         testId="value-filter"
         name="valueFilter"
-        value={ filterNumeric.value } // valor do state
+        value={ filterNumeric.value }
       />
       <Button
         testId="button-filter"
