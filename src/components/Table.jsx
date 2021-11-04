@@ -1,9 +1,13 @@
 import React from 'react';
-import { useDataContext } from '../context/DataContext';
+import { useDataContext, useFilters } from '../context/DataContext';
+import useFilter from '../context/FilterHook';
 
 export default function Table() {
   const { apiData } = useDataContext();
-  if (!apiData) return null;
+  const { filters } = useFilters();
+  const { filteredData } = useFilter(apiData, filters);
+
+  if (!filteredData) return null;
   const columns = Object.keys(apiData[0]);
   return (
     <table>
@@ -15,7 +19,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {apiData.map((row, i) => {
+        {filteredData.map((row, i) => {
           const planets = Object.entries(row);
           return (
             <tr key={ i }>

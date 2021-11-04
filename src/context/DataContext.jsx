@@ -5,6 +5,13 @@ const DataContext = createContext();
 
 function DataContextProvider({ children }) {
   const [apiData, setData] = useState();
+  const [filteredData, setFilteredData] = useState();
+  const [nameText, setNameText] = useState('');
+  const filters = {
+    filters: {
+      nameFilter: nameText,
+    },
+  };
 
   useEffect(() => {
     async function fetchPlanetData() {
@@ -13,6 +20,7 @@ function DataContextProvider({ children }) {
       const { results } = data;
       results.forEach((planet) => delete planet.residents);
       setData(results);
+      setFilteredData(response);
     }
     fetchPlanetData();
   }, []);
@@ -22,6 +30,11 @@ function DataContextProvider({ children }) {
       value={ {
         apiData,
         setData,
+        nameText,
+        setNameText,
+        filteredData,
+        setFilteredData,
+        filters,
       } }
     >
       { children }
@@ -30,12 +43,27 @@ function DataContextProvider({ children }) {
 }
 
 export function useDataContext() {
-  const context = useContext(DataContext);
-  return context;
+  const { apiData, setData } = useContext(DataContext);
+  return { apiData, setData };
+}
+
+export function useFilteredData() {
+  const { filteredData, setFilteredData } = useContext(DataContext);
+  return { filteredData, setFilteredData };
+}
+
+export function useFilters() {
+  const { filters } = useContext(DataContext);
+  return filters;
+}
+
+export function useNameFilter() {
+  const { nameText, setNameText } = useContext(DataContext);
+  return { nameText, setNameText };
 }
 
 DataContextProvider.propTypes = {
   children: PropTypes.node,
-}.isRequised;
+}.isRequired;
 
 export default DataContextProvider;
