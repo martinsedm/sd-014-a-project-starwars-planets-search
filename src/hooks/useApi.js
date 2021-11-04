@@ -1,23 +1,21 @@
-import { useContext, useEffect } from 'react';
-
-import PlanetsContext from '../context/PlanetsContext';
+import { useState, useEffect } from 'react';
 
 export default function useApi() {
-  const { isLoading, setIsLoading, data, setData } = useContext(PlanetsContext);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const fetchApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+    const response = await fetchApi.json();
+    const apiResults = response.results;
+    setData(apiResults);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-
-    const fetchData = async () => {
-      const fetchApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const response = await fetchApi.json();
-      const apiResults = await response.results;
-      setData(apiResults);
-      setIsLoading(false);
-    };
-
     fetchData();
-  });
+  }, []);
 
   return { data, isLoading };
 }

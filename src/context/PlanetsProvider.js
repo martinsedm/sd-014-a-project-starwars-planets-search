@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import PlanetsContext from './PlanetsContext';
+import useApi from '../hooks/useApi';
 
 export default function PlanetsProvider({ children }) {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useApi();
 
   const exportState = {
     data,
-    setData,
     isLoading,
-    setIsLoading,
   };
 
   return (
