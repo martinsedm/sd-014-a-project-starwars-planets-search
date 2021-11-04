@@ -5,7 +5,7 @@ function Select(props) {
   const { testId, value, name, textLabel, setState, options } = props;
   function handleChange({ target }) {
     // montar logica para mudar o state com função passado por props
-    setState(target.value);
+    setState(target.value, target.name);
   }
   return (
     <label htmlFor={ name }>

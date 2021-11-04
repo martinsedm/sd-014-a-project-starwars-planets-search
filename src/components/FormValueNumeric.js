@@ -25,7 +25,7 @@ function FormValueNumeric() {
     if (planetsResponseApi.length > 0) {
       setColumnsNumeric(getKeysNumeric(planetsResponseApi[0]));
     }
-  }, [planetsResponseApi]);
+  }, [planetsResponseApi, setColumnsNumeric]);
 
   const handleClick = () => {
     // const filtersApart = filterByNumericValues.filter((filter) => (

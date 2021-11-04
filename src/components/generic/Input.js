@@ -6,7 +6,7 @@ function Input(props) {
   function handleChange({ target }) {
     // seta o state com o target.value
     // precisara criar condição para utilizar em do tipo checkbox
-    setState(target.value);
+    setState(target.value, target.name);
   }
   return (
     <label htmlFor={ id === undefined ? name : id }>

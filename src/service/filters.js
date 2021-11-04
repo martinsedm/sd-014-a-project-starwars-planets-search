@@ -26,30 +26,50 @@ const filterByNumeric = (listPlanets, listFilterNumeric) => {
   return planets;
 };
 
-const orderPlanets = (listPlanets, orderObj) => {
-  const { column, sort } = orderObj;
+const sortStringAsc = (list, itemColumn) => {
   const NUMBER_FOR_SORT = -1;
+  return list.sort((a, b) => {
+    if (a[itemColumn] < b[itemColumn]) {
+      return NUMBER_FOR_SORT;
+    }
+    if (a[itemColumn] > b[itemColumn]) {
+      return 0;
+    }
+    return 0;
+  });
+};
+
+const sortStringDsc = (list, itemColumn) => {
+  const NUMBER_FOR_SORT = -1;
+  return list.sort((a, b) => {
+    if (a[itemColumn] > b[itemColumn]) {
+      return NUMBER_FOR_SORT;
+    }
+    if (a[itemColumn] < b[itemColumn]) {
+      return 0;
+    }
+    return 0;
+  });
+};
+
+const orderPlanets = (listPlanets, orderObj) => {
+  const columnValue = listPlanets.length > 0 ? listPlanets[0][orderObj.column]
+    : null;
+  const { column, sort } = orderObj;
   switch (sort) {
   case 'ASC':
-    return listPlanets.sort((a, b) => {
-      if (a[column] < b[column]) {
-        return NUMBER_FOR_SORT;
-      }
-      if (a[column] > b[column]) {
-        return 0;
-      }
-      return 0;
-    });
+    if (Number.isNaN(Number(columnValue))) {
+      console.log('strin');
+      return sortStringAsc(listPlanets, column);
+    }
+    console.log('number');
+    return listPlanets.sort((a, b) => a[column] - b[column]);
+
   case 'DSC':
-    return listPlanets.sort((a, b) => {
-      if (a[column] > b[column]) {
-        return NUMBER_FOR_SORT;
-      }
-      if (a[column] < b[column]) {
-        return 0;
-      }
-      return 0;
-    });
+    if (Number.isNaN(Number(columnValue))) {
+      return sortStringDsc(listPlanets, column);
+    }
+    return listPlanets.sort((a, b) => b[column] - a[column]);
   default:
     break;
   }
