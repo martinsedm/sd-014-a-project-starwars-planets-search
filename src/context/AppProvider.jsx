@@ -4,9 +4,12 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [results, setResults] = useState([]);
+  const [fullResults, setFullResults] = useState([]);
   const contextValue = {
     results,
     setResults,
+    fullResults,
+    setFullResults,
   };
 
   return (

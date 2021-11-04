@@ -4,10 +4,10 @@ import fetchStarWarsAPI from '../helpers/fetchStarWarsAPI';
 
 function Table() {
   const value = useContext(AppContext);
-  const { results, setResults } = value;
+  const { results, setResults, setFullResults } = value;
   useEffect(() => {
-    fetchStarWarsAPI(setResults);
-  }, [setResults]);
+    fetchStarWarsAPI(setResults, setFullResults);
+  }, [setFullResults, setResults]);
   console.log(results);
   if (results.length === 0) return (<h1>Loading...</h1>);
   return (
