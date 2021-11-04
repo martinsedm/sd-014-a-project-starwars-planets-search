@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PlanetContext from './context/PlanetContext';
 import './App.css';
+import Table from './components/Table';
 
 function App() {
+  const { isLoading } = useContext(PlanetContext);
   return (
-    <span>Hello, App!</span>
+    <div>
+      {!isLoading && <Table />}
+    </div>
+
   );
 }
 
