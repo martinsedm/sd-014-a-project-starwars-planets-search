@@ -10,31 +10,69 @@ import getSWPlanets from '../services/swAPI';
  * @returns {JSX.Element} - SWProvider
  * @example
  * <SWProvider>
- *  <SWContext.Consumer>
+ *   <SWContext.Consumer>
  * </SWProvider>
  */
 const SWProvider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [name, setName] = useState('');
+  const [numericValue, setNumericValue] = useState([]);
+  const [order, setOrder] = useState({ column: 'name', sort: 'ASC' });
+
+  const filters = {
+    filters: {
+      filterByName: name,
+      filterByNumericValues: numericValue,
+      order,
+    },
+  };
 
   useEffect(() => {
-    const getPlanets = async () => setPlanets(await getSWPlanets());
+    const getPlanets = async () => {
+      const response = await getSWPlanets();
+      setPlanets(response);
+      setFilteredPlanets(response);
+    };
     getPlanets();
   }, []);
 
+  const contextValue = {
+    planets,
+    setPlanets,
+    filteredPlanets,
+    setFilteredPlanets,
+    name,
+    setName,
+    numericValue,
+    setNumericValue,
+    order,
+    setOrder,
+    filters,
+  };
+
   return (
-    <SWContext.Provider value={ { planets, setPlanets } }>
+    <SWContext.Provider value={ contextValue }>
       { children }
     </SWContext.Provider>
   );
 };
 
-export const usePlanets = () => {
-  const { planets, setPlanets } = useContext(SWContext);
-  return { planets, setPlanets };
+/**
+ * useFilters - Hook to get the filters from SWProvider
+ * @returns {Object} - filters
+ * @example
+ * const { filters } = useFiltersInput();
+ * console.log(filters);
+ * // { filterByName: '', filterByNumericValues: [], order: { column: 'name', sort: 'ASC' } }
+ */
+export const useFilters = () => {
+  const { filters } = useContext(SWContext);
+  return filters;
 };
 
 SWProvider.propTypes = {
-  children: PropTypes.node,
-}.isRequised;
+  children: PropTypes.node.isRequired,
+}.isRequired;
 
 export default SWProvider;
