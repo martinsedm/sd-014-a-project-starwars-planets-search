@@ -5,9 +5,7 @@ import planetFetcher from '../PlanetsAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
-  // setData(planetFetcher);
   useEffect(() => {
-    // setData(planetFetcher);
     planetFetcher().then((result) => setData(result));
   }, []);
 

@@ -8,7 +8,6 @@ function App() {
     <PlanetsProvider>
       <Table />
     </PlanetsProvider>
-
   );
 }
 
