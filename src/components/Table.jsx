@@ -7,8 +7,7 @@ function Table() {
   const { results, setResults } = value;
   useEffect(() => {
     fetchStarWarsAPI(setResults);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setResults]);
   console.log(results);
   if (results.length === 0) return (<h1>Loading...</h1>);
   return (
