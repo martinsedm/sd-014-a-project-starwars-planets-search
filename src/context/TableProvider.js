@@ -15,9 +15,15 @@ function TableProvider({ children }) {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const fetchUrl = await fetch(url);
     const responseApi = await fetchUrl.json();
-    console.log(responseApi.results);
     setReponse({
       data: responseApi.results,
+    });
+  };
+
+  const removeColum = () => {
+    const colums = document.querySelector('#colum-id');
+    colums.childNodes.forEach((option) => {
+      if (option.innerHTML === colum) option.remove();
     });
   };
 
@@ -27,12 +33,10 @@ function TableProvider({ children }) {
     } else {
       setfilter(true);
     }
+    removeColum();
   };
 
   const handleChange = ({ target }) => setFilterText(target.value);
-  // console.log(colum);
-  // console.log(comparsion);
-  // console.log(value);
 
   const createTd = (planets, index) => (
     <tr key={ index }>

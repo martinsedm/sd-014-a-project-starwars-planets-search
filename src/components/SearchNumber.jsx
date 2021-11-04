@@ -14,6 +14,7 @@ function SearchNumber() {
       <label htmlFor="colum">
         <select
           data-testid="column-filter"
+          id="colum-id"
           onChange={ (e) => setColum(e.target.value) }
         >
           <option value="population">population</option>
