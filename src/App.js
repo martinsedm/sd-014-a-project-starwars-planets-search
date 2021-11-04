@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import './App.css';
+import Table from './components/Table';
+import MainProvider from './context/MainProvider';
 
 function App() {
   return (
-    <span>Vamo que Vamo</span>
+    <MainProvider>
+      <Table />
+    </MainProvider>
   );
 }
 
