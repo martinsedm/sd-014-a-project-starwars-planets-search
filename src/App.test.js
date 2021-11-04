@@ -159,7 +159,7 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
   });
 });
 
-describe.only('3 - Crie um filtro para valores numéricos', () => {
+describe('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -283,6 +283,7 @@ describe('4 - Não utilize filtros repetidos', () => {
     });
     expect(foundColumnFilter).toEqual(expect.arrayContaining(['orbital_period', 'diameter', 'rotation_period', 'surface_water']));
     expect(foundColumnFilter).toHaveLength(4);
+    
   });
 });
 

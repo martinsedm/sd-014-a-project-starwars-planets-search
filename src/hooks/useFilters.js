@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
 
-const MAIOR = 'maior que';
-const MENOR = 'menor que';
-const IGUAL = 'igual a';
+export const MAIOR = 'maior que';
+export const MENOR = 'menor que';
+export const IGUAL = 'igual a';
 
-function useFilters(initialState) {
+export function useFilters(initialState) {
   const [array, setArray] = useState(initialState);
 
   const applyFilters = useCallback((planets, filters) => {
@@ -16,7 +16,7 @@ function useFilters(initialState) {
     if (name !== '') {
       const regex = new RegExp(name, 'ig');
       filteredArray = filteredArray
-        .filter((planet) => planet.name.search(regex) > 0);
+        .filter((planet) => planet.name.search(regex) >= 0);
     }
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((filter) => {
@@ -35,7 +35,7 @@ function useFilters(initialState) {
             .filter((planet) => Number(planet[column]) === Number(value));
           break;
         default:
-          console.log('deu ruim');
+          break;
         }
       });
     }
@@ -44,5 +44,3 @@ function useFilters(initialState) {
 
   return [array, applyFilters];
 }
-
-export default useFilters;

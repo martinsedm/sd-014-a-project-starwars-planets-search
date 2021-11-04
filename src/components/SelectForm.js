@@ -19,7 +19,7 @@ function SelectForm({ setup }) {
         onChange={ (e) => handleChange(e, key) }
         required
       >
-        <option value="" hidden disabled>Selecione</option>
+        {/* <option value="" hidden disabled>Selecione</option> */}
         { array.map((option) => (
           <option
             key={ option }

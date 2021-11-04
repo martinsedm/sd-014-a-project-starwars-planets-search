@@ -3,26 +3,29 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import StarsWarsContext from '../contexts/StarWarsContext';
 
-import { isEquivalent } from '../services';
+import { MAIOR, MENOR, IGUAL } from '../hooks/useFilters';
+import { ADD_NUM_FILTER, ADD_NAME_FILTER } from '../reducer';
 
 import SelectForm from './SelectForm';
 import InputForm from './InputForm';
 
 const COMPARISON = [
-  'maior que',
-  'menor que',
-  'igual a',
+  MAIOR,
+  MENOR,
+  IGUAL,
 ];
 
 function FiltersForm() {
   const {
     filters,
     planets,
-    handleNameChange,
-    addNumericFilter } = useContext(StarsWarsContext);
+    dispatch } = useContext(StarsWarsContext);
   const [columns, setColumns] = useState([]);
-  const [numericFilter, setNumericFilter] = useState({
+  const [colsUpdated, setColsUptaded] = useState([]);
+  const [numFilter, setNumFilter] = useState({
     column: '', comparison: '', value: '' });
+
+  const { filterByNumericValues } = filters;
 
   useEffect(() => {
     const [planet] = planets;
@@ -33,24 +36,34 @@ function FiltersForm() {
       return acc;
     }, []);
     setColumns(result);
+    setColsUptaded(result);
   }, [planets]);
 
-  const handleChange = ({ target }) => {
+  useEffect(() => {
+    const columnsUpdated = columns
+      .filter((column) => !filterByNumericValues
+        .some((filter) => column === filter.column));
+    setColsUptaded(columnsUpdated);
+  }, [columns, filterByNumericValues]);
+
+  const handleNumChange = ({ target }) => {
     const { name, value } = target;
-    setNumericFilter({ ...numericFilter, [name]: value });
+    setNumFilter({ ...numFilter, [name]: value });
+  };
+
+  const handleNameChange = ({ target }) => {
+    const { name, value } = target;
+    dispatch({ type: ADD_NAME_FILTER, payload: { name, value } });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { filterByNumericValues } = filters;
-    if (!filterByNumericValues.some((object) => isEquivalent(numericFilter, object))) {
-      addNumericFilter(numericFilter);
-    }
-    setNumericFilter({ column: '', comparison: '', value: 0 });
+    dispatch({ type: ADD_NUM_FILTER, payload: { ...numFilter } });
+    setNumFilter({ column: '', comparison: '', value: 0 });
   };
 
   const { filterByName: { name } } = filters;
-  const { column, comparison, value } = numericFilter;
+  const { column, comparison, value } = numFilter;
 
   return (
     <section>
@@ -61,13 +74,13 @@ function FiltersForm() {
       </Form>
       <Form id="numeric-form" onSubmit={ handleSubmit }>
         <SelectForm
-          setup={ [columns, 'Coluna', 'column', column, handleChange] }
+          setup={ [colsUpdated, 'Coluna', 'column', column, handleNumChange] }
         />
         <SelectForm
-          setup={ [COMPARISON, 'Comparação', 'comparison', comparison, handleChange] }
+          setup={ [COMPARISON, 'Comparação', 'comparison', comparison, handleNumChange] }
         />
         <InputForm
-          setup={ ['number', 'Valor', 'value', value, handleChange] }
+          setup={ ['number', 'Valor', 'value', value, handleNumChange] }
         />
         <Button
           type="submit"
@@ -76,10 +89,9 @@ function FiltersForm() {
         >
           Adicionar
         </Button>
-
       </Form>
     </section>
   );
 }
-// onChange={ (e) => handleChange(e, 'filterByName') }
+
 export default FiltersForm;

@@ -10,7 +10,7 @@ function InputForm(props) {
     <FloatingLabel
       htmlFor={ `${name}-input` }
       label={ label }
-      classname="mb-3"
+      className="mb-3"
     >
       <Form.Control
         id={ `${name}-input` }

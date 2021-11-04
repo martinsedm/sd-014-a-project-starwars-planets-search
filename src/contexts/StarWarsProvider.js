@@ -1,28 +1,22 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import useFilters from '../hooks/useFilters';
+import { useFilters } from '../hooks/useFilters';
 import StarsWarsContext from './StarWarsContext';
-import { fetchPlanets } from '../services';
-
-const INITIAL_FILTERS = {
-  filterByName: {
-    name: '',
-  },
-  filterByNumericValues: [],
-};
+import fetchPlanets from '../services';
+import { filterReducer, init, INITIAL_STATE_FILTER } from '../reducer';
 
 function StarsWarsProvider(props) {
   const { children } = props;
   const [planets, setPlanets] = useState([]);
-  const [planetsRender, applyFilters] = useFilters([]);
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [planetsRender, setApplyFilters] = useFilters([]);
+  const [filters, dispatch] = useReducer(filterReducer, INITIAL_STATE_FILTER, init);
 
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState({ hasError: false, message: '' });
 
   useEffect(() => {
-    applyFilters(planets, filters);
-  }, [planets, filters, applyFilters]);
+    setApplyFilters(planets, filters);
+  }, [planets, filters, setApplyFilters]);
 
   const getPlanets = useCallback(async () => {
     try {
@@ -38,26 +32,13 @@ function StarsWarsProvider(props) {
     }
   }, []);
 
-  const handleNameChange = ({ target }) => {
-    const { name, value } = target;
-    setFilters({ ...filters, filterByName: { [name]: value } });
-  };
-
-  const addNumericFilter = (filter) => {
-    const { filterByNumericValues } = filters;
-    setFilters({
-      ...filters,
-      filterByNumericValues: [...filterByNumericValues, filter] });
-  };
-
   const context = {
     planets,
     planetsRender,
     filters,
     isFetching,
     error,
-    handleNameChange,
-    addNumericFilter,
+    dispatch,
     getPlanets,
   };
 
