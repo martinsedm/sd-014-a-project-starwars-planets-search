@@ -25,29 +25,31 @@ function Table() {
 
   const tableBodyMaker = () => {
     const { name } = filters.filterByName;
-    const { column, comparison, value } = filters.filterByNumericValues;
+    const { filterByNumericValues } = filters;
     // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
 
     const filteredPlanets = data
       .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
       .filter((planet) => {
-        switch (comparison) {
-        case 'maior que':
-          // return planet[column] >= value ?;
-          if (parseInt(planet[column], 10) > value) return true;
-          break;
-        case 'menor que':
-          if (parseInt(planet[column], 10) < value) return true;
-          break;
-        case 'igual a':
-          if (parseInt(planet[column], 10) === parseInt(value, 10)) return true;
-          break;
-        case '':
-          return true;
-        default:
-          break;
-        }
-        return false;
+        const isPlanetValid = filterByNumericValues.every((thisFilter) => {
+          const { comparison, column, value } = thisFilter;
+          // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
+          // console.log(filterByNumericValues);
+          switch (comparison) {
+          case 'maior que':
+            return parseInt(planet[column], 10) > parseInt(value, 10);
+          case 'menor que':
+            return parseInt(planet[column], 10) < parseInt(value, 10);
+          case 'igual a':
+            return parseInt(planet[column], 10) === parseInt(value, 10);
+          case '':
+            return true;
+          default:
+            break;
+          }
+          return false;
+        });
+        return isPlanetValid;
       });
 
     const planetData = filteredPlanets.map((planet) => (

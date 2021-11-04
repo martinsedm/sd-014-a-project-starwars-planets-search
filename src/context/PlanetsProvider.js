@@ -7,7 +7,8 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: { column: '', comparison: '', value: 0 }, // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+    filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
+    filtersUsed: [],
   });
 
   useEffect(() => {
@@ -26,7 +27,9 @@ function PlanetsProvider({ children }) {
   const getValueFilter = (column, comparison, value) => {
     setFilter({
       ...filters,
-      filterByNumericValues: { column, comparison, value },
+      filterByNumericValues:
+      [...filters.filterByNumericValues, { column, comparison, value }],
+      filtersUsed: [...filters.filtersUsed, column],
     });
   };
 

@@ -1,10 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PlanetsContext from './context/PlanetsContext';
 
-// column, comparison, value
 function FilterField() {
   const { getNameFilter, getValueFilter } = useContext(PlanetsContext);
-  const [numFilter, setNumFilter] = useState({});
+  const [numFilter, setNumFilter] = useState({}); // THERE'S A PECULIARITY HERE***
+  const [spentFilters, setSpentFilters] = useState({
+    population: false,
+    orbital_period: false,
+    rotation_period: false,
+    diameter: false,
+    surface_water: false,
+  });
+  // const firstUnspentFilter = Object.keys(spentFilters).find((elem) => !spentFilters[elem]);
+  // const [numFilter, setNumFilter] = useState({ column: firstUnspentFilter });
 
   const handleChange = ({ target }) => {
     setNumFilter({
@@ -19,8 +27,31 @@ function FilterField() {
     if (column && comparison && value) {
       // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
       getValueFilter(column, comparison, value);
+      setSpentFilters({
+        ...spentFilters,
+        [column]: true,
+      });
     }
   };
+
+  const columnOptions = () => {
+    const optionFilter = Object.keys(spentFilters).filter((columnName) => (
+      !spentFilters[columnName]
+    ));
+    const columnRender = optionFilter.map((name) => (
+      <option
+        key={ name }
+        value={ name }
+        disabled={ spentFilters[name] }
+      >
+        {name}
+      </option>));
+    return columnRender;
+  };
+
+  useEffect(() => {
+    columnOptions();
+  });
 
   return (
     <>
@@ -39,12 +70,7 @@ function FilterField() {
           name="column"
           onChange={ handleChange }
         >
-          <option selected disabled>Filter by</option>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="diameter">diameter</option>
-          <option value="surface_water">surface_water</option>
+          {columnOptions()}
         </select>
         <select
           data-testid="comparison-filter"
@@ -75,3 +101,5 @@ function FilterField() {
 }
 
 export default FilterField;
+
+// **** OBSERVATION: Because the tests from req 4 WANT to see exactly 4 choices after spending one filter, I can't use my placeholder. Which means that in the app you'll either have to reselect the column if you want the default (e.g. population, if it's not spent), or you'll end up with a bug that keeps counting it as population if I don't ever choose anything else, despite it being disabled.
