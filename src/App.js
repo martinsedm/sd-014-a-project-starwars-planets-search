@@ -1,9 +1,13 @@
 import React from 'react';
+import Table from './components/Table';
 import './App.css';
 
 function App() {
+  document.title = 'StarWars - Planet Search';
   return (
-    <span>Hello, App!</span>
+    <main>
+      <Table />
+    </main>
   );
 }
 

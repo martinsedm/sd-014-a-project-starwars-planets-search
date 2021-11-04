@@ -1,19 +1,16 @@
-
 import React, { useState } from 'react';
 import AppContext from './AppContext';
 
+// eslint-disable-next-line react/prop-types
 function Provider({ children }) {
-  const [stateA, setStateA] = useState('initialStateA');
-  const [stateB, setStateB] = useState('initialStateB');
+  const [results, setResults] = useState([]);
   const contextValue = {
-    stateA,
-    setStateA,
-    stateB,
-    setStateB,
+    results,
+    setResults,
   };
 
   return (
-    <AppContext.Provider value={contextValue}>
+    <AppContext.Provider value={ contextValue }>
       {children}
     </AppContext.Provider>
   );
