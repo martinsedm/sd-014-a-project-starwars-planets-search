@@ -38,10 +38,11 @@ function NumericFilter() {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
-      <label data-testid="value-filter" htmlFor="value-filter">
+      <label htmlFor="value-filter">
         <input
           type="number"
           id="value-filter"
+          data-testid="value-filter"
           onChange={ (e) => setValue(e.target.value) }
         />
       </label>
