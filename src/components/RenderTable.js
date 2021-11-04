@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import planetContext from '../context';
 
-function Table() {
+function RenderTable() {
   const { data, filter } = useContext(planetContext);
   const [filteredPlanets, setFilteredPlanets] = useState(null);
   const { name } = filter.filters.filterByName;
@@ -46,7 +47,7 @@ function Table() {
   }, [arrayNewFilters, data]);
 
   return (
-    <table>
+    <Table className="table-responsive">
       <thead>
         <tr>
           <th>Name</th>
@@ -83,8 +84,8 @@ function Table() {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
-export default Table;
+export default RenderTable;

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import planetContext from '../context';
+import { MainSearchBar, SearchBar } from '../style/style';
 
 function FilterInput() {
   const { setFilter } = useContext(planetContext);
@@ -14,17 +15,15 @@ function FilterInput() {
   }, [name, setFilter]);
 
   return (
-    <div>
-      <form>
-        <input
-          type="text"
-          data-testid="name-filter"
-          value={ name }
-          placeholder="Digite o nome de uma planeta"
-          onChange={ ({ target }) => setName(target.value) } // target recebe o valor da pesquisa
-        />
-      </form>
-    </div>
+    <MainSearchBar>
+      <SearchBar
+        type="text"
+        data-testid="name-filter"
+        value={ name }
+        placeholder="Digite o nome de um planeta"
+        onChange={ ({ target }) => setName(target.value) } // target recebe o valor da pesquisa
+      />
+    </MainSearchBar>
   );
 }
 

@@ -1,19 +1,20 @@
 import React from 'react';
-import Table from './components/Table';
-import './App.css';
+import RenderTable from './components/RenderTable';
 import Provider from './context/Provider';
 import FilterInput from './components/FilterInput';
 import FiltersSettings from './components/FiltersSettings';
 import SavedFilters from './components/SavedFilters';
+import GlobalStyle, { Title } from './style/style';
 
 function App() {
   return (
     <Provider>
-      <h1>Projeto Star Wars - Trybe!</h1>
+      <Title>Projeto Star Wars - Trybe!</Title>
       <FilterInput />
+      <GlobalStyle />
       <FiltersSettings />
       <SavedFilters />
-      <Table />
+      <RenderTable />
     </Provider>
   );
 }

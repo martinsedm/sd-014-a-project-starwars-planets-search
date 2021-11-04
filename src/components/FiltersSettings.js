@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import planetContext from '../context';
+import { StayleSelect, StyleInput, FilterButton, StyleForm } from '../style/style';
 
 function FiltersSettings() {
   const { filter, setFilter } = useContext(planetContext);
@@ -28,9 +29,9 @@ function FiltersSettings() {
 
   return (
     <div>
-      <form onSubmit={ (e) => handleSubmit(e) }>
+      <StyleForm onSubmit={ (e) => handleSubmit(e) }>
         <label htmlFor="column-filter">
-          <select
+          <StayleSelect
             data-testid="column-filter"
             value={ column }
             onChange={ (e) => setColumn(e.target.value) }
@@ -38,10 +39,10 @@ function FiltersSettings() {
             { columnArrayVal.map((item, index) => (
               <option key={ index } value={ item }>{ item }</option>
             )) }
-          </select>
+          </StayleSelect>
         </label>
         <label htmlFor="comparison-filter">
-          <select
+          <StayleSelect
             data-testid="comparison-filter"
             value={ comparision }
             onChange={ (e) => setComparision(e.target.value) }
@@ -49,23 +50,23 @@ function FiltersSettings() {
             { comparisonValues.map((item, index) => (
               <option key={ index } value={ item }>{ item }</option>
             )) }
-          </select>
+          </StayleSelect>
         </label>
-        <label htmlFor="value-filter">
-          <input
-            data-testid="value-filter"
-            value={ value }
-            type="text"
-            onChange={ (e) => setValue(e.target.value) }
-          />
-        </label>
-        <button
+        <StyleInput
+          data-testid="value-filter"
+          placeholder="Digite o valor a ser comparado"
+          name="value-filter"
+          value={ value }
+          type="text"
+          onChange={ (e) => setValue(e.target.value) }
+        />
+        <FilterButton
           type="submit"
           data-testid="button-filter"
         >
           Filtrar
-        </button>
-      </form>
+        </FilterButton>
+      </StyleForm>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import planetContext from '../context';
+import { RemoveButton, FilterSaved } from '../style/style';
 
 function SavedFilters() {
   const { filter, setFilter } = useContext(planetContext);
@@ -20,15 +21,15 @@ function SavedFilters() {
           const { column, comparision, value } = item;
 
           return (
-            <p key={ index } data-testid="filter">
+            <FilterSaved key={ index } data-testid="filter">
               { `${column} ${comparision} ${value}`}
-              <button
+              <RemoveButton
                 type="button"
                 onClick={ () => { hendleClick(column); } }
               >
                 X
-              </button>
-            </p>
+              </RemoveButton>
+            </FilterSaved>
           );
         })
       }
