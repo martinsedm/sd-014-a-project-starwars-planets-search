@@ -5,6 +5,13 @@ import fetchPlanetsApi from '../services/planetsApi';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   // Executa a função fetchApi quando a página é carregada
   useEffect(() => {
@@ -18,6 +25,8 @@ function Provider({ children }) {
   const context = {
     data,
     setData,
+    filter,
+    setFilter,
   };
 
   return (
