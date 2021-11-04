@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useFilters from '../hooks/useFilters';
 import StarsWarsContext from './StarWarsContext';
-import fetchPlanets from '../services';
+import { fetchPlanets } from '../services';
 
 const INITIAL_FILTERS = {
   filterByName: {
@@ -38,9 +38,16 @@ function StarsWarsProvider(props) {
     }
   }, []);
 
-  const handleChange = ({ target }, key) => {
+  const handleNameChange = ({ target }) => {
     const { name, value } = target;
-    setFilters({ ...filters, [key]: { [name]: value } });
+    setFilters({ ...filters, filterByName: { [name]: value } });
+  };
+
+  const addNumericFilter = (filter) => {
+    const { filterByNumericValues } = filters;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterByNumericValues, filter] });
   };
 
   const context = {
@@ -49,7 +56,8 @@ function StarsWarsProvider(props) {
     filters,
     isFetching,
     error,
-    handleChange,
+    handleNameChange,
+    addNumericFilter,
     getPlanets,
   };
 
