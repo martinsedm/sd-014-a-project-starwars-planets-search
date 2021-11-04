@@ -9,6 +9,7 @@ function FilterNumber() {
   const { filters,
     setFilters,
     columns,
+    // filterByNumericValues,
     filterPlanetsByNumericValues, addColumn,
     removeFilterByNumericValues,
     resetFilters } = useContext(PlanetContext);
@@ -62,13 +63,14 @@ function FilterNumber() {
           Filtrar
         </button>
         <div className="btn">
-          <p>
-            { column }
-            {' '}
-            { comparison }
-            {' '}
-            { value }
-          </p>
+          {filterByNumericValues.map((filter) => (
+            <p
+              key={ filter.column }
+            >
+              { `${filter.column} ${filter.comparison} ${filter.value}`}
+            </p>
+          )) }
+
           <button
             data-testid="filter"
             type="button"
