@@ -5,6 +5,20 @@ import fetchAPI from '../utils/utils';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
+
+  const value = {
+    data,
+    setData,
+    filter,
+    setFilter,
+  };
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -16,14 +30,14 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <Context.Provider value={ { data } }>
+    <Context.Provider value={ value }>
       { children }
     </Context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
