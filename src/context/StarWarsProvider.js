@@ -4,7 +4,10 @@ import PlanetsContext from './PlanetsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const filter = { filtersByName: '' };
+  const filter = {
+    filtersByName: '',
+    filterByNumericValues: [],
+  };
   const [filters, setFilters] = useState(filter);
 
   const fetchPlanets = async () => {
@@ -28,11 +31,33 @@ function StarWarsProvider({ children }) {
     }
   };
 
+  const filtersByNumeric = (column, comparison, value) => {
+    if (column && comparison && value) {
+      const filtered = data.filter((planet) => {
+        const filterIndex = Number(planet[column]);
+        if (comparison === 'maior que') {
+          return filterIndex > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return filterIndex < Number(value);
+        }
+        if (comparison === 'igual a') {
+          return filterIndex === Number(value);
+        }
+        return filterIndex;
+      });
+      setData(filtered);
+    } else {
+      fetchPlanets();
+    }
+  };
+
   const context = {
     data,
     filters,
     setFilters,
     filtersByName,
+    filtersByNumeric,
   };
   return (
     <PlanetsContext.Provider value={ context }>
