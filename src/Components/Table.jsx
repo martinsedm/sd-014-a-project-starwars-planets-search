@@ -2,7 +2,16 @@ import React, { useContext } from 'react';
 import Context from '../Context/Context';
 
 function Table() {
-  const { data, loaded } = useContext(Context);
+  const {
+    data,
+    loaded,
+    filters: {
+      filterByName: {
+        name,
+      },
+    },
+  } = useContext(Context);
+  console.log(name);
   return (
     <table>
       <thead>
@@ -13,23 +22,26 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {loaded && data.map((planet, index) => (
-          <tr key={ `${planet.name}-${index}` }>
-            <td>{ planet.name }</td>
-            <td>{ planet.rotation_period }</td>
-            <td>{ planet.orbital_period }</td>
-            <td>{ planet.diameter }</td>
-            <td>{ planet.climate }</td>
-            <td>{ planet.gravity }</td>
-            <td>{ planet.terrain }</td>
-            <td>{ planet.surface_water }</td>
-            <td>{ planet.population }</td>
-            <td>{ planet.films }</td>
-            <td>{ planet.created }</td>
-            <td>{ planet.edited }</td>
-            <td>{ planet.url }</td>
-          </tr>
-        ))}
+        {loaded
+        && data
+          .filter((planet) => planet.name.includes(name))
+          .map((planet, index) => (
+            <tr key={ `${planet.name}-${index}` }>
+              <td>{ planet.name }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.climate }</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.url }</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
