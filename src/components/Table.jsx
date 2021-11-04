@@ -6,16 +6,21 @@ import AppContext from '../context/AppContext';
 import Loading from './Loading';
 
 export default function Table() {
-  const { data, getData, filters } = useContext(AppContext);
+  const {
+    data,
+    getData,
+    filters,
+  } = useContext(AppContext);
   const { filterByName } = filters;
 
   useEffect(() => {
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* Lógica da pessoa colega Leonardo Bermejo */
   const filteredData = data.filter((planet) => {
-    if (filterByName) {
+    if (filterByName !== '') {
       return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
     }
     return planet;
@@ -34,13 +39,16 @@ export default function Table() {
           )) }
         </tr>
       </thead>
-      <tbody className="mt-2">
+      <tbody>
         {filteredData.map((planet) => {
           const planetInfo = Object.values(planet);
           return (
             <tr key={ uuidv4() }>
               { planetInfo.map((info) => (
-                <td key={ uuidv4() }>
+                <td
+                  key={ uuidv4() }
+                  className="m-3"
+                >
                   {info}
                 </td>
               )) }
