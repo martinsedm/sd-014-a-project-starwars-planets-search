@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import GlobalContext from '../provider/GlobalContext';
 
 function NumericFilter() {
-  const { filters, filterData, setFilters } = useContext(GlobalContext);
+  const { filters, filterData, setFilters, categorie } = useContext(GlobalContext);
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('value');
 
   useEffect(() => {
@@ -12,7 +12,11 @@ function NumericFilter() {
   }, [filters]);
 
   const handleButton = () => {
-    setFilters({ ...filters, filterByNumericValues: { column, comparison, value } });
+    setFilters({ ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value },
+      ] });
   };
 
   return (
@@ -23,11 +27,8 @@ function NumericFilter() {
           data-testid="column-filter"
           onChange={ (event) => setColumn(event.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { categorie
+            .map((categ) => <option key={ categ } value={ categ }>{ categ }</option>)}
         </select>
       </label>
       <label htmlFor="comparison">

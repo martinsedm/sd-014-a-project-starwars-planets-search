@@ -3,10 +3,25 @@ import PropTypes from 'prop-types';
 import GlobalContext from './GlobalContext';
 
 function PlanetProvider({ children }) {
+  const INITIAL_STATE = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const [data, setData] = useState([]); // guarda info dos planetas;
   const [filtred, setFiltred] = useState([]); // guarda info filtrada dos planetas;
+  const [filters, setFilters] = useState({
+    filterByName: '',
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: '',
+    }] });
+  const [categorie, setCategorie] = useState(INITIAL_STATE);
   const [isLoading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({ filterByName: '' });
 
   const fetchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -28,35 +43,50 @@ function PlanetProvider({ children }) {
     let newData = data.filter((planet) => ((planet.name)
       .toLowerCase()).includes(filters.filterByName));
 
-    if (filters.filterByNumericValues) {
-      switch (filters.filterByNumericValues.comparison) {
-      case 'maior que':
-        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
-        > Number(filters.filterByNumericValues.value));
-        break;
-      case 'menor que':
-        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
-        < Number(filters.filterByNumericValues.value));
-        break;
-      case 'igual a':
-        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
-        === Number(filters.filterByNumericValues.value));
-        break;
-      default:
-        break;
-      }
+    if (filters.filterByNumericValues.length > 0) {
+      filters.filterByNumericValues.forEach((filter) => {
+        switch (filter.comparison) {
+        case 'maior que':
+          newData = newData.filter((p) => Number(p[filter.column])
+          > Number(filter.value));
+          break;
+        case 'menor que':
+          newData = newData.filter((p) => Number(p[filter.column])
+          < Number(filter.value));
+          break;
+        case 'igual a':
+          newData = newData.filter((p) => Number(p[filter.column])
+          === Number(filter.value));
+          break;
+        default:
+          break;
+        }
+      });
     }
 
     setFiltred(newData);
   };
 
+  const filterCategories = () => {
+    const numericFilter = filters.filterByNumericValues;
+    setCategorie(categorie.filter((
+      (categ) => categ !== numericFilter[numericFilter.length - 1].column)));
+  };
+
+  useEffect(() => {
+    filterData();
+    filterCategories();
+  }, [filters]);
+
   const contextState = {
+    categorie,
     data,
     filters,
-    filterData,
     filtred,
     isLoading,
     setFilters,
+    filterData,
+    filterCategories,
   };
 
   return (
