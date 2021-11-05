@@ -5,16 +5,36 @@ function Filtro() {
   const {
     nameFilter,
     setNameFilter,
-    setColuna, setComparacao, setValor, setFiltrado } = useContext(APIContext);
+    setColuna,
+    setComparacao,
+    setValor,
+    setFiltrado,
+    filtros,
+    coluna,
+    comparacao,
+    valor,
+    filtro,
+    setFiltro, } = useContext(APIContext);
+  const { filterByName, filterByNumericValues } = filtros.filters;
 
   const changeName = (e) => {
     setNameFilter(e.target.value);
   };
+
+  const filterBtn = () => {
+    setFiltrado(true);
+    setFiltro([...filtro, { column: coluna, comparison: comparacao, value: valor }]);
+    console.log(filtro);
+    // filterByNumericValues.push(...filtro);
+    console.log(filterByNumericValues);
+    console.log(filterByNumericValues.length);
+  };
+
   return (
     <>
       <input
         type="text"
-        value={ nameFilter }
+        value={ filterByName.name }
         onChange={ changeName }
         data-testid="name-filter"
       />
@@ -47,10 +67,13 @@ function Filtro() {
       <button
         type="submit"
         data-testid="button-filter"
-        onClick={ () => setFiltrado(true) }
+        onClick={ () => filterBtn() }
       >
         Filtrar
       </button>
+      {filtro.length > 0 && filtro.map((cur, i) => (
+        <p key={ `filtro-${i}` }>{`${cur.column} ${cur.comparison} ${cur.value}`}</p>
+      ))}
     </>
   );
 }
