@@ -1,7 +1,6 @@
 .filter-container {
   align-items: center;
-  background: 
-  linear-gradient(to top, rgba(20, 61, 195, 0.657), rgba(140, 90, 206, 0.705));
+  background: linear-gradient(to top, rgba(20, 61, 195, 0.6), rgba(140, 90, 206, 0.7));
   background-color: black;
   border: 25px solid black;
   color: azure;
