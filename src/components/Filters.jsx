@@ -5,8 +5,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 const Filters = () => {
   const { setFilter,
-    filter, filter: { filterByNumericValues },
-    /* setFiltersSelect, setNewData,  */newData, setisFilter,
+    filter, filter: { filterByNumericValues }, setisFilter,
   } = useContext(StarWarsContext);
 
   const handleOption = (({ target: { name, value } }) => {
@@ -23,11 +22,17 @@ const Filters = () => {
     // newOption(filterByNumericValues[index]);
     // setFilter({ ...filter,
     //   filterByNumericValues: [...filterByNumericValues, { column, comparison, value }] });
+    // const selectColumn = document.getElementById('column-filter');
+    // const columnCurrent = filterByNumericValues
+    document.getElementById('column-filter').childNodes.forEach((element) => {
+      filterByNumericValues.forEach((columnContext) => {
+        if (element.value === columnContext.column) return element.remove();
+      });
+    });
   };
 
   return (
     <div>
-      {console.log(newData, 'newData in Filters')}
       <SelectForms values={ types } handleChange={ handleOption } />
       <SelectForms values={ comparisonFilter } handleChange={ handleOption } />
       <input

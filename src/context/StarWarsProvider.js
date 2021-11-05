@@ -31,38 +31,16 @@ const StarWarsProvider = ({ children }) => {
     return data;
   };
 
-  // const setFiltersSelect = ({ column, comparison, value }) => {
-  //   let algum = [];
-  //   switch (comparison) {
-  //   case 'maior que':
-  //     algum = [...data.filter((planet) => Number(planet[column]) > Number(value))];
-  //     break;
-  //   case 'menor que':
-  //     algum = [...data.filter((planet) => Number(planet[column]) < Number(value))];
-  //     break;
-  //   case 'igual a':
-  //     algum = [...data.filter((planet) => Number(planet[column]) === Number(value))];
-  //     break;
-  //   default:
-  //     algum = [...data];
-  //     break;
-  //   }
-  //   return algum;
-  // };
-
-  useEffect(() => {
+  useEffect(() => { // Obrigado Issac!!!
     const { filterByNumericValues } = filter;
     if (isFilter && filterByNumericValues[0] && newData !== []) {
-      console.log(isFilter, 'isFilter');
       filterByNumericValues.reduce((acc, ele) => {
         const { comparison, value, column } = ele;
         switch (comparison) {
         case 'maior que':
-          console.log(acc, '>');
           acc = newData.filter((planet) => Number(planet[column]) > Number(value));
           break;
         case 'menor que':
-          console.log(acc, '< antes');
           acc = newData.filter((planet) => Number(planet[column]) < Number(value));
           console.log(acc, '< depois');
           break;
@@ -72,10 +50,8 @@ const StarWarsProvider = ({ children }) => {
           break;
 
         default:
-          console.log('=((');
           break;
         }
-        console.log(acc, 'acc');
         return setNewData(acc);
       }, [newData]);
     }
@@ -94,7 +70,6 @@ const StarWarsProvider = ({ children }) => {
     setPlanetsByFilter,
     newData,
     setNewData,
-    // setFiltersSelect,
     isLoading,
     isFilter,
     setisFilter,
