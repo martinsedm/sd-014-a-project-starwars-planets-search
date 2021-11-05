@@ -1,25 +1,25 @@
 .planets-table {
-  background-color: rgb(0, 0, 0);
+  background-color: black;
   color: white;
   flex: auto;
-  font-size: 15px;
   font-family: sans-serif;
+  font-size: 15px;
   padding: 10px 40px;
 }
 
 .planets-table th {
   flex-direction: column;
-  font-weight: bolder;
+  font-weight: 900;
+  padding: 0.8em;
   text-align: center;
   text-transform: uppercase;
-  padding: 0.8em;
 
 }
 
 .planets-table td {
   border-top: 2px solid rgba(200, 200, 200, 0.438);
-  font-size: 15px;
   flex-direction: row;
+  font-size: 15px;
   padding: 1em 0.5em;
   text-align: center;
 }
