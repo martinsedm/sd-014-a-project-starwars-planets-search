@@ -14,3 +14,5 @@ function App() {
 }
 
 export default App;
+
+// Utilizei meu PR da turma antiga para refazer este projeto
