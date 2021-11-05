@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import PlanetsSearchContext from '../../context/PlanetsSearchContext';
 
 function FilterByNumber() {
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [columnValue, setColumnValue] = useState('population');
+  const [comparisonValue, setComparisonValue] = useState('maior que');
   const [numValue, setNumValue] = useState('0');
 
   const {
@@ -20,7 +20,7 @@ function FilterByNumber() {
         ...filterOptions.filters,
         filterByNumericValues:
        [...filterOptions.filters.filterByNumericValues, {
-         column, comparison, value: numValue }],
+         column: columnValue, comparison: comparisonValue, value: numValue }],
       },
     });
   };
@@ -28,10 +28,10 @@ function FilterByNumber() {
   const handleChange = ({ target: { value, name } }) => {
     switch (name) {
     case 'column':
-      setColumn(value);
+      setColumnValue(value);
       break;
     case 'comparison':
-      setComparison(value);
+      setComparisonValue(value);
       break;
     case 'numValue':
       setNumValue(value);
@@ -41,20 +41,11 @@ function FilterByNumber() {
     }
   };
 
-  const switchComparison = (planet, propertyIndex) => {
-    switch (comparison) {
-    case 'maior que':
-      return Number(planet[propertyIndex][1]) > Number(numValue);
-    case 'menor que':
-      return Number(planet[propertyIndex][1]) < Number(numValue);
-    case 'igual a':
-      return Number(planet[propertyIndex][1]) === Number(numValue);
-    default:
-      return 0;
-    }
-  };
-
   useEffect(() => {
+    const { column, comparison, value,
+    } = filterOptions.filters
+      .filterByNumericValues.length > 0 ? filterOptions.filters
+        .filterByNumericValues[0] : { columnValue, comparisonValue, numValue };
     const filterByNumber = () => {
       setFilteredPlanets(
         planets
@@ -67,12 +58,23 @@ function FilterByNumber() {
               }
               return propertyIndex;
             });
-            return switchComparison(planet, propertyIndex);
+            switch (comparison) {
+            case 'maior que':
+              return Number(planet[propertyIndex][1]) > Number(value);
+            case 'menor que':
+              return Number(planet[propertyIndex][1]) < Number(value);
+            case 'igual a':
+              return Number(planet[propertyIndex][1]) === Number(value);
+            default:
+              return 0;
+            }
           }),
       );
     };
     filterByNumber();
-  }, [filterOptions]);
+    console.log('loop');
+  }, [columnValue, comparisonValue, filterOptions, numValue, planets,
+    setFilteredPlanets]);
 
   return (
     <>
