@@ -16,7 +16,6 @@ export default function PlanetsProvider({ children }) {
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
-    console.log(results);
     setPlanets(results);
     setRenderPlanets(results);
     setIsLoading(false);
@@ -55,6 +54,7 @@ export default function PlanetsProvider({ children }) {
       const usedColumns = filterByNumericValues.map((filter) => filter.column);
       const updatedOptions = INITIAL_COLUMNS
         .filter((option) => !usedColumns.includes(option));
+      // ref https://stackoverflow.com/questions/14930516/compare-two-javascript-arrays-and-remove-duplicates
       setColumnOptions(updatedOptions);
     };
     updateOptions();
@@ -69,19 +69,27 @@ export default function PlanetsProvider({ children }) {
     filterPlanets();
   };
 
+  const deleteFilter = (col) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues:
+        filters.filterByNumericValues.filter((filter) => filter.column !== col),
+    });
+    setRenderPlanets(planets);
+  };
+
   const context = {
     planets,
     isLoading,
     filters,
-    setFilters,
     handleChange,
     renderPlanets,
-    filterPlanets,
     handleClick,
     setColumn,
     setComparison,
     setValue,
     columnOptions,
+    deleteFilter,
   };
 
   return (

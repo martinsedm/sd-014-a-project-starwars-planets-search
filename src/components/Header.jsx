@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import Filters from './Filters';
 
 export default function Header() {
   const { handleChange } = useContext(PlanetsContext);
@@ -18,7 +17,6 @@ export default function Header() {
           />
         </label>
       </header>
-      <Filters />
     </div>
   );
 }
