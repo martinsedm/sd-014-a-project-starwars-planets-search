@@ -7,7 +7,7 @@ function Tables() {
   const { filteredPlanets } = useContext(StarWarsContext);
   return (
     <div>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover variant="dark" size="sm">
         <thead>
           <tr>
             <th>name</th>
