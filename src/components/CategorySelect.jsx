@@ -3,13 +3,8 @@ import AppContext from '../context/AppContext';
 
 function CategorySelect() {
   const { filters, selectedCategory, setSelectedCategory } = useContext(AppContext);
-  const fullSelectOptionsList = [
-    { value: 'population', text: 'Population' },
-    { value: 'orbital_period', text: 'Orbital Period' },
-    { value: 'diameter', text: 'Diameter' },
-    { value: 'rotation_period', text: 'Rotation Period' },
-    { value: 'surface_water', text: 'Furface Water' },
-  ];
+  const fullSelectOptionsList = ['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water'];
   const selectOptionsList = fullSelectOptionsList.filter((category) => (
     !filters.includes(category.value)
   ));
@@ -22,10 +17,10 @@ function CategorySelect() {
     >
       { selectOptionsList.map((category) => (
         <option
-          key={ category.value }
-          value={ category.value }
+          key={ category }
+          value={ category }
         >
-          { category.value }
+          { category }
         </option>)) }
     </select>
   );

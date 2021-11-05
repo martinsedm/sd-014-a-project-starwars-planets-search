@@ -21,17 +21,17 @@ function FilterButton() {
         setSelectedCategory(filteredCategories[0]);
         let newResults = [];
         switch (selectedComparison) {
-        case '>':
+        case 'maior que':
           newResults = results.filter((planet) => (
             parseInt(planet[selectedCategory], 10) > parseInt(inputedQuantity, 10)
           ));
           break;
-        case '<':
+        case 'menor que':
           newResults = results.filter((planet) => (
             parseInt(planet[selectedCategory], 10) < parseInt(inputedQuantity, 10)
           ));
           break;
-        case '===':
+        case 'igual a':
           newResults = results.filter((planet) => (
             parseInt(planet[selectedCategory], 10) === parseInt(inputedQuantity, 10)
           ));
