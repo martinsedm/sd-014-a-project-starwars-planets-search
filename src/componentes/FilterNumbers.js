@@ -9,10 +9,10 @@ function FilterNumber() {
   const { filters,
     setFilters,
     columns,
-    // filterByNumericValues,
-    filterPlanetsByNumericValues, addColumn,
-    removeFilterByNumericValues,
-    resetFilters } = useContext(PlanetContext);
+    resetFilters,
+    addColumn,
+    // removeFilterByNumericValues,
+    filterPlanetsByNumericValues } = useContext(PlanetContext);
 
   return (
     <section className="formulario">
@@ -62,29 +62,31 @@ function FilterNumber() {
         >
           Filtrar
         </button>
+        <br />
         <div className="btn">
-          {filterByNumericValues.map((filter) => (
-            <p
-              key={ filter.column }
-            >
-              { `${filter.column} ${filter.comparison} ${filter.value}`}
-            </p>
-          )) }
-
-          <button
-            data-testid="filter"
-            type="button"
-            className="btn-x"
-            onClick={ () => {
-              addColumn(column);
-              removeFilterByNumericValues(column);
-              resetFilters();
-            } }
-          >
-            {' '}
-            x
-            {' '}
-          </button>
+          {filters.filterByNumericValues.length > 0
+            && filters.filterByNumericValues.map((filter) => (
+              <span
+                data-testid="filter"
+                key={ filter.column }
+              >
+                { `${filter.column} ${filter.comparison} ${filter.value}`}
+                <button
+                  name={ filter.column }
+                  type="button"
+                  className="btn-x"
+                  onClick={ () => {
+                    addColumn(column);
+                    removeFilterByNumericValues(column);
+                    resetFilters();
+                  } }
+                >
+                  {' '}
+                  x
+                  {' '}
+                </button>
+              </span>
+            )) }
         </div>
       </form>
     </section>

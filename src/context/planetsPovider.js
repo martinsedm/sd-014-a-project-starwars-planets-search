@@ -16,15 +16,6 @@ function PlanetProvider({ children }) {
   const [filters, setFilters] = useState(initialStates);
   const [array, setArray] = useState([]);
 
-  // const btnRemove = () => {
-  //   setFilters({
-  //     ...filters,
-  //     filterByNumericValues:
-  //     [...filters, filterByNumericValues,
-  //       { column, comparison, value }],
-  //   });
-  // };
-
   const [columns, setColumns] = useState([
     'population',
     'orbital_period',
@@ -40,7 +31,7 @@ function PlanetProvider({ children }) {
     const planets = json.results;
     setData(planets);
     setLoading(false);
-    setArray(planets.results);
+    setArray(planets);
   };
 
   useEffect(() => {
@@ -118,9 +109,9 @@ function PlanetProvider({ children }) {
     setFilters,
     resetFilters,
     nameFilters,
+    removeFilterByNumericValues,
     filterPlanetsByName,
     filterPlanetsByNumericValues,
-    removeFilterByNumericValues,
     addColumn,
     removeColumn,
   };
