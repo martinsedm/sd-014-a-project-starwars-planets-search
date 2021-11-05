@@ -19,6 +19,10 @@ function Filters() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
 
+  const newColumnFilters = COLUMN_FILTERS.filter(
+    (filter) => !filters.filterByNumericValues.some((f) => f.column === filter),
+  );
+
   const handleAddFilter = () => {
     setFilters({
       ...filters,
@@ -32,9 +36,7 @@ function Filters() {
       ],
     });
 
-    // reset form
-    setColumn('population');
-    setComparison('maior que');
+    // reset form value
     setValue('');
   };
 
@@ -43,11 +45,7 @@ function Filters() {
     setName(target.value);
   };
 
-  const isDisabled = () => !value;
-
-  const newColumnFilters = COLUMN_FILTERS.filter(
-    (filter) => !filters.filterByNumericValues.some((f) => f.column === filter),
-  );
+  const isDisabled = () => !column && !comparison && !value;
 
   return (
     <>

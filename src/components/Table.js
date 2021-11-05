@@ -19,6 +19,7 @@ const TABLE_HEADERS = [
 
 function Table() {
   const { filters, getPlanets, planets } = useContext(PlanetsContext);
+  const { filterByName, filterByNumericValues } = filters;
 
   useEffect(() => {
     getPlanets();
@@ -26,19 +27,20 @@ function Table() {
   }, []);
 
   const filterPlanetsByName = planets.filter((planet) => {
-    if (filters.filterByName.name) {
+    if (filterByName.name) {
       return planet.name
         .toLowerCase()
-        .includes(filters.filterByName.name.toLowerCase());
-      // Make case insensitive
+        .includes(filterByName.name.toLowerCase());
+      // make case insensitive
     }
     return true;
   });
 
   const filterPlanetsByNumericValues = filterPlanetsByName.filter((planet) => {
-    if (filters.filterByNumericValues.length > 0) {
-      return filters.filterByNumericValues.every((filter) => {
+    if (filterByNumericValues.length > 0) {
+      return filterByNumericValues.every((filter) => {
         const value = Number(planet[filter.column]);
+
         switch (filter.comparison) {
         case 'maior que':
           return value > Number(filter.value);
