@@ -90,7 +90,7 @@ function NumberFilter() {
                     <span key={ value }>{ `${value} ` }</span>
                   ))
               }
-              <button type="button" onClick={ () => removeFilter(0)}>X</button>
+              <button type="button" onClick={ () => removeFilter(0) }>X</button>
             </div>
           )
         }
