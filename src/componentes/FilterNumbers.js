@@ -11,7 +11,7 @@ function FilterNumber() {
     columns,
     resetFilters,
     addColumn,
-    // removeFilterByNumericValues,
+    removeFilterByNumericValues,
     filterPlanetsByNumericValues } = useContext(PlanetContext);
 
   return (
