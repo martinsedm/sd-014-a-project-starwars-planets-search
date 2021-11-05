@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import myContext from '../context/myContext';
 
 function Table() {
+  const [loading, setLoading] = useState(true);
   function capitalizeFirstLetter(string) {
     const words = string.split(' ');
     const capitalize = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
@@ -14,17 +15,24 @@ function Table() {
   const formattedHeaders = headers
     .map((header) => capitalizeFirstLetter(header.replace(/_/g, ' ')));
 
+  useEffect(() => {
+    if (dataFiltered.length !== 0) setLoading(false);
+    if (dataFiltered === 0) setLoading(true);
+  }, [dataFiltered]);
+
   return (
     <table>
       <thead>
         <tr>
-          {formattedHeaders.map((header, i) => (<th key={ i }>{ header }</th>))}
+          {!loading && formattedHeaders.map((header, i) => (
+            <th key={ i }>{ header }</th>))}
         </tr>
       </thead>
       <tbody>
-        {dataFiltered.map((planet, i) => (
+        {!loading && dataFiltered.map((planet, i) => (
           <tr key={ i }>
-            {headers.map((header, indx) => (<td key={ indx }>{planet[header]}</td>))}
+            {headers.map((header) => (
+              <td key={ header + planet.name }>{planet[header]}</td>))}
           </tr>))}
       </tbody>
     </table>

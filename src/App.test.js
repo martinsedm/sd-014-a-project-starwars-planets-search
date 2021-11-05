@@ -213,10 +213,9 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     await act(async () => {
       render(<App />);
     });
-
-    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'surface_water' }});
-    fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'menor que' }});
-    fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '40' }});
+    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'surface_water'}});
+    fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'menor que'}});
+    fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '40'}});
     fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
 
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(7);

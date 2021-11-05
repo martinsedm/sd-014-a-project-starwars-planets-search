@@ -82,7 +82,7 @@ function FilterByStats() {
         {list(rules)}
       </select>
       <input
-        type="value"
+        type="number"
         data-testid="value-filter"
         name="value"
         value={ value }
