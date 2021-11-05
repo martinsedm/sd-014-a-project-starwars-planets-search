@@ -1,9 +1,19 @@
 import React from 'react';
 import './App.css';
+import NameFilter from './components/NameFilter';
+import NumericFilter from './components/NumericFilter';
+import Table from './components/Table';
+import PlanetProvider from './context/PlanetProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <main>
+      <PlanetProvider>
+        <NameFilter />
+        <NumericFilter />
+        <Table />
+      </PlanetProvider>
+    </main>
   );
 }
 
