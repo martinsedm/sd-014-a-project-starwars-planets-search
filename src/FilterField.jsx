@@ -26,7 +26,6 @@ function FilterField() {
 
   const submitFilter = () => {
     const { column, comparison, value } = numFilter;
-    // const parseValue = parseInt(value, 10);
     if (column && comparison && value) {
       // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
       getValueFilter(column, comparison, value);
