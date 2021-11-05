@@ -6,21 +6,31 @@ function NumberFilter() {
     setFilterByNumber,
     renderOptions,
     setRenderOptions,
+    filters,
     filters: { filterByNumericValues },
+    setFilters,
   } = useContext(StarWarsContext);
 
   const isFilter = filterByNumericValues.length > 0;
 
-  const [numberFilters, setNumbernumberFilters] = useState({
+  const [numberFilters, setNumberFilters] = useState({
     column: isFilter && filterByNumericValues[0].column,
     comparison: isFilter && filterByNumericValues[0].comparison,
     value: isFilter && filterByNumericValues[0].value,
   });
 
   const handleChange = (e) => {
-    setNumbernumberFilters({
+    setNumberFilters({
       ...numberFilters,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const removeFilter = (removeIndex) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((_filter, index) => index !== removeIndex),
     });
   };
 
@@ -29,11 +39,11 @@ function NumberFilter() {
       onSubmit={ (e) => {
         e.preventDefault();
         setFilterByNumber(numberFilters);
-        const { columns, comparison: comparisonOptions } = renderOptions;
-        const { column, comparison } = numberFilters;
+        const { columns } = renderOptions;
+        const { column } = numberFilters;
         setRenderOptions({
+          ...renderOptions,
           columns: columns.filter((option) => option !== column),
-          comparison: comparisonOptions.filter((option) => option !== comparison),
         });
       } }
     >
@@ -70,6 +80,21 @@ function NumberFilter() {
         onChange={ handleChange }
       />
       <button type="submit" data-testid="button-filter">Filtrar</button>
+      <fieldset>
+        {
+          isFilter && (
+            <div data-testid="filter">
+              {
+                Object.values(filterByNumericValues[0])
+                  .map((value) => (
+                    <span key={ value }>{ `${value} ` }</span>
+                  ))
+              }
+              <button type="button" onClick={ () => removeFilter(0)}>X</button>
+            </div>
+          )
+        }
+      </fieldset>
     </form>
   );
 }

@@ -37,7 +37,9 @@ function StarWarsProvider({ children }) {
   };
 
   const applyNumberFilter = (column, comparison, value) => {
-    setFilteredData(Object.values(data)
+    const isData = Object.keys(filteredData).length > 0;
+    const dataToRender = isData ? filteredData : data;
+    setFilteredData(Object.values(dataToRender)
       .filter((planet) => {
         switch (comparison) {
         case 'igual a':
@@ -72,6 +74,7 @@ function StarWarsProvider({ children }) {
     applyNumberFilter,
     renderOptions,
     setRenderOptions,
+    setFilters,
   };
 
   return (
