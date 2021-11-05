@@ -8,8 +8,7 @@ function Table() {
   useEffect(() => {
     fetchStarWarsAPI(setResults, setFullResults);
   }, [setFullResults, setResults]);
-  console.log(results);
-  if (results.length === 0) return (<h1>Loading...</h1>);
+  if (results.length === 0) return (<h1>No available planet</h1>);
   return (
     <table>
       <thead>

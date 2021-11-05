@@ -5,11 +5,23 @@ import AppContext from './AppContext';
 function AppProvider({ children }) {
   const [results, setResults] = useState([]);
   const [fullResults, setFullResults] = useState([]);
+  const [filters, setFilters] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('population');
+  const [selectedComparison, setSelectedComparison] = useState('>');
+  const [inputedQuantity, setInputedQuantity] = useState('0');
   const contextValue = {
     results,
     setResults,
     fullResults,
     setFullResults,
+    filters,
+    setFilters,
+    selectedCategory,
+    setSelectedCategory,
+    selectedComparison,
+    setSelectedComparison,
+    inputedQuantity,
+    setInputedQuantity,
   };
 
   return (
