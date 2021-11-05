@@ -11,7 +11,6 @@ function PlanetProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [{ column: 'population', comparison: 'maior que', value: 0 }],
-    // filtersUsed: [],
   });
 
   async function fetchPlanetsList() {
@@ -42,15 +41,21 @@ function PlanetProvider({ children }) {
   useEffect(() => {
     let filteredByNumbers = '';
     const { column, comparison, value } = filters.filterByNumericValues;
-    console.log(comparison)
-    if (comparison === 'maior que') {
+    switch (comparison) {
+    case 'maior que':
       filteredByNumbers = data.filter((item) => (
         parseInt(item[column], 10) > parseInt(value, 10)));
-    } else if ((comparison === 'menor que')) {
+      break;
+    case 'menor que':
       filteredByNumbers = data.filter((item) => (
         parseInt(item[column], 10) < parseInt(value, 10)));
-    } else {filteredByNumbers = data.filter((item) => (
-      parseInt(item[column], 10) === parseInt(value, 10)));
+      break;
+    case 'igual a':
+      filteredByNumbers = data.filter((item) => (
+        parseInt(item[column], 10) === parseInt(value, 10)));
+      break;
+    default:
+      break;
     }
     setFilteredPlanets(filteredByNumbers);
   }, [filters]);
