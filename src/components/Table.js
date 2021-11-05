@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-const tableHeaders = [
+const TABLE_HEADERS = [
   'Name',
   'Rotation Period',
   'Orbital Period',
@@ -25,10 +25,31 @@ function Table() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const planetsToDisplay = planets.filter((planet) => {
-    if (filters.name) {
-      return planet.name.toLowerCase().includes(filters.name.toLowerCase());
+  const filterPlanetsByName = planets.filter((planet) => {
+    if (filters.filterByName.name) {
+      return planet.name
+        .toLowerCase()
+        .includes(filters.filterByName.name.toLowerCase());
       // Make case insensitive
+    }
+    return true;
+  });
+
+  const filterPlanetsByNumericValues = filterPlanetsByName.filter((planet) => {
+    if (filters.filterByNumericValues.length > 0) {
+      return filters.filterByNumericValues.every((filter) => {
+        const value = Number(planet[filter.column]);
+        switch (filter.comparison) {
+        case 'maior que':
+          return value > Number(filter.value);
+        case 'menor que':
+          return value < Number(filter.value);
+        case 'igual a':
+          return value === Number(filter.value);
+        default:
+          return true;
+        }
+      });
     }
     return true;
   });
@@ -37,13 +58,13 @@ function Table() {
     <table>
       <thead>
         <tr>
-          {tableHeaders.map((tableHeader) => (
+          {TABLE_HEADERS.map((tableHeader) => (
             <th key={ tableHeader }>{tableHeader}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {planetsToDisplay.map((planet) => (
+        {filterPlanetsByNumericValues.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

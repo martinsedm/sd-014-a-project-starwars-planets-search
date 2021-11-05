@@ -6,7 +6,12 @@ const { Provider } = PlanetsContext;
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function PlanetsProvider({ children }) {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  });
   const [planets, setPlanets] = useState([]);
 
   const getPlanets = async () => {
