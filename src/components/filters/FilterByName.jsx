@@ -31,14 +31,17 @@ export default function FilterByName() {
   }, [filterOptions, planets, setFilteredPlanets]);
 
   return (
-    <input
-      type="text"
-      name="nome"
-      id="nome"
-      placeholder="Filtrar por nome:"
-      onChange={ handleChange }
-      value={ filterOptions.filters.filterByName.name }
-      data-testid="name-filter"
-    />
+    <>
+      <h2>Filtro por nome:</h2>
+      <input
+        type="text"
+        name="nome"
+        id="nome"
+        placeholder="Digite aqui"
+        onChange={ handleChange }
+        value={ filterOptions.filters.filterByName.name }
+        data-testid="name-filter"
+      />
+    </>
   );
 }
