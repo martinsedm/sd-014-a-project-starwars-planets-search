@@ -6,7 +6,7 @@ function CategorySelect() {
   const fullSelectOptionsList = ['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
   const selectOptionsList = fullSelectOptionsList.filter((category) => (
-    !filters.includes(category.value)
+    !filters.includes(category)
   ));
   if (selectOptionsList.length === 0) return <h3>No category available</h3>;
   return (
