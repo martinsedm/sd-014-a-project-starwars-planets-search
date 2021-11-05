@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Days+One&display=swap');
+@import 'https://fonts.googleapis.com/css2?family=Days+One&display=swap';
 
 body {
   background-image: url('./images/star-wars-backgrounds-08.jpg');
@@ -8,11 +8,11 @@ body {
 
 header {
   align-items: center;
-  background-color: #000, 0.3;
+  background-color: black , 0.3;
   color: rgb(255, 232, 31);
   display: flex;
   flex-direction: column;
-  font-family: Days One, sans-serif;
+  font-family: Days One , sans-serif;
   font-size: 10pt;
   justify-content: center;
   margin-top: 20px;
@@ -58,9 +58,9 @@ form {
 
 table {
   background-color: rgb(255, 255, 255, 0.35);
-  border: 2px solid #FFF;
+  border: 2px solid white;
   border-collapse: collapse;
-  font-family: Days One, sans-serif;
+  font-family: Days One , sans-serif;
   font-size: 8pt;
   margin-left: 100px;
   margin-right: 100px;
@@ -68,7 +68,7 @@ table {
 }
 
 table td, table th {
-  border: 1px solid #FFF;
+  border: 1px solid white;
   padding: 3px;
 }
 
@@ -81,7 +81,7 @@ table thead th {
   border-left: 2px solid #333;
   color: #333;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -92,4 +92,5 @@ table thead th:first-child {
 table tfoot td {
   font-size: 14px;
 }
+
 /* https://divtable.com/table-styler/ */
