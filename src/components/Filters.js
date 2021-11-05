@@ -31,6 +31,8 @@ function Filters() {
         },
       ],
     });
+
+    // reset form
     setColumn('population');
     setComparison('maior que');
     setValue('');
@@ -41,7 +43,11 @@ function Filters() {
     setName(target.value);
   };
 
-  const isDisabled = () => !column || !comparison || !value;
+  const isDisabled = () => !value;
+
+  const newColumnFilters = COLUMN_FILTERS.filter(
+    (filter) => !filters.filterByNumericValues.some((f) => f.column === filter),
+  );
 
   return (
     <>
@@ -55,7 +61,7 @@ function Filters() {
       <SelectFilter
         dataTestId="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
-        options={ COLUMN_FILTERS }
+        options={ newColumnFilters }
         value={ column }
       />
       <SelectFilter
