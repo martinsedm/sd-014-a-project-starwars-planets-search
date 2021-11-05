@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import SearchHeader from './SearchHeader';
+import ActiveFilters from './ActiveFilters';
 
 function Table() {
   const {
@@ -27,6 +28,7 @@ function Table() {
   return (
     <>
       <SearchHeader />
+      <ActiveFilters />
       <table>
         <thead>
           <tr>

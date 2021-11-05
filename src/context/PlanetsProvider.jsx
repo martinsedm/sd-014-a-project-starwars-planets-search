@@ -14,7 +14,7 @@ function PlanetsProvider({ children }) {
   );
 
   const filterPlanets = () => {
-    let planetsToRender = planets;
+    let planetsToRender = [...planets];
     const { filterByName, filterByNumericValue } = filters;
 
     if (filterByName.name.length) {

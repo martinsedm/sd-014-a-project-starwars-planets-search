@@ -35,9 +35,9 @@ export default function SearchHeader() {
       >
         { columns.filter((option) => {
           const selectedFilters = filterByNumericValue
-            .map(({ column: activeFilter }) => activeFilter);
+            .map(({ column: activeFilter }) => activeFilter); // faz um map com todos os filtros ativos
 
-          return !selectedFilters.includes(option);
+          return !selectedFilters.includes(option); // verifica se a option já está selecionada
         }).map((option) => (
           <option key={ option } value={ option }>
             { option }
