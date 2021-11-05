@@ -12,29 +12,32 @@ class StarwarsProvider extends React.Component {
       keys: [],
       values: [],
       isFetching: false,
+      filters: {},
     };
     this.getAPI = this.getAPI.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     this.getAPI();
   }
 
+  handleChange(e) {
+    const { rawData } = this.state;
+    if (e.target.value !== undefined) {
+      this.setState({ filters: { filterByName: { name: e.target.value } } });
+      const filtered = rawData.filter((element) => (
+        element.name.includes(e.target.value)));
+      this.setState({ data: filtered });
+    }
+  }
+
   getAPI() {
-    // onde aprendi a omitir o residents com o spread
-    // https://codeburst.io/use-es2015-object-rest-operator-to-omit-properties-38a3ecffe90
-    const values = [];
     this.setState({ isFetching: true }, async () => {
       const { results } = await fetchStarwarsAPI();
-      results.map(({ residents, ...key }) => {
-        values.push(Object.values(key));
-        return this.setState({
-          data: results,
-          keys: Object.keys(key),
-          values,
-          isFetching: false,
-        });
-      });
+      this.setState({ data: results });
+      this.setState({ rawData: results });
+      this.setState({ isFetching: false });
     });
   }
 
@@ -44,6 +47,7 @@ class StarwarsProvider extends React.Component {
       <StarwarsContext.Provider
         value={ {
           ...this.state,
+          handleChange: this.handleChange,
         } }
       >
         {children}
@@ -54,7 +58,7 @@ class StarwarsProvider extends React.Component {
 }
 
 StarwarsProvider.propTypes = {
-  children: PropTypes.shape([]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default StarwarsProvider;

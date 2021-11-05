@@ -1,39 +1,47 @@
 import React, { useContext } from 'react';
-import StarWarsContext from '../context/StarwarsContext';
+import StarwarsContext from '../context/StarwarsContext';
 
 function mappingBody(element) {
-  return element.map((value) => (
-    <td key={ value }>
-      {value}
-    </td>
+  return element.map(([key, value]) => (
+    key !== 'residents'
+    && (
+      <td key={ key }>
+        {value}
+      </td>
+    )
   ));
 }
 
 function mappingHeader(element) {
-  return element.map((value) => (
-    <th key={ value }>
-      {value}
-    </th>
+  return element.map((key) => (
+    key !== 'residents'
+     && (
+       <th key={ key }>
+         {key}
+       </th>
+     )
   ));
 }
 
 function Table() {
-  const { keys, values, isFetching } = useContext(StarWarsContext);
+  const { isFetching, data } = useContext(StarwarsContext);
   return !isFetching ? (
     <section id="table-elements">
       <table>
         <thead>
           <tr>
-            {mappingHeader(keys)}
+            { data[0]
+            && mappingHeader(Object.keys(data[0])) }
           </tr>
         </thead>
         <tbody>
 
-          {values.map((element, i) => (
-            <tr key={ i }>
-              {mappingBody(element)}
-            </tr>
-          ))}
+          {data
+            .map((element, i) => (
+              <tr key={ i }>
+                {mappingBody(Object.entries(element))}
+              </tr>
+            ))}
 
         </tbody>
       </table>
