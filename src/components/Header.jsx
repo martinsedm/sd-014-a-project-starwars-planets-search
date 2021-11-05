@@ -13,26 +13,20 @@ export default function Header() {
     setComparison,
     setNumber,
     setNumericValues,
+    removeSelectedColumn,
     filters,
+    columnOptions,
   } = useContext(AppContext);
 
-  const columnOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
 
   const comparisonOptions = [
     'maior que',
     'menor que',
     'igual a',
   ];
-
-  useEffect(() => {
-    console.log(filters.filterByNumericValues);
-  }, [filters]);
 
   if (loading) return <Loading />;
   return (
@@ -84,7 +78,10 @@ export default function Header() {
         type="button"
         className="mx-3 px-2 py-1 bg-blue-400 rounded-md text-black"
         data-testid="button-filter"
-        onClick={ () => setNumericValues() }
+        onClick={ () => {
+          setNumericValues();
+          removeSelectedColumn();
+        } }
       >
         Filtrar
       </button>

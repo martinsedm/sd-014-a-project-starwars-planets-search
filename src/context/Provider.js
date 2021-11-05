@@ -5,9 +5,20 @@ import AppContext from './AppContext';
 import fetchData from '../services/fetchData';
 
 export default function Provider({ children }) {
+  // DOM
+  // const columnFilter = document.getElementById('column-filter');
+
+  // ESTADOS
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [column, setColumn] = useState('population');
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState(0);
   const [filters, setFilters] = useState({
@@ -33,6 +44,7 @@ export default function Provider({ children }) {
       filterByName: { name },
     });
   }
+
   useEffect(() => {
     const { filterByNumericValues } = filters;
     if (filterByNumericValues.length > 0) {
@@ -48,11 +60,11 @@ export default function Provider({ children }) {
         filtered = data.filter((planet) => Number(planet[column]) === number);
         break;
       default:
-        console.log('opção não esperada');
-        break;
+        throw new Error('Essa opção não existe!');
       }
       setData([...filtered]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByNumericValues]);
 
   function setNumericValues() {
@@ -60,6 +72,12 @@ export default function Provider({ children }) {
       ...filters,
       filterByNumericValues: [{ column, comparison, number }],
     });
+  }
+
+  function removeSelectedColumn() {
+    const filteredOptions = columnOptions
+      .filter((columnOption) => columnOption !== column);
+    setColumnOptions(filteredOptions);
   }
 
   const context = { data,
@@ -73,6 +91,8 @@ export default function Provider({ children }) {
     number,
     setData,
     setNumericValues,
+    removeSelectedColumn,
+    columnOptions,
   };
 
   return (
