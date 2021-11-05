@@ -72,9 +72,8 @@ function FilterByNumber() {
       );
     };
     filterByNumber();
-    console.log('loop');
-  }, [columnValue, comparisonValue, filterOptions, numValue, planets,
-    setFilteredPlanets]);
+  }, [columnValue, comparisonValue, numValue, planets,
+    setFilteredPlanets, filterOptions.filters.filterByNumericValues]);
 
   return (
     <>
