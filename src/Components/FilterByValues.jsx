@@ -27,7 +27,6 @@ function FilterByValues() {
   };
 
   const handleClick = () => {
-    console.log(filterByNumericValues[filterByNumericValues.length - 1]);
     setFilters([
       ...filterByNumericValues,
       filter,
