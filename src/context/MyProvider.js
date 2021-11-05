@@ -4,11 +4,12 @@ import myContext from './myContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([{}]);
-  const [dataFiltered, setDataFiltered] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState(data);
   const [filter, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -17,6 +18,7 @@ function MyProvider({ children }) {
     const dataResponseJson = await dataResponse.json();
     const { results } = dataResponseJson;
     setData(results);
+    setDataFiltered(results);
   };
 
   useEffect(() => {
@@ -25,13 +27,50 @@ function MyProvider({ children }) {
 
   const byName = (name) => {
     setFilters({
+      ...filter,
       filterByName: {
         name,
       },
     });
     const filteredNames = data.filter((planet) => planet.name.includes(name));
     setDataFiltered(filteredNames);
-    if (name === '') setDataFiltered([]);
+  };
+
+  const byStats = (column, comparison, value) => {
+    setFilters({
+      ...filter,
+      filterByNumericValues: [
+        ...filter.filterByNumericValues,
+        {
+          column,
+          comparison,
+          value,
+        }],
+    });
+
+    const filteredStats = dataFiltered.filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return (Number(planet[column]) > Number(value));
+      case 'menor que':
+        return (Number(planet[column]) < Number(value));
+      case 'igual a':
+        return (Number(planet[column]) === Number(value));
+      default:
+        return true;
+      }
+    });
+
+    setDataFiltered(filteredStats);
+  };
+
+  const removeFIlters = (column) => {
+    setDataFiltered(data);
+    setFilters({
+      ...filter,
+      filterByNumericValues:
+        filter.filterByNumericValues.filter((f) => f.column !== column),
+    });
   };
 
   const context = {
@@ -39,6 +78,8 @@ function MyProvider({ children }) {
     filter,
     filterFuncs: {
       byName,
+      byStats,
+      removeFIlters,
     },
     dataFiltered,
   };
