@@ -2,8 +2,18 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 
+const INITIAL_COLUMN = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [columns, setColumns] = useState(INITIAL_COLUMN);
+
   const filter = {
     filtersByName: '',
     filterByNumericValues: [],
@@ -31,20 +41,25 @@ function StarWarsProvider({ children }) {
     }
   };
 
+  const removeColumn = (column) => {
+    setColumns(columns.filter((item) => item !== column));
+  };
+
   const filtersByNumeric = (column, comparison, value) => {
+    removeColumn(column);
     if (column && comparison && value) {
       const filtered = data.filter((planet) => {
-        const filterIndex = Number(planet[column]);
+        const filterElement = Number(planet[column]);
         if (comparison === 'maior que') {
-          return filterIndex > Number(value);
+          return filterElement > Number(value);
         }
         if (comparison === 'menor que') {
-          return filterIndex < Number(value);
+          return filterElement < Number(value);
         }
         if (comparison === 'igual a') {
-          return filterIndex === Number(value);
+          return filterElement === Number(value);
         }
-        return filterIndex;
+        return filterElement;
       });
       setData(filtered);
     } else {
@@ -55,9 +70,11 @@ function StarWarsProvider({ children }) {
   const context = {
     data,
     filters,
+    columns,
     setFilters,
     filtersByName,
     filtersByNumeric,
+    removeColumn,
   };
   return (
     <PlanetsContext.Provider value={ context }>
