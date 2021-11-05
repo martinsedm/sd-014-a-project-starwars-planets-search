@@ -31,6 +31,7 @@ function SortContext() {
           data-testid="column-sort-input-asc"
           id="ASC"
           value="ASC"
+          name="asc-desc"
           onChange={ (e) => { setSort(e.target.value); } }
         />
       </label>
@@ -41,6 +42,7 @@ function SortContext() {
           data-testid="column-sort-input-desc"
           id="DESC"
           value="DESC"
+          name="asc-desc"
           onChange={ (e) => { setSort(e.target.value); } }
         />
       </label>
