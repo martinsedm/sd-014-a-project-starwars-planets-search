@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import '../css/Header.css';
 
-const Filter = () => {
+const Search = () => {
   const { filter: { filterByName: { name } },
     setFilter, filter, filterByName } = useContext(StarWarsContext);
 
@@ -12,16 +12,13 @@ const Filter = () => {
   };
 
   return (
-    <>
-      {console.log(name, 'name')}
-      <input
-        className="input"
-        value={ name }
-        onChange={ handleSearch }
-        data-testid="name-filter"
-      />
-    </>
+    <input
+      className="input"
+      value={ name || '' }
+      onChange={ handleSearch }
+      data-testid="name-filter"
+    />
   );
 };
 
-export default Filter;
+export default Search;

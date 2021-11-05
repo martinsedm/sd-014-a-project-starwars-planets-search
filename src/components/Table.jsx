@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import '../css/Table.css';
+import Loading from './Loading';
 
 const Table = () => {
   const { data, filter, planetsByFilter,
-    setPlanetsByFilter } = useContext(StarWarsContext);
-  const [titles, setTitles] = useState();
+    setPlanetsByFilter, titles, setTitles, newData, isLoading,
+  } = useContext(StarWarsContext);
 
   useEffect(() => setTitles(Object.keys({ ...data[0] })
-    .filter((title) => title !== 'residents')), [data, planetsByFilter]);
+    .filter((title) => title !== 'residents')), [data, planetsByFilter, setTitles]);
 
   const trTitles = () => titles
     .filter((title) => title !== 'residents')
     .map((title) => title.replace(/_/g, ' '))
     .map((title) => title[0].toUpperCase() + title.slice(1))
     // <Refência: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript>
-    .map((title) => <th className="th" key={ title }>{title}</th>);
+    .map((title, index) => <th className="th" key={ index }>{title}</th>);
 
   const fullPlanets = (listPlanets) => listPlanets.map((planet) => (
-    <tr key={ planet }>
+    <tr key={ planet.name }>
       { titles.map((title) => <td className="td" key={ title }>{planet[title]}</td>)}
     </tr>
   ));
@@ -30,7 +31,8 @@ const Table = () => {
         fullPlanets(planetsByFilter)
       );
     }
-    return fullPlanets(data);
+    if (newData) return fullPlanets(newData);
+    return titles && fullPlanets(data);
   };
 
   useEffect(() => {
@@ -42,12 +44,11 @@ const Table = () => {
     <table className="table">
       <thead>
         <tr>
-          { console.log(planetsByFilter, 'planetsByFilter') }
-          { titles && (trTitles()) }
+          { isLoading ? <Loading /> : trTitles() }
         </tr>
       </thead>
       <tbody>
-        { titles && (renderPlanets()) }
+        { renderPlanets() }
       </tbody>
     </table>
   );
