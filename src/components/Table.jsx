@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import ContextPlanet from '../Context/ContextPlanet';
 
 export default function Table() {
-  const { data, loading, filters } = useContext(ContextPlanet);
+  const { data, loading, filters, planetsFiltered } = useContext(ContextPlanet);
   const { filterByName } = filters;
   if (!data) return null;
   if (loading) return <p>Loading...</p>;
-  // Logica do Filipe Brochier <3
-  const filteredData = data.filter((planet) => {
+  const blyMonstraoDoCSGO = planetsFiltered.length !== 0 ? planetsFiltered : data;
+  // Logica do Filipe Brochier feat Bly <3
+  const filteredData = blyMonstraoDoCSGO.filter((planet) => {
     if (filterByName !== '') {
       return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
     }
