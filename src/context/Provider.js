@@ -5,11 +5,16 @@ import fetchPlanetsApi from '../services/planetsApi';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   });
 
@@ -27,6 +32,12 @@ function Provider({ children }) {
     setData,
     filter,
     setFilter,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
   };
 
   return (

@@ -8,6 +8,7 @@ function FilterName() {
   // função que recebe o valor digitado no input e salva na variável name
   const handleChange = ({ target }) => {
     const { value } = target;
+
     setFilter({
       ...filter, // itens salvos em filter até o momento
       filters: {
@@ -20,14 +21,16 @@ function FilterName() {
 
   return (
     <div>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder="Filtrar por nome"
-        data-testid="name-filter"
-        onChange={ handleChange }
-      />
+      <label htmlFor="name">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Filtrar por nome"
+          data-testid="name-filter"
+          onChange={ handleChange }
+        />
+      </label>
     </div>
   );
 }
