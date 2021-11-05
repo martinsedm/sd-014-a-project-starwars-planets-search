@@ -7,9 +7,11 @@ function DataContextProvider({ children }) {
   const [apiData, setData] = useState();
   const [filteredData, setFilteredData] = useState();
   const [nameText, setNameText] = useState('');
+  const [numericValue, setNumericValue] = useState([]);
   const filters = {
     filters: {
       nameFilter: nameText,
+      FilterByNumber: numericValue,
     },
   };
 
@@ -34,6 +36,8 @@ function DataContextProvider({ children }) {
         setNameText,
         filteredData,
         setFilteredData,
+        numericValue,
+        setNumericValue,
         filters,
       } }
     >
@@ -60,6 +64,11 @@ export function useFilters() {
 export function useNameFilter() {
   const { nameText, setNameText } = useContext(DataContext);
   return { nameText, setNameText };
+}
+
+export function useNumberFilter() {
+  const { numericValue, setNumericValue } = useContext(DataContext);
+  return { numericValue, setNumericValue };
 }
 
 DataContextProvider.propTypes = {

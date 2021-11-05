@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNameFilter } from '../context/DataContext';
 
-export default function Filter() {
+export default function FilterByText() {
   const { nameText, setNameText } = useNameFilter();
 
   return (
