@@ -14,10 +14,18 @@ function FilterTable() {
     setComparison,
     value,
     setValue,
+    options,
+    setOptions,
   } = useContext(PlanetsContext);
 
+  // Req.4: função atualiza variável options retirando a column selecionada
+  const filterOptions = () => {
+    const filterOption = options.filter((option) => option !== column);
+    setOptions(filterOption);
+  };
+
   // Req. 3: função que executa o filtro
-  const filterNumeric = () => {
+  const filterNumeric = async () => {
     let dataFilterNumeric;
 
     if (comparison === 'maior que') {
@@ -32,6 +40,7 @@ function FilterTable() {
     }
 
     setData(dataFilterNumeric); // salva em data os valores com filtro
+    await filterOptions();
   };
 
   // função acionada ao clicar no botão filtrar
@@ -62,11 +71,14 @@ function FilterTable() {
           onChange={ (element) => setColumn(element.target.value) } // Função salva opção selecionada na variável column
           data-testid="column-filter"
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option
+              key={ option }
+              value={ option }
+            >
+              { option }
+            </option>
+          )) }
         </select>
         <select
           name="comparison"
