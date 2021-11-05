@@ -2,49 +2,91 @@ import React, { useContext, useState } from 'react';
 import myContext from '../MyContext/MyContext';
 import '../styles/table.css';
 import Loading from './Loading';
+import labelSelectOpt, { labelSelectComp,
+  tableInfos,
+  selectFilter,
+} from '../htmlFunctions/formFunc';
+
+const NOME = 'name';
 
 function Table() {
   const { planets, loading, filtros, setFiltros } = useContext(myContext);
-  const [isFilter, setIsFilter] = useState(false);
-  const { filters: { filterByName } } = filtros;
-  const nome = 'name';
+  const [isClicked, setIsClicked] = useState(false);
+  const [options, setOptions] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [number, setNumber] = useState(0);
+  const { filters } = filtros;
+  const numeric = filtros.filters.filterByNumericValues;
 
   const handleTextFilter = (event) => {
+    const { filters: { filterByNumericValues } } = filtros;
     const stateFilter = {
       filters: {
         filterByName: {
-          name: event.target.value,
+          [NOME]: event.target.value,
         },
+        filterByNumericValues,
       },
     };
     setFiltros(stateFilter);
-    setIsFilter(true);
   };
 
-  const renderAllPlanets = () => (
-    planets.map((planeta, index) => (
-      <tr key={ index }>
-        <td>{ planeta.name }</td>
-        <td>{ planeta.rotation_period }</td>
-        <td>{ planeta.orbital_period }</td>
-        <td>{ planeta.diameter }</td>
-        <td>{ planeta.climate }</td>
-        <td>{ planeta.gravity }</td>
-        <td>{ planeta.terrain }</td>
-        <td>{ planeta.surface_water }</td>
-        <td>{ planeta.population }</td>
-        <td>{ planeta.films }</td>
-        <td>{ planeta.created }</td>
-        <td>{ planeta.edited }</td>
-        <td>{ planeta.url }</td>
-      </tr>
-    ))
-  );
+  const handleOpt = (event) => {
+    setOptions(event.target.value);
+  };
+
+  const handleComparison = (event) => {
+    setComparison(event.target.value);
+  };
+
+  const handleNumber = (event) => {
+    setNumber(event.target.value);
+  };
+
+  const handleClick = () => {
+    const newFilter = {
+      column: options,
+      comparison,
+      value: number,
+    };
+
+    numeric.push(newFilter);
+
+    const columnSelect = document.getElementById('column');
+    columnSelect.childNodes.forEach((child) => {
+      if (child.value === options) { child.remove(); }
+    });
+
+    setIsClicked(true);
+  };
+
+  const nameFilter = () => {
+    const nameFiltering = planets
+      .filter((plt) => plt.name.includes(filters.filterByName[NOME]))
+      .map((planeta, index) => (
+        tableInfos(planeta, index)
+      ));
+    return nameFiltering;
+  };
 
   return (
     loading ? <Loading /> : (
       <main>
         <input type="text" data-testid="name-filter" onChange={ handleTextFilter } />
+        <form>
+          {labelSelectOpt(handleOpt)}
+          {labelSelectComp(handleComparison)}
+
+          <input type="number" data-testid="value-filter" onChange={ handleNumber } />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ handleClick }
+          >
+            Filtrar
+          </button>
+        </form>
+
         <table>
           <thead>
             <tr>
@@ -60,25 +102,9 @@ function Table() {
           </thead>
 
           <tbody>
-            { isFilter ? planets.filter((plt) => plt.name.includes(filterByName[nome]))
-              .map((planeta, index) => (
-                <tr key={ index }>
-                  <td>{ planeta.name }</td>
-                  <td>{ planeta.rotation_period }</td>
-                  <td>{ planeta.orbital_period }</td>
-                  <td>{ planeta.diameter }</td>
-                  <td>{ planeta.climate }</td>
-                  <td>{ planeta.gravity }</td>
-                  <td>{ planeta.terrain }</td>
-                  <td>{ planeta.surface_water }</td>
-                  <td>{ planeta.population }</td>
-                  <td>{ planeta.films }</td>
-                  <td>{ planeta.created }</td>
-                  <td>{ planeta.edited }</td>
-                  <td>{ planeta.url }</td>
-                </tr>
-              ))
-              : renderAllPlanets() }
+
+            { isClicked ? selectFilter(planets,
+              comparison, options, number) : nameFilter() }
 
           </tbody>
         </table>

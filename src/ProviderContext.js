@@ -3,18 +3,24 @@ import PropTypes from 'prop-types';
 import myContext from './MyContext/MyContext';
 import planetsAPI from './Services/planetsAPI';
 
+const stateFilter = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: 0,
+      },
+    ],
+  },
+};
+
 function ProviderContext({ children }) {
   const [planets, setPlanets] = useState();
   const [loading, setLoading] = useState(true);
-
-  const stateFilter = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  };
-
   const [filtros, setFiltros] = useState(stateFilter);
 
   const fetchPlanets = async () => {
