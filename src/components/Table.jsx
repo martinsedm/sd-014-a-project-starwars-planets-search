@@ -4,7 +4,30 @@ import Row from './Row';
 
 export default function Table() {
   const [isLoading, setIsLoading] = useState(false);
-  const [funcfetch, planets] = useContext(MainContext);
+
+  const {
+    allPlanets,
+    funcfetch,
+    filters,
+    applyFilters,
+  } = useContext(MainContext);
+
+  const filtroName = (alp) => {
+    return alp.filter((planeta) => planeta.name.includes(filters.filterByName.name));
+  };
+
+  const planetsFilter = () => {
+    let planetFName;
+    const flitName = filters.filterByName.name;
+    if (flitName.length > 0) {
+      planetFName = filtroName(allPlanets);
+    } else {
+      planetFName = allPlanets;
+    }
+    return planetFName;
+  };
+
+  // console.log(planetsFilter());
 
   const headerDaTabela = [
     'Name',
@@ -24,7 +47,8 @@ export default function Table() {
 
   useEffect(() => {
     setIsLoading(true);
-    funcfetch().then(() => setIsLoading(false));
+    funcfetch()
+      .then(() => setIsLoading(false));
   }, []);
 
   return (
@@ -40,8 +64,8 @@ export default function Table() {
       </thead>
       <tbody>
         {
-          !isLoading && planets
-            .map((records) => <Row key={ records } records={ records } />)
+          !isLoading && planetsFilter()
+            .map((records) => <Row key={ records.diameter } records={ records } />)
         }
       </tbody>
     </table>

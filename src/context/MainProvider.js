@@ -4,17 +4,32 @@ import MainContext from './MainContext';
 import getPlanetsAPI from '../API/starwarsPlanetAPI';
 
 function MainProvider({ children }) {
-  const [planets, setplanets] = useState([]);
+  const [allPlanets, setAllPlanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
+  });
 
   const funcfetch = async () => {
     const { results } = await getPlanetsAPI();
-    setplanets(results);
+    setAllPlanets(results);
   };
 
-  const enviar = [
+  const enviar = {
     funcfetch,
-    planets,
-  ];
+    allPlanets,
+    setAllPlanets,
+    filters,
+    setFilters,
+  };
 
   return (
     <MainContext.Provider value={ enviar }>
@@ -24,7 +39,7 @@ function MainProvider({ children }) {
 }
 
 MainProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default MainProvider;
