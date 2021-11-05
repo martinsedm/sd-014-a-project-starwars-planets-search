@@ -4,11 +4,12 @@ import '../App.css';
 import FilterByName from '../components/FilterByName';
 import filterContext from '../context/filterContext';
 import FilterByNum from '../components/FIlterByNum';
+import Table from '../components/Table';
+import LineFilter from '../components/LineFilter';
+import SortContext from '../components/SortContent';
 
 function Home() {
-  const { setData, setDataFilt, dataFilt } = useContext(filterContext);
-
-  const indexResidents = 9;
+  const { setData, setDataFilt } = useContext(filterContext);
 
   useEffect(() => {
     getApiStarWars('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -22,37 +23,13 @@ function Home() {
       <h1>Projeto Star Wars - Trybe</h1>
       <FilterByName />
       <br />
-      <FilterByNum />
-      <table>
-        <thead>
-          <tr>
-            { dataFilt.length > 0
-          && Object.keys(dataFilt[0]).map((item) => (
-            item !== 'residents'
-            && (
-              <th key={ item }>
-                {item.split('_').join(' ')}
-              </th>
-            )
-          ))}
-          </tr>
-        </thead>
-        <tbody>
-          {dataFilt.length > 0
-        && dataFilt.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.values(planet).map((value, i) => (
-              i !== indexResidents
-              && (
-                <td key={ i }>
-                  {value}
-                </td>
-              )
-            ))}
-          </tr>
-        ))}
-        </tbody>
-      </table>
+      <div>
+        <FilterByNum />
+        <SortContext />
+      </div>
+      <br />
+      <LineFilter />
+      <Table />
     </div>
   );
 }

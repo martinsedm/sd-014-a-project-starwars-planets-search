@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import filterContext from '../context/filterContext';
-import LineFilter from './LineFilter';
 
 const FilterByNum = () => {
   const {
@@ -54,8 +53,7 @@ const FilterByNum = () => {
       >
         Filtrar
       </button>
-      <br />
-      <LineFilter />
+
     </>
   );
 };

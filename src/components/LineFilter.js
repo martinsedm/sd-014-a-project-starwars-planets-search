@@ -19,7 +19,7 @@ function LineFilter() {
         (col, comp, value) => handleClick(col, comp, value),
       );
     } else {
-      handleClick(false, false, false);
+      handleClick(false);
     }
     setFilters(filt);
   };

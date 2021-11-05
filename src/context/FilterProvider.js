@@ -20,7 +20,15 @@ function FilterProvider(props) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
+
+  const [sort, setSort] = useState('ASC');
+  const [columnState, setColumnState] = useState('name');
+
   const retAPi = [...dataFilt];
   const { children } = props;
 
@@ -68,7 +76,30 @@ function FilterProvider(props) {
     setSelectColumns(newCols);
   };
 
+  const sortPlanets = dataFilt.sort((a, b) => {
+    let first = a[columnState];
+    let second = b[columnState];
+    if (columnState === 'orbital_period') {
+      first = Number(first);
+      second = Number(second);
+    }
+    const NumberComparation = -1;
+    switch (sort) {
+    case 'ASC':
+      return first > second ? 1 : NumberComparation;
+    case 'DESC':
+      return first < second ? 1 : NumberComparation;
+    default:
+      return 0;
+    }
+  });
+
   const filtroEApi = {
+    sortPlanets,
+    sort,
+    setSort,
+    columnState,
+    setColumnState,
     dataFilt,
     setDataFilt,
     selectColumns,
