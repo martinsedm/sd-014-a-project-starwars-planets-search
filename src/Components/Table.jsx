@@ -10,8 +10,10 @@ function Table() {
         name,
       },
     },
+    filters,
   } = useContext(Context);
-  console.log(name);
+
+  console.log(name, filters);
   return (
     <table>
       <thead>

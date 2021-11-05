@@ -16,7 +16,7 @@ function useFetch() {
         setLoaded(true);
       });
   }, []);
-  return [data, loaded];
+  return [data, setData, loaded];
 }
 
 // Obrigado ao querido @LuizFJP.

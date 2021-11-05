@@ -4,11 +4,32 @@ import Context from './Context';
 import useFetch from '../Hooks/useFetch';
 
 const Provider = ({ children }) => {
-  const [data, loaded] = useFetch();
+  const [data, setData, loaded] = useFetch();
   const [name, setName] = useState('');
   const [filters, setFilters] = useState([]);
+
+  const filterFunction = ({ comparison, column, value }) => {
+    switch (comparison) {
+    case 'maior que':
+      return setData(data.filter((planet) => (
+        Number(planet[column]) > Number(value)
+      )));
+    case 'menor que':
+      return setData(data.filter((planet) => (
+        Number(planet[column]) < Number(value)
+      )));
+    case 'igual a':
+      return setData(data.filter((planet) => (
+        Number(planet[column]) === Number(value)
+      )));
+    default:
+      return null;
+    }
+  };
+
   const contextValue = {
     data,
+    setData,
     loaded,
     setName,
     setFilters,
@@ -18,6 +39,7 @@ const Provider = ({ children }) => {
       },
       filterByNumericValues: filters,
     },
+    filterFunction,
   };
 
   return (
