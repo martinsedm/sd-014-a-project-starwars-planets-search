@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
+import '../styles/PlanetsTable.css';
+
 function PlanetsTable() {
   const { planets, loading } = useContext(PlanetsContext);
 
   if (loading) return <p>Loading...</p>;
 
   return (
-    <table>
+    <table className="planets-table">
       <thead>
         <tr>
           <th>Name</th>
