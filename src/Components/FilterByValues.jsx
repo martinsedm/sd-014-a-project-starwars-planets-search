@@ -2,14 +2,17 @@ import React, { useState, useContext } from 'react';
 import Context from '../Context/Context';
 
 function FilterByValues() {
-  const { filterFunction, setData, data, filters: { filterByNumericValues }, setFilters } = useContext(Context);
+  const {
+    filterFunction,
+    filters: { filterByNumericValues },
+    setFilters,
+  } = useContext(Context);
+
   const [filter, setFilter] = useState({
     column: 'population',
     comparison: 'maior que',
     value: 0,
   });
-  const [filtered, setFiltered] = useState([]);
-  console.log(filtered);
 
   const columnArray = [
     'population',
