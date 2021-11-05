@@ -5,18 +5,18 @@ import fetchPlanets from '../services/fetchPlanets';
 import PlanetsContext from './PlanetsContext';
 
 export default function PlanetsProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
   const [renderPlanets, setRenderPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState(INITIAL_STATE);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('100000');
+  const [value, setValue] = useState('0');
   const [columnOptions, setColumnOptions] = useState(INITIAL_COLUMNS);
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
-    setPlanets(results);
+    setData(results);
     setRenderPlanets(results);
     setIsLoading(false);
   };
@@ -27,7 +27,7 @@ export default function PlanetsProvider({ children }) {
 
   const handleChange = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
-    const filteredPlanets = planets.filter((planet) => (
+    const filteredPlanets = data.filter((planet) => (
       planet.name.toLowerCase().includes(target.value)));
     setRenderPlanets(filteredPlanets);
   };
@@ -75,11 +75,11 @@ export default function PlanetsProvider({ children }) {
       filterByNumericValues:
         filters.filterByNumericValues.filter((filter) => filter.column !== col),
     });
-    setRenderPlanets(planets);
+    setRenderPlanets(data);
   };
 
   const context = {
-    planets,
+    data,
     isLoading,
     filters,
     handleChange,

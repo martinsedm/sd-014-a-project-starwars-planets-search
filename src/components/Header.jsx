@@ -1,21 +1,12 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import logo from '../images/resizedlogo.png';
 
 export default function Header() {
-  const { handleChange } = useContext(PlanetsContext);
-
   return (
     <div>
       <header>
-        <h1>Star Wars Planet Search</h1>
-        <label htmlFor="search">
-          <input
-            id="search"
-            type="text"
-            onChange={ handleChange }
-            data-testid="name-filter"
-          />
-        </label>
+        <img src={ logo } alt="Star Wars logo" />
+        <h1>Planet Search</h1>
       </header>
     </div>
   );

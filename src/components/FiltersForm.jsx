@@ -3,47 +3,67 @@ import PlanetsContext from '../context/PlanetsContext';
 import { comparisonOptions } from '../data/data';
 
 export default function FiltersForm() {
-  const { handleClick, setColumn,
+  const { handleChange, handleClick, setColumn,
     setComparison, setValue, columnOptions } = useContext(PlanetsContext);
 
   return (
     <form>
-      <select
-        name="column"
-        data-testid="column-filter"
-        onChange={ ({ target }) => setColumn(target.value) }
-      >
-        { columnOptions.map((option) => (
-          <option
-            key={ option }
-            id={ option }
-            value={ option }
+      <div className="form-group">
+        <label htmlFor="search">
+          <input
+            id="search"
+            type="text"
+            className="input-control search-input"
+            placeholder="Pesquisar planeta"
+            onChange={ handleChange }
+            data-testid="name-filter"
+          />
+        </label>
+      </div>
+      <div className="form-group">
+        <div>
+          <select
+            name="column"
+            className="input-control"
+            onChange={ ({ target: { value } }) => setColumn(value) }
+            data-testid="column-filter"
           >
-            { option }
-          </option>
-        )) }
-      </select>
-      <select
-        name="comparison"
-        data-testid="comparison-filter"
-        onChange={ ({ target }) => setComparison(target.value) }
-      >
-        { comparisonOptions.map((option) => (
-          <option key={ option } value={ option }>{ option }</option>
-        )) }
-      </select>
-      <input
-        type="number"
-        data-testid="value-filter"
-        onChange={ ({ target }) => setValue(target.value) }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
-        Filtrar
-      </button>
+            { columnOptions.map((option) => (
+              <option key={ option } value={ option }>{ option }</option>
+            )) }
+          </select>
+        </div>
+        <div>
+          <select
+            name="comparison"
+            className="input-control"
+            onChange={ ({ target: { value } }) => setComparison(value) }
+            data-testid="comparison-filter"
+          >
+            { comparisonOptions.map((option) => (
+              <option key={ option } value={ option }>{ option }</option>
+            )) }
+          </select>
+        </div>
+        <div>
+          <input
+            type="number"
+            className="input-control"
+            onChange={ ({ target: { value } }) => setValue(value) }
+            data-testid="value-filter"
+          />
+        </div>
+        <div>
+          <button
+            type="button"
+            className="filter-btn"
+            onClick={ handleClick }
+            data-testid="button-filter"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
