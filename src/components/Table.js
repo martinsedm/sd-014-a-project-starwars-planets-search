@@ -6,10 +6,10 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, isLoading, search } = useContext(PlanetsContext); // src: https://medium.com/@devjpnobrega/primeiros-passos-com-react-hooks-usecontext-66c69ded5411
+  const { filterData, isLoading, name } = useContext(PlanetsContext); // src: https://medium.com/@devjpnobrega/primeiros-passos-com-react-hooks-usecontext-66c69ded5411
 
   // src: https://www.youtube.com/watch?v=Q8JyF3wpsHc
-  const infos = () => data.filter((planet) => planet.name.includes(search))
+  const infos = () => filterData.filter((planet) => planet.name.includes(name))
     .map((results) => (
       <tr key={ results.name }>
         <td>{results.name}</td>
@@ -59,5 +59,4 @@ function Table() {
     )
   );
 }
-
 export default Table;
