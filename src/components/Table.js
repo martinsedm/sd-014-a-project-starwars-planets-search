@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 import Filter from './Filter';
+import NameFilter from './NameFilter';
 
 const Table = () => {
   const { data, filter: { filters } } = useContext(DataContext);
@@ -9,6 +10,7 @@ const Table = () => {
   return (
     <main>
       <Filter />
+      <NameFilter />
       <table>
         <thead>
           <tr>

@@ -6,11 +6,15 @@ import FetchApi from '../services/FetchApi';
 const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   });
 
@@ -24,8 +28,22 @@ const DataProvider = ({ children }) => {
     ApiStarWars();
   }, []);
 
+  const context = {
+    data,
+    setData,
+    isLoading,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    filter,
+    setFilter,
+  };
+
   return (
-    <DataContext.Provider value={ { data, isLoading, FetchApi, filter, setFilter } }>
+    <DataContext.Provider value={ context }>
       { children }
     </DataContext.Provider>
   );
