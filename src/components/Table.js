@@ -2,11 +2,21 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { fetchPlanetsInfo, planetInfo } = useContext(PlanetsContext);
+  const { planetInfo, filters, fetchPlanetsInfo } = useContext(PlanetsContext);
+
+  function filterByName() {
+    // Vi que estava fazendo o filter no local errado depois que vi o pr do Rodolfo Pinheiro
+    if (filters.filterByName.name) {
+      return planetInfo.filter(
+        (planet) => (planet.name).toLowerCase().includes((filters.filterByName.name)),
+      );
+    }
+    return planetInfo;
+  }
 
   useEffect(() => {
     fetchPlanetsInfo();
-  }, []);
+  }, [fetchPlanetsInfo]);
 
   return (
     <table>
@@ -25,7 +35,7 @@ function Table() {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      {planetInfo.map((info) => {
+      {filterByName().map((info) => {
         const {
           name,
           rotation_period: rotationPeriod,

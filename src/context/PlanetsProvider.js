@@ -16,10 +16,6 @@ function PlanetsProvider({ children }) {
     setPlanetsInfo(planetsInfo);
   }
 
-  // function filterByName() {
-
-  // }
-
   return (
     <PlanetsContext.Provider
       value={ {

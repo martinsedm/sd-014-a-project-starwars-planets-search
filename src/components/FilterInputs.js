@@ -1,13 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterInputs() {
-  const { setPlanetsInfo, planetInfo } = useContext(PlanetsContext);
-  const [filters, setFilterByName] = useState({
-    filterByName: {
-      name: '',
-    },
-  });
+  const { setFilterByName } = useContext(PlanetsContext);
 
   // function teste() {
   //   setPlanetInfo(planetInfo.map(() => planetInfo.name.includes()));
@@ -19,14 +14,6 @@ function FilterInputs() {
       },
     };
     setFilterByName(filterName);
-    const lower = (event.target.value).toLowerCase();
-    const testePlanet = [
-      planetInfo.filter(
-        (planet) => (planet.name).toLowerCase().includes((lower)),
-      )];
-    console.log(testePlanet);
-    setPlanetsInfo(testePlanet);
-    console.log(planetInfo);
   }
 
   return (
