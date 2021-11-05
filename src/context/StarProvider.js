@@ -4,11 +4,33 @@ import StarContext from './StarContext';
 import fetchPlanets from '../services';
 
 function StarProvider(props) {
+  const INITIAL_STATE = {
+    filterByName: {
+      name: '',
+    },
+  };
+
   const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState(INITIAL_STATE);
+  const [planetsCopy, setPlanetsCopy] = useState([]);
+
+  useEffect(() => {
+    const { filterByName } = filters;
+    let planetFilter = [...planets];
+    if (filterByName.name !== '') {
+      planetFilter = planetFilter.filter((planet) => planet.name.toLowerCase()
+        .includes(filterByName.name.toLowerCase()));
+    }
+    setPlanetsCopy(planetFilter);
+  }, [filters, planets]);
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
     setPlanets(results);
+  };
+
+  const handleChange = ({ target: { name, value } }, key) => {
+    setFilters({ ...filters, [key]: { [name]: value } });
   };
 
   useEffect(() => {
@@ -17,6 +39,9 @@ function StarProvider(props) {
 
   const context = {
     planets,
+    filters,
+    planetsCopy,
+    handleChange,
   };
 
   const { children } = props;

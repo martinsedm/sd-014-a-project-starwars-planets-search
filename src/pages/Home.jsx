@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Filters from '../components/Filters';
 
 import Header from '../components/Header';
 import PlanetsTable from '../components/PlanetsTable';
@@ -10,6 +11,7 @@ function Home() {
   return (
     <main>
       <Header />
+      <Filters />
       { planets.length > 0 && <PlanetsTable />}
     </main>
   );

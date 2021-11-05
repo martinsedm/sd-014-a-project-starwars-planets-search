@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import StarContext from '../context/StarContext';
 
 function PlanetsTable() {
-  const { planets } = useContext(StarContext);
+  const { planets, planetsCopy } = useContext(StarContext);
 
   const getHeaders = () => {
     if (planets.length !== 0) {
@@ -25,7 +25,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet, index) => (
+          {planetsCopy.map((planet, index) => (
             <tr key={ index }>
               {headers.map((header, i) => (
                 <td key={ `${header}-${i}` }>{ planet[header] }</td>
