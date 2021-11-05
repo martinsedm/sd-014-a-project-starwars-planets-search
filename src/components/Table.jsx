@@ -61,7 +61,6 @@ export default function Table() {
 
   return isLoading ? <Loading /> : (
     <table>
-      { console.log(data) }
       { renderTableRows() }
       { renderTable() }
     </table>
