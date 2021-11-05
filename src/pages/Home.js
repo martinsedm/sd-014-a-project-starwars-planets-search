@@ -7,6 +7,7 @@ import FilterByNum from '../components/FIlterByNum';
 import Table from '../components/Table';
 import LineFilter from '../components/LineFilter';
 import SortContext from '../components/SortContent';
+import './home.css';
 
 function Home() {
   const { setData, setDataFilt } = useContext(filterContext);
@@ -23,7 +24,7 @@ function Home() {
       <h1>Projeto Star Wars - Trybe</h1>
       <FilterByName />
       <br />
-      <div>
+      <div className="filter-num">
         <FilterByNum />
         <SortContext />
       </div>

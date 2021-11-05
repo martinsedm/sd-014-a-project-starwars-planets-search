@@ -6,7 +6,7 @@ function Table() {
 
   const indexResidents = 9;
   return (
-    <table>
+    <table border="1">
       <thead>
         <tr>
           { sortPlanets.length > 0
