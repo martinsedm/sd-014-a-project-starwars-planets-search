@@ -6,6 +6,7 @@ function PlanetProvider({ children }) {
   const [data, setData] = useState([]); // guarda info dos planetas;
   const [filtred, setFiltred] = useState([]); // guarda info filtrada dos planetas;
   const [isLoading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({ filterByName: '' });
 
   const fetchApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -23,20 +24,39 @@ function PlanetProvider({ children }) {
   }, []);
 
   // função que filtra por nome os resultados do { data } e guarda no estado { filtred };
-  const filterByName = (name) => {
-    const newData = data.filter((planet) => ((planet.name).toLowerCase()).includes(name));
+  const filterData = () => {
+    let newData = data.filter((planet) => ((planet.name)
+      .toLowerCase()).includes(filters.filterByName));
+
+    if (filters.filterByNumericValues) {
+      switch (filters.filterByNumericValues.comparison) {
+      case 'maior que':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        > Number(filters.filterByNumericValues.value));
+        break;
+      case 'menor que':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        < Number(filters.filterByNumericValues.value));
+        break;
+      case 'igual a':
+        newData = data.filter((p) => Number(p[filters.filterByNumericValues.column])
+        === Number(filters.filterByNumericValues.value));
+        break;
+      default:
+        break;
+      }
+    }
+
     setFiltred(newData);
   };
 
-  /* const filterByNumericValue = (column, comparison, value) => {
-    const
-  } */
-
   const contextState = {
     data,
+    filters,
+    filterData,
     filtred,
     isLoading,
-    filterByName,
+    setFilters,
   };
 
   return (
