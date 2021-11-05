@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
+
+import StarWarsContext from '../context/StarWarsContext';
 
 function SelectSearch() {
   const [column, setColumn] = useState('');
-  const [comparsion, setComparsion] = useState('');
+  const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
+  const { setFilters, filters } = useContext(StarWarsContext);
+
+  const handleClick = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [{
+        column,
+        comparison,
+        value,
+      }],
+    });
+  };
+
   return (
     <form action="SelectSearch">
       <Form.Select
@@ -29,7 +44,7 @@ function SelectSearch() {
       </select> */}
       <Form.Select
         data-testid="comparison-filter"
-        onChange={ (event) => (setComparsion(event.target.value)) }
+        onChange={ (event) => (setComparison(event.target.value)) }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
@@ -37,7 +52,7 @@ function SelectSearch() {
       </Form.Select>
       {/* <select
         data-testid="comparison-filter"
-        onChange={ (event) => (setComparsion(event.target.value)) }
+        onChange={ (event) => (setcomparison(event.target.value)) }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
@@ -62,6 +77,7 @@ function SelectSearch() {
       <Button
         type="button"
         data-testid="button-filter"
+        onClick={ handleClick }
       >
         Filtrar
       </Button>
