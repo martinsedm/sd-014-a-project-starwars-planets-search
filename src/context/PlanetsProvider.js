@@ -5,22 +5,37 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planetInfo, setPlanetsInfo] = useState([]);
+  const [filters, setFilterByName] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   async function fetchPlanetsInfo() {
     const planetsInfo = await getPlanetsInfo();
     setPlanetsInfo(planetsInfo);
-    console.log(planetInfo);
   }
 
+  // function filterByName() {
+
+  // }
+
   return (
-    <PlanetsContext.Provider value={ { planetInfo, fetchPlanetsInfo } }>
+    <PlanetsContext.Provider
+      value={ {
+        planetInfo,
+        fetchPlanetsInfo,
+        setPlanetsInfo,
+        setFilterByName,
+        filters } }
+    >
       {children}
     </PlanetsContext.Provider>
   );
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.objectOf().isRequired,
 };
 
 export default PlanetsProvider;

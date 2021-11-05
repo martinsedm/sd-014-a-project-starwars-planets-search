@@ -6,7 +6,7 @@ function Table() {
 
   useEffect(() => {
     fetchPlanetsInfo();
-  }, [fetchPlanetsInfo]);
+  }, []);
 
   return (
     <table>
