@@ -8,7 +8,8 @@ function Header() {
     setNameFilterText,
     filters,
     getNumericFilters,
-    removeFilter } = useContext(PlanetContext);
+    removeFilter,
+    getSortOrder } = useContext(PlanetContext);
 
   const { filterByName: { name } } = filters;
   const [numericFilters, setNumericFilters] = useState({ value: 0 });
@@ -17,7 +18,7 @@ function Header() {
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const [columnOptions, setColumsOptions] = useState(options);
-  const [sortOrderList, setSortOrderList] = useState({ column: 'Name', sort: 'ASC' });
+  const [sortOrderList, setSortOrderList] = useState({ column: 'name', sort: 'ASC' });
 
   useEffect(() => {
     setNumericFilters({ column: columnOptions[0], comparison: 'maior que', value: 0 });
@@ -32,6 +33,10 @@ function Header() {
     setColumsOptions(columnOptions.filter((option) => option !== numericFilters.column));
   };
 
+  const handleSubmitOrder = () => {
+    getSortOrder(sortOrderList);
+  };
+
   const handleClick = (ev) => {
     const { filterByNumericValues } = filters;
     const columnFilter = (ev.target.parentElement.innerHTML.split(' ')[0]);
@@ -43,6 +48,10 @@ function Header() {
 
   const handleCheck = ({ target: { value } }) => {
     setSortOrderList({ ...sortOrderList, sort: value });
+  };
+
+  const handleChangeColumnSort = ({ target }) => {
+    setSortOrderList({ ...sortOrderList, column: target.value });
   };
 
   const filterColumnList = () => columnOptions.map((option) => (
@@ -91,10 +100,10 @@ function Header() {
         Adicionar Filtro
       </button>
 
-      <select data-testid="column-sort" name="sort">
+      <select data-testid="column-sort" name="sort" onChange={ handleChangeColumnSort }>
         {!isLoading && Object.keys(data[0]).map((element) => (
-          <option key={ element }>
-            {element.replace('_', ' ')}
+          <option key={ element } name="column" value={ element }>
+            {element}
           </option>))}
       </select>
       <div onChange={ handleCheck }>
@@ -104,7 +113,6 @@ function Header() {
           name="order"
           checked={ sortOrderList.sort === 'ASC' }
           data-testid="column-sort-input-asc"
-          // onChange={ handleCheck }
         />
         ASC
         <input
@@ -116,7 +124,13 @@ function Header() {
         />
         DESC
       </div>
-      <button type="button" data-testid="column-sort-button"> Ordenar </button>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ handleSubmitOrder }
+      >
+        Ordenar
+      </button>
       {activeFilter()}
     </div>
   );
