@@ -4,9 +4,9 @@ import PlanetsContext from '../context/PlanetsContext';
 export default function Filters() {
   const { filters: { filterByNumericValues }, deleteFilter } = useContext(PlanetsContext);
   return (
-    filterByNumericValues.map(({ column, comparison, value }, index) => (
-      <section key={ index } data-testid="filter">
-        <div className="filter">
+    <section className="filters-section">
+      { filterByNumericValues.map(({ column, comparison, value }, index) => (
+        <div key={ index } data-testid="filter" className="filter">
           <p>
             { column }
             {' '}
@@ -22,7 +22,7 @@ export default function Filters() {
             x
           </button>
         </div>
-      </section>
-    ))
+      ))}
+    </section>
   );
 }

@@ -21,19 +21,17 @@ export default function PlanetsProvider({ children }) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    getPlanets();
-  }, []);
+  useEffect(() => { getPlanets(); }, []);
 
   const handleChange = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
-    const filteredPlanets = data.filter((planet) => (
-      planet.name.toLowerCase().includes(target.value)));
-    setRenderPlanets(filteredPlanets);
+    const filteredByName = data.filter((planet) => (
+      planet.name.toLowerCase().includes(target.value.toLowerCase())));
+    setRenderPlanets(filteredByName);
   };
 
   const filterPlanets = () => {
-    const filtered = renderPlanets.filter((planet) => {
+    const filteredByNumeric = renderPlanets.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
       }
@@ -43,9 +41,9 @@ export default function PlanetsProvider({ children }) {
       if (comparison === 'igual a') {
         return Number(planet[column]) === Number(value);
       }
-      return filtered;
+      return filteredByNumeric;
     });
-    setRenderPlanets(filtered);
+    setRenderPlanets(filteredByNumeric);
   };
 
   useEffect(() => {
