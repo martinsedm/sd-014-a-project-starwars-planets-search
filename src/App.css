@@ -86,7 +86,7 @@ form {
   filter: saturate(0.2) opacity(0.5);
 }
 
-.filter-btn:not( :disabled ):hover , .filter-btn:not( :disabled ):focus {
+.filter-btn:not( :disabled ):hover, .filter-btn:not( :disabled ):focus {
   background: #f4e603;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) , 0 3px 8px 0 rgba(0, 0, 0, 0.15);
   outline: 0;
@@ -99,7 +99,7 @@ form {
   padding: 0 5px;
 }
 
-.delete-btn:hover , .delete-btn:active {
+.delete-btn:hover, .delete-btn:active {
   background-color: initial;
   background-position: 0 0;
   color: #ff0800;
@@ -110,7 +110,6 @@ form {
 }
 
 /* buttons -> https://getcssscan.com/css-buttons-examples */
-
 .search-input {
   margin-top: -10px;
   width: 100%;
