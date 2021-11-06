@@ -4,7 +4,7 @@ import Loading from './Loading';
 
 export default function Table() {
   const { data, isLoading, renderPlanets } = useContext(PlanetsContext);
-
+  console.log(data);
   const handleTitles = () => (Object.keys(data[0])
     .filter((key) => key !== 'residents')
     .map((title, index) => (

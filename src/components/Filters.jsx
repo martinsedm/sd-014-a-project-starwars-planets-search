@@ -6,19 +6,22 @@ export default function Filters() {
   return (
     filterByNumericValues.map(({ column, comparison, value }, index) => (
       <section key={ index } data-testid="filter">
-        <p>
-          { column }
-          {' '}
-          { comparison }
-          {' '}
-          { value }
+        <div className="filter">
+          <p>
+            { column }
+            {' '}
+            { comparison }
+            {' '}
+            { value }
+          </p>
           <button
             type="button"
+            className="delete-btn"
             onClick={ () => deleteFilter(column) }
           >
             x
           </button>
-        </p>
+        </div>
       </section>
     ))
   );
