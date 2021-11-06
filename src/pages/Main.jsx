@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
 import fetchPlanets from '../services/fetchPlanets';
 
@@ -18,11 +19,11 @@ export default function Main() {
     setResultsAsData();
   }, [setData]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>
-      hi there
+      <Table />
     </div>
   );
 }
