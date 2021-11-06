@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function TableHeader() {
   return (
-    <thead>
+    <tr>
       <th>Nome</th>
       <th>Filmes</th>
       <th>População</th>
@@ -16,6 +16,6 @@ export default function TableHeader() {
       <th>Criado em</th>
       <th>Editado em</th>
       <th>Link</th>
-    </thead>
+    </tr>
   );
 }
