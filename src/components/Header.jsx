@@ -13,6 +13,9 @@ const Header = () => {
 
   const submitForm = () => {
     filterValues(column, comparison, valueNumber);
+    document.getElementById('column-filter').childNodes.forEach((element) => {
+      if (element.value === column) return element.remove();
+    });
   };
 
   return (
