@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Header() {
-  const { setNameFilterText, filters, getNumericFilters, removeFilter } = useContext(PlanetContext);
+  const {
+    setNameFilterText,
+    filters,
+    getNumericFilters,
+    removeFilter } = useContext(PlanetContext);
+
   const { filterByName: { name } } = filters;
   const [numericFilters, setNumericFilters] = useState({ value: 0 });
 

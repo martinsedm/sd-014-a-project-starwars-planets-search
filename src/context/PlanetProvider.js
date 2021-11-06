@@ -47,7 +47,7 @@ function PlanetProvider({ children }) {
   useEffect(() => {
     let filteredByNumbers = '';
     const { filterByNumericValues } = filters;
-    if (filterByNumericValues.length === 0 ) {
+    if (filterByNumericValues.length === 0) {
       setFilteredPlanets(data);
     } else {
       const { column, comparison, value } = (
@@ -71,14 +71,21 @@ function PlanetProvider({ children }) {
       }
       setFilteredPlanets(filteredByNumbers);
     }
-  }, [filters.filterByNumericValues]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.filterByNumericValues, data]);
 
   const contextValue = {
-    data, isLoading, filteredPlanets, setNameFilterText, getNumericFilters, filters, removeFilter
+    data,
+    isLoading,
+    filteredPlanets,
+    setNameFilterText,
+    getNumericFilters,
+    filters,
+    removeFilter,
   };
 
   return (
-    <PlanetContext.Provider value={contextValue}>
+    <PlanetContext.Provider value={ contextValue }>
       {children}
     </PlanetContext.Provider>
   );
