@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Allplanets from '../services/fetchPlanets';
 
 import Allcontext from './context';
@@ -67,6 +68,10 @@ const Provider = ({ children }) => {
       <Allcontext.Provider value={ stateGlobal }>{ children }</Allcontext.Provider>
     </main>
   );
+};
+
+Provider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
