@@ -10,11 +10,14 @@ const Header = () => {
     const { column, comparison, value } = filterByNumericValues[0];
     let dataFiltered = [];
     if (comparison === 'maior que') {
-      dataFiltered = data.filter((planet) => parseInt(planet[column]) > parseInt(value));
+      dataFiltered = data.filter((planet) => (
+        parseInt(planet[column], 10) > parseInt(value, 10)));
     } else if (comparison === 'menor que') {
-      dataFiltered = data.filter((planet) => parseInt(planet[column]) < parseInt(value));
+      dataFiltered = data.filter((planet) => (
+        parseInt(planet[column], 10) < parseInt(value, 10)));
     } else if (comparison === 'igual a') {
-      dataFiltered = data.filter((planet) => parseInt(planet[column]) === parseInt(value));
+      dataFiltered = data.filter((planet) => (
+        parseInt(planet[column], 10) === parseInt(value, 10)));
     }
     setData(dataFiltered);
   }
