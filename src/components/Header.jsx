@@ -4,6 +4,20 @@ import starwarsApi from '../services/starwarsApi';
 
 const Header = () => {
   const { setFilters, filters, data, setData } = useContext(AppContext);
+  const { filterByNumericValues } = filters;
+
+  async function filterNumericValues() {
+    const { column, comparison, value } = filterByNumericValues[0];
+    let dataFiltered = [];
+    if (comparison === 'maior que') {
+      dataFiltered = data.filter((planet) => parseInt(planet[column]) > parseInt(value));
+    } else if (comparison === 'menor que') {
+      dataFiltered = data.filter((planet) => parseInt(planet[column]) < parseInt(value));
+    } else if (comparison === 'igual a') {
+      dataFiltered = data.filter((planet) => parseInt(planet[column]) === parseInt(value));
+    }
+    setData(dataFiltered);
+  }
 
   async function filterName(name) {
     if (name.length > 0) {
@@ -23,7 +37,6 @@ const Header = () => {
   }
 
   function handleChangeNumeric({ target }) {
-    const { filterByNumericValues } = filters;
     const { column, comparison, value } = filterByNumericValues[0];
     switch (target.name) {
     case 'column':
@@ -76,11 +89,11 @@ const Header = () => {
             data-testid="column-filter"
             onChange={ (event) => handleChangeNumeric(event) }
           >
-            <option value="population">Population</option>
-            <option value="orbital_period">Orbital period</option>
-            <option value="diameter">Diameter</option>
-            <option value="rotation_period">Rotation period</option>
-            <option value="surface_water">Surface water</option>
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
           </select>
           { ' ' }
           <select
@@ -89,9 +102,9 @@ const Header = () => {
             data-testid="comparison-filter"
             onChange={ (event) => handleChangeNumeric(event) }
           >
-            <option value="maior que">Maior que</option>
-            <option value="menor que">Menor que</option>
-            <option value="igual a">Igual a</option>
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
           </select>
           { ' ' }
           <input
@@ -104,7 +117,7 @@ const Header = () => {
           <button
             type="button"
             data-testid="button-filter"
-            onClick={ 1 }
+            onClick={ () => filterNumericValues() }
           >
             Filtrar
           </button>

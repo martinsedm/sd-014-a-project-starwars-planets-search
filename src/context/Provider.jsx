@@ -10,7 +10,7 @@ function Provider({ children }) {
       },
       filterByNumericValues: [
         {
-          column: 'pulation',
+          column: 'population',
           comparison: 'maior que',
           value: '0',
         },
