@@ -1,12 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/Context';
+import Row from './Row';
 
 export default function Table() {
-  const { planets, fetchPlanets } = useContext(PlanetContext);
+  const { planets, fetchPlanets, filters } = useContext(PlanetContext);
 
   useEffect(() => {
     fetchPlanets();
   });
+
+  const filterNames = () => {
+    if (filters.filterByName.name) {
+      return planets.filter(
+        ({ name }) => name.toLowerCase().includes(filters.filterByName.name),
+      );
+    }
+    return planets;
+  };
 
   return (
     <table>
@@ -19,15 +29,8 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
-          <tr key={ planet.name }>
-            {Object.keys(planet).map((key, index) => (
-              <td key={ index }>
-                {planet[key]}
-              </td>))}
-          </tr>
-        ))}
+        <Row planets={ filterNames() } />
       </tbody>
-    </table>
+    </table>// componentizando as linhas com o component rows do Rod
   );
 }

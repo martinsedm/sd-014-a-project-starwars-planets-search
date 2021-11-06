@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 import PlanetProvider from './context/Provider';
-import Home from './pages/Main';
+import Main from './pages/Main';
+import Filter from './components/Filter';
 
 function App() {
   return (
     <PlanetProvider>
-      <Home />
+      <Filter />
+      <Main />
     </PlanetProvider>
   );
 }

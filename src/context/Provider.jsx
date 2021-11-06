@@ -4,6 +4,11 @@ import Context from './Context';
 
 export default function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([{}]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -17,7 +22,7 @@ export default function PlanetProvider({ children }) {
 
   return (
     <main>
-      <Context.Provider value={ { planets, fetchPlanets } }>
+      <Context.Provider value={ { planets, fetchPlanets, filters, setFilters } }>
         {children}
       </Context.Provider>
     </main>
