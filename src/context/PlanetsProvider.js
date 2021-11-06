@@ -71,7 +71,7 @@ export default function PlanetsProvider({ children }) {
     setFilters({
       ...filters,
       filterByNumericValues:
-        filters.filterByNumericValues.filter((filter) => filter.column !== col),
+        filters.filterByNumericValues.filter((filter) => !filter.column.includes(col)),
     });
     setRenderPlanets(data);
   };

@@ -6,7 +6,7 @@ export default function Table() {
   const { data, renderPlanets } = useContext(PlanetsContext);
 
   const handleTitles = () => (Object.keys(data[0])
-    .filter((key) => key !== 'residents')
+    .filter((key) => !key.includes('residents'))
     .map((title, index) => (
       <th key={ index }>
         { title.charAt(0).toUpperCase() + title.slice(1).replace('_', ' ') }
