@@ -10,6 +10,8 @@ function Table() {
     filterByName: { name },
   } = filters;
 
+  if (!results || !results.length) return <p>Loading...</p>;
+
   if (results) {
     const tableHeader = results.filter((planet) => delete planet.residents);
 
@@ -44,7 +46,6 @@ function Table() {
       </table>
     );
   }
-  return <p>Loading...</p>;
 }
 
 export default Table;

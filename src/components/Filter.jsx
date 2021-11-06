@@ -2,39 +2,29 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Filter() {
-  const optionsColumn = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
+  const optionsComparison = ['maior que', 'menor que', 'igual a'];
 
-  const optionsComparison = [
-    'maior que',
-    'menor que',
-    'igual a',
-  ];
+  const {
+    data,
+    filter,
+    changeFilter,
+    columnOptions,
+    setData,
+    setFilter,
+    setChangeFilter,
+    setColumnOptions,
+  } = useContext(PlanetsContext);
 
-  const { data, filter, setData, setFilter } = useContext(PlanetsContext);
   const { filterByNumericValues } = filter;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFilter({
-      ...filter,
-      filterByNumericValues: [
-        {
-          ...filterByNumericValues[0],
-          [name]: value,
-        },
-      ],
-    });
+    setChangeFilter({ ...changeFilter, [name]: value });
   };
 
   const handleClick = async () => {
     const { results } = data;
-    const { column, comparison, value } = filterByNumericValues[0];
+    const { column, comparison, value } = changeFilter;
     const filteredData = results.filter((planet) => {
       const planetValue = planet[column];
       if (comparison === 'maior que') {
@@ -49,12 +39,28 @@ function Filter() {
       ...data,
       results: filteredData,
     });
+
+    const optionsColumn = columnOptions.filter(
+      (option) => option !== changeFilter.column,
+    );
+    setColumnOptions(optionsColumn);
+
+    setFilter({
+      ...filter,
+      filterByNumericValues: [...filterByNumericValues, changeFilter],
+    });
+
+    setChangeFilter({
+      column: optionsColumn[0],
+      comparison: optionsComparison[0],
+      value: '',
+    });
   };
 
   return (
     <div>
       <select data-testid="column-filter" name="column" onChange={ handleChange }>
-        {optionsColumn.map((option) => (
+        {columnOptions.map((option) => (
           <option key={ option } value={ option }>
             {option}
           </option>
@@ -65,9 +71,9 @@ function Filter() {
         name="comparison"
         onChange={ handleChange }
       >
-        {optionsComparison.map((opt) => (
-          <option key={ opt } value={ opt }>
-            {opt}
+        {optionsComparison.map((op) => (
+          <option key={ op } value={ op }>
+            {op}
           </option>
         ))}
       </select>
