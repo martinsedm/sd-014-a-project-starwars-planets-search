@@ -1,16 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets, isLoading, setLoading } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    if (!planets) setLoading(true);
-    if (planets) setLoading(false);
-  }, [planets, setLoading]);
+  const { filteredPlanets } = useContext(PlanetsContext);
 
   const renTableInfo = () => (
-    planets.map((planet, index) => (
+    filteredPlanets.map((planet, index) => (
       <tr key={ index }>
         <td>{ planet.name }</td>
         <td>{planet.rotation_period}</td>
@@ -52,7 +47,7 @@ function Table() {
           <th>Edited</th>
           <th>URL</th>
         </tr>
-        {!isLoading && renTableInfo()}
+        {filteredPlanets.length > 0 ? renTableInfo() : 'Nenhum planeta encontrado'}
       </table>
     </div>
   );
