@@ -19,7 +19,9 @@ function Provider({ children }) {
   );
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [dataFiltered, setDataFiltered] = useState([]);
+  const [listColumn, setListColumn] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   const dataApiUpdate = async () => {
     const response = await starwarsApi();
@@ -36,6 +38,8 @@ function Provider({ children }) {
     setData,
     isLoading,
     setIsLoading,
+    listColumn,
+    setListColumn,
   };
 
   return (

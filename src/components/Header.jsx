@@ -3,12 +3,18 @@ import AppContext from '../context/AppContext';
 import starwarsApi from '../services/starwarsApi';
 
 const Header = () => {
-  const { setFilters, filters, data, setData } = useContext(AppContext);
+  const {
+    setFilters, filters, data, setData,
+    listColumn, setListColumn } = useContext(AppContext);
   const { filterByNumericValues } = filters;
 
   async function filterNumericValues() {
     const { column, comparison, value } = filterByNumericValues[0];
     let dataFiltered = [];
+
+    const newListColumn = listColumn.filter((item) => item !== column);
+    setListColumn(newListColumn);
+
     if (comparison === 'maior que') {
       dataFiltered = data.filter((planet) => (
         parseInt(planet[column], 10) > parseInt(value, 10)));
@@ -92,11 +98,9 @@ const Header = () => {
             data-testid="column-filter"
             onChange={ (event) => handleChangeNumeric(event) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {listColumn.map((item) => (
+              <option key={ item } value={ item }>{item}</option>
+            ))}
           </select>
           { ' ' }
           <select
