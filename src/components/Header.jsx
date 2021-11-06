@@ -3,6 +3,8 @@ import PlanetContext from '../context/PlanetContext';
 
 function Header() {
   const {
+    data,
+    isLoading,
     setNameFilterText,
     filters,
     getNumericFilters,
@@ -15,6 +17,7 @@ function Header() {
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const [columnOptions, setColumsOptions] = useState(options);
+  const [sortOrderList, setSortOrderList] = useState({ column: 'Name', sort: 'ASC' });
 
   useEffect(() => {
     setNumericFilters({ column: columnOptions[0], comparison: 'maior que', value: 0 });
@@ -36,6 +39,10 @@ function Header() {
       .filter(({ column }) => column !== columnFilter);
     setColumsOptions(columnOptions.concat(columnFilter));
     removeFilter(newFilters);
+  };
+
+  const handleCheck = ({ target: { value } }) => {
+    setSortOrderList({ ...sortOrderList, sort: value });
   };
 
   const filterColumnList = () => columnOptions.map((option) => (
@@ -83,6 +90,33 @@ function Header() {
       >
         Adicionar Filtro
       </button>
+
+      <select data-testid="column-sort" name="sort">
+        {!isLoading && Object.keys(data[0]).map((element) => (
+          <option key={ element }>
+            {element.replace('_', ' ')}
+          </option>))}
+      </select>
+      <div onChange={ handleCheck }>
+        <input
+          type="radio"
+          value="ASC"
+          name="order"
+          checked={ sortOrderList.sort === 'ASC' }
+          data-testid="column-sort-input-asc"
+          // onChange={ handleCheck }
+        />
+        ASC
+        <input
+          type="radio"
+          value="DESC"
+          name="order"
+          data-testid="column-sort-input-desc"
+          checked={ sortOrderList.sort === 'DESC' }
+        />
+        DESC
+      </div>
+      <button type="button" data-testid="column-sort-button"> Ordenar </button>
       {activeFilter()}
     </div>
   );
