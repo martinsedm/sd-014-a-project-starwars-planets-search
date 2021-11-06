@@ -1,9 +1,13 @@
 import React from 'react';
 import SearchByNameInput from './SearchByNameInput';
+import SearchByNumericInput from './SearchByNumericInput';
 
 function SearchForm() {
   return (
-    <SearchByNameInput />
+    <div>
+      <SearchByNameInput />
+      <SearchByNumericInput />
+    </div>
   );
 }
 
