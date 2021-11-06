@@ -6,7 +6,7 @@ function InputSearch() {
   // Apenas atualizando o estado com o valor do input
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setFilter({ ...filter, filters: { filterByName: { [name]: value } } });
+    setFilter({ ...filter, filterByName: { [name]: value } });
   };
 
   // filters: {
