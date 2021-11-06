@@ -22,7 +22,6 @@ const thead = (arr) => {
 
 function Table() {
   const { data } = useContext(Allcontext);
-
   return (
     <table>
       <thead>
