@@ -1,19 +1,28 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import FilterByname from './FilterByname';
 
 function Table() {
-  const { data, headTable } = useContext(StarWarsContext);
+  const { data,
+    filter: { filters: { filterByName: { name } } },
+  } = useContext(StarWarsContext);
+  if (data.length === 0) {
+    return null;
+  }
+
+  const columns = Object.keys(data[0]);
 
   return (
     <main>
+      <FilterByname />
       <table>
         <thead>
           <tr>
-            { headTable.map((column) => (<th key={ column }>{ column }</th>)) }
+            { columns.map((column) => (<th key={ column }>{ column }</th>)) }
           </tr>
         </thead>
         <tbody>
-          { data
+          { data.filter(({ name: namePlanet }) => namePlanet.includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>

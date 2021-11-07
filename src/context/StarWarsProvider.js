@@ -2,23 +2,28 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import StarWarsContext from './StarWarsContext';
-import { fetchApi, headTableArray } from '../services/fetchApi';
+import fetchApi from '../services/fetchApi';
 
 function StarWarsProvider({ children }) {
   const [data, setdata] = useState([]);
-  const [headTable, setHeadTable] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   useEffect(() => {
     async function getData() {
       const dataPlanets = await fetchApi();
-      setHeadTable(headTableArray);
       setdata(dataPlanets);
     }
     getData();
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, headTable } }>
+    <StarWarsContext.Provider value={ { data, filter, setFilter } }>
       {children}
     </StarWarsContext.Provider>
   );
