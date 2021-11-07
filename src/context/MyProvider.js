@@ -3,8 +3,15 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 import getApi from '../services/getApi';
 
-const INITIAL_FILTERS = { filters: { filterByName: { name: '' } } };
 function MyProvider({ children }) {
+  const INITIAL_FILTERS = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  };
+
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [planets, setPlanets] = useState([]);
 
