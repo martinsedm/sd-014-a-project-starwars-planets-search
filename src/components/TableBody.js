@@ -37,20 +37,3 @@ export default function TableBody() {
     <Planets planets={ planets() } />
   );
 }
-
-// switch (comparison) {
-//   case 'maior que':
-//     accumulator = results
-//       .filter((planet) => Number(planet[column]) > Number(value));
-//     break;
-//   case 'menor que':
-//     accumulator = results
-//       .filter((planet) => Number(planet[column]) < Number(value));
-//     break;
-//   case 'igual a':
-//     accumulator = results
-//       .filter((planet) => Number(planet[column]) === Number(value));
-//     break;
-//   default:
-//     break;
-//   }
