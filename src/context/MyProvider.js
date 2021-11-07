@@ -9,11 +9,19 @@ function MyProvider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
+  };
+
+  const NUMERIC_FILTER = {
+    column: '',
+    comparison: '',
+    value: '',
   };
 
   const [filter, setFilter] = useState(INITIAL_FILTERS);
   const [planets, setPlanets] = useState([]);
+  const [numericFilter, setNumericFilter] = useState(NUMERIC_FILTER);
 
   useEffect(() => {
     const fetchPlanet = async () => {
@@ -28,6 +36,8 @@ function MyProvider({ children }) {
     setFilter,
     planets,
     setPlanets,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (

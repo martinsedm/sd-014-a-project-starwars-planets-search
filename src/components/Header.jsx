@@ -30,6 +30,7 @@ function Header() {
     <header>
       <h1>Star WArs Planet Search</h1>
       <input
+        placeholder="Choose the Planet"
         data-testid="name-filter"
         type="text"
         onChange={ handleChange }

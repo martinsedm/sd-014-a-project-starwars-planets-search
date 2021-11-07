@@ -14,6 +14,22 @@ const tableHeaders = [
   'url',
 ];
 
+const columnSuport = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const comparisonSuport = [
+  'maior que',
+  'menor que',
+  'igual a',
+];
+
 module.exports = {
   tableHeaders,
+  columnSuport,
+  comparisonSuport,
 };

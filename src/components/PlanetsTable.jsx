@@ -27,15 +27,15 @@ function PlantesTable() {
           ? planets.map((planet) => (
             <tr key={ planet }>
               {Object.values(planet).map((planetInfo) => (
-                <td key={ planet }>{ planetInfo }</td>
+                <td key={ planetInfo }>{ planetInfo }</td>
               ))}
             </tr>
           ))
           : planets.filter((planet) => planet.name.includes(name))
-            .map((planet) => (
-              <tr key={ planet }>
-                {Object.values(planet).map((planetInfo) => (
-                  <td key={ planet }>{ planetInfo }</td>
+            .map((planet, idx) => (
+              <tr key={ idx }>
+                {Object.values(planet).map((planetInfo, id) => (
+                  <td key={ id }>{ planetInfo }</td>
                 ))}
               </tr>
             ))}
