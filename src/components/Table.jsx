@@ -26,15 +26,31 @@ export default function Table() {
     return planet;
   });
 
+  const headings = [
+    'Name',
+    'Rotation Period',
+    'Orbital Period',
+    'Diameter',
+    'Climate',
+    'Gravity',
+    'Terrain',
+    'Surface Water',
+    'Population',
+    'Films',
+    'Created',
+    'Edited',
+    'URL',
+  ];
+
   const { loading } = useContext(AppContext);
   if (loading) return <Loading />;
   return (
     <table>
       <thead>
         <tr>
-          { Object.keys(data[0]).map((category) => (
+          { headings.map((heading) => (
             <th key={ uuidv4() }>
-              { category }
+              { heading }
             </th>
           )) }
         </tr>

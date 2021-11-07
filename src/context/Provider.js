@@ -5,13 +5,8 @@ import AppContext from './AppContext';
 import fetchData from '../services/fetchData';
 
 export default function Provider({ children }) {
-  // DOM
-  // const columnFilter = document.getElementById('column-filter');
-
-  // ESTADOS
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [column, setColumn] = useState('population');
   const [columnOptions, setColumnOptions] = useState([
     'population',
     'orbital_period',
@@ -19,8 +14,6 @@ export default function Provider({ children }) {
     'rotation_period',
     'surface_water',
   ]);
-  const [comparison, setComparison] = useState('maior que');
-  const [number, setNumber] = useState(0);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -45,9 +38,23 @@ export default function Provider({ children }) {
     });
   }
 
+  function setNumericValues(column, comparison, number) {
+    setFilters({
+      ...filters,
+      filterByNumericValues:
+        [...filters.filterByNumericValues, { column, comparison, number }],
+    });
+  }
+
   useEffect(() => {
     const { filterByNumericValues } = filters;
     if (filterByNumericValues.length > 0) {
+      const {
+        column,
+        comparison,
+        number,
+      } = filterByNumericValues[filterByNumericValues.length - 1];
+      console.log(column, comparison, number);
       let filtered = [...data];
       switch (comparison) {
       case 'maior que':
@@ -63,18 +70,14 @@ export default function Provider({ children }) {
         throw new Error('Essa opção não existe!');
       }
       setData([...filtered]);
-    }
+    } else { getData(); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByNumericValues]);
 
-  function setNumericValues() {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [{ column, comparison, number }],
-    });
-  }
-
-  function removeSelectedColumn() {
+  function removeSelectedColumn(column) {
+    // const { filterByNumericValues } = filters;
+    // const { column } = filterByNumericValues[filterByNumericValues.length - 1];
+    // console.log(column);
     const filteredOptions = columnOptions
       .filter((columnOption) => columnOption !== column);
     setColumnOptions(filteredOptions);
@@ -84,15 +87,12 @@ export default function Provider({ children }) {
     getData,
     loading,
     filters,
-    setNumber,
-    setColumn,
-    setComparison,
     changeName,
-    number,
     setData,
     setNumericValues,
     removeSelectedColumn,
     columnOptions,
+    setFilters,
   };
 
   return (

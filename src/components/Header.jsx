@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import AppContext from '../context/AppContext';
@@ -9,17 +9,18 @@ export default function Header() {
   const {
     changeName,
     loading,
-    setColumn,
-    setComparison,
-    setNumber,
     setNumericValues,
     removeSelectedColumn,
     filters,
     columnOptions,
   } = useContext(AppContext);
 
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [number, setNumber] = useState(0);
+
   useEffect(() => {
-    console.log(filters);
+    console.log(filters.filterByNumericValues.column);
   }, [filters]);
 
   const comparisonOptions = [
@@ -79,8 +80,8 @@ export default function Header() {
         className="mx-3 px-2 py-1 bg-blue-400 rounded-md text-black"
         data-testid="button-filter"
         onClick={ () => {
-          setNumericValues();
-          removeSelectedColumn();
+          setNumericValues(column, comparison, number);
+          removeSelectedColumn(column);
         } }
       >
         Filtrar
