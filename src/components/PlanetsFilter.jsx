@@ -11,8 +11,15 @@ function PlanetsFilter() {
     setValue,
     filters,
     setFilters,
+    categories,
+    setCategories,
     column,
     setColumn } = useContext(PlanetsContext);
+
+  const categoryColumn = () => {
+    const categoryOp = categories.filter((category) => category !== column);
+    setCategories(categoryOp);
+  };
 
   const filterComparison = async () => {
     let planetComparison;
@@ -29,9 +36,10 @@ function PlanetsFilter() {
     }
 
     await setPlanets(planetComparison);
+    categoryColumn();
   };
 
-  const handleClinck = () => {
+  const handleClinck = async () => {
     setFilters({
       ...filters,
       filterByNumericValues: [
@@ -42,7 +50,7 @@ function PlanetsFilter() {
         },
       ],
     });
-    filterComparison();
+    await filterComparison();
   };
   return (
     <div>
@@ -54,11 +62,16 @@ function PlanetsFilter() {
           value={ column }
           onChange={ (columns) => setColumn(columns.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {
+            categories.map((category) => (
+              <option
+                key={ category }
+                value={ category }
+              >
+                { category }
+              </option>
+            ))
+          }
         </select>
         <select
           data-testid="comparison-filter"

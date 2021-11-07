@@ -15,6 +15,14 @@ function PlanetsProvider({ children }) {
     filterByNumericValues: [],
   };
   const [filters, setFilters] = useState(filter);
+  const columnOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const [categories, setCategories] = useState(columnOptions);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -48,6 +56,8 @@ function PlanetsProvider({ children }) {
     setValue,
     comparison,
     setComparison,
+    categories,
+    setCategories,
   };
 
   return (
