@@ -12,7 +12,7 @@ function MyProvider({ children }) {
     },
   };
 
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [filter, setFilter] = useState(INITIAL_FILTERS);
   const [planets, setPlanets] = useState([]);
 
   useEffect(() => {
@@ -24,8 +24,8 @@ function MyProvider({ children }) {
   }, []);
 
   const contextValue = {
-    filters,
-    setFilters,
+    filter,
+    setFilter,
     planets,
     setPlanets,
   };
