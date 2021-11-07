@@ -1,19 +1,21 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-function FilterInputs() {
-  const { setFilterByName } = useContext(PlanetsContext);
+function FilterInputByName() {
+  const { setFilters } = useContext(PlanetsContext);
 
-  // function teste() {
-  //   setPlanetInfo(planetInfo.map(() => planetInfo.name.includes()));
-  // }
   function handleChange(event) {
     const filterName = {
       filterByName: {
         name: (event.target.value).toLowerCase(),
       },
+      filterByNumericValues: [{
+        column: '',
+        comparison: '',
+        value: '',
+      }],
     };
-    setFilterByName(filterName);
+    setFilters(filterName);
   }
 
   return (
@@ -26,4 +28,4 @@ function FilterInputs() {
   );
 }
 
-export default FilterInputs;
+export default FilterInputByName;

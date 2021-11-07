@@ -1,22 +1,58 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import getPlanetsInfo from '../services/planetsApi';
 
 function Table() {
-  const { planetInfo, filters, fetchPlanetsInfo } = useContext(PlanetsContext);
+  const { planetInfo, filters, setPlanetsInfo } = useContext(PlanetsContext);
 
-  function filterByName() {
-    // Vi que estava fazendo o filter no local errado depois que vi o pr do Rodolfo Pinheiro
+  function filter() {
     if (filters.filterByName.name) {
       return planetInfo.filter(
         (planet) => (planet.name).toLowerCase().includes((filters.filterByName.name)),
+      );
+    }
+    if (
+      filters.filterByNumericValues[0].column
+      && filters.filterByNumericValues[0].comparison === 'maior que') {
+      console.log('oid');
+      return planetInfo.filter(
+        (planet) => Number(
+          planet[filters.filterByNumericValues[0].column]
+          ,
+        ) > Number(filters.filterByNumericValues[0].value),
+      );
+    }
+    if (
+      filters.filterByNumericValues[0].column
+      && filters.filterByNumericValues[0].comparison === 'menor que') {
+      console.log('oid');
+      return planetInfo.filter(
+        (planet) => Number(
+          planet[filters.filterByNumericValues[0].column]
+          ,
+        ) < Number(filters.filterByNumericValues[0].value),
+      );
+    }
+    if (
+      filters.filterByNumericValues[0].column
+      && filters.filterByNumericValues[0].comparison === 'igual a') {
+      console.log('oid');
+      return planetInfo.filter(
+        (planet) => Number(
+          planet[filters.filterByNumericValues[0].column],
+        ) === Number(filters.filterByNumericValues[0].value),
       );
     }
     return planetInfo;
   }
 
   useEffect(() => {
+    async function fetchPlanetsInfo() {
+      const planetsInfo = await getPlanetsInfo();
+      setPlanetsInfo(planetsInfo);
+    }
     fetchPlanetsInfo();
-  }, [fetchPlanetsInfo]);
+  }, [setPlanetsInfo]);
 
   return (
     <table>
@@ -35,7 +71,7 @@ function Table() {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      {filterByName().map((info) => {
+      {filter().map((info) => {
         const {
           name,
           rotation_period: rotationPeriod,

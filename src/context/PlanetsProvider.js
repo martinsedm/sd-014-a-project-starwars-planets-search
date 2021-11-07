@@ -1,28 +1,26 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import getPlanetsInfo from '../services/planetsApi';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planetInfo, setPlanetsInfo] = useState([]);
-  const [filters, setFilterByName] = useState({
+  const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: '',
+    }],
   });
-
-  async function fetchPlanetsInfo() {
-    const planetsInfo = await getPlanetsInfo();
-    setPlanetsInfo(planetsInfo);
-  }
 
   return (
     <PlanetsContext.Provider
       value={ {
         planetInfo,
-        fetchPlanetsInfo,
         setPlanetsInfo,
-        setFilterByName,
+        setFilters,
         filters } }
     >
       {children}

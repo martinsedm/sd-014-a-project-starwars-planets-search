@@ -3,13 +3,15 @@ import './App.css';
 import Header from './components/Header';
 import Table from './components/Table';
 import PlanetsProvider from './context/PlanetsProvider';
-import FilterInputs from './components/FilterInputs';
+import FilterInputByName from './components/FilterInputByName';
+import NumericFilter from './components/NumericFilter';
 
 function App() {
   return (
     <PlanetsProvider>
       <Header />
-      <FilterInputs />
+      <FilterInputByName />
+      <NumericFilter />
       <Table />
     </PlanetsProvider>
   );
