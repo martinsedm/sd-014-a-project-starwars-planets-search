@@ -16,7 +16,7 @@ function Table() {
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState(0);
   const { filters } = filtros;
-  const numeric = filtros.filters.filterByNumericValues;
+  const numericValues = filtros.filters.filterByNumericValues;
 
   const handleTextFilter = (event) => {
     const { filters: { filterByNumericValues } } = filtros;
@@ -50,7 +50,7 @@ function Table() {
       value: number,
     };
 
-    numeric.push(newFilter);
+    numericValues.push(newFilter);
 
     const columnSelect = document.getElementById('column');
     columnSelect.childNodes.forEach((child) => {
@@ -69,6 +69,23 @@ function Table() {
     return nameFiltering;
   };
 
+  const spanClick = () => {
+    const columnSelect = document.getElementById('column');
+    const opt = document.createElement('option');
+    opt.innerText = options;
+    columnSelect.appendChild(opt);
+
+    setIsClicked(false);
+    numericValues.pop();
+  };
+
+  const filterBtn = () => (
+    <section>
+      <span>{ `${options} ${comparison} ${number}` }</span>
+      <button type="button" data-testid="filter" onClick={ spanClick }>X</button>
+    </section>
+  );
+
   return (
     loading ? <Loading /> : (
       <main>
@@ -86,6 +103,8 @@ function Table() {
             Filtrar
           </button>
         </form>
+
+        { isClicked && filterBtn() }
 
         <table>
           <thead>
