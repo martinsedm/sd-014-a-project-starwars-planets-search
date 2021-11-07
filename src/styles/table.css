@@ -6,14 +6,12 @@
 .title {
   color: white;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-weight: 700;
 }
 
 div {
   display: flex;
   flex-direction: row;
-  /* border: 1px solid black; */
 }
 
 table {
@@ -22,10 +20,8 @@ table {
 
 tr {
   color: white;
-  /* border: 1px solid black; */
   margin: 5px;
   padding: 3px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 td {
