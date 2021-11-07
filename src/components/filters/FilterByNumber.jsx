@@ -42,10 +42,12 @@ function FilterByNumber() {
   };
 
   useEffect(() => {
+    const lastNumericFilterIndex = filterOptions.filters.filterByNumericValues.length - 1;
     const { column, comparison, value,
     } = filterOptions.filters
       .filterByNumericValues.length > 0 ? filterOptions.filters
-        .filterByNumericValues[0] : { columnValue, comparisonValue, numValue };
+        .filterByNumericValues[lastNumericFilterIndex]
+      : { columnValue, comparisonValue, numValue };
     const filterByNumber = () => {
       setFilteredPlanets(
         planets
@@ -75,6 +77,16 @@ function FilterByNumber() {
   }, [columnValue, comparisonValue, numValue, planets,
     setFilteredPlanets, filterOptions.filters.filterByNumericValues]);
 
+  useEffect(() => {
+    const lastNumericFilterIndex = filterOptions.filters.filterByNumericValues.length - 1;
+    const selectedFilter = filterOptions.filters
+      .filterByNumericValues[lastNumericFilterIndex];
+
+    if (typeof selectedFilter !== 'undefined' && selectedFilter.column !== null) {
+      document.getElementById(`${selectedFilter.column}`).remove();
+    }
+  }, [filterOptions.filters.filterByNumericValues]);
+
   return (
     <>
       <h2>Filtro por valores numéricos:</h2>
@@ -86,11 +98,11 @@ function FilterByNumber() {
           data-testid="column-filter"
           onChange={ handleChange }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option value="population" id="population">population</option>
+          <option value="orbital_period" id="orbital_period">orbital_period</option>
+          <option value="diameter" id="diameter">diameter</option>
+          <option value="rotation_period" id="rotation_period">rotation_period</option>
+          <option value="surface_water" id="surface_water">surface_water</option>
         </select>
       </label>
       <label htmlFor="comparison">
