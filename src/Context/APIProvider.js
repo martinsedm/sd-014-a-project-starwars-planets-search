@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import APIContext from './APIContext';
 
 function APIProvider({ children }) {
+  const opt = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
   const [data, setData] = useState([]);
   const [isLoad, setLoad] = useState(true);
   const [headers, setheaders] = useState([]);
@@ -13,6 +18,7 @@ function APIProvider({ children }) {
   const [valor, setValor] = useState(0);
   const [filtro, setFiltro] = useState([]);
   const [multFilter, setMultFilter] = useState([]);
+  const [opcoes, setOpcoes] = useState([...opt]);
 
   const filtros = {
     filters: {
@@ -23,59 +29,51 @@ function APIProvider({ children }) {
     },
   };
 
-  const switcher = (param, col, val) => {
-    switch (param) {
+  const firstFilter = () => {
+    const { filterByNumericValues } = filtros.filters;
+    const { column, value, comparison } = filterByNumericValues[0];
+    const maior = data.filter((cur) => cur[column] > Number(value));
+    const menor = data.filter((cur) => cur[column] < Number(value));
+    const igual = data.filter((cur) => cur[column] === value);
+    switch (comparison) {
     case 'maior que':
-      return data.filter((cur) => cur[col] > Number(val));
+      return maior;
     case 'menor que':
-      return data.filter((cur) => cur[col] < Number(val));
+      return menor;
     case 'igual a':
-      return data.filter((cur) => cur[col] === Number(val));
+      return igual;
     default: return data;
     }
   };
 
   const numericFilter = () => {
     const { filterByNumericValues } = filtros.filters;
-    
-    const arr = [];
     if (filtro.length === 0) {
       return data;
     } if (filtro.length === 1) {
-      const maior = data.filter((cur) => cur[filterByNumericValues[0].column] > Number(valor));
-      const menor = data.filter((cur) => cur[filterByNumericValues[0].column] <= valor);
-      const igual = data.filter((cur) => cur[filterByNumericValues[0].column] === valor);
-      // switcher(filtro[0].comparison,
-      //   filtro[0].column, filtro[0].value);
-      switch (filterByNumericValues[0].comparison) {
-      case 'maior que':
-        return maior;
-      case 'menor que':
-        return menor;
-      case 'igual a':
-        return igual;
-      default: return data;
-      }
-    } else {
-      
+      return firstFilter();
+    }
+    switch (filterByNumericValues[1].comparison) {
+    case 'maior que':
+      return firstFilter().filter(
+        (cur) => cur[filterByNumericValues[1].column] > filterByNumericValues[1].value,
+      );
+    case 'menor que':
+      return firstFilter().filter(
+        (cur) => cur[filterByNumericValues[1].column]
+        <= Number(filterByNumericValues[1].value),
+      );
+    case 'igual a':
+      return firstFilter().filter(
+        (cur) => cur[filterByNumericValues[1].column] === filterByNumericValues[1].value,
+      );
+    default: return multFilter;
     }
   };
 
   const planetasFiltrados = () => {
-    // console.log(coluna, comparacao, valor, filtrado);
     const filtroA = numericFilter().filter((cur) => cur.name.includes(nameFilter));
-    // if (!filtrado) {
     return filtroA;
-    // }
-    // switch (comparacao) {
-    // case 'maior que':
-    //   return filtroA.filter((cur) => cur[coluna] > Number(valor));
-    // case 'menor que':
-    //   return data.filter((cur) => cur.name.includes(nameFilter) && cur[coluna] <= valor);
-    // case 'igual a':
-    //   return data.filter((cur) => cur.name.includes(nameFilter) && cur[coluna] === valor);
-    // default: return data;
-    // }
   };
 
   useEffect(() => {
@@ -101,6 +99,10 @@ function APIProvider({ children }) {
     filtros,
     filtro,
     setFiltro,
+    opcoes,
+    setOpcoes,
+    filtrado,
+    setMultFilter,
   };
 
   return (

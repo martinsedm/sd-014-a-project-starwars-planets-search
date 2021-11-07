@@ -2,9 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import APIContext from '../Context/APIContext';
 
 function Table() {
-  // const [data, setData] = useState([]);
-  // const [isLoad, setLoad] = useState(true);
-  // const [headers, setheaders] = useState([]);
   const { setData,
     setLoad, setheaders, isLoad, headers, planetasFiltrados } = useContext(APIContext);
 

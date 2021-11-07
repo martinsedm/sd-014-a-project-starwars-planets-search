@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import APIContext from '../Context/APIContext';
+import Select from './Select';
 
 function Filtro() {
   const {
-    nameFilter,
     setNameFilter,
-    setColuna,
     setComparacao,
     setValor,
     setFiltrado,
@@ -14,8 +13,10 @@ function Filtro() {
     comparacao,
     valor,
     filtro,
-    setFiltro, } = useContext(APIContext);
-  const { filterByName, filterByNumericValues } = filtros.filters;
+    setFiltro,
+    opcoes,
+    setOpcoes } = useContext(APIContext);
+  const { filterByName } = filtros.filters;
 
   const changeName = (e) => {
     setNameFilter(e.target.value);
@@ -24,10 +25,7 @@ function Filtro() {
   const filterBtn = () => {
     setFiltrado(true);
     setFiltro([...filtro, { column: coluna, comparison: comparacao, value: valor }]);
-    console.log(filtro);
-    // filterByNumericValues.push(...filtro);
-    console.log(filterByNumericValues);
-    console.log(filterByNumericValues.length);
+    setOpcoes(opcoes.filter((cur) => cur !== coluna));
   };
 
   return (
@@ -38,17 +36,7 @@ function Filtro() {
         onChange={ changeName }
         data-testid="name-filter"
       />
-      <select
-        name="column"
-        data-testid="column-filter"
-        onChange={ (e) => setColuna(e.target.value) }
-      >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-      </select>
+      <Select />
       <select
         name="comparison"
         data-testid="comparison-filter"
