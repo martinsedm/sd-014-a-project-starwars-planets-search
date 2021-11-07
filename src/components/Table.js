@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import fetchData from '../services/planetsAPI';
 
 const TABLE_HEADERS = [
   'Name',
@@ -18,12 +19,13 @@ const TABLE_HEADERS = [
 ];
 
 function Table() {
-  const { filters, getPlanets, planets } = useContext(PlanetsContext);
+  const { filters } = useContext(PlanetsContext);
   const { filterByName, filterByNumericValues, order } = filters;
 
+  const [planets, setPlanets] = useState([]);
+
   useEffect(() => {
-    getPlanets();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchData().then(({ results }) => setPlanets(results));
   }, []);
 
   const filterPlanetsByName = planets.filter((planet) => {

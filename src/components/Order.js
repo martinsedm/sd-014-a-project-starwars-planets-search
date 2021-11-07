@@ -18,10 +18,10 @@ const OPTIONS = [
 ];
 
 function Order() {
+  const { filters, setFilters } = useContext(PlanetsContext);
+
   const [order, setOrder] = useState('name');
   const [sort, setSort] = useState('ASC');
-
-  const { filters, setFilters } = useContext(PlanetsContext);
 
   const handleSort = () => {
     setFilters({
