@@ -23,9 +23,16 @@ function PlanetsProvider({ children }) {
 
   const handleLog = (column, comparison, number) => setFilter(
     { ...filter,
-      filterByNumericValues: [...filter
-        .filterByNumericValues, { column, comparison, number }] },
+      filterByNumericValues: [
+        ...filter.filterByNumericValues, { column, comparison, number },
+      ],
+    },
   );
+
+  const deleteColumn = (column) => {
+    document.getElementById('filter').childNodes
+      .forEach((option) => (option.value === column ? option.remove() : null));
+  };
 
   const context = {
     getPlanets,
@@ -33,6 +40,7 @@ function PlanetsProvider({ children }) {
     setFilter,
     filter,
     handleLog,
+    deleteColumn,
   };
 
   useEffect(() => {

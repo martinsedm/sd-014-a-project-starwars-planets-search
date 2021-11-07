@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../contexts/PlanetsContext';
 
 function NumericFilter() {
-  const { handleLog } = useContext(PlanetsContext);
+  const { handleLog, deleteColumn } = useContext(PlanetsContext);
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [number, setNumber] = useState('');
@@ -16,6 +16,7 @@ function NumericFilter() {
   return (
     <form>
       <select
+        id="filter"
         name="column"
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => setColumn(value) }
@@ -44,7 +45,10 @@ function NumericFilter() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => handleLog(column, comparison, number) }
+        onClick={ () => {
+          handleLog(column, comparison, number);
+          deleteColumn(column);
+        } }
       >
         filtrar
 
