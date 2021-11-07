@@ -10,6 +10,7 @@ export default function Table() {
     data,
     getData,
     filters,
+    filteredData,
   } = useContext(AppContext);
   const { filterByName } = filters;
 
@@ -19,7 +20,8 @@ export default function Table() {
   }, []);
 
   /* Lógica da pessoa colega Leonardo Bermejo */
-  const filteredData = data.filter((planet) => {
+  const dataArray = filteredData.length === 0 ? data : filteredData;
+  const filteredByName = dataArray.filter((planet) => {
     if (filterByName !== '') {
       return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
     }
@@ -56,7 +58,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredData.map((planet) => {
+        {filteredByName.map((planet) => {
           const planetInfo = Object.values(planet);
           return (
             <tr key={ uuidv4() }>

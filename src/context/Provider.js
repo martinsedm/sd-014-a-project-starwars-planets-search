@@ -20,6 +20,7 @@ export default function Provider({ children }) {
     },
     filterByNumericValues: [],
   });
+  const [filteredData, setFilteredData] = useState([]);
 
   async function getData() {
     const results = await fetchData();
@@ -69,15 +70,12 @@ export default function Provider({ children }) {
       default:
         throw new Error('Essa opção não existe!');
       }
-      setData([...filtered]);
-    } else { getData(); }
+      setFilteredData([...filtered]);
+    } else { setFilteredData(data); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByNumericValues]);
 
   function removeSelectedColumn(column) {
-    // const { filterByNumericValues } = filters;
-    // const { column } = filterByNumericValues[filterByNumericValues.length - 1];
-    // console.log(column);
     const filteredOptions = columnOptions
       .filter((columnOption) => columnOption !== column);
     setColumnOptions(filteredOptions);
@@ -93,6 +91,7 @@ export default function Provider({ children }) {
     removeSelectedColumn,
     columnOptions,
     setFilters,
+    filteredData,
   };
 
   return (

@@ -11,7 +11,6 @@ export default function Header() {
     loading,
     setNumericValues,
     removeSelectedColumn,
-    filters,
     columnOptions,
   } = useContext(AppContext);
 
@@ -20,8 +19,8 @@ export default function Header() {
   const [number, setNumber] = useState(0);
 
   useEffect(() => {
-    console.log(filters.filterByNumericValues.column);
-  }, [filters]);
+    setColumn(columnOptions[0]);
+  }, [columnOptions]);
 
   const comparisonOptions = [
     'maior que',
@@ -43,6 +42,7 @@ export default function Header() {
       <select
         data-testid="column-filter"
         onChange={ (e) => setColumn(e.target.value) }
+        value={ column }
       >
         { columnOptions.map((columnOption) => (
           <option
@@ -57,6 +57,7 @@ export default function Header() {
       <select
         data-testid="comparison-filter"
         onChange={ (e) => setComparison(e.target.value) }
+        value={ comparison }
       >
         {comparisonOptions.map((comparisonOption) => (
           <option
