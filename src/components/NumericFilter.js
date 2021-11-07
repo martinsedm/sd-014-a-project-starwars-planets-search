@@ -14,19 +14,20 @@ export default function NumericFilter() {
     const column = columnId.value;
     const comparison = comparisonId.value;
     const { value } = valueId;
-    const teste = { ...filters,
+    const filtersValues = { ...filters,
       filterByNumericValues: [{
         column,
         comparison,
         value,
       }],
     };
-    setFilters(teste);
+    setFilters(filtersValues);
   }
 
   function handleClick() {
     setFilterClick(!filterClick);
     filter(filters, planetInfo, filterClick);
+    document.querySelector(`#${filters.filterByNumericValues[0].column}`).remove();
   }
 
   return (
@@ -36,11 +37,11 @@ export default function NumericFilter() {
         id="column"
         onChange={ () => handleChange() }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        <option id="population">population</option>
+        <option id="orbital_period">orbital_period</option>
+        <option id="diameter">diameter</option>
+        <option id="rotation_period">rotation_period</option>
+        <option id="surface_water">surface_water</option>
       </select>
       <select
         data-testid="comparison-filter"

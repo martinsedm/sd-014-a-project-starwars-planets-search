@@ -6,7 +6,9 @@ import getPlanetsInfo from '../services/planetsApi';
 function Table() {
   const {
     planetInfo,
-    filters, setPlanetsInfo, filterClick, setFilterClick } = useContext(PlanetsContext);
+    filters,
+    setPlanetsInfo,
+    filterClick, setFilterClick, setFilters } = useContext(PlanetsContext);
 
   useEffect(() => {
     async function fetchPlanetsInfo() {
@@ -27,7 +29,29 @@ function Table() {
           .filterByNumericValues[0].comparison} ${filters.filterByNumericValues[0].value}
           `}
           </p>
-          <button type="button" onClick={ () => setFilterClick(false) }>X</button>
+          <button
+            type="button"
+            onClick={ () => {
+              const option = document.createElement('option');
+              const optionText = document.createTextNode(`${
+                filters.filterByNumericValues[0].column}`);
+              const selectValue = document.querySelector('#column');
+              option.appendChild(optionText);
+              setFilterClick(!filterClick);
+              selectValue.prepend(option);
+              const filtersValues = { ...filters,
+                filterByNumericValues: [{
+                  column: selectValue.value,
+                  comparison: filters.filterByNumericValues[0].comparison,
+                  value: filters.filterByNumericValues[0].value,
+                }],
+              };
+              setFilters(filtersValues);
+            } }
+          >
+            X
+
+          </button>
         </div>
       );
     }
