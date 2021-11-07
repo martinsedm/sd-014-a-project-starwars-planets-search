@@ -4,11 +4,31 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  // [value, setValue(É uma função)]
+  const [value, setValue] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [filter, setFilter] = useState(
+    {
+      filters: {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValue: [],
+      },
+    },
+  );
 
   const contextValue = {
     planets,
     setPlanets,
+    filter,
+    setFilter,
+    value,
+    setValue,
+    column,
+    setColumn,
+    comparisom: comparison,
+    setComparisom: setComparison,
   };
 
   // Chamada de requisição a API e seta o resultado no estado.
