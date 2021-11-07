@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { megaFilter } from '../services';
 
@@ -20,6 +20,8 @@ function Form() {
   } = filters;
 
   const { filterByNumericValues } = filters;
+
+  const [alreadyUsed, setUsed] = useState();
 
   useEffect(() => {
     function nameFilter() {
@@ -51,14 +53,23 @@ function Form() {
   const handleClick = () => {
     const filterP = [...filteredPlanets];
     const newPlanets = megaFilter(column, comparison, value, filterP);
+
+    const newElementComparison = {
+      ...filters,
+      filterByNumericValues: [{ ...filterByNumericValues[0] },
+        { column, comparison, value }],
+    };
+    setUsed(column);
+    setFilters(newElementComparison);
     setFilteredPlanets(newPlanets);
   };
 
   const renderOptions = () => {
     const options = ['population', 'orbital_period',
       'diameter', 'rotation_period', 'surface_water'];
+    const newOptions = options.filter((option) => option !== alreadyUsed);
     return (
-      options.map((option, index) => (<option key={ index }>{option}</option>))
+      newOptions.map((option, index) => (<option key={ index }>{option}</option>))
     );
   };
 

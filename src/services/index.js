@@ -5,7 +5,6 @@ export const fetchPlanets = async () => {
 };
 
 export const megaFilter = (column, comparison, value, planets) => {
-  console.log(column);
   switch (comparison) {
   case 'maior que':
     return planets.filter((planet) => Number(planet[column]) > Number(value));
