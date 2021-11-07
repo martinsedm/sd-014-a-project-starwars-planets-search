@@ -3,36 +3,39 @@ import React, { useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function NumericFilter() {
-  const [select, setSelect] = useState();
   const [comparison, setComparison] = useState();
   const [number, setNumber] = useState();
-  const { byNumericValues, submitNumFilter } = useContext(PlanetContext);
+  const { byNumericValues, options, select, setSelect,
+    submitNumFilter } = useContext(PlanetContext);
+  console.log('option[0][0]:', options[0][0]);
+  console.log('select:', select);
 
-  const selectOptions = [['population', 'Population'],
-    ['orbital_period', 'Orbital Period'], ['diameter', 'Diameter'],
-    ['rotation_period', 'Rotation Period'], ['surface_Water', 'Surface Water']];
+  // console.log('NumericFilter11: ByNumericValues', byNumericValues);
+
+  // selectOptions.map((item, index) => {
+  //   if (byNumericValues.some((ele) => ele.column === item[0])) {
+  //     console.log(item[0]);
+  //     selectOptions.splice(index, 1);
+  //   }
+  //   return selectOptions;
+  // });
 
   return (
-    <form onSubmit={ () => submitNumFilter(select, comparison, number) }>
+    <form>
       <select
         value={ select }
         type="string"
         data-testid="column-filter"
         onChange={ (event) => setSelect(event.target.value) }
       >
-        { selectOptions.filter().map((item, index) => (
+        { options.map((item, index) => (
           <option
             key={ index }
             value={ item[0] }
           >
-            {item[1]}
+            { item[1] }
           </option>
         ))}
-        {/* <option value="population">Population</option>
-        <option value="orbital_period">Orbital Period</option>
-        <option value="diameter">Diameter</option>
-        <option value="rotation_period">Rotation Period</option>
-        <option value="surface_water">Surface Water</option> */}
       </select>
       <select
         value={ comparison }
@@ -50,7 +53,13 @@ function NumericFilter() {
         type="number"
         onChange={ (event) => setNumber(event.target.value) }
       />
-      <button type="submit" data-testid="button-filter">Enviar</button>
+      <button
+        onClick={ () => submitNumFilter(select, comparison, number) }
+        type="button"
+        data-testid="button-filter"
+      >
+        Enviar
+      </button>
     </form>
   );
 }

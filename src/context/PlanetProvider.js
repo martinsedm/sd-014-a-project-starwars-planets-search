@@ -20,6 +20,10 @@ function PlanetProvider({ children }) {
       ],
     },
   });
+  const [options, setOptions] = useState([['population', 'Population'],
+    ['orbital_period', 'Orbital Period'], ['diameter', 'Diameter'],
+    ['rotation_period', 'Rotation Period'], ['surface_Water', 'Surface Water']]); // Used in the NumericFilter component
+  const [select, setSelect] = useState(options[0][0]);
 
   useEffect(() => {
     async function getPlanet() {
@@ -29,18 +33,23 @@ function PlanetProvider({ children }) {
     getPlanet();
   }, []);
 
+  useEffect(() => {
+    setSelect(options[0][0]);
+  }, [options]);
+
   const nameFilterChange = (name) => {
     setFilter({ filters: { ...filter.filters, filterByName: { name } } });
   };
 
+  // const updateNumFilterSelector = () => {
+  //   setSelect(options[0][0]);
+  // };
+
   const submitNumFilter = (column, comparison, value) => {
     setFilter({ filters: { ...filter.filters,
       filterByNumericValues: [...filter.filters.filterByNumericValues,
-        {
-          column,
-          comparison,
-          value,
-        }] } });
+        { column, comparison, value }] } });
+    setOptions(options.filter((ele) => ele[0] !== column));
   };
 
   return (
@@ -50,6 +59,9 @@ function PlanetProvider({ children }) {
         name: filter.filters.filterByName.name,
         nameFilterChange,
         byNumericValues: filter.filters.filterByNumericValues,
+        select,
+        setSelect,
+        options,
         submitNumFilter,
       } }
     >

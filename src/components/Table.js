@@ -4,7 +4,7 @@ import PlanetContext from '../context/PlanetContext';
 
 function Table() {
   const { data, name } = useContext(PlanetContext);
-  console.log(data);
+  // console.log('Table7: data', data);
   const validKeys = ['name', 'rotation_period', 'orbital_period', 'diameter',
     'climate', 'gravity', 'terrain', 'surface_water', 'population',
     'films', 'created', 'edited', 'url'];
