@@ -1,13 +1,49 @@
-import React, { useState, useContext } from 'react';
-import StarwarsContext from '../context/StarwarsContext';
+import React, { useContext } from 'react';
 import '../Starwars.css';
+import Table from './Table';
+import StarwarsContext from '../context/StarwarsContext';
 
 function Starwars() {
-  const [input, setInput] = useState('');
-  const { starwars } = useContext(StarwarsContext);
+  const options = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const {
+    data,
+    name,
+    column,
+    comparison,
+    values,
+    filterByNumericValues,
+    setName,
+    setColumn,
+    setComparison,
+    setValues,
+    setFilter,
+    setFilterByNumericValues,
+  } = useContext(StarwarsContext);
 
-  const handleChange = ({ target }) => {
-    setInput(target.value);
+  const handleClick = () => {
+    let comparisons;
+    if (comparison === 'maior que' && values !== '') {
+      comparisons = data
+        .filter((plan) => parseInt(plan[column], 10) > parseInt(values, 10));
+    }
+
+    if (comparison === 'menor que' && values !== '') {
+      comparisons = data
+        .filter((plan) => parseInt(plan[column], 10) < parseInt(values, 10));
+    }
+
+    if (comparison === 'igual a' && values !== '') {
+      comparisons = data
+        .filter((plan) => parseInt(plan[column], 10) === parseInt(values, 10));
+    }
+    setFilter(comparisons);
+    setFilterByNumericValues([...filterByNumericValues, column]);
   };
 
   return (
@@ -19,39 +55,55 @@ function Starwars() {
         <input
           type="text"
           id="input"
-          value={ input }
+          value={ name }
           data-testid="name-filter"
-          onChange={ handleChange }
+          onChange={ ({ target: { value } }) => setName(value) }
         />
       </label>
-      <table>
-        <thead>
-          <tr>
-            { starwars.length !== 0 && Object.keys(starwars[0])
-              .map((star) => <th key={ star }>{ star }</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          { starwars.length !== 0 && starwars
-            .filter((planet) => planet.name.toLowerCase().includes(input))
-            .map((star) => (
-              <tr key={ star.name }>
-                <td>{ star.name }</td>
-                <td>{ star.rotation_period }</td>
-                <td>{ star.orbital_period }</td>
-                <td>{ star.diameter }</td>
-                <td>{ star.climate }</td>
-                <td>{ star.gravity }</td>
-                <td>{ star.terrain }</td>
-                <td>{ star.surface_water }</td>
-                <td>{ star.population }</td>
-                <td>{ star.films }</td>
-                <td>{ star.created }</td>
-                <td>{ star.edited }</td>
-                <td>{ star.url }</td>
-              </tr>))}
-        </tbody>
-      </table>
+      <div>
+        <label htmlFor="column-filter">
+          <select
+            data-testid="column-filter"
+            name="select"
+            id="column-filter"
+            value={ column }
+            onChange={ ({ target: { value } }) => setColumn(value) }
+          >
+            { options.filter((option) => !filterByNumericValues.includes(option))
+              .map((opt) => <option key={ opt }>{ opt }</option>)}
+          </select>
+        </label>
+        <label htmlFor="comparison-filter">
+          <select
+            data-testid="comparison-filter"
+            name="select"
+            id="comparison-filter"
+            value={ comparison }
+            onChange={ ({ target: { value } }) => setComparison(value) }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+        </label>
+        <label htmlFor="input-number">
+          <input
+            type="number"
+            id="input-number"
+            value={ values }
+            data-testid="value-filter"
+            onChange={ ({ target: { value } }) => setValues(value) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleClick }
+        >
+          Filtrar
+        </button>
+        <Table />
+      </div>
     </div>
   );
 }

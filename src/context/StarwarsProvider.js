@@ -4,7 +4,31 @@ import PropTypes from 'prop-types';
 import StarwarsContext from './StarwarsContext';
 
 function StarwarsProvider({ children }) {
-  const [starwars, setStarwars] = useState([]);
+  const [data, setData] = useState([]);
+  const [name, setName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [values, setValues] = useState('');
+  const [filter, setFilter] = useState([]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  console.log(filterByNumericValues);
+  console.log(column);
+  const contextFilters = {
+    data,
+    name,
+    column,
+    comparison,
+    values,
+    filter,
+    filterByNumericValues,
+    setData,
+    setName,
+    setColumn,
+    setComparison,
+    setValues,
+    setFilter,
+    setFilterByNumericValues,
+  };
 
   const starwarsApi = async () => {
     const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -13,7 +37,8 @@ function StarwarsProvider({ children }) {
       delete result.residents;
       return result;
     });
-    setStarwars(filteredResults);
+    setData(filteredResults);
+    setFilter(filteredResults);
   };
 
   useEffect(() => {
@@ -21,7 +46,7 @@ function StarwarsProvider({ children }) {
   }, []);
 
   return (
-    <StarwarsContext.Provider value={ { starwars } }>
+    <StarwarsContext.Provider value={ contextFilters }>
       { children }
     </StarwarsContext.Provider>
   );
