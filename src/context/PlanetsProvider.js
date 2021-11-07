@@ -4,6 +4,7 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planetInfo, setPlanetsInfo] = useState([]);
+  const [filterClick, setFilterClick] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -18,6 +19,8 @@ function PlanetsProvider({ children }) {
   return (
     <PlanetsContext.Provider
       value={ {
+        filterClick,
+        setFilterClick,
         planetInfo,
         setPlanetsInfo,
         setFilters,

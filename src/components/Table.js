@@ -1,50 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import filter from '../services/filter';
 import getPlanetsInfo from '../services/planetsApi';
 
 function Table() {
-  const { planetInfo, filters, setPlanetsInfo } = useContext(PlanetsContext);
-
-  function filter() {
-    if (filters.filterByName.name) {
-      return planetInfo.filter(
-        (planet) => (planet.name).toLowerCase().includes((filters.filterByName.name)),
-      );
-    }
-    if (
-      filters.filterByNumericValues[0].column
-      && filters.filterByNumericValues[0].comparison === 'maior que') {
-      console.log('oid');
-      return planetInfo.filter(
-        (planet) => Number(
-          planet[filters.filterByNumericValues[0].column]
-          ,
-        ) > Number(filters.filterByNumericValues[0].value),
-      );
-    }
-    if (
-      filters.filterByNumericValues[0].column
-      && filters.filterByNumericValues[0].comparison === 'menor que') {
-      console.log('oid');
-      return planetInfo.filter(
-        (planet) => Number(
-          planet[filters.filterByNumericValues[0].column]
-          ,
-        ) < Number(filters.filterByNumericValues[0].value),
-      );
-    }
-    if (
-      filters.filterByNumericValues[0].column
-      && filters.filterByNumericValues[0].comparison === 'igual a') {
-      console.log('oid');
-      return planetInfo.filter(
-        (planet) => Number(
-          planet[filters.filterByNumericValues[0].column],
-        ) === Number(filters.filterByNumericValues[0].value),
-      );
-    }
-    return planetInfo;
-  }
+  const {
+    planetInfo,
+    filters, setPlanetsInfo, filterClick, setFilterClick } = useContext(PlanetsContext);
 
   useEffect(() => {
     async function fetchPlanetsInfo() {
@@ -54,8 +16,26 @@ function Table() {
     fetchPlanetsInfo();
   }, [setPlanetsInfo]);
 
+  function displaySelectedFilters() {
+    if (filterClick === true) {
+      return (
+        <div>
+          <p>
+            {`
+          ${filters.filterByNumericValues[0].column} 
+          ${filters
+          .filterByNumericValues[0].comparison} ${filters.filterByNumericValues[0].value}
+          `}
+          </p>
+          <button type="button" onClick={ () => setFilterClick(false) }>X</button>
+        </div>
+      );
+    }
+  }
+
   return (
     <table>
+      {displaySelectedFilters()}
       <tr>
         <th>Name</th>
         <th>Rotation Period</th>
@@ -71,7 +51,7 @@ function Table() {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      {filter().map((info) => {
+      {filter(filters, planetInfo, filterClick).map((info) => {
         const {
           name,
           rotation_period: rotationPeriod,

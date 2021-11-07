@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import filter from '../services/filter';
 
 export default function NumericFilter() {
-  const { setFilters, filters } = useContext(PlanetsContext);
+  const {
+    setFilters,
+    filters, planetInfo, setFilterClick, filterClick } = useContext(PlanetsContext);
 
   function handleChange() {
     const columnId = document.querySelector('#column');
@@ -19,6 +22,11 @@ export default function NumericFilter() {
       }],
     };
     setFilters(teste);
+  }
+
+  function handleClick() {
+    setFilterClick(!filterClick);
+    filter(filters, planetInfo, filterClick);
   }
 
   return (
@@ -49,7 +57,13 @@ export default function NumericFilter() {
         data-testid="value-filter"
         onChange={ () => handleChange() }
       />
-      <button type="button" data-testid="button-filter">Filtrar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => handleClick() }
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
