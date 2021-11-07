@@ -11,6 +11,10 @@ function PlanetsProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const [planets, setPlanets] = useState([]);
 

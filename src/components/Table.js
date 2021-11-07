@@ -19,7 +19,7 @@ const TABLE_HEADERS = [
 
 function Table() {
   const { filters, getPlanets, planets } = useContext(PlanetsContext);
-  const { filterByName, filterByNumericValues } = filters;
+  const { filterByName, filterByNumericValues, order } = filters;
 
   useEffect(() => {
     getPlanets();
@@ -56,6 +56,31 @@ function Table() {
     return true;
   });
 
+  const compareNumbers = (a, b, sort) => (sort === 'ASC' ? a - b : b - a);
+
+  const compareStrings = (a, b, sort) => {
+    const MIN_VALUE = -1;
+    if (sort === 'ASC') {
+      return a > b ? 1 : MIN_VALUE;
+    }
+    return a < b ? 1 : MIN_VALUE;
+  };
+
+  const orderPlanets = filterPlanetsByNumericValues.sort((a, b) => {
+    const valueA = a[order.column];
+    const valueB = b[order.column];
+
+    if (
+      order.column === 'rotation_period'
+      || order.column === 'orbital_period'
+      || order.column === 'diameter'
+      || order.column === 'surface_water'
+    ) {
+      return compareNumbers(Number(valueA), Number(valueB), order.sort);
+    }
+    return compareStrings(valueA, valueB, order.sort);
+  });
+
   return (
     <table>
       <thead>
@@ -66,9 +91,9 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filterPlanetsByNumericValues.map((planet) => (
+        {orderPlanets.map((planet) => (
           <tr key={ planet.name }>
-            <td>{planet.name}</td>
+            <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.orbital_period}</td>
             <td>{planet.diameter}</td>

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import CurrentFilters from './CurrentFilters';
 import FilterByNumericValues from './FilterByNumericValues';
+import Order from './Order';
 
 function Filters() {
   const { filters, setFilters } = useContext(PlanetsContext);
@@ -23,6 +24,7 @@ function Filters() {
         value={ name }
       />
       <FilterByNumericValues />
+      <Order />
       <CurrentFilters />
     </>
   );
