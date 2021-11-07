@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import CurrentFilters from './CurrentFilters';
 import SelectFilter from './SelectFilter';
 
 const COLUMN_FILTERS = [
@@ -37,6 +38,7 @@ function Filters() {
     });
 
     // reset form value
+    setColumn('');
     setValue('');
   };
 
@@ -45,7 +47,7 @@ function Filters() {
     setName(target.value);
   };
 
-  const isDisabled = () => !column && !comparison && !value;
+  const isDisabled = () => !column || !comparison || !value;
 
   return (
     <>
@@ -84,6 +86,7 @@ function Filters() {
       >
         Filter
       </button>
+      <CurrentFilters />
     </>
   );
 }
