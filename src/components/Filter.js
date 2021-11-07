@@ -13,9 +13,16 @@ const Filter = () => {
     setComparison,
     value,
     setValue,
+    options,
+    setOptions,
   } = useContext(DataContext);
 
-  const numericalFilter = () => {
+  const optionsFIlter = () => {
+    const filterOption = options.filter((option) => option !== column);
+    setOptions(filterOption);
+  };
+
+  const numericalFilter = async () => {
     let dataNumericalFilter;
     if (comparison === 'maior que') {
       dataNumericalFilter = data
@@ -28,6 +35,7 @@ const Filter = () => {
         .filter((planet) => Number(planet[column]) === Number((value)));
     }
     setData(dataNumericalFilter);
+    await optionsFIlter();
   };
 
   const handleClick = async () => {
@@ -54,11 +62,15 @@ const Filter = () => {
           value={ column }
           onChange={ (element) => setColumn(element.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option
+              key={ option }
+              value={ option }
+            >
+              { option }
+            </option>
+          ))}
+
         </select>
       </label>
       <label htmlFor="comparison-filter">

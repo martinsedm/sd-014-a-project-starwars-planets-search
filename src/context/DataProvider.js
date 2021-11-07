@@ -9,6 +9,13 @@ const DataProvider = ({ children }) => {
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
@@ -40,6 +47,8 @@ const DataProvider = ({ children }) => {
     setValue,
     filter,
     setFilter,
+    options,
+    setOptions,
   };
 
   return (
