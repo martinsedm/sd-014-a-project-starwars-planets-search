@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loading from './Loading';
 
-function Table({ planets }) {
-  return (
+function Table({ planets, headers }) {
+  return planets.length < 1 ? <Loading /> : (
     <table>
       <thead>
         <tr>
           {
-            Object.keys(planets[0]).map((header) => (
+            headers.map((header) => (
               header !== 'residents' ? <th key={ header }>{header}</th> : null
             ))
           }
@@ -34,6 +35,7 @@ function Table({ planets }) {
 
 Table.propTypes = {
   planets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headers: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Table;

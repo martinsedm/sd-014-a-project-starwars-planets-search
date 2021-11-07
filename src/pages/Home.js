@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
-import Loading from '../components/Loading';
 
 function Home() {
-  const { data } = useContext(PlanetsContext);
-  console.log(data);
-  // useEffect(() => console.log(teste), [teste]);
-  return data.length < 1 ? <Loading /> : (
+  const { data, headers, handleFilter } = useContext(PlanetsContext);
+  return (
     <div>
-      <Table planets={ data.results } />
+      <input
+        type="text"
+        placeholder="Filtre por nome"
+        data-testid="name-filter"
+        onChange={
+          ({ target }) => handleFilter(target.value)
+        }
+      />
+      <Table planets={ data } headers={ headers } />
     </div>
   );
 }
