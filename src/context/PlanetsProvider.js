@@ -11,7 +11,16 @@ function PlanetsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   // src: https://www.youtube.com/watch?v=Q8JyF3wpsHc
   const [name, setName] = useState('');
-
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   // src: https://github.com/tryber/sd-014-a-project-starwars-planets-search/pull/8/commits/bc68e7f5df3e1e6ebf5cea76e68498392f57026c
   const [filterData, setFilterData] = useState([]);
 
@@ -20,13 +29,7 @@ function PlanetsProvider({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [
-        {
-          column: '',
-          comparison: '',
-          value: 0,
-        },
-      ],
+      filterByNumericValues: [],
     },
   );
 
@@ -41,7 +44,6 @@ function PlanetsProvider({ children }) {
   };
 
   const filterByNumber = () => {
-    const { column, comparison, value } = filters.filterByNumericValues[0];
     const number = Number(value);
     let filtered;
     switch (comparison) {
@@ -57,19 +59,6 @@ function PlanetsProvider({ children }) {
     default:
       return null;
     }
-  };
-
-  const handleClick = (column, comparison, value) => {
-    setFilter({
-      ...filters,
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
-    });
   };
 
   useEffect(() => {
@@ -92,11 +81,19 @@ function PlanetsProvider({ children }) {
     data,
     isLoading,
     name,
+    column,
+    comparison,
+    value,
+    columnOptions,
     filters,
     filterData,
     getPlanets,
     handleChange,
-    handleClick,
+    setColumn,
+    setComparison,
+    setValue,
+    setColumnOptions,
+    setFilter,
   };
 
   return (

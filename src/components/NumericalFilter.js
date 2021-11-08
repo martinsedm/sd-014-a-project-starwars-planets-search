@@ -1,13 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
 function NumericalFilter() {
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState('');
+  const {
+    filters,
+    column,
+    comparison,
+    value,
+    columnOptions,
+    setFilter,
+    setColumn,
+    setComparison,
+    setValue,
+    setColumnOptions,
+  } = useContext(PlanetsContext);
 
-  const { handleClick } = useContext(PlanetsContext);
+  const handleClick = () => {
+    setFilter({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
+    });
+    const filterColumnOptions = columnOptions
+      .filter((columnItems) => columnItems !== column);
+    setColumnOptions(filterColumnOptions);
+  };
 
   return (
     <form>
@@ -18,11 +42,8 @@ function NumericalFilter() {
             data-testid="column-filter"
             onChange={ ({ target }) => setColumn(target.value) }
           >
-            <option>population</option>
-            <option>orbital_period</option>
-            <option>diameter</option>
-            <option>rotation_period</option>
-            <option>surface_water</option>
+            { columnOptions
+              .map((columnItems) => <option key={ columnItems }>{ columnItems }</option>)}
           </select>
         </label>
 
@@ -50,7 +71,7 @@ function NumericalFilter() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleClick(column, comparison, value) }
+          onClick={ () => handleClick() }
         >
           Filtrar
         </button>
