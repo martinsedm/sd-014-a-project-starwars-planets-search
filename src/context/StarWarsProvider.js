@@ -12,6 +12,7 @@ const INITIAL_COLUMN = [
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
   const [columns, setColumns] = useState(INITIAL_COLUMN);
 
   const filter = {
@@ -24,6 +25,7 @@ function StarWarsProvider({ children }) {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const responseJson = await response.json();
     setData(responseJson.results);
+    setPlanets(responseJson.results);
   };
 
   useEffect(() => {
@@ -39,6 +41,22 @@ function StarWarsProvider({ children }) {
     } else {
       fetchPlanets();
     }
+  };
+
+  const addColumn = (column) => {
+    setColumns([...columns, column]);
+  };
+
+  const removeItemFromFilterByNum = (column) => {
+    const newFilters = { ...filters };
+    newFilters.filterByNumericValues = filters.filterByNumericValues.filter(
+      (item) => (
+        item.column !== column
+      ),
+    );
+
+    setFilters(newFilters);
+    setData(planets);
   };
 
   const removeColumn = (column) => {
@@ -74,7 +92,9 @@ function StarWarsProvider({ children }) {
     setFilters,
     filtersByName,
     filtersByNumeric,
+    addColumn,
     removeColumn,
+    removeItemFromFilterByNum,
   };
   return (
     <PlanetsContext.Provider value={ context }>
