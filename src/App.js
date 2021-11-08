@@ -6,6 +6,7 @@ import ProviderTabela from '../provider/ProviderTabela';
 function App() {
   return (
     <ProviderTabela>
+      <h1>Star Wars Planet</h1>
       <TabelaPlaneta />
     </ProviderTabela>
   );

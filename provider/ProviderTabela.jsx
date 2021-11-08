@@ -7,6 +7,7 @@ import ContextTabela from '../context/ContextTabela';
 function ProviderTabela({ children }) {
   const [data, setData] = useState([]);
   const [titles, setTitles] = useState([]);
+  const [filterName, setFilterName] = useState([]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -21,7 +22,11 @@ function ProviderTabela({ children }) {
     getPlanets();
   }, []);
 
-  const myContext = { data, titles };
+  const handleChange = ({ target: { value } }) => {
+    setFilterName(value);
+  };
+
+  const myContext = { data, titles, filterName, handleChange };
 
   return (
     <ContextTabela.Provider value={ myContext }>
