@@ -18,6 +18,10 @@ function StarWarsProvider({ children }) {
   const filter = {
     filtersByName: '',
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
   const [filters, setFilters] = useState(filter);
 

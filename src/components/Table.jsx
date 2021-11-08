@@ -2,7 +2,31 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, filters } = useContext(PlanetsContext);
+  const { order: { column, sort } } = filters;
+
+  // Inspirado no GitHub de Fernando Oliveira https://github.com/tryber/sd-014-a-project-starwars-planets-search/pull/80#pullrequestreview-800276553
+  data.sort((a, b) => {
+    let firstElement = a[column];
+    let secondElement = b[column];
+    const MINUS_ONE = -1;
+    if (column !== 'name') {
+      firstElement = Number(a[column]);
+      secondElement = Number(b[column]);
+    }
+    if (firstElement < secondElement) {
+      return MINUS_ONE;
+    }
+    if (firstElement > secondElement) {
+      return 1;
+    }
+    return 0;
+  });
+
+  if (sort === 'DESC') {
+    data.reverse();
+  }
+
   return (
     <table>
       <thead>
@@ -25,7 +49,7 @@ function Table() {
       <tbody>
         {data.map((planet) => (
           <tr key={ planet.name }>
-            <td>{planet.name}</td>
+            <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.orbital_period}</td>
             <td>{planet.diameter}</td>
