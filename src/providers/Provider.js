@@ -4,21 +4,33 @@ import Context from '../context/Context';
 import fetchAPI from '../utils/utils';
 
 function Provider({ children }) {
-  const [data, setData] = useState([]);
-  const [filter, setFilter] = useState({
+  const INITIAL_STATE = {
     filters: {
       filterByName: {
         name: '',
       },
     },
-  });
-
-  const value = {
-    data,
-    setData,
-    filter,
-    setFilter,
+    filterByNumericValues: [],
   };
+
+  const FILTER_OPTIONS = {
+    column: '',
+    comparison: '',
+    value: '',
+  };
+
+  const COLUMN_OPTIONS = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [data, setData] = useState([]);
+  const [filter, setFilter] = useState(INITIAL_STATE);
+  const [changeFilter, setChangeFilter] = useState(FILTER_OPTIONS);
+  const [columnOptions, setColumnOptions] = useState(COLUMN_OPTIONS);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -29,8 +41,19 @@ function Provider({ children }) {
     fetchResults();
   }, []);
 
+  const values = {
+    data,
+    setData,
+    filter,
+    setFilter,
+    changeFilter,
+    setChangeFilter,
+    columnOptions,
+    setColumnOptions,
+  };
+
   return (
-    <Context.Provider value={ value }>
+    <Context.Provider value={ values }>
       { children }
     </Context.Provider>
   );
