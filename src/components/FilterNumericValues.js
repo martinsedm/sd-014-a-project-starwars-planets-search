@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import MyContext from '../context';
+import DeleteFilters from './DeleteFilters';
 
 export default function FilterNumericValues() {
   const { filterContext: { filters: { filterByNumericValues } } } = useContext(MyContext);
@@ -8,7 +9,9 @@ export default function FilterNumericValues() {
     { filters:
       { setColumn,
         setComparison,
-        setValue, setFilterByNumericValues, numericValues } } } = useContext(MyContext);
+        setValue,
+        setFilterByNumericValues,
+        numericValues } } } = useContext(MyContext);
 
   const columns = ['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
@@ -68,6 +71,7 @@ export default function FilterNumericValues() {
       >
         Filtrar
       </button>
+      <DeleteFilters />
     </div>
   );
 }
