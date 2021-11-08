@@ -9,20 +9,27 @@ export default function Table() {
     allPlanets,
     funcfetch,
     filters,
-    applyFilters,
+    // handlefilter: teste,
+    setListFiltered,
   } = useContext(MainContext);
 
-  const filtroName = (alp) => {
-    return alp.filter((planeta) => planeta.name.includes(filters.filterByName.name));
-  };
+  let planetFName;
 
   const planetsFilter = () => {
-    let planetFName;
-    const flitName = filters.filterByName.name;
-    if (flitName.length > 0) {
-      planetFName = filtroName(allPlanets);
-    } else {
-      planetFName = allPlanets;
+    const teste = setListFiltered();
+    const filtName = filters.filterByName.name;
+    if (filtName.length > 0) {
+      if (teste.length > 0) {
+        planetFName = teste.filter((planeta) => planeta.name.includes(filtName));
+      } else {
+        planetFName = allPlanets.filter((planeta) => planeta.name.includes(filtName));
+      }
+    } else if (filtName.length <= 0) {
+      if (teste.length > 0) {
+        planetFName = teste;
+      } else {
+        planetFName = allPlanets;
+      }
     }
     return planetFName;
   };
