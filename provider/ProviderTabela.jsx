@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import requestAPI from '../services/requestAPI';
+import requestAPI from '../services/RequerimentoAPI';
 import ContextTabela from '../context/ContextTabela';
 
 function ProviderTabela({ children }) {
