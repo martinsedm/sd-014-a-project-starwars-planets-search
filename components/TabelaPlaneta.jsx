@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import ContextTabela from "../context/ContextTabela";
-import FiltroNome from "./FiltroNome";
+import ContextTabela from '../context/ContextTabela';
+import FiltroNome from './FiltroNome';
 
 function TabelaPlaneta() {
   const { data, titles, filterName } = useContext(ContextTabela);
