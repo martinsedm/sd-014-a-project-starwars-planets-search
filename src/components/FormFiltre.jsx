@@ -9,6 +9,7 @@ export default function FormFiltre() {
         type="text"
         placeholder="Por Nome"
         data-testid="name-filter"
+        name="name"
         value={ filterNamePlanet }
         onChange={ (e) => setFilterNamePlanet(e.target.value) }
       />

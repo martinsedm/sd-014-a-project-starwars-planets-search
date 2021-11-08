@@ -1,6 +1,16 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/MyContext';
-import FormFiltre from './FormFiltre';
+
+export const header = ['name',
+  'rotation_period', 'orbital_period',
+  'diameter', 'climate', 'gravity',
+  'terrain',
+  'surface_water',
+  'population',
+  'films',
+  'created',
+  'edited',
+  'url'];
 
 export default function Table() {
   const { data, loading, filterNames } = useContext(AppContext);
@@ -9,13 +19,12 @@ export default function Table() {
     loading
       ? (
         <div>
-          <FormFiltre />
           <table border="1">
             <thead>
               <tr>
                 {
-                  Object.keys(data[0]).map((key) => (
-                    <th key={ key }>{key.split('_').join('')}</th>
+                  header.map((key) => (
+                    <th key={ key }>{key}</th>
                   ))
                 }
               </tr>
