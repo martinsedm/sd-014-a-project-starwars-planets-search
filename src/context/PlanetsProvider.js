@@ -40,7 +40,7 @@ function PlanetsProvider({ children }) {
     setIsLoading(false);
   };
 
-  const filterFunction = () => {
+  const filterByNumber = () => {
     const { column, comparison, value } = filters.filterByNumericValues[0];
     const number = Number(value);
     let filtered;
@@ -55,7 +55,7 @@ function PlanetsProvider({ children }) {
       filtered = data.filter((planet) => Number(planet[column]) === number);
       return filtered;
     default:
-      return console.log('def');
+      return null;
     }
   };
 
@@ -81,12 +81,12 @@ function PlanetsProvider({ children }) {
   };
 
   useEffect(() => {
-    setFilterData(filterFunction());
+    setFilterData(filterByNumber());
   }, [filters.filterByNumericValues]);
 
   useEffect(() => {
     getPlanets();
-  }, [name]);
+  }, []);
 
   const values = {
     data,
