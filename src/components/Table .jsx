@@ -2,7 +2,17 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets } = useContext(PlanetsContext);
+  const { planets, filters } = useContext(PlanetsContext);
+  const { filterByName: { name } } = filters;
+  if (planets.length === 0) return (<h1>No available planet</h1>);
+
+  const filteredPlanets = planets.filter((planet) => {
+    if (name !== '') {
+      return planet.name.toLowerCase().includes(name.toLowerCase());
+    }
+    return planet;
+  });
+
   return (
     <table>
       <thead>
@@ -23,15 +33,15 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planets.map(({
-          name,
-          rotation_period,
-          orbital_period,
+        { filteredPlanets.map(({
+          name: NAME_PLANET,
+          rotation_period: ROTATION_PERIOD,
+          orbital_period: ORBITAL_PERIOD,
           diameter,
           climate,
           gravity,
           terrain,
-          surface_water,
+          surface_water: SURFACE_WATER,
           population,
           films,
           created,
@@ -39,14 +49,14 @@ function Table() {
           url,
         }, index) => (
           <tr key={ index }>
-            <td>{ name }</td>
-            <td>{ rotation_period }</td>
-            <td>{orbital_period}</td>
+            <td>{ NAME_PLANET }</td>
+            <td>{ ROTATION_PERIOD }</td>
+            <td>{ORBITAL_PERIOD}</td>
             <td>{diameter}</td>
             <td>{climate}</td>
             <td>{gravity}</td>
             <td>{terrain}</td>
-            <td>{surface_water}</td>
+            <td>{SURFACE_WATER}</td>
             <td>{population}</td>
             <td>{films}</td>
             <td>{created}</td>
