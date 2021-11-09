@@ -26,6 +26,10 @@ export default function PlanetsProvider({ children }) {
     setFilteredData(apiResults);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   // ## FILTER BY NAME ##
 
   // const search = async () => {
@@ -34,10 +38,6 @@ export default function PlanetsProvider({ children }) {
   //     .toLowerCase().includes(filterByName.name.toLowerCase()));
   //   setFilteredData(filterr);
   // };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const search = async () => {
@@ -70,6 +70,7 @@ export default function PlanetsProvider({ children }) {
 
   useEffect(() => {
     filterByNumeric();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickButton]);
 
   // ### DELETE-ME PLEASE
@@ -98,7 +99,6 @@ export default function PlanetsProvider({ children }) {
     setFilterByOption,
     filterByComparison,
     setFilterByComparison,
-    filterByNumeric,
     clickButton,
     setClickButton,
   };
