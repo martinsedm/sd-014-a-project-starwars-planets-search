@@ -3,13 +3,33 @@ import PropTypes from 'prop-types';
 import ContextPlanet from './ContextPlanet';
 
 export default function ProviderPlanets({ children }) {
-  const [data, setPlanets] = useState();
+  const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValue: [
+      {
+        colum: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  });
+
+  function SetInputFilter(name) {
+    setFilter({
+      ...filters, filterByName: { name },
+    });
+  }
 
   const context = {
     data,
     setPlanets,
     loading,
+    SetInputFilter,
+    filters,
   };
 
   useEffect(() => {
