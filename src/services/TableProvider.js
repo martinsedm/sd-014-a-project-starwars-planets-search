@@ -5,27 +5,49 @@ import fetchApi from './apiService';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([{}]);
-  useEffect(() => {
-    async function receiveData() {
-      const receive = await fetchApi();
-      setData(receive.results);
-    }
+  const [dataTest, setDataTest] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+  const [loading, setLoading] = useState(false);
+  const [filterPlanets, setFilterPlanets] = useState([]);
 
-    receiveData();
+  useEffect(() => {
+    setLoading(true);
+    const receiveApi = async () => {
+      const response = await fetchApi();
+      setData(response.results);
+      setDataTest(response.results);
+      setFilterPlanets(response.results);
+      setLoading(false);
+    };
+    receiveApi();
   }, []);
 
   return (
-    <div>
-      <TableContext.Provider value={ { data } }>
-        {children}
-      </TableContext.Provider>
-    </div>
+
+    <TableContext.Provider
+      value={ {
+        data,
+        setData,
+        setFilters,
+        filterPlanets,
+        setFilterPlanets,
+        filters,
+        dataTest,
+        loading,
+      } }
+    >
+      {children}
+    </TableContext.Provider>
 
   );
 }
 
 TableProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default TableProvider;
