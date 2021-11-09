@@ -20,6 +20,12 @@ export default function Filter() {
     'surface_water',
   ];
 
+  const comparisonOptions = [
+    'maior que',
+    'igual a',
+    'menor que',
+  ];
+
   // const fButton = () => {
   //   if (clickButton === true) {
   //     return setClickButton(false);
@@ -54,9 +60,15 @@ export default function Filter() {
         data-testid="comparison-filter"
         onChange={ (e) => setFilterByComparison(e.target.value) }
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que"> menor que</option>
-        <option value="igual a">igual a</option>
+        { comparisonOptions.map((op, i) => (
+          <option
+            value={ op }
+            name={ i }
+            key={ i }
+          >
+            { op }
+          </option>
+        )) }
       </select>
       <input
         type="number"
