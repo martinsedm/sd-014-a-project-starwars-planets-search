@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Table = ({ headers, data: { results } }) => (
+const Table = ({ headers, data }) => (
   <table>
     <thead>
       <tr>
@@ -13,7 +13,7 @@ const Table = ({ headers, data: { results } }) => (
       </tr>
     </thead>
     <tbody>
-      {results.map((planet, index) => (
+      {data.map((planet, index) => (
         <tr key={ index }>
           {headers.map((header, key) => (
             <td key={ key }>{planet[header]}</td>
@@ -26,7 +26,6 @@ const Table = ({ headers, data: { results } }) => (
 
 Table.propTypes = {
   headers: PropTypes.arrayOf(PropTypes.string).isRequired,
-  results: PropTypes.arrayOf(PropTypes.objectOf).isRequired,
   data: PropTypes.objectOf.isRequired,
 };
 
