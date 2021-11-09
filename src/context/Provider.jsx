@@ -10,6 +10,22 @@ export default function PlanetProvider({ children }) {
     },
   });
 
+  function filterNumeric(input, firstFilter, secondFilter) {
+    const resultFilter = planets.filter((planet) => {
+      if (secondFilter === 'maior que') {
+        return Number(planet[firstFilter]) > Number(input);
+      }
+      if (secondFilter === 'menor que') {
+        return Number(planet[firstFilter]) < Number(input);
+      }
+      if (secondFilter === 'igual a') {
+        return Number(planet[firstFilter]) === Number(input);
+      }
+      return false;
+    });
+    setPlanets(resultFilter);
+  }
+
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const data = await response.json();
@@ -22,7 +38,13 @@ export default function PlanetProvider({ children }) {
 
   return (
     <main>
-      <Context.Provider value={ { planets, fetchPlanets, filters, setFilters } }>
+      <Context.Provider
+        value={ { planets,
+          fetchPlanets,
+          filters,
+          setFilters,
+          filterNumeric } }
+      >
         {children}
       </Context.Provider>
     </main>
