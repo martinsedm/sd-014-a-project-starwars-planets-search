@@ -12,7 +12,9 @@ export default function Filter() {
     setFilterByComparison,
     // filterByOption,
     setFilterByOption,
-    filterByNumeric,
+    // filterByNumeric,
+    clickButton,
+    setClickButton,
   } = useContext(PlanetsContext);
 
   const filterOptions = [
@@ -22,6 +24,13 @@ export default function Filter() {
     'rotation_period',
     'surface_water',
   ];
+
+  const fButton = () => {
+    if (clickButton === true) {
+      return setClickButton(false);
+    }
+    return setClickButton(true);
+  };
 
   return (
     <>
@@ -70,7 +79,7 @@ export default function Filter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ filterByNumeric() }
+        onClick={ () => fButton() }
       >
         Buscar
       </button>

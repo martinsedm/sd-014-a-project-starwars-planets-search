@@ -12,6 +12,7 @@ export default function PlanetsProvider({ children }) {
   const [filterByOption, setFilterByOption] = useState('population');
   const [filterByComparison, setFilterByComparison] = useState('maior que');
   const [filteredData, setFilteredData] = useState([]);
+  const [clickButton, setClickButton] = useState(false);
 
   // ## PLANETS API ##
 
@@ -51,21 +52,25 @@ export default function PlanetsProvider({ children }) {
   // ## FILTER BY NUMERIC VALUES ##
 
   const filterByNumeric = async () => {
-    // const filterByNum = data.filter((a) => {
-    //   // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
-    //   if (filterByComparison === 'maior que') {
-    //     return ((1 * a[filterByOption]) > (filterByNumber * 1));
-    //   }
-    //   if (filterByComparison === 'igual a') {
-    //     return ((1 * a[filterByOption]) === (filterByNumber * 1));
-    //   }
-    //   if (filterByComparison === 'menor que') {
-    //     return ((1 * a[filterByOption]) < (filterByNumber * 1));
-    //   }
-    //   return null;
-    // });
-    // setFilteredData(filterByNum);
+    const filterByNum = data.filter((a) => {
+      // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
+      if (filterByComparison === 'maior que') {
+        return ((1 * a[filterByOption]) > (filterByNumber * 1));
+      }
+      if (filterByComparison === 'igual a') {
+        return ((1 * a[filterByOption]) === (filterByNumber * 1));
+      }
+      if (filterByComparison === 'menor que') {
+        return ((1 * a[filterByOption]) < (filterByNumber * 1));
+      }
+      return null;
+    });
+    setFilteredData(filterByNum);
   };
+
+  useEffect(() => {
+    filterByNumeric();
+  }, [clickButton]);
 
   // ### DELETE-ME PLEASE
 
@@ -75,7 +80,7 @@ export default function PlanetsProvider({ children }) {
     console.log(filterByNumber);
     console.log(filterByOption);
     console.log(filterByComparison);
-    console.log();
+    console.log(clickButton);
   });
 
   // https://stackoverflow.com/questions/60209671/asynchronous-context-with-useeffect-in-react
@@ -94,6 +99,8 @@ export default function PlanetsProvider({ children }) {
     filterByComparison,
     setFilterByComparison,
     filterByNumeric,
+    clickButton,
+    setClickButton,
   };
 
   return (
