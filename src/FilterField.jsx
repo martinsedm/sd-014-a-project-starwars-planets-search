@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from './context/PlanetsContext';
 import './FilterField.css';
+import FilterOrder from './FilterOrder';
 
 function FilterField() {
   const {
@@ -115,6 +116,7 @@ function FilterField() {
           Filter
         </button>
       </div>
+      <FilterOrder />
       <br />
       {filterGroups()}
     </>

@@ -26,8 +26,6 @@ function Table() {
   const tableBodyMaker = () => {
     const { name } = filters.filterByName;
     const { filterByNumericValues } = filters;
-    // console.log(`column: ${column} | comparison: ${comparison} | value: ${value}`);
-
     const filteredPlanets = data
       .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
       .filter((planet) => {
@@ -52,10 +50,21 @@ function Table() {
         return isPlanetValid;
       });
 
+    // data-testid={ `${planet.name}` }
+    // I think I set this vvvvv data-testid on the row and not the planet.name cell - check later
     const planetData = filteredPlanets.map((planet) => (
       <tr key={ planet.name }>
         { Object.values(planet)
-          .map((info) => <td key={ `${planet.name}-${info}` }>{info}</td>) }
+          .map((info, index) => {
+            if (index === 0) {
+              return (
+                <td key={ `${planet.name}-${info}` } data-testid="planet-name">
+                  {info}
+                </td>
+              );
+            }
+            return <td key={ `${planet.name}-${info}` }>{info}</td>;
+          }) }
       </tr>
 
     ));
