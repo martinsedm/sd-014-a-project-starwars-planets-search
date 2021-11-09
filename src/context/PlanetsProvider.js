@@ -32,7 +32,15 @@ function PlanetsProvider({ children }) {
   };
 
   return (
-    <PlanetsContext.Provider value={ { data, isLoading, filterNames, setFilters, filters } }>
+    <PlanetsContext.Provider
+      value={ {
+        data,
+        isLoading,
+        filterNames,
+        setFilters,
+        filters,
+      } }
+    >
       {children}
     </PlanetsContext.Provider>
   );
