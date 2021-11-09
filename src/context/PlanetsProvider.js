@@ -8,6 +8,9 @@ export default function PlanetsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumber, setFilterByNumber] = useState(0);
+  const [filterByOption, setFilterByOption] = useState('population');
+  const [filterByComparison, setFilterByComparison] = useState('maior que');
   const [filteredData, setFilteredData] = useState([]);
 
   // ## PLANETS API ##
@@ -35,11 +38,38 @@ export default function PlanetsProvider({ children }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    search();
+  }, [filterByName]);
+
+  // ## FILTER BY NUMERIC VALUES ##
+
+  const filterByNumeric = async () => {
+    const filterByNum = data.filter((a) => {
+      // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
+      if (filterByComparison === 'maior que') {
+        return ((1 * a[filterByOption]) > (filterByNumber * 1));
+      }
+      if (filterByComparison === 'igual a') {
+        return ((1 * a[filterByOption]) === (filterByNumber * 1));
+      }
+      if (filterByComparison === 'menor que') {
+        return ((1 * a[filterByOption]) < (filterByNumber * 1));
+      }
+      return null;
+    });
+    // setFilteredData(filterByNum);
+  };
+
   // ### DELETE-ME PLEASE
 
   useEffect(() => {
     console.log(filteredData);
     console.log(filterByName);
+    console.log(filterByNumber);
+    console.log(filterByOption);
+    console.log(filterByComparison);
+    console.log();
   });
 
   // https://stackoverflow.com/questions/60209671/asynchronous-context-with-useeffect-in-react
@@ -52,6 +82,13 @@ export default function PlanetsProvider({ children }) {
     setFilterByName,
     filteredData,
     search,
+    filterByNumber,
+    setFilterByNumber,
+    filterByOption,
+    setFilterByOption,
+    filterByComparison,
+    setFilterByComparison,
+    filterByNumeric,
   };
 
   return (

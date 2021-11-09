@@ -3,7 +3,26 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Filter() {
-  const { filterByName, search, setFilterByName } = useContext(PlanetsContext);
+  const {
+    filterByName,
+    search,
+    setFilterByName,
+    filterByNumber,
+    setFilterByNumber,
+    filterByComparison,
+    setFilterByComparison,
+    filterByOption,
+    setFilterByOption,
+    filterByNumeric,
+  } = useContext(PlanetsContext);
+
+  const filterOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
   return (
     <>
@@ -11,7 +30,8 @@ export default function Filter() {
         type="text"
         data-testid="name-filter"
         value={ filterByName.name }
-        onChange={ (e) => setFilterByName({ name: e.target.value }) || search() }
+        onChange={ (e) => setFilterByName({ name: e.target.value }) }
+        placeholder="Pesquisar"
       />
       {/* <button
         type="button"
@@ -19,6 +39,42 @@ export default function Filter() {
       >
         Pesquisar
       </button> */}
+      <br />
+      <select
+        data-testid="column-filter"
+        onChange={ (e) => setFilterByOption(e.target.value) }
+      >
+        { filterOptions.map((op, i) => (
+          <option
+            key={ i }
+            value={ op }
+          >
+            { op }
+          </option>
+        )) }
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (e) => setFilterByComparison(e.target.value) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que"> menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        type="number"
+        name="value-filter"
+        id="value-filter"
+        data-testid="value-filter"
+        onChange={ (e) => setFilterByNumber(e.target.value) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ filterByNumeric() }
+      >
+        Buscar
+      </button>
     </>
   );
 }

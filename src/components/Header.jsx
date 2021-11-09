@@ -7,6 +7,7 @@ export default function Header() {
     <>
       <h1>Projeto Star Wars - Trybe</h1>
       <Filter />
+      <br />
     </>
   );
 }

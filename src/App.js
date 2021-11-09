@@ -3,9 +3,13 @@ import './App.css';
 
 import Home from './pages/Home';
 
+import PlanetsProvider from './context/PlanetsProvider';
+
 function App() {
   return (
-    <Home />
+    <PlanetsProvider>
+      <Home />
+    </PlanetsProvider>
   );
 }
 
