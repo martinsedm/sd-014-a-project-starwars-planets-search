@@ -5,22 +5,32 @@ import ContextPlanet from './ContextPlanet';
 export default function ProviderPlanets({ children }) {
   const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [planetsFiltered, setPlanetsFiltered] = useState([]);
   const [filters, setFilter] = useState({
     filterByName: {
       name: '',
     },
-    filterByNumericValue: [
-      {
-        colum: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: {
+      column: '',
+      comparison: '',
+      value: '',
+    },
   });
 
-  function SetInputFilter(name) {
+  function setInputFilter(name) {
     setFilter({
       ...filters, filterByName: { name },
+    });
+  }
+
+  function setInputFilterNumeric(column, comparison, value) {
+    setFilter({
+      ...filters,
+      filterByNumericValues: {
+        column,
+        comparison,
+        value,
+      },
     });
   }
 
@@ -28,8 +38,11 @@ export default function ProviderPlanets({ children }) {
     data,
     setPlanets,
     loading,
-    SetInputFilter,
+    setInputFilter,
     filters,
+    setInputFilterNumeric,
+    planetsFiltered,
+    setPlanetsFiltered,
   };
 
   useEffect(() => {
@@ -42,6 +55,20 @@ export default function ProviderPlanets({ children }) {
     };
     fetchAPI();
   }, []);
+
+  useEffect(() => {
+    const { filterByNumericValues: { column, comparison, value } } = filters;
+    if (column !== '') {
+      const filteredData = data.filter((planet) => {
+        const planetValue = Number(planet[column]);
+        if (comparison === 'maior que') return planetValue > Number(value);
+        if (comparison === 'menor que') return planetValue < Number(value);
+        if (comparison === 'igual a') return planetValue === Number(value);
+        return false;
+      });
+      setPlanetsFiltered(filteredData);
+    }
+  }, [data, filters, filters.filterByNumericValues]);
 
   return (
     <ContextPlanet.Provider value={ context }>
