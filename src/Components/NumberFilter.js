@@ -19,7 +19,9 @@ function NumberFilter() {
   // Filtro do select
   const FilterNumeric = () => {
     const { column, comparison, value } = stateNumberFilter[0];
-    const filtradoSelect = data.filter((planets) => {
+    const xablau = (filtrado.length < 1) ? [...data] : [...filtrado];
+
+    const filtradoSelect = xablau.filter((planets) => {
       switch (comparison) {
       case 'maior que':
         return (Number(planets[column]) > Number(value));
@@ -31,7 +33,7 @@ function NumberFilter() {
         return [];
       }
     });
-    setFiltrado(...filtrado, [filtradoSelect]);
+    setFiltrado(filtradoSelect);
     console.log(filtrado);
   };
 
@@ -41,9 +43,10 @@ function NumberFilter() {
       ...filter,
       filters: {
         ...filter.filters,
-        filterByNumericValues: [{
+        filterByNumericValues: [
+          ...filter.filters.filterByNumericValues,
           ...stateNumberFilter,
-        }],
+        ],
       },
     });
     console.log(filter);
@@ -57,14 +60,13 @@ function NumberFilter() {
       <select
         data-testid="column-filter"
         name="column"
-        id="column"
         onChange={ handleChange }
       >
         <option selected value="population">population</option>
-        <option value="orbital_period">orbital period</option>
+        <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation period</option>
-        <option value="surface_water">surface water</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
       </select>
 
       <select
@@ -77,8 +79,8 @@ function NumberFilter() {
         <option value="igual a">igual a</option>
       </select>
 
-      <label htmlFor="value" data-testid="value-filter" onChange={ handleChange }>
-        <input type="number" id="value" name="value" />
+      <label htmlFor="value" onChange={ handleChange }>
+        <input type="number" data-testid="value-filter" id="value" name="value" />
       </label>
 
       <button
