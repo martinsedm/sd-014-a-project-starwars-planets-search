@@ -17,7 +17,7 @@ export default function NumericFilter() {
     'menor que',
     'igual a',
   ];
-  const [stateFilter] = useState(firstFilter);
+  const [stateFilter, setStateFilter] = useState(firstFilter);
 
   function handleClick() {
     const filterColumn = document.getElementById('column-filter');
@@ -26,6 +26,8 @@ export default function NumericFilter() {
     const filterOption = filterColumn.options[filterColumn.selectedIndex].value;
     const comparison = filtercomparison.options[filtercomparison.selectedIndex].value;
     filterNumeric(filterInput, filterOption, comparison);
+    const noRepeatFilter = firstFilter.filter((option) => option !== filterOption);
+    setStateFilter(noRepeatFilter);
   }
   return (
     <form>
