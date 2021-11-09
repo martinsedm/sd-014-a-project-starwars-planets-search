@@ -10,6 +10,13 @@ function Provide({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: '',
+          comparison: '',
+          value: '',
+        },
+      ],
     },
   });
 
@@ -19,19 +26,20 @@ function Provide({ children }) {
     setData(dataResults.results);
   };
 
-  const { name } = filter.filters.filterByName;
+  const { filters: { filterByName: { name } } } = filter;
   // Realizando o filtro pelo texto digitado
   useEffect(() => {
     const nameFilter = data.filter((item) => item.name.includes(name));
     setFiltrado(nameFilter);
-  }, [name]);
+  }, [name]); // name
 
   const context = {
     data,
-    PlanetFetch,
     filter,
-    setFilter,
     filtrado,
+    setFiltrado,
+    PlanetFetch,
+    setFilter,
   };
 
   return (

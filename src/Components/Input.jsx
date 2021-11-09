@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../ContextAPI/PlanetsContext';
 
 function Input() {
-  const { setFilter } = useContext(PlanetsContext);
+  const { filter, setFilter } = useContext(PlanetsContext);
 
   const handleChange = ({ target }) => {
     const textInput = target.value;
     setFilter({
+      ...filter,
       filters: {
+        ...filter.filters,
         filterByName: {
           name: textInput,
         },

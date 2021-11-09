@@ -8,7 +8,7 @@ function Table() {
     PlanetFetch();
   }, []);
 
-  const filt = () => {
+  const resultadoFiltro = () => {
     if (filtrado.length > 0) {
       return filtrado;
     }
@@ -35,7 +35,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filt().map((item) => (
+        {resultadoFiltro().map((item) => (
           <tr key={ item.name }>
             <td>{item.name}</td>
             <td>{item.rotation_period}</td>
