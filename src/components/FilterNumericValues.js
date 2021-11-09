@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import MyContext from '../context';
 import DeleteFilters from './DeleteFilters';
+import Order from './Order';
 
 export default function FilterNumericValues() {
   const { filterContext: { filters: { filterByNumericValues } } } = useContext(MyContext);
@@ -71,6 +72,7 @@ export default function FilterNumericValues() {
       >
         Filtrar
       </button>
+      <Order />
       <DeleteFilters />
     </div>
   );

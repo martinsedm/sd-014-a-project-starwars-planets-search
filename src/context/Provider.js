@@ -11,6 +11,11 @@ function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
+  const [result, setResult] = useState([]);
 
   const filterContext = {
     filters: {
@@ -25,10 +30,14 @@ function Provider({ children }) {
           comparison,
           value,
         },
+      order,
+      result,
+      setOrder,
       setColumn,
       setComparison,
       setValue,
       setFilterByNumericValues,
+
     },
   };
 
@@ -38,6 +47,7 @@ function Provider({ children }) {
       const response = await fetch(URL)
         .then((res) => res.json());
       setState(response);
+      setResult(response);
       setLoading(false);
     };
     swPlanets();

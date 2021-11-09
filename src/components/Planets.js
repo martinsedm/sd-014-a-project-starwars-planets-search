@@ -4,7 +4,7 @@ export default function Planets({ planets }) {
   return (
     planets.map((result) => (
       <tr key={ result.name }>
-        <td>{result.name}</td>
+        <td data-testid="planet-name">{result.name}</td>
         <td>{result.rotation_period}</td>
         <td>{result.orbital_period}</td>
         <td>{result.diameter}</td>
