@@ -6,7 +6,7 @@ import { PlanetAPI } from '../services/PlanetAPI';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]); // Array that contains ALL the initial planet data that was fetched from the API
-  const [numFilterData, setNumFilterData] = useState(); // contains the planets after the tests made only by the filterByNumericValues
+  const [numFilterData, setNumFilterData] = useState([]); // contains the planets after the tests made only by the filterByNumericValues
   const [planets, setPlanets] = useState([]); // Array that contains the planets that pass the filter tests to be rendered in the table
   const [filters, setFilters] = useState({
     filterByName: {
@@ -35,6 +35,7 @@ function PlanetProvider({ children }) {
         }, {})
       ));
       setData(correctData);
+      setNumFilterData(correctData);
     }
     initialFetch();
   }, []);

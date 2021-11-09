@@ -6,17 +6,17 @@ function NumericFilter() {
   const [column, setColumn] = useState();
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState();
-  const [select, setSelect] = useState();
   const { data, filters, setFilters, setNumFilterData } = useContext(PlanetContext);
 
   const [options, setOptions] = useState(['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water']); // Used in the NumericFilter component
 
   useEffect(() => { // "ComponentDidUpdate" to set the select default value as an valid option after every submission
-    setSelect(options[0]);
+    setColumn(options[0]);
   }, [options]);
 
-  const submitNumFilter = (arg1, arg2, arg3) => {
+  const submitNumFilter = (arg1 = options[0], arg2, arg3) => {
+    console.log('column:', arg1);
     setFilters({ ...filters,
       filterByNumericValues: [...filters.filterByNumericValues,
         { column: arg1, comparison: arg2, value: arg3 }] });
@@ -27,6 +27,7 @@ function NumericFilter() {
     if (cur.column && cur.comparison && cur.value) {
       // console.log('ele:', ele);
       // console.log('cur', cur);
+      console.log(cur.column);
       const planetValue = Number(ele[cur.column]);
       const threshold = Number(cur.value);
       switch (cur.comparison) {
@@ -46,18 +47,17 @@ function NumericFilter() {
         return true;
       }
     }
+    return true;
   };
 
   useEffect(() => {
     function filterPlanetsByNum() {
-      const test = filters.filterByNumericValues.reduce((acc, cur) => {
-        console.log('Acc:', acc);
-        return acc.filter((ele) => compareNumValue(ele, {
-          column: 'rotation_period',
-          comparison: 'maior que',
-          value: 23,
-        }));
-      }, [data]);
+      const test = filters.filterByNumericValues.reduce((acc, cur) => (
+        acc.filter((ele) => (
+          compareNumValue(ele, cur)
+        ))
+      ), data);
+      // console.log('Retorno:', test);
       return test;
     }
     setNumFilterData(filterPlanetsByNum());
@@ -97,7 +97,7 @@ function NumericFilter() {
         onChange={ (event) => setNumber(event.target.value) }
       />
       <button
-        onClick={ () => submitNumFilter(select, comparison, number) }
+        onClick={ () => submitNumFilter(column, comparison, number) }
         type="button"
         data-testid="button-filter"
       >

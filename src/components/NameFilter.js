@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function NameFilter() {
-  const { data, filters, setFilters, setPlanets } = useContext(PlanetContext);
+  const { filters, setFilters, setPlanets, numFilterData } = useContext(PlanetContext);
 
   const nameFilterChange = (name) => {
     setFilters({ ...filters, filterByName: { name } });
@@ -11,15 +11,16 @@ function NameFilter() {
 
   useEffect(() => { // "ComponentDidUpdate" to keep the planets that are supposed to be rendered on the table, updated.
     function filterPlanetsByName() {
+      // console.log('numFilterData:', numFilterData);
       if (filters.filterByName.name.length > 0) {
-        return data.filter((planet) => (
+        return numFilterData.filter((planet) => (
           planet.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
         ));
       }
-      return data;
+      return numFilterData;
     }
     setPlanets(filterPlanetsByName());
-  }, [filters.filterByName.name, data, setPlanets]);
+  }, [filters.filterByName.name, numFilterData, setPlanets]);
 
   return (
     <form>
