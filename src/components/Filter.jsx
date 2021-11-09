@@ -6,15 +6,10 @@ export default function Filter() {
   const {
     filterByName,
     setFilterByName,
-    // filterByNumber,
     setFilterByNumber,
-    // filterByComparison,
     setFilterByComparison,
-    // filterByOption,
     setFilterByOption,
-    // filterByNumeric,
-    clickButton,
-    setClickButton,
+    filterByNumeric,
   } = useContext(PlanetsContext);
 
   const filterOptions = [
@@ -25,12 +20,12 @@ export default function Filter() {
     'surface_water',
   ];
 
-  const fButton = () => {
-    if (clickButton === true) {
-      return setClickButton(false);
-    }
-    return setClickButton(true);
-  };
+  // const fButton = () => {
+  //   if (clickButton === true) {
+  //     return setClickButton(false);
+  //   }
+  //   return setClickButton(true);
+  // };
 
   return (
     <>
@@ -41,12 +36,6 @@ export default function Filter() {
         onChange={ (e) => setFilterByName({ name: e.target.value }) }
         placeholder="Pesquisar"
       />
-      {/* <button
-        type="button"
-        onClick={ search }
-      >
-        Pesquisar
-      </button> */}
       <br />
       <select
         data-testid="column-filter"
@@ -79,7 +68,7 @@ export default function Filter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => fButton() }
+        onClick={ () => filterByNumeric() }
       >
         Buscar
       </button>

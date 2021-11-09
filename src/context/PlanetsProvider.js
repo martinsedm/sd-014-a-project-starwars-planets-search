@@ -32,28 +32,16 @@ export default function PlanetsProvider({ children }) {
 
   // ## FILTER BY NAME ##
 
-  // const search = async () => {
-  //   // setFilterByName({ name: e.target.value });
-  //   const filterr = data.filter((a) => a.name
-  //     .toLowerCase().includes(filterByName.name.toLowerCase()));
-  //   setFilteredData(filterr);
-  // };
-
   useEffect(() => {
-    const search = async () => {
-      // setFilterByName({ name: e.target.value });
-      const filterr = data.filter((a) => a.name
-        .toLowerCase().includes(filterByName.name.toLowerCase()));
-      setFilteredData(filterr);
-    };
-    search();
+    const filterr = data.filter((a) => a.name
+      .toLowerCase().includes(filterByName.name.toLowerCase()));
+    setFilteredData(filterr);
   }, [filterByName, data]);
 
   // ## FILTER BY NUMERIC VALUES ##
 
-  const filterByNumeric = async () => {
-    const filterByNum = data.filter((a) => {
-      // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
+  function filterByNumeric() {
+    setFilteredData((data).filter((a) => {
       if (filterByComparison === 'maior que') {
         return ((1 * a[filterByOption]) > (filterByNumber * 1));
       }
@@ -64,16 +52,14 @@ export default function PlanetsProvider({ children }) {
         return ((1 * a[filterByOption]) < (filterByNumber * 1));
       }
       return null;
-    });
-    setFilteredData(filterByNum);
-  };
+    }));
+  }
 
-  useEffect(() => {
-    filterByNumeric();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clickButton]);
+  // useEffect(() => {
+  //   filterByNumeric();
+  // }, [clickButton]);
 
-  // ### DELETE-ME PLEASE
+  // ### DELETE ME PLEASE
 
   useEffect(() => {
     console.log(filteredData);
@@ -101,6 +87,7 @@ export default function PlanetsProvider({ children }) {
     setFilterByComparison,
     clickButton,
     setClickButton,
+    filterByNumeric,
   };
 
   return (
