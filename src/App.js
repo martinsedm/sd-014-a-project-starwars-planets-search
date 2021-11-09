@@ -8,12 +8,16 @@ import FilterNumbers from './componentes/FilterNumbers';
 function App() {
   return (
     <PlanetProvider>
-      <h1 className="title-initial">StarWalls Planets</h1>
-      <Filter />
-      <div className="filters">
-        <FilterNumbers />
-      </div>
-      <Table />
+      <main>
+        <header>
+          <h1 className="title-initial">StarWalls Planets</h1>
+        </header>
+        <Filter />
+        <div className="filters">
+          <FilterNumbers />
+        </div>
+        <Table />
+      </main>
     </PlanetProvider>
   );
 }
