@@ -6,6 +6,11 @@ import swapi from '../services/swapi';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const getPlanets = async () => {
     const filterResults = await swapi();
@@ -17,8 +22,17 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
+  const filterNames = () => {
+    if (filters.filterByName.name) {
+      return data.filter(
+        ({ name }) => name.toLowerCase().includes(filters.filterByName.name),
+      );
+    }
+    return data;
+  };
+
   return (
-    <PlanetsContext.Provider value={ { data, isLoading } }>
+    <PlanetsContext.Provider value={ { data, isLoading, filterNames, setFilters, filters } }>
       {children}
     </PlanetsContext.Provider>
   );
