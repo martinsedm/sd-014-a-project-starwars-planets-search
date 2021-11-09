@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://swapi-trybe.herokuapp.com/api/planets/'
+const API_BASE_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const getData = async () => {
   const response = await fetch(API_BASE_URL);
