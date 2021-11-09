@@ -5,10 +5,11 @@ import { TYPEFILTER, COMPARE, TABLEHEADERS } from '../data/data';
 export default function Table() {
   const { data, name, filters, setFilters } = useContext(StarWarsContext);
 
+  const [trigger, setTrigger] = useState(false);
   const [filterPlanetName, setFilterPlanetName] = useState([]);
   const [typeOfFilters, setTypeOfFilters] = useState(TYPEFILTER);
   const [tableForm, setTableForm] = useState(
-    { column: 'population', comparison: 'maior que', value: null },
+    { column: '', comparison: '', value: 0 },
   );
 
   const handleTableForm = ({ target }) => {
@@ -22,8 +23,6 @@ export default function Table() {
       .filter((planet) => planet.name.toLowerCase().includes(lowerName));
     setFilterPlanetName(filteredPlanet);
   };
-
-  useEffect(filterPlanet, [data, name]);
 
   const filterNumericValue = (coluna, compara, numero) => {
     switch (compara) {
@@ -41,13 +40,35 @@ export default function Table() {
     }
   };
 
-  const removeTypeFilter = (coluna, compara, numero) => {
+  const removeColumnAndAttFilters = (coluna, compara, numero) => {
     filterNumericValue(coluna, compara, numero);
     setFilters({ ...filters,
       filterByNumericValues: [...filters.filterByNumericValues, tableForm] });
     return typeOfFilters.includes(coluna)
       ? setTypeOfFilters(typeOfFilters.filter((type) => type !== coluna)) : typeOfFilters;
   };
+
+  const removeFilter = (column) => {
+    setTypeOfFilters([column, ...typeOfFilters]);
+    const filterWithoutColumn = filters.filterByNumericValues
+      .filter((item) => item.column !== column);
+
+    setFilters({ ...filters,
+      filterByNumericValues: [...filterWithoutColumn] });
+
+    return trigger ? setTrigger(false) : setTrigger(true);
+  };
+
+  const testeFilter05 = () => {
+    setFilterPlanetName(data);
+    if (filters.filterByNumericValues.length > 0) {
+      filters.filterByNumericValues
+        .forEach((item) => filterNumericValue(item.column, item.comparison, item.value));
+    }
+  };
+
+  useEffect(filterPlanet, [data, name]);
+  useEffect(testeFilter05, [trigger]);
 
   return (
     <>
@@ -83,16 +104,22 @@ export default function Table() {
           type="button"
           data-testid="button-filter"
           value="Filtrar"
-          onClick={ () => removeTypeFilter(tableForm.column, tableForm.comparison,
-            tableForm.value) }
+          onClick={ () => removeColumnAndAttFilters(tableForm.column,
+            tableForm.comparison, tableForm.value) }
         >
           Filtrar
         </button>
       </div>
       {filters.filterByNumericValues.length > 0 && (
         filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
-          <div key={ index }>
-            <p>{`${column} ${comparison} ${value} `}</p>
+          <div key={ index } data-testid="filter">
+            <span>{`${column} ${comparison} ${value} `}</span>
+            <button
+              type="button"
+              onClick={ () => removeFilter(column) }
+            >
+              X
+            </button>
           </div>
         ))
       )}
