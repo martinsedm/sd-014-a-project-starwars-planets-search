@@ -1,6 +1,6 @@
 import React from 'react';
+import Home from './pages/Home';
 import PlanetProvider from './context/PlanetProvider';
-import Home from './components/Home';
 import './App.css';
 
 function App() {

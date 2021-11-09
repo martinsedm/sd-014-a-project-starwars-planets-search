@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import PlanetContext from './PlanetContext';
+import ApiRequest from '../hooks/ApiRequest';
 
 function PlanetProvider({ children }) {
-  const [api, setApi] = useState([]);
+  const { data, loading } = ApiRequest('https://swapi-trybe.herokuapp.com/api/planets/');
 
-  const apiFetch = async () => {
-    try {
-      const apiResponde = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const data = await apiResponde.json();
-      setApi(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const context = { data, loading };
 
   return (
-    <PlanetContext.Provider value={ { api, apiFetch } }>
+    <PlanetContext.Provider value={ context }>
       {children}
     </PlanetContext.Provider>
   );
