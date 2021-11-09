@@ -4,7 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import '../styles/PlanetsTable.css';
 
 function PlanetsTable() {
-  const { planets, loading } = useContext(PlanetsContext);
+  const { loading, planets, filteredPlanets } = useContext(PlanetsContext);
 
   if (loading) return <p>Loading...</p>;
 
@@ -28,7 +28,7 @@ function PlanetsTable() {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet, index) => (
+        { filteredPlanets(planets).map((planet, index) => (
           <tr key={ index }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
