@@ -27,37 +27,43 @@ export default function PlanetsProvider({ children }) {
 
   // ## FILTER BY NAME ##
 
-  const search = async () => {
-    // setFilterByName({ name: e.target.value });
-    const filterr = data.filter((a) => a.name
-      .toLowerCase().includes(filterByName.name.toLowerCase()));
-    setFilteredData(filterr);
-  };
+  // const search = async () => {
+  //   // setFilterByName({ name: e.target.value });
+  //   const filterr = data.filter((a) => a.name
+  //     .toLowerCase().includes(filterByName.name.toLowerCase()));
+  //   setFilteredData(filterr);
+  // };
 
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
+    const search = async () => {
+      // setFilterByName({ name: e.target.value });
+      const filterr = data.filter((a) => a.name
+        .toLowerCase().includes(filterByName.name.toLowerCase()));
+      setFilteredData(filterr);
+    };
     search();
-  }, [filterByName]);
+  }, [filterByName, data]);
 
   // ## FILTER BY NUMERIC VALUES ##
 
   const filterByNumeric = async () => {
-    const filterByNum = data.filter((a) => {
-      // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
-      if (filterByComparison === 'maior que') {
-        return ((1 * a[filterByOption]) > (filterByNumber * 1));
-      }
-      if (filterByComparison === 'igual a') {
-        return ((1 * a[filterByOption]) === (filterByNumber * 1));
-      }
-      if (filterByComparison === 'menor que') {
-        return ((1 * a[filterByOption]) < (filterByNumber * 1));
-      }
-      return null;
-    });
+    // const filterByNum = data.filter((a) => {
+    //   // const filterOption = data.filter((a) => a.filterByOption.toLowerCase());
+    //   if (filterByComparison === 'maior que') {
+    //     return ((1 * a[filterByOption]) > (filterByNumber * 1));
+    //   }
+    //   if (filterByComparison === 'igual a') {
+    //     return ((1 * a[filterByOption]) === (filterByNumber * 1));
+    //   }
+    //   if (filterByComparison === 'menor que') {
+    //     return ((1 * a[filterByOption]) < (filterByNumber * 1));
+    //   }
+    //   return null;
+    // });
     // setFilteredData(filterByNum);
   };
 
@@ -81,7 +87,6 @@ export default function PlanetsProvider({ children }) {
     filterByName,
     setFilterByName,
     filteredData,
-    search,
     filterByNumber,
     setFilterByNumber,
     filterByOption,

@@ -5,13 +5,12 @@ import PlanetsContext from '../context/PlanetsContext';
 export default function Filter() {
   const {
     filterByName,
-    search,
     setFilterByName,
-    filterByNumber,
+    // filterByNumber,
     setFilterByNumber,
-    filterByComparison,
+    // filterByComparison,
     setFilterByComparison,
-    filterByOption,
+    // filterByOption,
     setFilterByOption,
     filterByNumeric,
   } = useContext(PlanetsContext);
