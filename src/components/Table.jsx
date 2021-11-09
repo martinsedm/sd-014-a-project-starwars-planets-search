@@ -1,32 +1,11 @@
-import React, { useState, useEffect } from 'react';
-
-// import PlanetsContext from '../context/PlanetsContext';
+import React, { useContext } from 'react';
 
 import Loading from './Loading';
 
+import PlanetsContext from '../context/PlanetsContext';
+
 export default function Table() {
-  // A função está aqui pq não estava passando no teste do lado de fora
-  function useApi() {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      const fetchApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const response = await fetchApi.json();
-      const apiResults = response.results;
-      setData(apiResults);
-      setIsLoading(false);
-    };
-
-    useEffect(() => {
-      fetchData();
-    }, []);
-
-    return { data, isLoading };
-  }
-
-  const { isLoading, data } = useApi();
+  const { isLoading, filteredData } = useContext(PlanetsContext);
 
   const tableRows = [
     'Name',
@@ -60,7 +39,7 @@ export default function Table() {
 
   const renderTable = () => (
     <tbody>
-      { data.map((r, i) => (
+      { filteredData.map((r, i) => (
         <tr key={ i }>
           <td>{ r.name }</td>
           <td>{ r.rotation_period }</td>
