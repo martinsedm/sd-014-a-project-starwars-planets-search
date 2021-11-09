@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import ContextPlanet from '../Context/ContextPlanet';
 
 export default function Table() {
-  const { data, loading, filters } = useContext(ContextPlanet);
+  const { data, loading, filters, planetsFiltered } = useContext(ContextPlanet);
   const { filterByName } = filters;
   if (!data) return null;
   if (loading) return <p>Loading...</p>;
 
-  const filteresData = data.filter((planet) => {
+  const postData = planetsFiltered.length !== 0 ? planetsFiltered : data;
+
+  const filteredData = postData.filter((planet) => {
     if (filterByName !== '') {
       return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
     }
@@ -25,7 +27,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          { filteresData.map((planet) => (
+          { filteredData.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ContextPlanet from './ContextPlanet';
 
 export default function ProviderPlanets({ children }) {
+  const columnFilter = document.getElementById('column');
   const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [planetsFiltered, setPlanetsFiltered] = useState([]);
@@ -31,6 +32,11 @@ export default function ProviderPlanets({ children }) {
         comparison,
         value,
       },
+    });
+    columnFilter.childNodes.forEach((child) => {
+      if (child.value === column) {
+        child.remove();
+      }
     });
   }
 
