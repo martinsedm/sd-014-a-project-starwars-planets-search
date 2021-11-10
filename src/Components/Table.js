@@ -24,7 +24,8 @@ function Table() {
     planetsToRender = data.filter(
       (planet) => {
         const { filterByNumericValues } = filters;
-        const { column, comparison, value } = filterByNumericValues[0];
+        const lastFilterIndex = filterByNumericValues.length - 1;
+        const { column, comparison, value } = filterByNumericValues[lastFilterIndex];
         if (comparison === 'maior que') {
           return parseInt(planet[column], 10) > parseInt(value, 10);
         } if (comparison === 'menor que') {

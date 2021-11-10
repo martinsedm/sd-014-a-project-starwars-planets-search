@@ -8,11 +8,23 @@ function PlanetsProvider({ children }) {
   const [filterMethod, setFilterMethod] = useState('noFilter');
   const [filters, setFilters] = useState();
 
+  const [availableColumns, setAvailableColumns] = useState(
+    [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+  );
+
   const contextValue = {
+    availableColumns,
     data,
     filterMethod,
     filters,
     requestError,
+    setAvailableColumns,
     setFilterMethod,
     setFilters,
   };
@@ -36,7 +48,7 @@ function PlanetsProvider({ children }) {
 
   return (
     <PlanetContext.Provider value={ contextValue }>
-      { children }
+      {children}
     </PlanetContext.Provider>
   );
 }
