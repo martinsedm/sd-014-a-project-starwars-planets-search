@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import FilterButton from './FilterButton';
 import InputFilter from './InputFilter';
+import InputNumberFilter from './InputNumberFilter';
+import InputSelectColumn from './InputSelectColumn';
+import InputSelectComparison from './InputSelectComparison';
 
 function Filters() {
-  const { filters, handleChange } = useContext(PlanetsContext);
-
-  const { filterByName: { name } } = filters;
-
   return (
     <section>
-      <InputFilter
-        setup={
-          ['text', 'filterByName', 'name', name, handleChange, 'name-filter']
-        }
-      />
+      <InputFilter />
+      <InputSelectColumn />
+      <InputSelectComparison />
+      <InputNumberFilter />
+      <FilterButton />
     </section>
   );
 }

@@ -4,7 +4,6 @@ import PlanetsContext from '../context/PlanetsContext';
 function Table() {
   const { planets, filters } = useContext(PlanetsContext);
   const { filterByName: { name } } = filters;
-  if (planets.length === 0) return (<h1>No available planet</h1>);
 
   const filteredPlanets = planets.filter((planet) => {
     if (name !== '') {

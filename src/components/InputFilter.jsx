@@ -1,34 +1,30 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
 
-function InputFilter({ setup }) {
-  const [type, label, name, value, handlechange, dataTestid] = setup;
+function InputFilter() {
+  const {
+    filters,
+    handleChange,
+  } = useContext(PlanetsContext);
+
+  const {
+    filterByName:
+      { name } } = filters;
   return (
     <label
-      htmlFor={ `${name}-input` }
-      label={ label }
+      htmlFor="name-input"
+      label="filterByName"
     >
       <input
-        id={ `${name}-input` }
-        type={ type }
-        value={ value }
-        onChange={ handlechange }
-        placeholder={ label }
-        data-testid={ dataTestid }
+        id="name-filter"
+        type="text"
+        value={ name }
+        onChange={ handleChange }
+        placeholder="filterByName"
+        data-testid="name-filter"
       />
     </label>
   );
 }
-
-InputFilter.propTypes = {
-  setup: PropTypes.shape({
-    dataTestid: PropTypes.string.isRequired,
-    handlechange: PropTypes.func,
-    label: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string,
-  }).isRequired,
-};
 
 export default InputFilter;
