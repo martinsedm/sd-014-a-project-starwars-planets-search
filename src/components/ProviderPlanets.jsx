@@ -5,11 +5,24 @@ import ContextPlanets from './ContextPlanets';
 export default function ProviderPlanets({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+
+  function setInputFilter(name) {
+    setFilter({
+      ...filter, filterByName: { name },
+    });
+  }
 
   const context = {
     planets,
     setPlanets,
     loading,
+    setInputFilter,
+    filter,
   };
 
   const url = 'https://swapi.dev/api/planets/';
