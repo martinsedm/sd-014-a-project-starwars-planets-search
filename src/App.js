@@ -1,9 +1,18 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
+import StarwarsProvider from './context/StarWarsProvider';
+import Table from './pages/Table';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <StarwarsProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={ Table } />
+        </Switch>
+      </BrowserRouter>
+    </StarwarsProvider>
   );
 }
 
