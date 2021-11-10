@@ -4,6 +4,11 @@ import StarwarsContext from './StarwarsContext';
 
 function StarwarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     async function Api() {
@@ -20,6 +25,8 @@ function StarwarsProvider({ children }) {
   const planetas = {
     data,
     setData,
+    filters,
+    setFilters,
   };
   return (
     <StarwarsContext.Provider value={ planetas }>
