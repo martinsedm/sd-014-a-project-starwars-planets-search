@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
+import Table from './components/Table';
+import StarWarsProvider from './contexAPI/StarWarsProvider';
 
 function App() {
   return (
-    <span>Hello, Appss!</span>
+    <StarWarsProvider>
+      <span>Hello, Appss!</span>
+      <Table />
+    </StarWarsProvider>
   );
 }
 
