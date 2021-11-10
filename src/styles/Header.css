@@ -36,8 +36,49 @@
   border: none;
   border-radius: 5px;
   font-size: 12px;
+  margin-top: 20px;
   margin-bottom: 2rem;
   padding: 0.5rem;
   text-transform: uppercase;
   width: 15rem;
+}
+
+.search-bar {
+  align-items: baseline;
+  background-color: rgba(0, 0, 0, 0.472);
+  border-radius: 5px;
+  box-shadow: 2 2 1rem 1rem rgba(0, 0, 0, 0.952);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 15px 50px;
+}
+
+.search-bar select {
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  margin: 0.8rem;
+  padding: 0.5rem;
+  text-transform: uppercase;
+}
+
+.search-bar input {
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  margin: 0.8rem;
+}
+
+.search-bar button {
+  background: linear-gradient(45deg, rgba(189, 20, 195, 0.6), rgba(77, 4, 172, 0.7));
+  border: none;
+  border-radius: 5px;
+  color: azure;
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin: 0.8rem;
+  padding: 0.4rem;
+  text-transform: uppercase;
+  width: 8rem;
 }

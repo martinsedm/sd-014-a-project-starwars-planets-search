@@ -11,6 +11,15 @@ function PlanetsProvider({ children }) {
     filterByName: { name: '' },
   });
   const [name, setName] = useState('');
+  const [numericFilter, setNumericFilter] = useState({
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
+  });
 
   const getPlanetsData = async () => {
     const { results } = await getPlanets();
@@ -26,7 +35,7 @@ function PlanetsProvider({ children }) {
     getPlanetsData();
   }, []);
 
-  const changeFilter = ({ target: { value } }) => {
+  const changeNameFilter = ({ target: { value } }) => {
     setFilter({
       ...filter,
       filterByName: {
@@ -45,8 +54,10 @@ function PlanetsProvider({ children }) {
     loading,
     filter,
     name,
-    changeFilter,
+    changeNameFilter,
     filteredPlanets,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (
