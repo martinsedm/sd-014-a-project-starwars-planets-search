@@ -9,6 +9,13 @@ function StarWarsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
@@ -43,6 +50,8 @@ function StarWarsProvider({ children }) {
     setValue,
     filter,
     setFilter,
+    options,
+    setOptions,
   };
 
   return (

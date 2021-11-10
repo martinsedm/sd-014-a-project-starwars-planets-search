@@ -13,7 +13,17 @@ function FilterByNumericValues() {
     setComparison,
     value,
     setValue,
+    options,
+    setOptions,
   } = useContext(StarWarsContext);
+
+  function ExcludeColumn() {
+    // A função está comparando se o value selecionado pelo usuário em options é diferente do value de column
+    // caso seja igual então esse item ficará de fora do array de options após o clique do botão fo form
+    // o array de option é que alimenta o estado column, então a exclusão acontece no estado column
+    const filterOptions = options.filter((option) => option !== column);
+    setOptions(filterOptions);
+  }
 
   function filterByNumericValues() {
     switch (comparison) {
@@ -46,6 +56,7 @@ function FilterByNumericValues() {
     });
 
     filterByNumericValues();
+    ExcludeColumn();
   }
 
   return (
@@ -56,11 +67,14 @@ function FilterByNumericValues() {
           onChange={ (e) => setColumn(e.target.value) }
           value={ column }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option
+              key={ option }
+              value={ option }
+            >
+              { option }
+            </option>
+          ))}
         </select>
 
         <select
