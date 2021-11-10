@@ -5,15 +5,14 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [value, setValue] = useState('');
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
   const [filter, setFilter] = useState(
     {
       filters: {
         filterByName: {
           name: '',
         },
-        filterByNumericValue: [],
       },
     },
   );
@@ -27,8 +26,8 @@ function StarWarsProvider({ children }) {
     setValue,
     column,
     setColumn,
-    comparisom: comparison,
-    setComparisom: setComparison,
+    comparison,
+    setComparison,
   };
 
   // Chamada de requisição a API e seta o resultado no estado.

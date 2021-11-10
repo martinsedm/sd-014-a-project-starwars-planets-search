@@ -9,22 +9,28 @@ function FilterByNumber() {
     setValue,
     column,
     setColumn,
-    comparisom: comparison,
-    setComparisom: setComparison,
+    comparison,
+    setComparison,
   } = useContext(StarWarsContext);
 
-  const numericFilter = () => {
+  const removeEqualFilter = () => {
+    document.getElementById('column').childNodes.forEach((opt) => {
+      if (opt.value === column) return opt.remove();
+    });
+  };
+
+  const comparisonFilterValue = () => {
     let filteredByNumeric;
 
     if (comparison === 'maior que') {
       filteredByNumeric = planets
-        .filter((planet) => Number(planet[column]) > Number((value)));
+        .filter((planet) => Number(planet[column]) > Number(value));
     } else if (comparison === 'menor que') {
       filteredByNumeric = planets
         .filter((planet) => Number(planet[column]) < Number(value));
     } else if (comparison === 'igual a') {
       filteredByNumeric = planets
-        .filter((planet) => Number(planet[column]) === Number((value)));
+        .filter((planet) => Number(planet[column]) === Number(value));
     }
     setPlanets(filteredByNumeric);
   };
@@ -40,7 +46,8 @@ function FilterByNumber() {
         },
       ],
     });
-    numericFilter();
+    comparisonFilterValue();
+    removeEqualFilter();
   };
 
   return (
@@ -51,7 +58,7 @@ function FilterByNumber() {
           id="column"
           value={ column }
           data-testid="column-filter"
-          onChange={ (e) => setColumn(e.target.value) }
+          onChange={ ({ target }) => setColumn(target.value) }
         >
           <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
@@ -64,7 +71,7 @@ function FilterByNumber() {
           id="comparison"
           value={ comparison }
           data-testid="comparison-filter"
-          onChange={ (e) => setComparison(e.target.value) }
+          onChange={ ({ target }) => setComparison(target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -76,7 +83,7 @@ function FilterByNumber() {
             name="value"
             value={ value }
             id="value"
-            onChange={ (e) => setValue(e.target.value) }
+            onChange={ ({ target }) => setValue(target.value) }
             data-testid="value-filter"
           />
         </label>

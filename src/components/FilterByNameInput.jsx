@@ -12,6 +12,7 @@ function FilterByNameInput() {
         filterByName: {
           name: value,
         },
+        filterByNumericValue: [],
       },
     });
   };
