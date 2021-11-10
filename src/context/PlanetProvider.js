@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import planetContext from './planetContext';
-import getPlanetsApi from '../services/getPlanetsApi';
+import getPlanetsApi from '../services/Api';
 
 function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([]);
