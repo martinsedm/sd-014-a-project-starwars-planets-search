@@ -10,6 +10,13 @@ function TableProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
   const [loading, setLoading] = useState(false);
   const [filterPlanets, setFilterPlanets] = useState([]);
