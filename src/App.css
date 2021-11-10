@@ -1,7 +1,7 @@
 body {
   background-image: url('./images/background.jpeg');
   background-size: cover;
-  font-family: Franklin Gothic Medium, Arial Narrow, Arial, sans-serif;
+  font-family: Franklin Gothic Medium , Arial Narrow , Arial , sans-serif;
 }
 
 table {
@@ -39,8 +39,8 @@ img {
 
 header {
   align-items: center;
-  display: flex;  
   color: cyan;
+  display: flex;
   justify-content: space-around;
   margin: auto;
   width: 60%;
