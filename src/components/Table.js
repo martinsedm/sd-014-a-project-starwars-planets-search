@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
+
 import PlanetContext from '../context/PlanetContext';
+import FilterByName from '../hooks/FilterByName';
 
 function Table() {
   const { data } = useContext(PlanetContext);
@@ -23,7 +25,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((planet) => (
+        { FilterByName(data).map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

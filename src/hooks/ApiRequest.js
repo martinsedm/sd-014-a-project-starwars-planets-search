@@ -14,10 +14,9 @@ export default function ApiRequest(URL) {
         const json = await result.json();
         const finalData = await json.results;
         setData(finalData);
+        setLoading(false);
       } catch (err) {
         setError(err);
-      } finally {
-        setLoading(false);
       }
     };
 
