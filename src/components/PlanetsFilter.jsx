@@ -10,7 +10,6 @@ function PlanetsFilter() {
     filter,
     setFilter,
     numericFilter,
-    setSelectedColumn,
     setNumericFilter,
   } = useContext(MyContext);
 
@@ -34,7 +33,6 @@ function PlanetsFilter() {
       }
       return filteredPlanet === value;
     });
-    console.log(newPlanets);
     setFilter({
       ...filter,
       filterByNumericValues: [
@@ -42,20 +40,23 @@ function PlanetsFilter() {
       ],
     });
     setFilteredPlanets(newPlanets);
-
-    setSelectedColumn(column);
   };
+
+  function columnOption() {
+    const { column } = numericFilter;
+    return (columnSuport
+      .filter((colun) => colun !== column)
+      .map((col) => (
+        <option key={ col } value={ col }>{ col }</option>
+      )));
+  }
 
   return (
     <div>
       <select data-testid="column-filter" name="column" onChange={ handleChange }>
-        <option>Select column</option>
-        {columnSuport.map((col) => (
-          <option key={ col } value={ col }>{ col }</option>
-        ))}
+        { columnOption() }
       </select>
       <select name="comparison" onChange={ handleChange } data-testid="comparison-filter">
-        <option>Select comparison</option>
         {comparisonSuport.map((opt) => (
           <option key={ opt } name={ opt } value={ opt }>{ opt }</option>
         ))}

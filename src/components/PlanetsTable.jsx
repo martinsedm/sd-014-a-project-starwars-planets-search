@@ -12,7 +12,7 @@ function PlantesTable() {
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets.filter.map((planet) => (
+        {filteredPlanets.map((planet) => (
           <tr key={ planet }>
             {Object.values(planet).map((planetInfo) => (
               <td key={ planetInfo }>{ planetInfo }</td>

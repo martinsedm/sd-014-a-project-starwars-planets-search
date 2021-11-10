@@ -36,7 +36,6 @@ function MyProvider({ children }) {
     const filtereds = planets
       .filter((planet) => planet.name.includes(name.toLowerCase()));
     setFilteredPlanets(filtereds);
-    console.log('executei');
   }, [name, planets]);
 
   const contextValue = {
