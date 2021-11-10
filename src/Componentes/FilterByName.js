@@ -2,16 +2,14 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterByName() {
-  const { FilteredByName, setFilter } = useContext(PlanetsContext);
+  const { filters, setFilter } = useContext(PlanetsContext);
 
   const handleChange = ({ target }) => {
     const { value } = target;
     setFilter({
-      ...FilteredByName,
-      filters: {
-        filterByName: {
-          name: value,
-        },
+      ...filters,
+      filterByName: {
+        name: value,
       },
     });
   };

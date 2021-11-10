@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets, isLoading, filteredByName: { filters } } = useContext(PlanetsContext);
-  const { filterByName: { name } } = filters;
+  const { filteredPlanets, isLoading } = useContext(PlanetsContext);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -27,9 +26,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planets.filter((valor) => (
-          valor.name.includes(name)
-        )).map((planet, index) => (
+        { filteredPlanets.map((planet, index) => (
           <tr key={ index }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
