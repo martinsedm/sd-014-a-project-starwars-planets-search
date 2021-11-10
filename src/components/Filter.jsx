@@ -10,7 +10,7 @@ export default function Filter() {
       <input
         data-testid="name-filter"
         type="text"
-        onChange={ (event) => setInputFilter(event.target.value) }
+        onChange={ ({ target: { value } }) => setInputFilter(value) }
         placeholder="Filter by name"
       />
     </div>
