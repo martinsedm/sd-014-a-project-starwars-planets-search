@@ -1,8 +1,14 @@
-import React from "react";
-import "./App.css";
+import React from 'react';
+import './App.css';
+import Table from './components/Table';
+import Provider from './context/Provider';
 
 function App() {
-  return <span>Hello, App wolrd!</span>;
+  return (
+    <Provider>
+      <Table />
+    </Provider>
+  );
 }
 
 export default App;
