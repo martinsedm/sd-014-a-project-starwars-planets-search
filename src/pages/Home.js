@@ -10,7 +10,8 @@ const Home = () => {
     headers,
     setHeaders } = useContext(GlobalContext);
 
-  const [filterByName, setFilterByName] = useState(null);
+  const [renderedList, setRenderedList] = useState([]);
+  const [filterByName, setFilterByName] = useState('');
   const [filterByNumber, setFilterByNumber] = useState({
     column: 'population', comparison: 'maior que', value: 0,
   });
@@ -24,8 +25,9 @@ const Home = () => {
           filterByNumericValues: [filterByNumber] },
       });
       setHeaders(Object.keys(data.results[0]));
+      setRenderedList(data.results);
     });
-  }, [setHeaders, setStarWarsData]);
+  }, [filterByNumber, setHeaders, setStarWarsData]);
 
   const handleSearch = ({ target: { value } }) => {
     setFilterByName({ value });
@@ -45,14 +47,32 @@ const Home = () => {
       } });
   };
 
+  let filteredList = null;
+
+  const executeFilterByNumber = () => {
+    const { column, comparison, value } = starWarsData.filters.filterByNumericValues[0];
+    switch (comparison) {
+    case 'maior que':
+      filteredList = starWarsData.results
+        .filter((planet) => Number(planet[column]) > Number(value));
+      break;
+    case 'menor que':
+      filteredList = starWarsData.results
+        .filter((planet) => Number(planet[column]) < Number(value));
+      break;
+    case 'igual a':
+      filteredList = starWarsData.results
+        .filter((planet) => Number(planet[column]) === Number(value));
+      break;
+    default:
+      filteredList = undefined;
+    }
+  };
+
   return (
     <div>
       <h2>Star Wars Planets Search</h2>
-      <input
-        type="text"
-        onChange={ handleSearch }
-        data-testid="name-filter"
-      />
+      <input data-testid="name-filter" onChange={ handleSearch } type="text" />
 
       <select
         data-testid="column-filter"
@@ -77,22 +97,30 @@ const Home = () => {
       </select>
 
       <input
-        type="number"
         data-testid="value-filter"
         name="value"
         onChange={ handleFilterByNumber }
+        type="number"
       />
-      <button type="button" data-testid="button-filter">
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => {
+          executeFilterByNumber();
+          setRenderedList(filteredList);
+        } }
+      >
         Filtrar
       </button>
 
-      {headers && (
+      {headers && starWarsData.results && (
         <Table
           headers={ headers.filter((header) => header !== 'residents') }
           data={
             starWarsData.filters.filterByName.value
-              ? starWarsData.results.filter((p) => p.name.includes(starWarsData.filters.filterByName.value))
-              : starWarsData.results
+              ? renderedList
+                .filter((p) => p.name.includes(starWarsData.filters.filterByName.value))
+              : renderedList
           }
         />
       )}
