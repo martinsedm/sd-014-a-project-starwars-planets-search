@@ -6,10 +6,13 @@ import swapi from '../services/swapi';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFiltering, setIsFiltering] = useState(false);
+
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   const getPlanets = async () => {
@@ -22,13 +25,36 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
+  const filteringByNumericValues = (planet, column, comparison, valuer) => {
+    if (comparison === 'maior que') {
+      return Number(planet[column]) > Number(valuer);
+    }
+    if (comparison === 'menor que') {
+      return Number(planet[column]) < Number(valuer);
+    }
+    if (comparison === 'igual a') {
+      return Number(planet[column]) === Number(valuer);
+    }
+  };
+
   const filterNames = () => {
-    if (filters.filterByName.name) {
-      return data.filter(
+    let filteredValues = data;
+    if (isFiltering) {
+      filters.filterByNumericValues.forEach(({ column, comparison, valuer }) => {
+        filteredValues = filteredValues.filter((planet) => (
+          filteringByNumericValues(planet, column, comparison, valuer)));
+        if (filters.filterByName.name) {
+          filteredValues = filteredValues.filter(
+            ({ name }) => name.toLowerCase().includes(filters.filterByName.name),
+          );
+        }
+      });
+    } else if (filters.filterByName.name) {
+      filteredValues = filteredValues.filter(
         ({ name }) => name.toLowerCase().includes(filters.filterByName.name),
       );
     }
-    return data;
+    return filteredValues;
   };
 
   return (
@@ -39,6 +65,7 @@ function PlanetsProvider({ children }) {
         filterNames,
         setFilters,
         filters,
+        setIsFiltering,
       } }
     >
       {children}
