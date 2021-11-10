@@ -9,10 +9,19 @@ const INIT_STATE = {
   filterByNumericValues: [],
 };
 
+const INIT_COLUMN_STATE = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState(INIT_STATE);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [columnStateGlobal, setColumnStateGlobal] = useState(INIT_COLUMN_STATE);
 
   useEffect(() => {
     fetch(END_POINT)
@@ -56,6 +65,8 @@ function StarWarsProvider({ children }) {
         filteredPlanets,
         filters,
         setFilters,
+        columnStateGlobal,
+        setColumnStateGlobal,
       } }
     >
       {children}

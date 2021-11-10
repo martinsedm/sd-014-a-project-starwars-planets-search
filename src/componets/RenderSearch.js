@@ -1,30 +1,47 @@
 import React, { useContext } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 
 import StarWarsContext from '../context/StarWarsContext';
 
 function RenderSearch() {
-  const { filters } = useContext(StarWarsContext);
+  const {
+    filters,
+    setFilters,
+    columnStateGlobal,
+    setColumnStateGlobal } = useContext(StarWarsContext);
+
+  const handleClick = (column) => {
+    const arrayNumericValues = filters
+      .filterByNumericValues
+      .filter((filterObj) => (filterObj.column !== column));
+    setFilters({
+      ...filters,
+      filterByNumericValues: arrayNumericValues,
+    });
+    setColumnStateGlobal([...columnStateGlobal, column]);
+  };
   return (
-    <div>
+    <ListGroup>
       {filters.filterByNumericValues.map((filter, index) => (
-        <div key={ index }>
-          <h3>
+        <ListGroup.Item
+          key={ index }
+          data-testid="filter"
+        >
+          <span>
             {`${filter.column}
       ${filter.comparison}
-      ${filter.value}`}
-          </h3>
+      ${filter.value} `}
+          </span>
           <Button
             size="sm"
             type="button"
-            data-testid="button-filter"
-            // onClick={ handleClick }
+            onClick={ () => handleClick(filter.column) }
           >
-            x
+            X
           </Button>
-        </div>
+        </ListGroup.Item>
       ))}
-    </div>
+    </ListGroup>
   );
 }
 
