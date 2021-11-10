@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../ContextAPI/PlanetsContext';
 
 function NumberFilter() {
@@ -7,6 +7,14 @@ function NumberFilter() {
     comparison: '',
     value: '',
   }]);
+  const [optionColumn, setOptionColumn] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   const { data, setFiltrado, filtrado, setFilter, filter } = useContext(PlanetsContext);
 
   const handleChange = ({ target: { name, value } }) => {
@@ -16,12 +24,20 @@ function NumberFilter() {
     }]);
   };
 
+  const disabledOption = () => {
+    const teste = optionColumn.find((item) => item === stateNumberFilter[0].column);
+    optionColumn.splice(optionColumn.indexOf(teste), 1);
+    console.log(optionColumn);
+    setOptionColumn(optionColumn);
+    return optionColumn;
+  };
+
   // Filtro do select
   const FilterNumeric = () => {
     const { column, comparison, value } = stateNumberFilter[0];
-    const xablau = (filtrado.length < 1) ? [...data] : [...filtrado];
+    const filtroSelect = (filtrado.length < 1) ? [...data] : [...filtrado];
 
-    const filtradoSelect = xablau.filter((planets) => {
+    const filtradoSelect = filtroSelect.filter((planets) => {
       switch (comparison) {
       case 'maior que':
         return (Number(planets[column]) > Number(value));
@@ -34,7 +50,6 @@ function NumberFilter() {
       }
     });
     setFiltrado(filtradoSelect);
-    console.log(filtrado);
   };
 
   const handleClick = () => {
@@ -49,10 +64,7 @@ function NumberFilter() {
         ],
       },
     });
-    console.log(filter);
-    // setFiltrado([...filtrado, filtradoSelect]);
-    // console.log(filtrado);
-    // console.log(column);
+    disabledOption();
   };
 
   return (
@@ -62,11 +74,10 @@ function NumberFilter() {
         name="column"
         onChange={ handleChange }
       >
-        <option selected value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          optionColumn
+            .map((item, index) => <option key={ index } value={ item }>{ item }</option>)
+        }
       </select>
 
       <select
