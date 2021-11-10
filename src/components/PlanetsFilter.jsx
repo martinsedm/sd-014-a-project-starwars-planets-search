@@ -52,7 +52,7 @@ function PlanetsFilter() {
   }
 
   return (
-    <div>
+    <div className="filter-container">
       <select data-testid="column-filter" name="column" onChange={ handleChange }>
         { columnOption() }
       </select>

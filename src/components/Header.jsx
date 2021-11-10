@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
+import logo from '../images/Star_Wars_Logo.png';
 
 function Header() {
   const { filter, setFilter } = useContext(MyContext);
@@ -16,6 +17,7 @@ function Header() {
 
   return (
     <header>
+      <img src={ logo } alt="Logo Star Wars" />
       <h1>Star WArs Planet Search</h1>
       <input
         placeholder="Choose the Planet"
