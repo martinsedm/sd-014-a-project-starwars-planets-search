@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-function SearchInput(filter, onChange) {
+import PlanetsContext from '../context/PlanetsContext';
+
+function SearchInput() {
+  const { name, changeFilter } = useContext(PlanetsContext);
+
   return (
     <input
       className="search-input"
@@ -8,8 +12,8 @@ function SearchInput(filter, onChange) {
       data-testid="name-filter"
       id="filterByName"
       placeholder="Filtrar por Nome"
-      value={ filter }
-      onChange={ onChange }
+      value={ name }
+      onChange={ changeFilter }
     />
   );
 }

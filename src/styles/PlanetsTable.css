@@ -2,18 +2,17 @@
   background-color: black;
   color: white;
   flex: auto;
-  font-family: sans-serif;
+  font-family: Fira Sans , sans-serif;
   font-size: 15px;
   padding: 10px 40px;
 }
 
 .planets-table th {
   flex-direction: column;
-  font-weight: 900;
+  font-weight: 700;
   padding: 0.8em;
   text-align: center;
   text-transform: uppercase;
-
 }
 
 .planets-table td {

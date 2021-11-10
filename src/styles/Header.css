@@ -6,7 +6,7 @@
   color: azure;
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
+  font-family: Fira Sans , sans-serif;
   font-size: 1.5rem;
   font-weight: 900;
   justify-content: center;
@@ -14,16 +14,19 @@
 }
 
 .filter-container h1 {
-  font-size: 3rem;
+  color: rgba(0, 0, 0, 0);
+  font-size: 4rem;
   font-weight: 900;
   margin-bottom: 0;
   margin-top: 4rem;
+  -webkit-text-stroke-color: white;
+  -webkit-text-stroke-width: 1px;
   text-transform: uppercase;
 }
 
 .filter-container p {
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 1.5rem;
   margin-bottom: 2rem;
   text-transform: uppercase;
