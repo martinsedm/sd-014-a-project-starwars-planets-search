@@ -5,12 +5,10 @@ import getApi from '../services/getApi';
 
 function MyProvider({ children }) {
   const INITIAL_FILTERS = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [],
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [],
   };
 
   const NUMERIC_FILTER = {
@@ -21,7 +19,10 @@ function MyProvider({ children }) {
 
   const [filter, setFilter] = useState(INITIAL_FILTERS);
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState(planets);
   const [numericFilter, setNumericFilter] = useState(NUMERIC_FILTER);
+  const [selectedColumn, setSelectedComun] = useState();
+  const { filterByName: { name } } = filter;
 
   useEffect(() => {
     const fetchPlanet = async () => {
@@ -31,13 +32,24 @@ function MyProvider({ children }) {
     fetchPlanet();
   }, []);
 
+  useEffect(() => {
+    const filtereds = planets
+      .filter((planet) => planet.name.includes(name.toLowerCase()));
+    setFilteredPlanets(filtereds);
+    console.log('executei');
+  }, [name, planets]);
+
   const contextValue = {
     filter,
     setFilter,
     planets,
     setPlanets,
+    filteredPlanets,
+    setFilteredPlanets,
     numericFilter,
     setNumericFilter,
+    selectedColumn,
+    setSelectedComun,
   };
 
   return (

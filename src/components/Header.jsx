@@ -8,24 +8,12 @@ function Header() {
     const { value } = target;
     setFilter({
       ...filter,
-      filters: {
-        filterByName: {
-          name: value,
-        },
+      filterByName: {
+        name: value,
       },
     });
   };
 
-  // useEffect(() => {
-  //   setFilters({
-  //     ...filters,
-  //     filters: {
-  //       filterByName: {
-  //         name,
-  //       },
-  //     },
-  //   });
-  // }, [filters, name, setFilters]);
   return (
     <header>
       <h1>Star WArs Planet Search</h1>

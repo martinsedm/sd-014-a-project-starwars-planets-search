@@ -4,11 +4,13 @@ import MyContext from '../context/MyContext';
 
 function PlanetsFilter() {
   const {
-    planets,
-    setPlanets,
+    // planets,
+    filteredPlanets,
+    setFilteredPlanets,
     filter,
     setFilter,
     numericFilter,
+    setSelectedColumn,
     setNumericFilter,
   } = useContext(MyContext);
 
@@ -22,9 +24,7 @@ function PlanetsFilter() {
 
   const handleClick = async () => {
     const { column, comparison, value } = numericFilter;
-    const { filters: { filterByNumericValues } } = filter;
-    console.log(filter);
-    const newPlanets = planets.filter((planet) => {
+    const newPlanets = filteredPlanets.filter((planet) => {
       const filteredPlanet = planet[column];
       if (comparison === 'maior que') {
         return filteredPlanet > Number(value);
@@ -34,20 +34,16 @@ function PlanetsFilter() {
       }
       return filteredPlanet === value;
     });
-
-    setPlanets([
-      ...newPlanets,
-    ]);
-
+    console.log(newPlanets);
     setFilter({
-      filters: {
-        ...filter.filters,
-        filterByNumericValues: [
-          ...filterByNumericValues,
-          numericFilter,
-        ],
-      },
+      ...filter,
+      filterByNumericValues: [
+        numericFilter,
+      ],
     });
+    setFilteredPlanets(newPlanets);
+
+    setSelectedColumn(column);
   };
 
   return (
