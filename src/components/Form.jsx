@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import TableContext from '../services/contextPages';
 
 function Form() {
@@ -19,6 +19,8 @@ function Form() {
     filters,
     filterPlanets,
   } = useContext(TableContext);
+
+  const [refresh, setRefresh] = useState();
 
   useEffect(() => {
     function filteredName() {
@@ -78,6 +80,14 @@ function Form() {
       }
     };
     const novo = filterSelect();
+
+    const refreshFilter = {
+      ...filters,
+      filterByNumericValues: [{ ...(Object.values(filters)[1][0]) },
+        { column, comparison, value }],
+    };
+    setRefresh(column);
+    setFilters(refreshFilter);
     setFilterPlanets(novo);
   };
 
@@ -103,9 +113,7 @@ function Form() {
         onChange={ (event) => (handleOptions(event, 'column')) }
       >
         {columnOption.map((option) => (
-          <option key={ option }>
-            {option}
-          </option>))}
+          option !== refresh && <option key={ option }>{option}</option>))}
       </select>
       <select
         data-testid="comparison-filter"
