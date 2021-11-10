@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import planetContext from '../contexts/planetContext';
+import planetContext from '../context/planetContext';
 
 function FilterInput() {
   const { filters, setFilters, handleNameFilter } = useContext(planetContext);

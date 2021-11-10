@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import planetContext from '../contexts/planetContext';
+import planetContext from '../context/planetContext';
 
 function Table() {
   const { planets, getPlanets, isLoading } = useContext(planetContext);

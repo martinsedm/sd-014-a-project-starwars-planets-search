@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import planetContext from '../contexts/planetContext';
+import planetContext from '../context/planetContext';
 
 import Filter from './Filter';
 
