@@ -7,6 +7,13 @@ const Provider = ({ children }) => {
   const [render, setRender] = React.useState([]);
   const [objectTitle, setObjectTitle] = React.useState();
   const [loading, setLoading] = React.useState(true);
+  const [exceptions, setExceptions] = React.useState([]);
+  const [filters, setFilters] = React.useState({
+    inputText: '',
+    columnFilter: '',
+    comparissionFilter: '',
+    value: '',
+  });
 
   const getPlanetsData = async () => {
     const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -32,7 +39,10 @@ const Provider = ({ children }) => {
     objectTitle,
     loading,
     setLoading,
-
+    exceptions,
+    setExceptions,
+    setFilters,
+    filters,
   };
 
   return (

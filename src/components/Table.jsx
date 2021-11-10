@@ -1,5 +1,7 @@
 import React from 'react';
 import Context from '../context/Context';
+import Filter from './Filter';
+
 import ContentTable from './ContentTable';
 import HeaderTable from './HeaderTable';
 
@@ -10,6 +12,7 @@ function Table() {
   return (
     <>
       <HeaderTable />
+      <Filter />
       <ContentTable />
     </>
   );
