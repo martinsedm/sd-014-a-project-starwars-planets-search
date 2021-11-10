@@ -5,6 +5,7 @@ import FilterByName from '../hooks/FilterByName';
 
 function Table() {
   const { data } = useContext(PlanetContext);
+
   return (
     <table>
       <thead>

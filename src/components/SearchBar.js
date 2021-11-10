@@ -10,7 +10,7 @@ function SearchBar() {
       type="text"
       data-testid="name-filter"
       placeholder={ placeHolder }
-      onChange={ ({ target }) => setSearchName(target.value) }
+      onChange={ ({ target: { value } }) => setSearchName(value.toLowerCase()) }
     />
   );
 }
