@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../ContextAPI/PlanetsContext';
 
 function NumberFilter() {
@@ -24,9 +24,10 @@ function NumberFilter() {
     }]);
   };
 
-  const disabledOption = () => {
-    const teste = optionColumn.find((item) => item === stateNumberFilter[0].column);
-    optionColumn.splice(optionColumn.indexOf(teste), 1);
+  const RemoveOption = () => {
+    const filtroEscolhido = optionColumn
+      .find((item) => item === stateNumberFilter[0].column);
+    optionColumn.splice(optionColumn.indexOf(filtroEscolhido), 1);
     console.log(optionColumn);
     setOptionColumn(optionColumn);
     return optionColumn;
@@ -64,7 +65,7 @@ function NumberFilter() {
         ],
       },
     });
-    disabledOption();
+    RemoveOption();
   };
 
   return (
