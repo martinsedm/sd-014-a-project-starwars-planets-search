@@ -1,20 +1,22 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import FilterByname from './FilterByname';
+import FilterByNumericValues from './FilterByNumericValues';
 
 function Table() {
   const { data,
     filter: { filters: { filterByName: { name } } },
   } = useContext(StarWarsContext);
+
   if (data.length === 0) {
     return null;
   }
-
   const columns = Object.keys(data[0]);
 
   return (
     <main>
       <FilterByname />
+      <FilterByNumericValues />
       <table>
         <thead>
           <tr>
@@ -22,7 +24,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.filter(({ name: namePlanet }) => namePlanet.includes(name))
+          { data.filter(({ name: namePlanet }) => namePlanet.toLowerCase().includes(name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>

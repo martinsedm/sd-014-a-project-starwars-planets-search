@@ -7,7 +7,7 @@ function FilterByname() {
     setFilter({
       filters: {
         filterByName: {
-          name: value,
+          name: value.toLowerCase(),
         },
       },
     });

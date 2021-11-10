@@ -5,25 +5,48 @@ import StarWarsContext from './StarWarsContext';
 import fetchApi from '../services/fetchApi';
 
 function StarWarsProvider({ children }) {
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
     },
   });
 
   useEffect(() => {
     async function getData() {
       const dataPlanets = await fetchApi();
-      setdata(dataPlanets);
+      setData(dataPlanets);
     }
     getData();
   }, []);
 
+  const context = {
+    data,
+    setData,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    filter,
+    setFilter,
+  };
+
   return (
-    <StarWarsContext.Provider value={ { data, filter, setFilter } }>
+    <StarWarsContext.Provider value={ context }>
       {children}
     </StarWarsContext.Provider>
   );
