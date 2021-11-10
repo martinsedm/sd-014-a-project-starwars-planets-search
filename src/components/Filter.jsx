@@ -10,15 +10,8 @@ export default function Filter() {
     setFilterByComparison,
     setFilterByOption,
     filterByNumeric,
+    filterOptions,
   } = useContext(PlanetsContext);
-
-  const filterOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
 
   const comparisonOptions = [
     'maior que',
@@ -47,6 +40,14 @@ export default function Filter() {
         data-testid="column-filter"
         onChange={ (e) => setFilterByOption(e.target.value) }
       >
+        {/* { filterOptions.map((op, i) => (
+          <option
+            key={ i }
+            value={ op }
+          >
+            { op }
+          </option>
+        )) } */}
         { filterOptions.map((op, i) => (
           <option
             key={ i }

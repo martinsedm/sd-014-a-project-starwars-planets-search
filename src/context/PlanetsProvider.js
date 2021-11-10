@@ -14,6 +14,15 @@ export default function PlanetsProvider({ children }) {
   const [filteredData, setFilteredData] = useState([]);
   const [clickButton, setClickButton] = useState(false);
 
+  const [defaultFilterOptions, neverChangeIt] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [filterOptions, setFilterOptions] = useState(defaultFilterOptions);
+
   // ## PLANETS API ##
 
   const fetchData = async () => {
@@ -41,6 +50,7 @@ export default function PlanetsProvider({ children }) {
   // ## FILTER BY NUMERIC VALUES ##
 
   function filterByNumeric() {
+    setFilterOptions(defaultFilterOptions.filter((e) => e !== filterByOption));
     setFilteredData((data).filter((a) => {
       if (filterByComparison === 'maior que') {
         return ((1 * a[filterByOption]) > (filterByNumber * 1));
@@ -68,6 +78,7 @@ export default function PlanetsProvider({ children }) {
     console.log(filterByOption);
     console.log(filterByComparison);
     console.log(clickButton);
+    console.log(filterOptions);
   });
 
   // https://stackoverflow.com/questions/60209671/asynchronous-context-with-useeffect-in-react
@@ -88,6 +99,9 @@ export default function PlanetsProvider({ children }) {
     clickButton,
     setClickButton,
     filterByNumeric,
+    filterOptions,
+    setFilterOptions,
+    neverChangeIt,
   };
 
   return (
