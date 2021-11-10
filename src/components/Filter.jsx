@@ -26,6 +26,9 @@ function Filter() {
       },
     );
     setIsFiltering(true);
+    document.getElementById('column-filter').childNodes.forEach((element) => {
+      if (element.value === column) return element.remove();
+    });
   };
 
   return (
@@ -44,6 +47,7 @@ function Filter() {
         data-testid="column-filter"
         onChange={ (e) => setColumn(e.target.value) }
         value={ column }
+        id="column-filter"
       >
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
