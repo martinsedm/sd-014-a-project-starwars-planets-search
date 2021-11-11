@@ -2,15 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planets, filters } = useContext(PlanetsContext);
-  const { filterByName: { name } } = filters;
-
-  const filteredPlanets = planets.filter((planet) => {
-    if (name !== '') {
-      return planet.name.toLowerCase().includes(name.toLowerCase());
-    }
-    return planet;
-  });
+  const { filteredPlanets } = useContext(PlanetsContext);
 
   return (
     <table>

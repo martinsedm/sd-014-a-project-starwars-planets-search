@@ -5,12 +5,13 @@ function FilterButton() {
   const { handleClick } = useContext(PlanetsContext);
 
   return (
-    <input
+    <button
       type="button"
       data-testid="button-filter"
       onClick={ handleClick }
-      value="Filtrar"
-    />
+    >
+      Filtrar
+    </button>
   );
 }
 

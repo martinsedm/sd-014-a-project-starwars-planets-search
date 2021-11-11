@@ -4,11 +4,11 @@ import { columnList } from '../services/data';
 
 function InputSelectColumn() {
   const {
-    filters,
+    numFilter,
     handleSelectColumn,
   } = useContext(PlanetsContext);
 
-  const { filterByNumericValues: { column } } = filters;
+  const { column } = numFilter;
 
   return (
     <select

@@ -4,11 +4,11 @@ import { comparisonList } from '../services/data';
 
 function InputSelectComparison() {
   const {
-    filters,
+    numFilter,
     handleSelectComparison,
   } = useContext(PlanetsContext);
 
-  const { filterByNumericValues: { comparison } } = filters;
+  const { comparison } = numFilter;
 
   return (
     <select

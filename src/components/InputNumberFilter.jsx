@@ -3,11 +3,11 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function InputNumberFilter() {
   const {
-    filters,
+    numFilter,
     handleChangeNumber,
   } = useContext(PlanetsContext);
 
-  const { filterByNumericValues: { value } } = filters;
+  const { value } = numFilter;
 
   return (
     <label
