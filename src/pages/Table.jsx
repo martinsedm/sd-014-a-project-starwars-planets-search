@@ -1,23 +1,16 @@
 import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
-import ColunaPlanetas from './ColunaPlanetas';
 import Search from '../Components/Search';
+import SearchByNumericValues from '../Components/SearchByNumeric';
+import Filtro from '../Components/Filtro';
 
 function Table() {
-  const { data, filters } = useContext(StarwarsContext);
+  const { data } = useContext(StarwarsContext);
 
-  const filtros = () => {
-    if (filters.filterByName.name) {
-      return data.filter((e) => e.name.includes(filters.filterByName.name));
-    }
-    return data;
-  };
-
-  if (!data || data.length === 0) {
-    return <p>...Loading </p>;
-  }
+  if (data.length === 0) return <p>...Loading </p>;
   return (
     <div>
+      <SearchByNumericValues />
       <Search />
       <table>
         <thead>
@@ -29,10 +22,9 @@ function Table() {
             ))}
           </tr>
         </thead>
-        <ColunaPlanetas data={ filtros() } />
+        <Filtro />
       </table>
     </div>
   );
 }
-
 export default Table;

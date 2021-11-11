@@ -9,6 +9,9 @@ function StarwarsProvider({ children }) {
       name: '',
     },
   });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     async function Api() {
@@ -22,14 +25,20 @@ function StarwarsProvider({ children }) {
     Api();
   }, []);
 
-  const planetas = {
+  const context = {
     data,
     setData,
     filters,
     setFilters,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
   };
   return (
-    <StarwarsContext.Provider value={ planetas }>
+    <StarwarsContext.Provider value={ context }>
       { children }
     </StarwarsContext.Provider>
   );
