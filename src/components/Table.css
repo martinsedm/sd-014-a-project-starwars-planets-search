@@ -1,0 +1,10 @@
+th, td {
+  background-color: gainsboro;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #04AA6D;
+  color: white;
+}

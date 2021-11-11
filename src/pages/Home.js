@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import getData from '../api';
 import GlobalContext from '../context';
-import Table from '../Table';
+import Table from '../components/Table';
 
 const Home = () => {
   const {
@@ -9,6 +9,14 @@ const Home = () => {
     setStarWarsData,
     headers,
     setHeaders } = useContext(GlobalContext);
+
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   const [renderedList, setRenderedList] = useState([]);
   const [filterByName, setFilterByName] = useState('');
@@ -69,6 +77,21 @@ const Home = () => {
     }
   };
 
+  const op = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const handleClick = () => {
+    executeFilterByNumber();
+    setRenderedList(filteredList);
+    setColumnOptions(op
+      .filter((a) => a !== starWarsData.filters.filterByNumericValues[0].column));
+  };
+
   return (
     <div>
       <h2>Star Wars Planets Search</h2>
@@ -79,11 +102,8 @@ const Home = () => {
         name="column"
         onChange={ handleFilterByNumber }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnOptions
+          .map((col, key) => <option key={ key } value={ col }>{ col }</option>)}
       </select>
 
       <select
@@ -105,10 +125,7 @@ const Home = () => {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => {
-          executeFilterByNumber();
-          setRenderedList(filteredList);
-        } }
+        onClick={ handleClick }
       >
         Filtrar
       </button>
