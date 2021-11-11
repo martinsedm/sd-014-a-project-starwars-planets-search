@@ -5,6 +5,13 @@ import requestApi from '../services/RequestApi';
 
 const Provider = ({ children }) => {
   const [response, setResponse] = useState([]);
+  const [nameFilter, setNameFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await requestApi();
@@ -15,6 +22,8 @@ const Provider = ({ children }) => {
 
   const state = {
     response,
+    nameFilter,
+    setNameFilter,
   };
 
   return (
