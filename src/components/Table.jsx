@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetasContext from '../context/PlanetasContext';
 
 function Table() {
-  const { planetas, isCarregando } = useContext(PlanetasContext);
+  const { isCarregando, planetasFiltrados } = useContext(PlanetasContext);
 
   if (isCarregando) {
     return <h4>Carregando...</h4>;
@@ -28,7 +28,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planetas.map((planeta, index) => (
+        {planetasFiltrados.map((planeta, index) => (
           <tr key={ index }>
             <td>{ planeta.name }</td>
             <td>{ planeta.rotation_period }</td>
