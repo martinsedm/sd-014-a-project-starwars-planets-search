@@ -8,6 +8,7 @@ function Home() {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div>
       <header>
