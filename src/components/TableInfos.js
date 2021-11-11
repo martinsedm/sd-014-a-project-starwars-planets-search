@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { planetInfos } from '../data/data';
 
-function TableInfos({ arrayOfPlanets }) {
+export default function TableInfos({ arrayOfPlanets }) {
   if (!arrayOfPlanets.length) return <p>Nenhum planeta encontrado</p>;
 
   const theads = Object.keys(arrayOfPlanets[0]).filter(
@@ -32,8 +32,6 @@ function TableInfos({ arrayOfPlanets }) {
     </table>
   );
 }
-
-export default TableInfos;
 
 TableInfos.propTypes = {
   arrayOfPlanets: PropTypes.arrayOf(PropTypes.object).isRequired,

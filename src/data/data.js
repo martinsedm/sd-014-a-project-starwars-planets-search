@@ -1,4 +1,4 @@
-const planetInfos = [
+export const planetInfos = [
   'rotation_period',
   'orbital_period',
   'diameter',
@@ -13,7 +13,7 @@ const planetInfos = [
   'url',
 ];
 
-const dropdownColumns = [
+export const dropdownColumns = [
   'population',
   'orbital_period',
   'diameter',
@@ -21,10 +21,8 @@ const dropdownColumns = [
   'surface_water',
 ];
 
-const dropdownTag = ['maior que', 'menor que', 'igual a'];
-
-module.exports = {
-  planetInfos,
-  dropdownColumns,
-  dropdownTag,
-};
+export const dropdownTag = [
+  'maior que',
+  'menor que',
+  'igual a',
+];

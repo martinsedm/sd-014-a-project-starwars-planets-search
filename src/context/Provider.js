@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
-import fetchAPI from './FetchAPI';
+import fetchAPI from './fetchAPI';
 
 export default function Provider({ children }) {
-  const [data, setData] = React.useState(null);
-  const resolvePromise = async () => {
-    const response = await fetchAPI();
-    setData(response);
-  };
+  const [data, setData] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const resolvePromise = async () => {
+      const response = await fetchAPI();
+      setData(response);
+    };
     resolvePromise();
   }, []);
 

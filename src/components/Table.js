@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import TableInfos from './TableInfos';
 import { dropdownColumns, dropdownTag } from '../data/data';
 
-function Table() {
+export default function Table() {
   const data = useContext(Context);
+  const [optionsColumns, setOptionsColumns] = useState(dropdownColumns);
 
-  const [dropdownFilter, setDropdownFilter] = React.useState({
+  const [dropdownFilter, setDropdownFilter] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
   });
 
-  const [filter, setFilter] = React.useState({
+  const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
@@ -41,6 +42,9 @@ function Table() {
 
   function addNewFilter() {
     const { column, comparison, value } = dropdownFilter;
+
+    setOptionsColumns(optionsColumns.filter((c) => c !== column));
+
     setFilter({
       filters: {
         ...filter.filters,
@@ -54,8 +58,8 @@ function Table() {
 
   if (!data) return <p>Loading...</p>;
 
-  const filteredByName = data
-    .filter(({ name }) => name.includes(filter.filters.filterByName.name));
+  const filteredByName = data.filter(({ name }) => name
+    .includes(filter.filters.filterByName.name));
 
   const filteredByDropdown = filteredByName.filter((planet) => {
     const { filterByNumericValues: filters } = filter.filters;
@@ -84,7 +88,7 @@ function Table() {
         name="column"
         data-testid="column-filter"
       >
-        {dropdownColumns.map((item, index) => (
+        {optionsColumns.map((item, index) => (
           <option key={ index }>{item}</option>
         ))}
       </select>
@@ -106,15 +110,21 @@ function Table() {
         data-testid="value-filter"
       />
 
-      <button onClick={ addNewFilter } type="button" data-testid="button-filter">
+      <button
+        onClick={ addNewFilter }
+        type="button"
+        data-testid="button-filter"
+      >
         Filtrar
       </button>
 
-      <input type="text" data-testid="name-filter" onChange={ inputSearch } />
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ inputSearch }
+      />
 
       <TableInfos arrayOfPlanets={ filteredByDropdown } />
     </div>
   );
 }
-
-export default Table;
