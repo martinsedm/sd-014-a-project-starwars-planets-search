@@ -4,7 +4,6 @@ import StarsProvider from './context/StarsProvider';
 import TableComponent from './components/TableComponent';
 import InputComponent from './components/InputComponent';
 import NumberFilter from './components/NumberFilter';
-import './bootstrap-5.1.2-dist/css/bootstrap.min.css';
 
 function App() {
   return (

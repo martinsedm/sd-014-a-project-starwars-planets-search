@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import StarsContext from '../context/myContext';
 
-
 export default function TextFilter() {
   const { filters, setFilter } = useContext(StarsContext);
 
