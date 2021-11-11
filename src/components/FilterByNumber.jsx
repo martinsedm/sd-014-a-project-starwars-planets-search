@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import ContextPlanets from './ContextPlanets';
 
+// Ajuda do colega de turma Rod Pinheiro <3
+
 export default function FilterByNumber() {
   const { setNumericFilter } = useContext(ContextPlanets);
   const [column, setColumn] = useState('population');
