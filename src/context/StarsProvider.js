@@ -6,7 +6,7 @@ import fetchData from '../utils/getAPI';
 function StarsProvider({ children }) {
   const [planetas, setPlanet] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilter] = useState({
+  const [filters, setFilter] = useState(             {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
