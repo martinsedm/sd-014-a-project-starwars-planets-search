@@ -27,7 +27,6 @@ function NumericFilters() {
         value={ column }
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option value="population">population</option>
 
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
