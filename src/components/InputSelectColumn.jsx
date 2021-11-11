@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import { columnList } from '../services/data';
 
 function InputSelectColumn() {
   const {
     numFilter,
     handleSelectColumn,
+    filterColumn,
   } = useContext(PlanetsContext);
 
   const { column } = numFilter;
@@ -16,7 +16,7 @@ function InputSelectColumn() {
       value={ column }
       data-testid="column-filter"
     >
-      { columnList.map((COLUMN, index) => (
+      { filterColumn.map((COLUMN, index) => (
         <option value={ COLUMN } key={ index }>{COLUMN}</option>
       )) }
     </select>

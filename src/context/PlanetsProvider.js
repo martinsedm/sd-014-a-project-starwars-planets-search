@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import fetchPlanetList from '../services/Api';
+import { columnList } from '../services/data';
 
 function PlanetsProvider({ children }) {
   const INITIAL_STATE = {
@@ -21,6 +22,7 @@ function PlanetsProvider({ children }) {
   const [filters, setFilters] = useState(INITIAL_STATE);
   const [numFilter, setNumFilter] = useState(INITIAL_NUMSTATE);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filterColumn, setFilterColumn] = useState(columnList);
 
   useEffect(() => {
     fetchPlanetList(setPlanets);
@@ -82,6 +84,14 @@ function PlanetsProvider({ children }) {
       ...filters, filterByNumericValues: [...filterByNumericValues, numFilter],
     });
     setNumFilter(INITIAL_NUMSTATE);
+    const { column } = numFilter;
+    const indexColumn = filterColumn.indexOf(column);
+    const NON_EXISTENT = -1;
+    if (indexColumn > NON_EXISTENT) {
+      const NEW_FILTER = [...filterColumn];
+      NEW_FILTER.splice(indexColumn, 1);
+      setFilterColumn(NEW_FILTER);
+    }
   };
 
   const context = {
@@ -89,6 +99,7 @@ function PlanetsProvider({ children }) {
     filters,
     numFilter,
     filteredPlanets,
+    filterColumn,
     handleChange,
     handleSelectColumn,
     handleSelectComparison,
