@@ -18,7 +18,7 @@ const headers = [
 ];
 
 export default function TableComponent() {
-  const { planetas, filters } = useContext(StarsContext);
+  const { planetas, filters, numericFilter } = useContext(StarsContext);
   const { filterByNumericValues } = filters;
 
   const getFilteredNumerically = (caracteristic, comparison, valor) => {
@@ -40,27 +40,21 @@ export default function TableComponent() {
 
   const getFilteredPlanets = () => {
     const { filterByName } = filters;
-
-    if (Object.keys(filterByNumericValues).length > 0) {
-      filterByNumericValues.map((filter) => {
-        console.log(filter);
-        const { caracteristic, comparison, value } = filter;
-        const newFilter = getFilteredNumerically(caracteristic, comparison, value);
-        console.log(newFilter);
-        return newFilter;
-      });
+    const { caracteristic, comparison, value } = numericFilter;
+    if (Object.keys(filterByNumericValues).length) {
+      const newFilter = getFilteredNumerically(caracteristic, comparison, value);
+      return newFilter;
     }
+
     const filtered = planetas
       .filter(({ name }) => (
         name.toLowerCase().includes(filterByName.name.toLowerCase())
       ));
-    console.log(filtered);
     return filtered;
   };
 
   const linhas = () => {
     const filteredPlanets = getFilteredPlanets();
-    console.log(filteredPlanets);
     return filteredPlanets.map((planeta) => (
       <tr key={ planeta.name }>
         <td>{ planeta.name }</td>
