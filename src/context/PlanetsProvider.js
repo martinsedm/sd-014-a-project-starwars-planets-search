@@ -7,6 +7,14 @@ function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [isLoading, setisLoading] = useState(false);
+  // const [columns, setColumn] = useState('');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [filters, setFilter] = useState({
     filterByName: {
       name: '',
@@ -55,12 +63,10 @@ function PlanetsProvider({ children }) {
       newFilteredPlanets = planets.filter((planet) => (
         Number(planet[column]) > Number(value)));
       break;
-
     default:
       break;
     }
     setFilteredPlanets([...newFilteredPlanets]);
-    console.log(newFilteredPlanets);
   };
 
   useEffect(() => {
@@ -80,6 +86,8 @@ function PlanetsProvider({ children }) {
     filters,
     setFilter,
     selectedFilters,
+    options,
+    setOptions,
   };
 
   return (
