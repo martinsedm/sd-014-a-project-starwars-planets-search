@@ -1,23 +1,24 @@
-import React, { useContext } from 'react';
-
-import PlanetContext from '../context/PlanetContext';
-
+import React, { useContext, useEffect } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
 import Table from '../components/Table';
 import SearchBar from '../components/SearchBar';
 
 function Home() {
-  const { loading } = useContext(PlanetContext);
-
+  const { fetchData, loading } = useContext(PlanetsContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div>
       <header>
         <h1>Projeto Star Wars - Trybe</h1>
-        <SearchBar />
       </header>
-      <div>
-        <button type="submit" data-testid="button-filter">Filtrar</button>
-      </div>
-      { loading ? <h1>Loading..</h1> : <Table /> }
+      { loading ? <h1>Loading...</h1> : (
+        <div>
+          <SearchBar />
+          <Table />
+        </div>
+      )}
     </div>
   );
 }
