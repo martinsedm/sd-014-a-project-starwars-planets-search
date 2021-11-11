@@ -4,7 +4,7 @@ import PlanetsTable from './PlanetsTable';
 
 function Home() {
   return (
-    <div>
+    <div className="div-home">
       <Header />
       <PlanetsTable />
     </div>

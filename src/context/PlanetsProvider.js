@@ -17,6 +17,7 @@ function PlanetsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const { filterByNumericValues } = numericFilter;
 
   const getPlanetsData = async () => {
     const { results } = await getPlanets();
@@ -59,9 +60,10 @@ function PlanetsProvider({ children }) {
     if (target.id === 'setValue') setValue(target.value);
   };
 
-  const filteredPlanets = () => planets.filter(
-    (planet) => planet.name.toLowerCase().includes(filter.filterByName.name),
-  );
+  const handleDeleteFilter = (filtered) => {
+    const newFilter = filterByNumericValues.filter((item) => item.column !== filtered);
+    setNumericFilter({ ...numericFilter, filterByNumericValues: newFilter });
+  };
 
   const valueContext = {
     planets,
@@ -69,13 +71,13 @@ function PlanetsProvider({ children }) {
     filter,
     searchName,
     changeNameFilter,
-    filteredPlanets,
     numericFilter,
     setNumericFilter,
     changeNumericClick,
     handleNumericChange,
     column,
     getPlanetsData,
+    handleDeleteFilter,
   };
 
   return (

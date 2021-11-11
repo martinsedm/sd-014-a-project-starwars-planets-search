@@ -8,7 +8,11 @@ function SearchBar() {
     column,
     handleNumericChange,
     changeNumericClick,
+    numericFilter,
+    handleDeleteFilter,
   } = useContext(PlanetsContext);
+
+  const { filterByNumericValues } = numericFilter;
 
   return (
     <div className="search-bar">
@@ -47,6 +51,18 @@ function SearchBar() {
       >
         Filtrar
       </button>
+      <div>
+        { filterByNumericValues.map((item) => (
+          <div key={ item.column } data-testid="filter">
+            <button
+              onClick={ () => handleDeleteFilter(item.column) }
+              type="button"
+            >
+              x
+            </button>
+          </div>
+        )) }
+      </div>
     </div>
   );
 }
