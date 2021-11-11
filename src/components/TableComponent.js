@@ -18,29 +18,44 @@ const headers = [
 ];
 
 export default function TableComponent() {
-  const { filters, planetas } = useContext(StarsContext);
+  const { planetas, filters } = useContext(StarsContext);
+  const { filterByNumericValues } = filters;
 
   const getFilteredNumerically = (caracteristic, comparison, valor) => {
-    console.log(comparison);
     if (comparison === 'maior que') {
-      return planetas.filter((planeta) => planeta[caracteristic] > Number(valor));
+      console.log('entrou no if maior que');
+      return planetas.filter((planeta) => (planeta[caracteristic] > Number(valor)));
     }
+
     if (comparison === 'menor que') {
-      return planetas.filter((planeta) => planeta[caracteristic] < Number(valor));
+      console.log('entrou no if menor que');
+      return planetas.filter((planeta) => (planeta[caracteristic] < Number(valor)));
     }
-    return planetas.filter((planeta) => planeta[caracteristic] === Number(valor));
+
+    if (comparison === 'igual a') {
+      console.log('entrou no if igual a');
+      return planetas.filter((planeta) => (planeta[caracteristic] === valor));
+    }
   };
 
   const getFilteredPlanets = () => {
-    const { filterByName, filterByNumericValues } = filters;
-    const { caracteristic, comparison, value } = filterByNumericValues;
+    const { filterByName } = filters;
 
-    if (Object.keys(filterByNumericValues).length > 1) {
-      return getFilteredNumerically(caracteristic, comparison, value);
+    if (Object.keys(filterByNumericValues).length > 0) {
+      filterByNumericValues.map((filter) => {
+        console.log(filter);
+        const { caracteristic, comparison, value } = filter;
+        const newFilter = getFilteredNumerically(caracteristic, comparison, value);
+        console.log(newFilter);
+        return newFilter;
+      });
     }
-    return planetas.filter(({ name }) => (
-      name.toLowerCase().includes(filterByName.name.toLowerCase())
-    ));
+    const filtered = planetas
+      .filter(({ name }) => (
+        name.toLowerCase().includes(filterByName.name.toLowerCase())
+      ));
+    console.log(filtered);
+    return filtered;
   };
 
   const linhas = () => {

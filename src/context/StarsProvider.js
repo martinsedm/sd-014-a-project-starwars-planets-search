@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import StarsContext from './myContext';
-
-const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+import fetchData from '../utils/getAPI';
 
 function StarsProvider({ children }) {
   const [planetas, setPlanet] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{
-      caracteristic: '',
-      comparison: '',
-      value: 0,
-    }],
+    filterByNumericValues: [],
   });
 
   const [numericFilter, setNumericFilter] = useState([{
-    caracteristic: '',
-    comparison: '',
+    caracteristic: 'population',
+    comparison: 'maior que',
     value: 0,
   }]);
 
-  async function fetchData() {
+  const getPlanetsAPI = useCallback(async () => {
     setIsLoading(true);
-    const responseData = await fetch(URL);
-    const data = await responseData.json();
-    setPlanet(data.results);
+    const planets = await fetchData();
+    setPlanet(planets);
     setIsLoading(false);
-  }
+  }, [setPlanet, setIsLoading]);
+
+  useEffect(() => {
+    getPlanetsAPI();
+  }, [getPlanetsAPI]);
 
   const contextValue = {
+    getPlanetsAPI,
     setIsLoading,
     isLoading,
-    fetchData,
     numericFilter,
     setNumericFilter,
     filters,
@@ -41,10 +39,6 @@ function StarsProvider({ children }) {
     planetas,
     setPlanet,
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <StarsContext.Provider value={ contextValue }>

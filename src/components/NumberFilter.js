@@ -7,15 +7,13 @@ import FilterNumerically from './FilterNumerically';
 export default function NumberFilter() {
   const { numericFilter, filters, setFilter } = useContext(StarsContext);
   const handleClick = () => {
-    const { caracteristic, comparison, value } = numericFilter;
+    /* const { caracteristic, comparison, value } = numericFilter; */
     setFilter({
       ...filters,
       filterByNumericValues: [
-        {
-          caracteristic,
-          comparison,
-          value,
-        }],
+        ...filters.filterByNumericValues,
+        numericFilter,
+      ],
     });
   };
 
