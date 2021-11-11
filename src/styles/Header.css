@@ -82,3 +82,11 @@
   text-transform: uppercase;
   width: 8rem;
 }
+
+.search-bar button:hover {
+  background: rgb(175, 2, 255);
+  border: none;
+  border-radius: 5px;
+  color: azure;
+  font-size: 0.7rem;
+}

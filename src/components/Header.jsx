@@ -1,9 +1,9 @@
 import React from 'react';
 
 import SearchInput from './SearchInput';
+import SearchBar from './SearchBar';
 
 import '../styles/Header.css';
-import SearchBar from './SearchBar';
 
 function Header() {
   return (

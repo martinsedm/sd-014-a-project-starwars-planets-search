@@ -1,43 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 import '../styles/Header.css';
 
 function SearchBar() {
-  const { numericFilter, setNumericFilter } = useContext(PlanetsContext);
-
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
-  });
-
-  const [filterColumn] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ]);
+  const {
+    column,
+    handleNumericChange,
+    changeNumericClick,
+  } = useContext(PlanetsContext);
 
   return (
     <div className="search-bar">
       <select
         data-testid="column-filter"
-        name="column-filter"
-        id="column-filter"
-        onChange={ (event) => setFilterByNumericValues({
-          ...filterByNumericValues,
-          column: event.target.value,
-        }) }
+        id="setColumn"
+        value={ column }
+        onChange={ handleNumericChange }
       >
-        { filterColumn
-          .map((item) => <option value={ item } key={ item }>{ item }</option>) }
+        <option name="column" value="population">population</option>
+        <option name="column" value="orbital_period">orbital_period</option>
+        <option name="column" value="diameter">diameter</option>
+        <option name="column" value="rotation_period">rotation_period</option>
+        <option name="column" value="surface_water">surface_water</option>
       </select>
       <select
         data-testid="comparison-filter"
-        name="comparison-filter"
-        id="comparison-filter"
-        onChange={ (event) => setFilterByNumericValues({
-          ...filterByNumericValues,
-          comparison: event.target.value,
-        }) }
+        id="setComparison"
+        onChange={ handleNumericChange }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
@@ -47,21 +37,13 @@ function SearchBar() {
         data-testid="value-filter"
         type="number"
         placeholder="Digite um número"
-        name="value-filter"
-        id="value-filter"
-        onChange={ (event) => setFilterByNumericValues({
-          ...filterByNumericValues,
-          value: event.target.value,
-        }) }
+        id="setValue"
+        onChange={ handleNumericChange }
       />
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => setNumericFilter({
-          ...numericFilter,
-          filterByNumericValues: [filterByNumericValues],
-        }) }
-
+        onClick={ changeNumericClick }
       >
         Filtrar
       </button>

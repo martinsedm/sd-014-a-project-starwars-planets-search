@@ -1,12 +1,64 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 import '../styles/PlanetsTable.css';
 
 function PlanetsTable() {
-  const { loading, planets, filteredPlanets } = useContext(PlanetsContext);
+  const {
+    loading,
+    planets,
+    getPlanetsData,
+    numericFilter,
+    filter,
+  } = useContext(PlanetsContext);
+  const [planetsUpdated, setPlanetsUpdated] = useState(planets);
+
+  useEffect(() => {
+    setPlanetsUpdated(planets);
+  }, [getPlanetsData, planets]);
 
   if (loading) return <p>Loading...</p>;
+
+  const filterPlanets = () => {
+    const newPlanets = [...planetsUpdated];
+    const { filterByNumericValues } = numericFilter;
+    const { filterByName } = filter;
+    if (filterByName.name) {
+      return planetsUpdated.filter(
+        ({ name }) => name.toLowerCase().includes(filterByName.name),
+      );
+    }
+
+    // referencia de filtro: https://github.com/tryber/sd-014-a-project-starwars-planets-search/pull/98
+    // obrigada Brian pela ajuda <3
+
+    if (filterByNumericValues[0]) {
+      return filterByNumericValues.reduce((accumulator, currentValue) => {
+        const { comparison, column, value } = currentValue;
+        switch (comparison) {
+        case 'maior que':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) > Number(value));
+          break;
+
+        case 'menor que':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) < Number(value));
+          break;
+
+        case 'igual a':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) === Number(value));
+          break;
+
+        default:
+          break;
+        }
+        return accumulator;
+      }, [planetsUpdated]);
+    }
+    return newPlanets;
+  };
 
   return (
     <div className="planets-table">
@@ -29,7 +81,7 @@ function PlanetsTable() {
           </tr>
         </thead>
         <tbody>
-          { filteredPlanets(planets).map((planet, index) => (
+          { filterPlanets().map((planet, index) => (
             <tr key={ index }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

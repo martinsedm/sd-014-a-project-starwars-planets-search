@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function SearchInput() {
-  const { name, changeNameFilter } = useContext(PlanetsContext);
+  const { searchName, changeNameFilter } = useContext(PlanetsContext);
 
   return (
     <input
@@ -12,7 +12,7 @@ function SearchInput() {
       data-testid="name-filter"
       id="filterByName"
       placeholder="Filtrar por Nome"
-      value={ name }
+      value={ searchName }
       onChange={ changeNameFilter }
     />
   );

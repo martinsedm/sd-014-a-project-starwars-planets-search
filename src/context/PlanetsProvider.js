@@ -10,16 +10,13 @@ function PlanetsProvider({ children }) {
   const [filter, setFilter] = useState({
     filterByName: { name: '' },
   });
-  const [name, setName] = useState('');
+  const [searchName, setSearchName] = useState('');
   const [numericFilter, setNumericFilter] = useState({
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
   });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
 
   const getPlanetsData = async () => {
     const { results } = await getPlanets();
@@ -35,14 +32,31 @@ function PlanetsProvider({ children }) {
     getPlanetsData();
   }, []);
 
-  const changeNameFilter = ({ target: { value } }) => {
+  useEffect(() => {
+  }, [numericFilter]);
+
+  const changeNameFilter = ({ target }) => {
     setFilter({
       ...filter,
       filterByName: {
-        name: value,
+        name: target.value,
       },
     });
-    setName(value);
+    setSearchName(target.value);
+  };
+
+  const changeNumericClick = () => {
+    setNumericFilter({
+      ...numericFilter,
+      filterByNumericValues: [...numericFilter.filterByNumericValues,
+        { column, comparison, value }],
+    });
+  };
+
+  const handleNumericChange = ({ target }) => {
+    if (target.id === 'setColumn') setColumn(target.value);
+    if (target.id === 'setComparison') setComparison(target.value);
+    if (target.id === 'setValue') setValue(target.value);
   };
 
   const filteredPlanets = () => planets.filter(
@@ -53,11 +67,15 @@ function PlanetsProvider({ children }) {
     planets,
     loading,
     filter,
-    name,
+    searchName,
     changeNameFilter,
     filteredPlanets,
     numericFilter,
     setNumericFilter,
+    changeNumericClick,
+    handleNumericChange,
+    column,
+    getPlanetsData,
   };
 
   return (
