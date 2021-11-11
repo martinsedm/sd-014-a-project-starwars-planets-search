@@ -17,14 +17,6 @@ export default function ProviderPlanets({ children }) {
     },
   });
 
-  // Requisito 4
-  const getColumn = document.getElementById('column');
-  getColumn.childNodes.forEach((child) => {
-    if (child.value === column) {
-      child.remove();
-    }
-  });
-
   function setInputFilter(name) {
     setFilter({
       ...filter, filterByName: { name },
@@ -39,6 +31,13 @@ export default function ProviderPlanets({ children }) {
         comparison,
         value,
       },
+    });
+    // Requisito 4
+    const getColumn = document.querySelector('#column');
+    getColumn.childNodes.forEach((child) => {
+      if (child.value === column) {
+        child.remove();
+      }
     });
   }
 
