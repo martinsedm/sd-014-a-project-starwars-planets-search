@@ -12,6 +12,7 @@ function StarwarsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [newColumn, setnewColumn] = useState('');
 
   useEffect(() => {
     async function Api() {
@@ -36,6 +37,8 @@ function StarwarsProvider({ children }) {
     setComparison,
     value,
     setValue,
+    newColumn,
+    setnewColumn,
   };
   return (
     <StarwarsContext.Provider value={ context }>

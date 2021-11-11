@@ -20,8 +20,18 @@ function SearchByNumericValues() {
     }
   };
 
-  const HandleClick = () => {
+  const preveState = () => {
+    const element = document.getElementById('population');
+    element.childNodes.forEach((e) => {
+      if (e.value === column) {
+        e.remove();
+      }
+    });
+  };
+
+  const HandleClick = async () => {
     setFilters({ ...filters, filterByNumericValues: [{ column, comparison, value }] });
+    preveState();
   };
 
   return (
