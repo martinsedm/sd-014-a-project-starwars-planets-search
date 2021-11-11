@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import ContextPlanets from './ContextPlanets';
 
 export default function Table() {
-  const { planets, loading, filter } = useContext(ContextPlanets);
+  const { planets, loading, filter, planetsFiltered } = useContext(ContextPlanets);
   const { filterByName } = filter;
   if (!planets) return null;
   if (loading) return <span>Loading...</span>;
+  const logicFilter = planetsFiltered.length !== 0 ? planetsFiltered : planets;
 
-  const filteredPlanets = planets.filter((planet) => {
+  const filteredPlanets = logicFilter.filter((planet) => {
     if (filterByName !== '') {
       return planet.name.toLowerCase().includes(filterByName.name.toLowerCase());
     }

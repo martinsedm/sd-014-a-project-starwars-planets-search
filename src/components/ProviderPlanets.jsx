@@ -5,9 +5,15 @@ import ContextPlanets from './ContextPlanets';
 export default function ProviderPlanets({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [planetsFiltered, setPlanetsFiltered] = useState([]);
   const [filter, setFilter] = useState({
     filterByName: {
       name: '',
+    },
+    filterByNumbers: {
+      column: '',
+      comparison: '',
+      value: '',
     },
   });
 
@@ -17,12 +23,26 @@ export default function ProviderPlanets({ children }) {
     });
   }
 
+  function setNumericFilter(column, comparison, value) {
+    setFilter({
+      ...filter,
+      filterByNumbers: {
+        column,
+        comparison,
+        value,
+      },
+    });
+  }
+
   const context = {
     planets,
     setPlanets,
     loading,
     setInputFilter,
     filter,
+    setNumericFilter,
+    planetsFiltered,
+    setPlanetsFiltered,
   };
 
   const url = 'https://swapi.dev/api/planets/';
@@ -37,6 +57,20 @@ export default function ProviderPlanets({ children }) {
     };
     fetchAPI();
   }, []);
+
+  useEffect(() => {
+    const { filterByNumbers: { column, comparison, value } } = filter;
+    if (column !== '') {
+      const planetsFilter = planets.filter((planet) => {
+        const valueOfPlanet = Number(planet[column]);
+        if (comparison === 'igual a') return valueOfPlanet === Number(value);
+        if (comparison === 'maior que') return valueOfPlanet > Number(value);
+        if (comparison === 'menor que') return valueOfPlanet < Number(value);
+        return false;
+      });
+      setPlanetsFiltered(planetsFilter);
+    }
+  }, [filter, filter.filterByNumbers, planets]);
 
   return (
     <ContextPlanets.Provider value={ context }>
