@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import StarsContext from '../context/myContext';
 
-export default function textFilter() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
+export default function TextFilter() {
   const { filters, setFilter } = useContext(StarsContext);
 
   const handleChange = ({ target }) => {
