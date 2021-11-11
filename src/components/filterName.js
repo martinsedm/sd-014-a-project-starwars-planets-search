@@ -22,7 +22,7 @@ function FilterNames() {
         type="text"
         name="name"
         id="search"
-        placeholder="Pesquisar"
+        placeholder="Filtrar por nome"
         onChange={ filterChange }
       />
     </section>
