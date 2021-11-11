@@ -8,8 +8,8 @@ import '../styles/Header.css';
 function Header() {
   return (
     <div className="filter-container">
-      <h1> Star Wars</h1>
-      <p> Planets Search </p>
+      <h1>Star Wars</h1>
+      <p>Planets Search</p>
       <SearchInput />
       <SearchBar />
     </div>
