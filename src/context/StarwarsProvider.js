@@ -15,6 +15,7 @@ class StarwarsProvider extends React.Component {
       keys: [],
       values: [],
       isFetching: false,
+      filteredArray: [],
       filters: {
         filterByName: {
           name: '',
@@ -50,7 +51,7 @@ class StarwarsProvider extends React.Component {
   }
 
   handleClick() {
-    const { filters, column, comparison, value, data } = this.state;
+    const { filters, column, comparison, value, data, filteredArray } = this.state;
     this.setState({
       filters: {
         ...filters,
@@ -79,6 +80,7 @@ class StarwarsProvider extends React.Component {
         }
       });
     this.setState({ data: filtered });
+    this.setState({ filteredArray: [...filteredArray, column] });
   }
 
   getAPI() {

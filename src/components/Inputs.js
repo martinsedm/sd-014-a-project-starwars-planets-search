@@ -7,7 +7,9 @@ const columnFilterArray = ['population', 'orbital_period',
 const comparisonFilterArray = ['maior que', 'menor que', 'igual a'];
 
 function Inputs() {
-  const { handleChangeName, handleChange, handleClick } = useContext(StarWarsContext);
+  const { handleChangeName, handleChange,
+    handleClick, filteredArray } = useContext(StarWarsContext);
+
   return (
     <div>
       Pesquisar:
@@ -23,7 +25,6 @@ function Inputs() {
         placeholder="Buscar por Valor"
         data-testid="value-filter"
         name="filterByNumericValues"
-        id=""
         onChange={ handleChange }
       />
       <select
@@ -48,6 +49,8 @@ function Inputs() {
         onChange={ handleChange }
       >
         { columnFilterArray
+        // https://stackoverflow.com/questions/45599749/using-filter-to-compare-two-arrays-and-return-values-that-arent-matched
+          .filter((element) => !filteredArray.includes(element))
           .map((filter) => (
             <option
               key={ filter }
