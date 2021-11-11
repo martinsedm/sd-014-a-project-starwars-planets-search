@@ -59,7 +59,7 @@ export default function FilterByNumber() {
         data-testid="button-filter"
         onClick={ () => setNumericFilter(column, comparison, values) }
       >
-        Add Filter
+        Filtrar
       </button>
     </div>
   );
