@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 import TableInfos from './TableInfos';
 import { dropdownColumns, dropdownTag } from '../data/data';
