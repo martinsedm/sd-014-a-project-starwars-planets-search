@@ -13,7 +13,7 @@ function Filters() {
         name: value,
       },
     });
-  };
+  }
 
   return (
     <form>
