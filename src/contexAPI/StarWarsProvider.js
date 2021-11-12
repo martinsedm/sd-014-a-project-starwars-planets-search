@@ -4,24 +4,34 @@ import starWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [title, setTitle] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const { filterByName: { name } } = filters;
 
   const planetsAPI = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-    const planets = await response.json();
-    setData(planets.results);
+    const planetsApi = await response.json();
+    setData(planetsApi.results);
   };
 
   useEffect(() => {
     planetsAPI();
   }, []);
 
+  useEffect(() => {
+    const filterNamePlanets = data.filter((planet) => planet.name.includes(name));
+    setPlanets(filterNamePlanets);
+  }, [data, name, filters]);
+
   const context = {
     data,
     setData,
-    title,
-    setTitle,
+    planets,
+    setPlanets,
+    filters,
+    setFilters,
   };
+
   return (
     <starWarsContext.Provider value={ context }>
       {children}
