@@ -1,14 +1,19 @@
 import React, { useContext, useState } from 'react';
 import PlanetasContext from '../context/PlanetasContext';
+import RemoverFilter from './RemoverFilter';
 
 function FilterValue() {
-  const { filtrar, setFiltrar } = useContext(PlanetasContext);
-
-  const [filtrarValoresNumericos, setFiltrarValoresNumericos] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
-  });
+  const {
+    filtrar,
+    setFiltrar,
+    planetasFiltrados,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+  } = useContext(PlanetasContext);
 
   const [filtrarOpcoes, setFiltrarOpcoes] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -20,6 +25,19 @@ function FilterValue() {
     setFiltrarOpcoes(novasOpcoes);
   };
 
+  const handleClick = () => {
+    setFiltrar({
+      ...filtrar,
+      filtrarValoresNumericos: [
+        ...filtrar.filtrarValoresNumericos, {
+          column, comparison, value,
+        },
+      ],
+    });
+    planetasFiltrados();
+    removerOpcoesFiltro(column);
+  };
+
   return (
     <div>
       <label htmlFor="filtrarColuna">
@@ -27,10 +45,7 @@ function FilterValue() {
           name="filtrarColuna"
           id="filtrarColuna"
           data-testid="column-filter"
-          onChange={ (event) => setFiltrarValoresNumericos({
-            ...filtrarValoresNumericos,
-            column: event.target.value,
-          }) }
+          onChange={ (event) => setColumn(event.target.value) }
         >
           { filtrarOpcoes
             .map((item) => <option value={ item } key={ item }>{ item }</option>) }
@@ -41,10 +56,7 @@ function FilterValue() {
           name="filtrarComparacao"
           id="filtrarComparacao"
           data-testid="comparison-filter"
-          onChange={ (event) => setFiltrarValoresNumericos({
-            ...filtrarValoresNumericos,
-            comparison: event.target.value,
-          }) }
+          onChange={ (event) => setComparison(event.target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -56,25 +68,17 @@ function FilterValue() {
           id="filtrarvalor"
           data-testid="value-filter"
           type="number"
-          onChange={ (event) => setFiltrarValoresNumericos({
-            ...filtrarValoresNumericos,
-            value: event.target.value,
-          }) }
+          onChange={ (event) => setValue(event.target.value) }
         />
       </label>
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => {
-          setFiltrar({
-            ...filtrar,
-            filtrarValoresNumericos: [filtrarValoresNumericos],
-          });
-          removerOpcoesFiltro(filtrarValoresNumericos.column);
-        } }
+        onClick={ handleClick }
       >
         Filtrar
       </button>
+      <RemoverFilter />
     </div>
   );
 }

@@ -3,11 +3,8 @@ import PlanetasContext from '../context/PlanetasContext';
 
 function Table() {
   const { isCarregando,
-    planetasFiltrados,
-    filtrar: { filtrarValoresNumericos },
+    rendirizarPlanetas,
   } = useContext(PlanetasContext);
-
-  const { column, comparison, value } = filtrarValoresNumericos[0];
 
   if (isCarregando) {
     return <h4>Carregando...</h4>;
@@ -33,16 +30,10 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { planetasFiltrados.filter((planetas) => {
-          if (!value) return planetas;
-          if (comparison === 'maior que') return Number(planetas[column]) > Number(value);
-          if (comparison === 'menor que') return Number(planetas[column]) < Number(value);
-          if (comparison === 'igual a') return Number(planetas[column]) === Number(value);
-          return planetas;
-        })
-          .map((planetas, index) => (
+        {
+          rendirizarPlanetas.map((planetas, index) => (
             <tr key={ index }>
-              <td>{ planetas.name }</td>
+              <td data-testid="planet-name">{ planetas.name }</td>
               <td>{ planetas.rotation_period }</td>
               <td>{ planetas.orbital_period }</td>
               <td>{ planetas.diameter }</td>
@@ -58,7 +49,8 @@ function Table() {
               <td>{ planetas.edited }</td>
               <td>{ planetas.url }</td>
             </tr>
-          ))}
+          ))
+        }
       </tbody>
     </table>
   );

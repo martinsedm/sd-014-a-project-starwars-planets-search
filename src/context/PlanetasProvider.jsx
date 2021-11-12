@@ -20,10 +20,15 @@ function PlanetasProvider({ children }) {
   const [planetas, setPlanetas] = useState([]);
   const [isCarregando, setCarregando] = useState(true);
   const [filtrar, setFiltrar] = useState(INITIAL_STATE);
+  const [rendirizarPlanetas, setRendirizarPlanetas] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
 
   const fetchPlanetasAPI = async () => {
     const { results } = await DataPlanetasAPI();
     setPlanetas(results);
+    setRendirizarPlanetas(results);
     setCarregando(false);
   };
 
@@ -31,16 +36,54 @@ function PlanetasProvider({ children }) {
     fetchPlanetasAPI();
   }, []);
 
-  const planetasFiltrados = planetas.filter((planeta) => (
-    planeta.name.toLowerCase().includes(filtrar.filtrarPeloNome.name.toLowerCase())
-  ));
+  const handleChange = ({ target }) => {
+    setFiltrar({
+      ...filtrar,
+      filtrarPeloNome: {
+        name: target.value,
+      },
+    });
+    const exibirPlanetasFiltrados = planetas.filter((planeta) => (
+      planeta.name.toLowerCase().includes(target.value)));
+    setRendirizarPlanetas(exibirPlanetasFiltrados);
+  };
+
+  const planetasFiltrados = () => {
+    const filtrados = planetas.filter((planeta) => {
+      if (!value) return planeta;
+      if (comparison === 'maior que') return Number(planeta[column]) > Number(value);
+      if (comparison === 'menor que') return Number(planeta[column]) < Number(value);
+      if (comparison === 'igual a') return Number(planeta[column]) === Number(value);
+      return filtrados;
+    });
+    setRendirizarPlanetas(filtrados);
+  };
+
+  const removerNumerosFiltrados = (parametro) => {
+    const filtrosAtualizados = filtrar.filtrarValoresNumericos
+      .filter((objeto) => objeto.column !== parametro);
+    setFiltrar({
+      ...filtrar,
+      filtrarValoresNumericos: filtrosAtualizados,
+    });
+    setRendirizarPlanetas(planetas);
+  };
 
   const contextState = {
     planetas,
     isCarregando,
-    planetasFiltrados,
+    rendirizarPlanetas,
     filtrar,
+    column,
+    comparison,
+    value,
     setFiltrar,
+    setColumn,
+    setComparison,
+    setValue,
+    handleChange,
+    planetasFiltrados,
+    removerNumerosFiltrados,
   };
 
   return (
