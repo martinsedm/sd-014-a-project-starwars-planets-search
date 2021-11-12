@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import PlanetasContext from '../context/PlanetasContext';
 
 function Table() {
-  const { isCarregando, planetasFiltrados } = useContext(PlanetasContext);
+  const { isCarregando,
+    planetasFiltrados,
+    filtrar: { filtrarValoresNumericos },
+  } = useContext(PlanetasContext);
+
+  const { column, comparison, value } = filtrarValoresNumericos[0];
 
   if (isCarregando) {
     return <h4>Carregando...</h4>;
@@ -28,25 +33,32 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planetasFiltrados.map((planeta, index) => (
-          <tr key={ index }>
-            <td>{ planeta.name }</td>
-            <td>{ planeta.rotation_period }</td>
-            <td>{ planeta.orbital_period }</td>
-            <td>{ planeta.diameter }</td>
-            <td>{ planeta.climate }</td>
-            <td>{ planeta.gravity }</td>
-            <td>{ planeta.terrain }</td>
-            <td>{ planeta.surface_water }</td>
-            <td>{ planeta.population }</td>
-            <td>{ planeta.surface_water }</td>
-            <td>{ planeta.population }</td>
-            <td>{ planeta.films }</td>
-            <td>{ planeta.created }</td>
-            <td>{ planeta.edited }</td>
-            <td>{ planeta.url }</td>
-          </tr>
-        ))}
+        { planetasFiltrados.filter((planetas) => {
+          if (!value) return planetas;
+          if (comparison === 'maior que') return Number(planetas[column]) > Number(value);
+          if (comparison === 'menor que') return Number(planetas[column]) < Number(value);
+          if (comparison === 'igual a') return Number(planetas[column]) === Number(value);
+          return planetas;
+        })
+          .map((planetas, index) => (
+            <tr key={ index }>
+              <td>{ planetas.name }</td>
+              <td>{ planetas.rotation_period }</td>
+              <td>{ planetas.orbital_period }</td>
+              <td>{ planetas.diameter }</td>
+              <td>{ planetas.climate }</td>
+              <td>{ planetas.gravity }</td>
+              <td>{ planetas.terrain }</td>
+              <td>{ planetas.surface_water }</td>
+              <td>{ planetas.population }</td>
+              <td>{ planetas.surface_water }</td>
+              <td>{ planetas.population }</td>
+              <td>{ planetas.films }</td>
+              <td>{ planetas.created }</td>
+              <td>{ planetas.edited }</td>
+              <td>{ planetas.url }</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

@@ -5,14 +5,20 @@ import DataPlanetasAPI from '../services/DataPlanetasAPI';
 
 function PlanetasProvider({ children }) {
   const INITIAL_STATE = {
-    filtraPeloNome: {
+    filtrarPeloNome: {
       name: '',
     },
+    filtrarValoresNumericos: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
   };
 
   const [planetas, setPlanetas] = useState([]);
   const [isCarregando, setCarregando] = useState(true);
-  const [name, setName] = useState('');
   const [filtrar, setFiltrar] = useState(INITIAL_STATE);
 
   const fetchPlanetasAPI = async () => {
@@ -25,26 +31,16 @@ function PlanetasProvider({ children }) {
     fetchPlanetasAPI();
   }, []);
 
-  const handleChange = ({ target: { value } }) => {
-    setFiltrar({
-      ...filtrar,
-      filtraPeloNome: {
-        name: value,
-      },
-    });
-    setName(value);
-  };
-
   const planetasFiltrados = planetas.filter((planeta) => (
-    planeta.name.toLowerCase().includes(filtrar.filtraPeloNome.name.toLowerCase())
+    planeta.name.toLowerCase().includes(filtrar.filtrarPeloNome.name.toLowerCase())
   ));
 
   const contextState = {
     planetas,
     isCarregando,
     planetasFiltrados,
-    handleChange,
-    name,
+    filtrar,
+    setFiltrar,
   };
 
   return (
