@@ -10,9 +10,15 @@ function FilterValue() {
     value: '',
   });
 
-  const [filtrarOpcoes] = useState([
+  const [filtrarOpcoes, setFiltrarOpcoes] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
+
+  const removerOpcoesFiltro = (colunaSelecionada) => {
+    const novasOpcoes = [...filtrarOpcoes];
+    novasOpcoes.splice(novasOpcoes.indexOf(colunaSelecionada), 1);
+    setFiltrarOpcoes(novasOpcoes);
+  };
 
   return (
     <div>
@@ -59,10 +65,13 @@ function FilterValue() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFiltrar({
-          ...filtrar,
-          filtrarValoresNumericos: [filtrarValoresNumericos],
-        }) }
+        onClick={ () => {
+          setFiltrar({
+            ...filtrar,
+            filtrarValoresNumericos: [filtrarValoresNumericos],
+          });
+          removerOpcoesFiltro(filtrarValoresNumericos.column);
+        } }
       >
         Filtrar
       </button>
