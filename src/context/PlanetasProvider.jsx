@@ -8,13 +8,13 @@ function PlanetasProvider({ children }) {
     filtrarPeloNome: {
       name: '',
     },
-    filtrarValoresNumericos: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+
+    filtrarValoresNumericos: [],
+    // Referência: colaboração do Tiago Sather na logica de filtrar por ordenação.
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
 
   const [planetas, setPlanetas] = useState([]);
@@ -25,16 +25,54 @@ function PlanetasProvider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
+  const { order } = filtrar;
+
+  const compararValores = (a, b) => {
+    const menosUm = -1;
+    // comparação de String.
+    if (Number.isNaN(parseInt(a, 10))) {
+      if (a < b) return menosUm;
+      if (a > b) return 1;
+      return 0;
+    }
+    // comparação de Número.
+    if (Number(a) < Number(b)) return menosUm;
+    if (Number(a) > Number(b)) return 1;
+    return 0;
+  };
+
+  const ordenarFiltro = (ordenarPlanetas, orderColumn, orderSort) => {
+    const arraySort = [...ordenarPlanetas];
+    if (orderSort === 'ASC') {
+      arraySort.sort((a, b) => compararValores(a[orderColumn], b[orderColumn]));
+    }
+    if (orderSort === 'DESC') {
+      arraySort.sort((b, a) => compararValores(a[orderColumn], b[orderColumn]));
+    }
+    setRendirizarPlanetas(arraySort);
+  };
+
   const fetchPlanetasAPI = async () => {
     const { results } = await DataPlanetasAPI();
     setPlanetas(results);
-    setRendirizarPlanetas(results);
+    ordenarFiltro(results, order.column, order.sort);
     setCarregando(false);
   };
 
   useEffect(() => {
     fetchPlanetasAPI();
   }, []);
+
+  const ordenarSort = (orderColumn, orderSort) => {
+    setFiltrar({
+      ...filtrar,
+      order: {
+        column: orderColumn,
+        sort: orderSort,
+      },
+    });
+    ordenarFiltro(rendirizarPlanetas, orderColumn, orderSort);
+  };
 
   const handleChange = ({ target }) => {
     setFiltrar({
@@ -82,6 +120,7 @@ function PlanetasProvider({ children }) {
     setComparison,
     setValue,
     handleChange,
+    ordenarSort,
     planetasFiltrados,
     removerNumerosFiltrados,
   };
