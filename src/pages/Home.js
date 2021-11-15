@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import RemoveFilterButton from '../components/RemoveFilterButton';
 import Select from '../components/Select';
 import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
@@ -44,6 +45,13 @@ function Home() {
           Filtrar
         </button>
       </form>
+      <section className="applied-filters-container">
+        {
+          filterByNumericValues.map((filter, index) => (
+            <RemoveFilterButton key={ filter.column } { ...{ filter, index } } />
+          ))
+        }
+      </section>
       <Table planets={ data } headers={ headers } filters={ filterByNumericValues } />
     </div>
   );

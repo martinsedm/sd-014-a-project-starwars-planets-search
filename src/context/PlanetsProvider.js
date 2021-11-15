@@ -6,20 +6,26 @@ import getPlanets from '../services/api';
 const COLUMN_OPTIONS = [
   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
 ];
+const INITIAL_FILTERS_STATE = {
+  filterByName: {
+    name: '',
+  },
+  filterByNumericValues: [],
+};
 
 function PlanetsProvider({ children }) {
-  const INITIAL_FILTERS_STATE = {
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [],
-  };
-
   const [data, setData] = useState([]);
   const [unmodifiedData, setUnmodifiedData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTERS_STATE);
   const [columnOptions, setColumnOptions] = useState(COLUMN_OPTIONS);
+
+  const removeNumericFilter = (filterToRemove) => {
+    const currentFilters = [...filters.filterByNumericValues];
+    const result = currentFilters.filter(({ column }) => (
+      filterToRemove !== column));
+    setFilters({ ...filters, filterByNumericValues: [...result] });
+  };
 
   const handleColumns = (column) => {
     const availableColumns = [...columnOptions];
@@ -64,7 +70,8 @@ function PlanetsProvider({ children }) {
           filters,
           columnOptions,
           handleName,
-          handleNumericValues }
+          handleNumericValues,
+          removeNumericFilter }
       }
     >
       {children}
