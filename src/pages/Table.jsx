@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import ContextApi from '../componentes/ContextApi';
 
 function Table() {
-  const { data } = useContext(ContextApi);
-
+  const { DataFiltered } = useContext(ContextApi);
   return (
     <table>
       <thead>
@@ -24,7 +23,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((info, key) => (
+        {DataFiltered.map((info, key) => (
           <tr key={ key }>
             <td>{info.name}</td>
             <td>{info.rotation_period}</td>

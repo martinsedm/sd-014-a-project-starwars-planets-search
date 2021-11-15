@@ -8,6 +8,11 @@ import ApiStarWarsPlanet from './components';
 // Função para prover os states
 export default function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const AtribuindoSetData = async () => {
     const API = await ApiStarWarsPlanet();
@@ -18,10 +23,21 @@ export default function StarWarsProvider({ children }) {
     AtribuindoSetData();
   }, []);
 
+  const ChangeFiltersName = (name) => {
+    setFilters({
+      ...filters,
+      filterByName: { name },
+    });
+  };
+
+  const DataFiltered = data.filter((plt) => (
+    plt.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
+  ));
+
   return (
     <ContextApi.Provider
       value={ {
-        data,
+        data, filters, ChangeFiltersName, DataFiltered,
       } }
     >
       {children}
