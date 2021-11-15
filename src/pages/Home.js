@@ -30,12 +30,12 @@ function Home() {
       >
         <Select
           options={ COLUMN_OPTIONS }
-          dataTestId="column-filter"
+          testId="column-filter"
           onClick={ setColumn }
         />
         <Select
           options={ COMPARISON_OPTIONS }
-          dataTestId="comparison-filter"
+          testId="comparison-filter"
           onClick={ setComparison }
         />
         <input

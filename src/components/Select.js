@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Select({ options, onClick, dataTestId }) {
+function Select({ options, onClick, testId }) {
   return (
-    <select onClick={ (({ target }) => onClick(target.value)) } data-testid={ dataTestId }>
+    <select onChange={ (({ target }) => onClick(target.value)) } data-testid={ testId }>
       {options.map((option, index) => (
         <option key={ index } value={ option }>
           {option}
@@ -15,13 +15,13 @@ function Select({ options, onClick, dataTestId }) {
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  dataTestId: PropTypes.string,
+  testId: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 Select.defaultProps = {
   onClick: '',
-  dataTestId: '',
+  testId: '',
 };
 
 export default Select;
