@@ -17,7 +17,6 @@ const filterByNumericValuesFunction = (planets, filters) => {
     case 'menor que':
       filteredPlanets = filteredPlanets.filter((planet) => (
         Number(planet[column]) < Number(value)));
-      console.log('planetas após o filtro', filteredPlanets);
       break;
     default:
       return null;

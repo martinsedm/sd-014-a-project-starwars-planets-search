@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import getPlanets from '../services/api';
 
+const COLUMN_OPTIONS = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
+
 function PlanetsProvider({ children }) {
   const INITIAL_FILTERS_STATE = {
     filterByName: {
@@ -15,17 +19,26 @@ function PlanetsProvider({ children }) {
   const [unmodifiedData, setUnmodifiedData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTERS_STATE);
+  const [columnOptions, setColumnOptions] = useState(COLUMN_OPTIONS);
+
+  const handleColumns = (column) => {
+    const availableColumns = [...columnOptions];
+    const columnToRemove = availableColumns.indexOf(column);
+    availableColumns.splice(columnToRemove, 1);
+    setColumnOptions(availableColumns);
+  };
 
   const handleName = (name) => {
     setFilters({ ...filters, filterByName: { name } });
   };
 
-  const handleNumericValues = (event, numericValues) => {
+  const handleNumericValues = (event, { column, comparison, value }) => {
     event.preventDefault();
-    const { column, comparison, value } = numericValues;
     setFilters({ ...filters,
       filterByNumericValues:
       [...filters.filterByNumericValues, { column, comparison, value }] });
+
+    handleColumns(column);
   };
 
   const setPlanetsOnState = async () => {
@@ -49,6 +62,7 @@ function PlanetsProvider({ children }) {
         { data,
           headers,
           filters,
+          columnOptions,
           handleName,
           handleNumericValues }
       }

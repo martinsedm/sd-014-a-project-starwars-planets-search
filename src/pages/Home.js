@@ -3,13 +3,10 @@ import Select from '../components/Select';
 import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
 
-const COLUMN_OPTIONS = [
-  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-];
 const COMPARISON_OPTIONS = ['maior que', 'menor que', 'igual a'];
 
 function Home() {
-  const { filters: { filterByNumericValues },
+  const { filters: { filterByNumericValues }, columnOptions,
     data, headers, handleName, handleNumericValues } = useContext(PlanetsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -23,20 +20,16 @@ function Home() {
         data-testid="name-filter"
         onChange={ ({ target }) => handleName(target.value) }
       />
-      <form
-        onSubmit={
-          (event) => handleNumericValues(event, { column, comparison, value })
-        }
-      >
+      <form>
         <Select
-          options={ COLUMN_OPTIONS }
+          options={ columnOptions }
           testId="column-filter"
-          onClick={ setColumn }
+          onChange={ setColumn }
         />
         <Select
           options={ COMPARISON_OPTIONS }
           testId="comparison-filter"
-          onClick={ setComparison }
+          onChange={ setComparison }
         />
         <input
           type="text"
@@ -46,6 +39,7 @@ function Home() {
         <button
           type="submit"
           data-testid="button-filter"
+          onClick={ (event) => handleNumericValues(event, { column, comparison, value }) }
         >
           Filtrar
         </button>
