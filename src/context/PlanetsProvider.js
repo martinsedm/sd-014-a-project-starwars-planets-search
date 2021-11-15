@@ -1,73 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import getPlanets from '../services/api';
 
-class PlanetsProvider extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      headers: [],
-      unmodifiedData: [],
-      data: [],
-      filters: {
-        filterByName: {
-          name: '',
-        },
-        filterByNumericValues: [],
-      },
-    };
-    this.setPlanetsOnState = this.setPlanetsOnState.bind(this);
-    this.handleFilter = this.handleFilter.bind(this);
-  }
+function PlanetsProvider({ children }) {
+  const INITIAL_FILTERS_STATE = {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  };
 
-  componentDidMount() {
-    this.setPlanetsOnState();
-  }
+  const [data, setData] = useState([]);
+  const [unmodifiedData, setUnmodifiedData] = useState([]);
+  const [headers, setHeaders] = useState([]);
+  const [filters, setFilters] = useState(INITIAL_FILTERS_STATE);
 
-  componentDidUpdate(prevProps, prevState) {
-    const { filters } = this.state;
-    if (prevState.filters.filterByName.name.length !== filters.filterByName.name.length) {
-      this.filterByNameFunction();
-    }
-  }
+  const handleName = (name) => {
+    setFilters({ ...filters, filterByName: { name } });
+  };
 
-  handleFilter(name) {
-    this.setState((prevState) => ({
-      filters: { ...prevState.filters, filterByName: { name } },
-    }));
-  }
+  const handleNumericValues = (event, numericValues) => {
+    event.preventDefault();
+    const { column, comparison, value } = numericValues;
+    setFilters({ ...filters,
+      filterByNumericValues:
+      [...filters.filterByNumericValues, { column, comparison, value }] });
+  };
 
-  async setPlanetsOnState() {
+  const setPlanetsOnState = async () => {
     const planets = await getPlanets();
-    this.setState({
-      data: planets,
-      unmodifiedData: planets,
-      headers: Object.keys(planets[0]),
-    });
-  }
+    setData(planets);
+    setUnmodifiedData(planets);
+    setHeaders(Object.keys(planets[0]));
+  };
 
-  filterByNameFunction() {
-    const { unmodifiedData, filters: { filterByName } } = this.state;
+  useEffect(() => { setPlanetsOnState(); }, []);
+  useEffect(() => {
+    const { filterByName: { name } } = filters;
     const filteredPlanets = unmodifiedData.filter((planet) => (
-      planet.name.includes((filterByName.name))));
-    this.setState({
-      data: filteredPlanets,
-    });
-  }
+      planet.name.includes((name))));
+    setData(filteredPlanets);
+  }, [filters, unmodifiedData]);
 
-  render() {
-    const { children } = this.props;
-    return (
-      <PlanetsContext.Provider
-        value={
-          { ...this.state, handleFilter: this.handleFilter }
-        }
-      >
-        {children}
-      </PlanetsContext.Provider>
-    );
-  }
+  return (
+    <PlanetsContext.Provider
+      value={
+        { data,
+          headers,
+          filters,
+          handleName,
+          handleNumericValues }
+      }
+    >
+      {children}
+    </PlanetsContext.Provider>
+  );
 }
 
 PlanetsProvider.propTypes = {
