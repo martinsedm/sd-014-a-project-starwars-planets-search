@@ -1,40 +1,28 @@
-import React, { useContext, useState } from 'react';
-import planetContext from '../context/planetContext';
+import React, { useContext } from 'react';
+import PlanetContext from '../context/planetContext';
 
-function FilterInput() {
-  const { filters, setFilters, handleNameFilter } = useContext(planetContext);
-  const [inputText, setInputText] = useState('');
+export default function FilterInput() {
+  const { filters, setFilters } = useContext(PlanetContext);
+  const { filterByName: { name } } = filters;
 
-  function handleInputChange(ev) {
-    const name = ev.target.value;
-
-    setInputText(name);
-
-    const newFilter = filters;
-
-    newFilter.filterByName.name = name;
-
-    setFilters(newFilter);
-
-    handleNameFilter();
-  }
+  const handleChange = (e) => {
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: e.target.value,
+      },
+    });
+  };
 
   return (
-    <fieldset>
-      <label htmlFor="planet-name-input">
-        Nome:
-        <input
-          name="planet-name-input"
-          id="planet-name-input"
-          type="text"
-          value={ inputText }
-          onChange={ handleInputChange }
-          data-testid="name-filter"
-        />
-      </label>
-
-    </fieldset>
+    <form>
+      <input
+        type="text"
+        value={ name }
+        onChange={ handleChange }
+        data-testid="name-filter"
+        placeholder="Search by name"
+      />
+    </form>
   );
 }
-
-export default FilterInput;
