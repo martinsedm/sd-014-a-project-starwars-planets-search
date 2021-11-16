@@ -1,73 +1,72 @@
-import React, { useContext, useState } from 'react';
-import planetContext from '../context/planetContext';
+import React, { useContext, useEffect, useState } from 'react';
+import PlanetsContext from '../context/planetContext';
 
-function NumericFilters() {
-  const { setFilters, filters, handleNumericFilters } = useContext(planetContext);
+export default function NumericFilters() {
+  const { filters, setFilters, columns, setColumns } = useContext(PlanetsContext);
 
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState(0);
+  const [filterValues, setFilterValues] = useState({});
 
-  function handleAddFilter() {
-    const newFilter = { column, comparison, value };
-    const oldFilters = filters.filterByNumericValues || [];
+  const { filterByNumericValues } = filters;
+  const { column, comparison, value } = filterValues;
 
-    setFilters({
-      filterByNumericValues: [...oldFilters, newFilter],
+  const comparisons = ['maior que', 'menor que', 'igual a'];
+
+  useEffect(() => {
+    setFilterValues({
+      column: columns[0],
+      comparison: 'maior que',
+      value: '0',
     });
+  }, [columns]);
 
-    handleNumericFilters(column, comparison, value);
-  }
+  const handleChange = ({ target }) => {
+    setFilterValues({
+      ...filterValues,
+      [target.name]: target.value,
+    });
+  };
+
+  const handleFilter = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterByNumericValues, filterValues],
+    });
+    setColumns(columns.filter((columnName) => column !== columnName));
+  };
 
   return (
-    <fieldset>
+    <>
       <select
-        name="colum-filter"
-        data-testid="column-filter"
         value={ column }
-        onChange={ ({ target }) => setColumn(target.value) }
+        name="column"
+        onChange={ handleChange }
+        data-testid="column-filter"
       >
-
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-
+        {columns.map((columnOption) => (
+          <option key={ columnOption }>{columnOption}</option>
+        ))}
       </select>
-
       <select
-        name="range"
-        id="range"
-        data-testid="comparison-filter"
         value={ comparison }
-        onChange={ (ev) => setComparison(ev.target.value) }
+        name="comparison"
+        onChange={ handleChange }
+        data-testid="comparison-filter"
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        {comparisons.map((comparisonOption) => (
+          <option key={ comparisonOption }>{comparisonOption}</option>
+        ))}
       </select>
-
       <input
         type="number"
-        name="value"
-        id="value"
-        data-testid="value-filter"
         value={ value }
-        onChange={ (ev) => setValue(ev.target.value) }
+        name="value"
+        data-testid="value-filter"
+        placeholder="0"
+        onChange={ handleChange }
       />
-
-      <button
-        data-testid="button-filter"
-        type="submit"
-        id="button-filter"
-        name="button-filter"
-        onClick={ handleAddFilter }
-      >
-        Filtrar
+      <button type="button" data-testid="button-filter" onClick={ handleFilter }>
+        Filter
       </button>
-
-    </fieldset>
+    </>
   );
 }
-
-export default NumericFilters;

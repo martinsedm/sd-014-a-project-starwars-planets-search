@@ -1,23 +1,32 @@
 import React, { useContext } from 'react';
+import PlanetsContext from '../context/planetContext';
 
-import planetContext from '../context/planetContext';
+export default function FiltersList() {
+  const { filters, setFilters, columns, setColumns } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filters;
 
-import Filter from './Filter';
-
-function FiltersList() {
-  const { filters } = useContext(planetContext);
+  const handleDeleteFilter = (column) => {
+    setColumns([...columns, column]);
+    setFilters({
+      ...filters,
+      filterByNumericValues: filterByNumericValues.filter((eachFilter) => (
+        eachFilter.column !== column
+      )),
+    });
+  };
 
   return (
-    <div>
-      {filters.filterByNumericValues.length > 1
-      && filters.filterByNumericValues.map((filter, index) => (<Filter
-        key={ index }
-        column={ filter.column }
-        comparison={ filter.comparison }
-        value={ filter.value }
-      />))}
-    </div>
+    <>
+      {filterByNumericValues.map((eachFilter) => {
+        const { column, comparison, value } = eachFilter;
+        if (!column) return '';
+        return (
+          <section key={ column } data-testid="filter">
+            <span>{`${column} | ${comparison} | ${value}`}</span>
+            <button type="button" onClick={ () => handleDeleteFilter(column) }>X</button>
+          </section>
+        );
+      })}
+    </>
   );
 }
-
-export default FiltersList;
