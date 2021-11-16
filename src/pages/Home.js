@@ -5,13 +5,18 @@ import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
 
 const COMPARISON_OPTIONS = ['maior que', 'menor que', 'igual a'];
+const SORT_OPTIONS = [
+  'name', 'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
 
 function Home() {
-  const { filters: { filterByNumericValues }, columnOptions,
+  const { filters: { filterByNumericValues }, columnOptions, orderPlanets,
     data, headers, handleName, handleNumericValues } = useContext(PlanetsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState();
+  const [sortColumn, setSortColumn] = useState('name');
+  const [sortType, setSortType] = useState();
 
   return (
     <div>
@@ -43,6 +48,40 @@ function Home() {
           onClick={ (event) => handleNumericValues(event, { column, comparison, value }) }
         >
           Filtrar
+        </button>
+        <Select
+          options={ SORT_OPTIONS }
+          testId="column-sort"
+          onChange={ setSortColumn }
+        />
+        <label htmlFor="asc-sort-input">
+          Ascendente
+          <input
+            type="radio"
+            data-testid="column-sort-input-asc"
+            id="asc-sort-input"
+            name="order"
+            value="ASC"
+            onClick={ ({ target }) => { setSortType(target.value); } }
+          />
+        </label>
+        <label htmlFor="desc-sort-input">
+          Descendente
+          <input
+            type="radio"
+            data-testid="column-sort-input-desc"
+            id="desc-sort-input"
+            name="order"
+            value="DESC"
+            onClick={ ({ target }) => { setSortType(target.value); } }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => orderPlanets(sortColumn, sortType) }
+        >
+          Ordernar
         </button>
       </form>
       <section className="applied-filters-container">

@@ -43,9 +43,15 @@ function Table({ planets, headers, filters }) {
             <tr key={ planet.name }>
               {
                 Object.values(planet).map((info, index) => (
-                  <td key={ index }>
-                    {info}
-                  </td>
+                  index === 0 ? (
+                    <td key={ index } data-testid="planet-name">
+                      {info}
+                    </td>
+                  ) : (
+                    <td key={ index }>
+                      {info}
+                    </td>
+                  )
                 ))
               }
             </tr>

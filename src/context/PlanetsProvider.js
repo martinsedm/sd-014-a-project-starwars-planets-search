@@ -11,6 +11,7 @@ const INITIAL_FILTERS_STATE = {
     name: '',
   },
   filterByNumericValues: [],
+  order: {},
 };
 
 function PlanetsProvider({ children }) {
@@ -19,6 +20,24 @@ function PlanetsProvider({ children }) {
   const [headers, setHeaders] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTERS_STATE);
   const [columnOptions, setColumnOptions] = useState(COLUMN_OPTIONS);
+
+  const orderPlanets = (column, type) => {
+    const currentPlanets = [...data];
+    let sortedPlanets;
+    switch (type) {
+    case 'ASC':
+      sortedPlanets = currentPlanets.sort((a, b) => (
+        Number(a[column]) - Number(b[column])));
+      break;
+    case 'DESC':
+      sortedPlanets = currentPlanets.sort((a, b) => (
+        Number(b[column]) - Number(a[column])));
+      break;
+    default:
+      return null;
+    }
+    setData(sortedPlanets);
+  };
 
   const removeNumericFilter = (filterToRemove) => {
     const currentFilters = [...filters.filterByNumericValues];
@@ -49,7 +68,9 @@ function PlanetsProvider({ children }) {
 
   const setPlanetsOnState = async () => {
     const planets = await getPlanets();
-    setData(planets);
+    const initialSort = planets.sort((a, b) => a.name.localeCompare(b.name));
+    // src: https://stackoverflow.com/questions/8900732/sort-objects-in-an-array-alphabetically-on-one-property-of-the-array
+    setData(initialSort);
     setUnmodifiedData(planets);
     setHeaders(Object.keys(planets[0]));
   };
@@ -71,7 +92,8 @@ function PlanetsProvider({ children }) {
           columnOptions,
           handleName,
           handleNumericValues,
-          removeNumericFilter }
+          removeNumericFilter,
+          orderPlanets }
       }
     >
       {children}
@@ -80,7 +102,7 @@ function PlanetsProvider({ children }) {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.object).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default PlanetsProvider;
