@@ -18,15 +18,18 @@ function Input() {
   };
 
   return (
-    <label htmlFor="textInput">
-      <input
-        type="text"
-        name="text"
-        id="textInput"
-        data-testid="name-filter"
-        onChange={ handleChange }
-      />
-    </label>
+    <div className="container">
+      <label htmlFor="textInput">
+        <input
+          type="text"
+          name="text"
+          id="textInput"
+          data-testid="name-filter"
+          onChange={ handleChange }
+          className="form-control m-3"
+        />
+      </label>
+    </div>
   );
 }
 

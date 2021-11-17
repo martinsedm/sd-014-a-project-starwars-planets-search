@@ -8,8 +8,14 @@ import NumberFilter from './Components/NumberFilter';
 function App() {
   return (
     <Provide>
-      <Input />
-      <NumberFilter />
+      <header
+        className="d-flex flex-wrap align-items-center
+          justify-content-center justify-content-lg-start bg-dark"
+      >
+        <Input />
+        <NumberFilter />
+
+      </header>
       <Table />
     </Provide>
   );

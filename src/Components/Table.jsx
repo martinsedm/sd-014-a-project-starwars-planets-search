@@ -16,7 +16,7 @@ function Table() {
   };
 
   return (
-    <table>
+    <table className="table table-dark table-striped">
       <thead>
         <tr>
           <th>name</th>
