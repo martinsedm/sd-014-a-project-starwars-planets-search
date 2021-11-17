@@ -73,12 +73,13 @@ function NumberFilter() {
   const removeFiltroX = (index, column) => {
     filterByNumericValues.splice(index, 1);
     setOptionColumn([...optionColumn, column]);
+    setFiltrado(data);
     setClick(!click);
   };
 
   const criandoFiltros = () => filterByNumericValues
     .map(({ column, comparison, value }, index) => (
-      <div key={ index } className="text-white">
+      <div key={ index } data-testid="filter" className="text-white">
         <span>{`${column} | ${comparison} | ${value}`}</span>
         <button
           type="button"
