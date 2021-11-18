@@ -8,6 +8,7 @@ export default function App() {
   return (
     <StarWarsProvider>
       <Header />
+      <p />
       <PlanetsTable />
     </StarWarsProvider>
   );
