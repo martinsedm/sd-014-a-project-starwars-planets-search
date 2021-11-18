@@ -6,10 +6,19 @@ import StarWarsContext from './StarWarsContext';
 
 export default function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   const data = {
     planets,
     setPlanets,
+    filter,
+    setFilter,
   };
 
   useEffect(() => {
@@ -29,5 +38,5 @@ export default function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

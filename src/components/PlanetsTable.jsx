@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function PlanetsTable() {
-  const { planets } = useContext(StarWarsContext);
-  console.log(planets);
+  const { planets,
+    filter: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
 
-  function showPlanets() {
-    const showExpenses = planets.map((planet) => (
+  function showPlanets(world) {
+    const showExpenses = world.map((planet) => (
       <tr key={ planet.name }>
         <td>{ planet.name }</td>
         <td>{ planet.climate }</td>
@@ -48,16 +48,20 @@ export default function PlanetsTable() {
     );
   }
 
+  function filterPlanets() {
+    const filter = planets.filter((planet) => planet.name.includes(name));
+    return filter;
+  }
+
   return (
     <div>
-      <span>Hello, StarWars!</span>
-      <p />
       <table>
         <thead>
           { showTable()}
         </thead>
         <tbody>
-          { showPlanets() }
+          { name.lenght === 0 ? showPlanets(planets)
+            : showPlanets(filterPlanets()) }
         </tbody>
       </table>
     </div>
