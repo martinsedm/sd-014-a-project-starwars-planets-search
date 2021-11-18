@@ -3,11 +3,15 @@ import './App.css';
 
 import PlanetsProvider from './context/PlanetsProvider';
 import PlanetsTable from './components/PlanetsTable';
+import FilterPlanetsByName from './components/FilterPlanetsByName';
 
 function App() {
   return (
     <PlanetsProvider>
-      <PlanetsTable />
+      <main>
+        <FilterPlanetsByName />
+        <PlanetsTable />
+      </main>
     </PlanetsProvider>
   );
 }
