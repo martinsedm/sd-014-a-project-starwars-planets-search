@@ -35,9 +35,7 @@ function ProviderTabela({ children }) {
 
   // const myContext = { data, titles, filterName, handleChange };
   const filteredPlanets = useCallback(() => {
-    console.log(filters);
     const { column, comparison, value } = filters.filterByNumericValue[0];
-    console.log('entoru');
 
     const filterInAPI = data.filter((element) => {
       if (comparison === 'maior que') {

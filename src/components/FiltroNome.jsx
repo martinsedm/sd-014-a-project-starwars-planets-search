@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
-import ContextTabela from '../context/ContextTabela';
+
+import ContextTabela from '../../context/ContextTabela';
 
 function Filtro() {
-  const { handleChange, filters: { filterByName: { name } } } = useContext(ContextTabela);
+  const {
+    handleChange,
+    filters: {
+      filterByName: { name },
+    },
+  } = useContext(ContextTabela);
 
   return (
     <label htmlFor="filter-name">

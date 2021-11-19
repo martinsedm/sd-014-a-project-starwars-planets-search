@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import ContextTabela from '../context/ContextTabela';
+import ContextTabela from '../../context/ContextTabela';
 import FiltroNome from './FiltroNome';
 import FiltroNumero from './FiltroNumero';
 
@@ -21,7 +21,7 @@ function TabelaPlaneta() {
         <thead>
           <tr>
             {titles.map((title) => (
-              <th key={ title }>{title}</th>
+              <th key={ title }>{ title }</th>
             ))}
           </tr>
         </thead>
@@ -30,12 +30,12 @@ function TabelaPlaneta() {
             .filter((planet) => planet.name.includes(name))
             .map((planets, index) => (
               <tr key={ index }>
-                <td>{ planets.name}</td>
-                <td>{ planets.rotation_period}</td>
-                <td>{ planets.orbital_period}</td>
-                <td>{ planets.diameter}</td>
-                <td>{ planets.climate}</td>
-                <td>{ planets.gravity}</td>
+                <td>{ planets.name }</td>
+                <td>{ planets.rotation_period }</td>
+                <td>{ planets.orbital_period }</td>
+                <td>{ planets.diameter }</td>
+                <td>{ planets.climate }</td>
+                <td>{ planets.gravity }</td>
                 <td>{ planets.terrain }</td>
                 <td>{ planets.surface_water }</td>
                 <td>{ planets.population }</td>

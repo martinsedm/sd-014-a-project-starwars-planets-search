@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import ContextTabela from '../context/ContextTabela';
+import ContextTabela from '../../context/ContextTabela';
 
 function FiltroNumero() {
   const { handleClick } = useContext(ContextTabela);
