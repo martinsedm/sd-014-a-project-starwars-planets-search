@@ -1,23 +1,20 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Context from './Context';
 import fecthPlanets from '../helper/fetchPlanets';
 
 export default function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
 
-  const fetchByPlanets = async () => {
-    const response = await fecthPlanets();
-
-    setPlanets(response);
-  };
-
-  // useEffect(() => {
-  //   fecthPlanets();
-  // }, []);
+  useEffect(() => {
+    async function getPlanets() {
+      const data = await fecthPlanets();
+      setPlanets(data.results);
+    }
+    getPlanets();
+  }, []);
 
   const Values = {
-    fetchByPlanets,
     planets,
   };
 
