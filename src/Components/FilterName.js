@@ -8,7 +8,7 @@ function FilterName() {
     filterPlanetsByName(e.target.value);
     setFilters({ ...filters, filterByName: e.target.value });
   };
-
+// test
   return (
     <section>
       <input
