@@ -2,15 +2,28 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Header() {
-  const { setFilter } = useContext(StarWarsContext);
+  const { filter: { filters: { filterByName, filterByNumericValues },
+  }, setFilter } = useContext(StarWarsContext);
 
+  // funciona e salva corretamente no context
+  // falta apenas arrumar o filtro em PlanetsTable
   function eventHandler({ target }) {
-    const { value } = target;
+    const { id, value } = target;
+
     setFilter({
       filters: {
         filterByName: {
-          name: value,
+          name: (id === 'name') ? value : filterByName.name,
         },
+        filterByNumericValues: [{
+          column: (id === 'column-filter') ? target[target.selectedIndex].id
+            : filterByNumericValues[filterByNumericValues.length - 1].column,
+          comparison: (id === 'comparison-filter')
+            ? target[target.selectedIndex].id
+            : filterByNumericValues[filterByNumericValues.length - 1].comparison,
+          value: (id === 'value-filter') ? value
+            : filterByNumericValues[filterByNumericValues.length - 1].value,
+        }],
       },
     });
   }
@@ -20,8 +33,8 @@ export default function Header() {
       <input
         type="text"
         data-testid="name-filter"
-        name="name"
         id="name"
+        name="name"
         placeholder="digite aqui"
         onChange={ eventHandler }
       />
@@ -31,12 +44,16 @@ export default function Header() {
   function filterByType() {
     return (
       <div>
-        <select data-testid="column-filter">
-          <option id="population" value="name">population</option>
-          <option id="orbital_period" value="name">orbital_period</option>
-          <option id="diameter" value="name">diameter</option>
-          <option id="rotation_period" value="name">rotation_period</option>
-          <option id="surface_water" value="name">surface_water</option>
+        <select
+          data-testid="column-filter"
+          id="column-filter"
+          onChange={ eventHandler }
+        >
+          <option id="population">population</option>
+          <option id="orbital_period">orbital_period</option>
+          <option id="diameter">diameter</option>
+          <option id="rotation_period">rotation_period</option>
+          <option id="surface_water">surface_water</option>
         </select>
       </div>
     );
@@ -46,10 +63,9 @@ export default function Header() {
     return (
       <div>
         <input
-          type="text"
+          type="number"
           data-testid="value-filter"
-          name="name"
-          id="name"
+          id="value-filter"
           placeholder="digite aqui"
           onChange={ eventHandler }
         />
@@ -60,10 +76,14 @@ export default function Header() {
   function filterByComparison() {
     return (
       <div>
-        <select data-testid="comparison-filter">
-          <option id="greater" value="name">maior que</option>
-          <option id="less" value="name">menor que</option>
-          <option id="equal" value="name">igual a</option>
+        <select
+          data-testid="comparison-filter"
+          id="comparison-filter"
+          onChange={ eventHandler }
+        >
+          <option id="greater">maior que</option>
+          <option id="less">menor que</option>
+          <option id="equal">igual a</option>
         </select>
       </div>
     );

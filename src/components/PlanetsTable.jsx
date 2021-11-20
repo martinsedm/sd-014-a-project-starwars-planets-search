@@ -48,10 +48,14 @@ export default function PlanetsTable() {
     );
   }
 
-  function filterPlanetsByText() {
+  function filterPlanets() {
     const filter = planets.filter((planet) => planet.name.includes(name));
     return filter;
   }
+
+  // function comparisonFilter(type) {
+  //   const filter = planets.filter((planet) => planet[type] === type)
+  // }
 
   return (
     <div>
@@ -61,7 +65,7 @@ export default function PlanetsTable() {
         </thead>
         <tbody>
           { name.lenght === 0 ? showPlanets(planets)
-            : showPlanets(filterPlanetsByText()) }
+            : showPlanets(filterPlanets()) }
         </tbody>
       </table>
     </div>

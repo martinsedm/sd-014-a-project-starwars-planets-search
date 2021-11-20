@@ -11,6 +11,11 @@ export default function StarWarsProvider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [{
+        column: 'population',
+        comparison: 'greater',
+        value: '',
+      }],
     },
   });
 
