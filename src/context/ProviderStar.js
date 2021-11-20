@@ -5,14 +5,22 @@ import requisitionPlanets from '../services/api';
 
 function ProviderStar({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   async function InfoPlanetsAPI() {
     const saveInfos = await requisitionPlanets();
     setPlanets(saveInfos);
   }
 
+  const contextValue = {
+    InfoPlanetsAPI,
+    planets,
+    setFilters,
+    filters,
+  };
+
   return (
-    <ContextStar.Provider value={ { InfoPlanetsAPI, planets } }>
+    <ContextStar.Provider value={ contextValue }>
       { children }
     </ContextStar.Provider>
   );
