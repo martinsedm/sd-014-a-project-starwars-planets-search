@@ -12,7 +12,11 @@ export default function StarWarsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+    ],
   });
+
+  const { filterByNumericValues, filterByName } = filters;
 
   const AtribuindoSetData = async () => {
     const API = await ApiStarWarsPlanet();
@@ -30,14 +34,32 @@ export default function StarWarsProvider({ children }) {
     });
   };
 
-  const DataFiltered = data.filter((plt) => (
-    plt.name.toLowerCase().includes(filters.filterByName.name.toLowerCase())
-  ));
+  const ChangeFiltersNumeric = ({ column, comparsion, value }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filterByNumericValues,
+        {
+          column,
+          comparsion,
+          value,
+        },
+      ],
+    });
+  };
+
+  const DataFiltered = data.filter(
+    (plt) => plt.name.toLowerCase().includes(filterByName.name.toLowerCase()),
+  );
 
   return (
     <ContextApi.Provider
       value={ {
-        data, filters, ChangeFiltersName, DataFiltered,
+        data,
+        filters,
+        ChangeFiltersName,
+        DataFiltered,
+        ChangeFiltersNumeric,
       } }
     >
       {children}

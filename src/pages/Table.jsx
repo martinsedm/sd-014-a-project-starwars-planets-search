@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import ContextApi from '../componentes/ContextApi';
 
 function Table() {
-  const { DataFiltered } = useContext(ContextApi);
+  const { DataFiltered, filters } = useContext(ContextApi);
+  const { filterByNumericValues } = filters;
+  const filterNum = filterByNumericValues;
+
+  console.log(filterNum);
+
   return (
     <table>
       <thead>
@@ -23,7 +28,20 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {DataFiltered.map((info, key) => (
+        {DataFiltered.filter((plt) => {
+          if (!filterNum[0]) return plt;
+          switch (filterNum[0].comparsion) {
+          case 'maior que':
+            return plt[filterNum[0].column] > Number(filterNum[0].value);
+          case 'menor que':
+            return plt[filterNum[0].column] < Number(filterNum[0].value);
+          case 'igual a':
+            return plt[filterNum[0].column] === filterNum[0].value;
+
+          default:
+            return plt;
+          }
+        }).map((info, key) => (
           <tr key={ key }>
             <td>{info.name}</td>
             <td>{info.rotation_period}</td>
