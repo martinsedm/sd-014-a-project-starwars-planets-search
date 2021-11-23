@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import ContextStar from '../context/ContextStar';
 
 function Filters() {
-  const { setFilters } = useContext(ContextStar);
+  const { setFilters, filters } = useContext(ContextStar);
 
   const handleChange = ({ target }) => {
-    setFilters({ filterByName: { name: target.value } });
+    setFilters({ ...filters, filterByName: { name: target.value } });
   };
 
   return (

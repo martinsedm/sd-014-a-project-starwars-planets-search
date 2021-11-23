@@ -2,19 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import ContextStar from '../context/ContextStar';
 
 function Table() {
-  const { filters, InfoPlanetsAPI } = useContext(ContextStar);
-  let { planets } = useContext(ContextStar);
-  const { filterByName: { name } } = filters;
-  if (name !== '') {
-    planets = planets
-      .filter((planet) => (
-        (planet.name.toLowerCase()).includes(name.toLowerCase())
-      ));
-  }
+  const { filterData, InfoPlanetsAPI } = useContext(ContextStar);
 
   useEffect(() => {
     InfoPlanetsAPI();
-  }, [InfoPlanetsAPI]);
+  }, []);
 
   return (
     <div>
@@ -37,7 +29,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { planets.map((planet, index) => (
+          { filterData.map((planet, index) => (
             <tr key={ index }>
               <td>{planet.name}</td>
               <td>{planet.climate}</td>

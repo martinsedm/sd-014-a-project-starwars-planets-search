@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
+import FilterNumber from './component/FilterNumber';
 import Filters from './component/Filters';
+import SelectedFilter from './component/SelectedFilter';
 import Table from './component/Table';
 import ProviderStar from './context/ProviderStar';
-import requisitionPlanets from './services/api';
 
 function App() {
-  useEffect(() => {
-    requisitionPlanets();
-  }, []);
   return (
     <ProviderStar>
       <Filters />
+      <FilterNumber />
+      <SelectedFilter />
       <Table />
     </ProviderStar>
   );
