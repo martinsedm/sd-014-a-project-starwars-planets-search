@@ -6,6 +6,11 @@ import ContextPlanet from './ContextPlanet';
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   async function fetchPlanet() {
     const chamadaApi = await Api();
@@ -16,8 +21,29 @@ function PlanetProvider({ children }) {
     fetchPlanet();
   }, []);
 
+  const handleChange = ({ target }) => {
+    const filterSearch = target.value;
+    console.log(filterSearch);
+
+    setFilter({
+      ...filter,
+      filterByName: {
+        name: filterSearch,
+      },
+    });
+  };
+
+  const context = {
+    data,
+    setData,
+    isLoading,
+    setIsLoading,
+    filter,
+    setFilter,
+    handleChange,
+  };
   return (
-    <ContextPlanet.Provider value={ { data, isLoading } }>
+    <ContextPlanet.Provider value={ context }>
       {children}
     </ContextPlanet.Provider>
   );
