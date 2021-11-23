@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import StarsContext from '../context/myContext';
 
 export default function FilterCaracteristic() {
-  const { numericFilter, setNumericFilter } = useContext(StarsContext);
-  const caracteristics = ['population', 'orbital_period', 'diameter', 'rotation_period',
+  const { numericFilter, setNumericFilter,
+    filters: { filterByNumericValues } } = useContext(StarsContext);
+  const caracteristics = [
+    'population', 'orbital_period', 'diameter', 'rotation_period',
     'surface_water'];
 
   function handleChange({ target }) {
@@ -14,13 +16,20 @@ export default function FilterCaracteristic() {
     });
   }
 
+  const removeOption = () => {
+    filterByNumericValues.forEach(({ caracteristic }) => {
+      caracteristics.splice(caracteristics.indexOf(caracteristic), 1);
+    });
+    return caracteristics;
+  };
+
   return (
     <select
       data-testid="column-filter"
       onChange={ handleChange }
-      value={ numericFilter.caracs }
+      value={ numericFilter.caracteristic }
     >
-      {caracteristics
+      {removeOption()
         .map((caracteristic, i) => (
           <option
             key={ i }

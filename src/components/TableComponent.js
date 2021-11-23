@@ -43,6 +43,7 @@ export default function TableComponent() {
     const { caracteristic, comparison, value } = numericFilter;
     if (Object.keys(filterByNumericValues).length) {
       const newFilter = getFilteredNumerically(caracteristic, comparison, value);
+      console.log(numericFilter[0].caracteristic);
       return newFilter;
     }
 
@@ -53,41 +54,45 @@ export default function TableComponent() {
     return filtered;
   };
 
-  const linhas = () => {
-    const filteredPlanets = getFilteredPlanets();
-    return filteredPlanets.map((planeta) => (
-      <tr key={ planeta.name }>
-        <td>{ planeta.name }</td>
-        <td>{ planeta.rotation_period }</td>
-        <td>{ planeta.orbital_period }</td>
-        <td>{ planeta.diameter}</td>
-        <td>{ planeta.climate}</td>
-        <td>{ planeta.gravity}</td>
-        <td>{ planeta.terrain}</td>
-        <td>{ planeta.surface_water}</td>
-        <td>{ planeta.population}</td>
-        <td>{ planeta.films}</td>
-        <td>{ planeta.created}</td>
-        <td>{ planeta.edited}</td>
-        <td>{ planeta.url}</td>
-      </tr>
-    ));
-  };
+  const filteredPlanets = getFilteredPlanets();
+  const linhas = () => filteredPlanets.map((planeta) => (
+    <tr key={ planeta.name }>
+      <td>{planeta.name}</td>
+      <td>{planeta.rotation_period}</td>
+      <td>{planeta.orbital_period}</td>
+      <td>{planeta.diameter}</td>
+      <td>{planeta.climate}</td>
+      <td>{planeta.gravity}</td>
+      <td>{planeta.terrain}</td>
+      <td>{planeta.surface_water}</td>
+      <td>{planeta.population}</td>
+      <td>{planeta.films}</td>
+      <td>{planeta.created}</td>
+      <td>{planeta.edited}</td>
+      <td>{planeta.url}</td>
+    </tr>
+  ));
 
   return (
-    <table className="table table-striped table-dark table-bordered table-hover table-sm">
-      <caption>List of planets</caption>
-      <thead className="thead-light">
-        <tr>
-          {headers.map((h2) => (
-            <th key={ h2 } className="bg-warning">
-              {h2}
-            </th>))}
-        </tr>
-      </thead>
-      <tbody>
-        { linhas() }
-      </tbody>
-    </table>
+    <section>
+      <div />
+      <table
+        className="table table-striped
+      table-dark table-bordered table-hover table-sm"
+      >
+        <caption>List of planets</caption>
+        <thead className="thead-light">
+          <tr>
+            {headers.map((h2) => (
+              <th key={ h2 } className="bg-warning">
+                {h2}
+              </th>))}
+          </tr>
+        </thead>
+        <tbody>
+          {linhas()}
+        </tbody>
+      </table>
+    </section>
   );
 }
