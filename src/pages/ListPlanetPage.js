@@ -4,6 +4,7 @@ import Table from '../components/Table';
 import FilterInput from '../components/FilterInput';
 import NumericFilters from '../components/NumericFilters';
 import FiltersList from '../components/FiltersList';
+import SortForm from '../components/SortForm';
 
 function ListPlanetPage() {
   return (
@@ -12,6 +13,7 @@ function ListPlanetPage() {
       <FilterInput />
       <NumericFilters />
       <FiltersList />
+      <SortForm />
       <Table />
     </main>
   );
