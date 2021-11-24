@@ -16,7 +16,8 @@ function Table() {
       <tbody>
         {planets.map((planet, i) => (
           <tr key={ i }>
-            {Object.values(planets[i]).map((header, i) => <td key={ i }>{header}</td>)}
+            {Object.values(planets[i])
+              .map((header, index) => <td key={ index }>{header}</td>)}
           </tr>))}
       </tbody>
     </table>
