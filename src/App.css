@@ -39,3 +39,25 @@
     transform: rotate(360deg);
   }
 }
+
+
+.table_edit  {
+
+  border:  solid black;
+  font-size:smaller;
+  color: yellow;
+  background-color: black;
+}
+
+.body_table {
+  align-items: center;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-direction:row;
+  font-size:smaller;
+  justify-content:center;
+  min-height: 25vh;
+  
+  
+}
