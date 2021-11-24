@@ -1,3 +1,4 @@
 import React from 'react';
 
-export default StarContext = React.createContext('');
+const StarContext = React.createContext();
+export default StarContext;

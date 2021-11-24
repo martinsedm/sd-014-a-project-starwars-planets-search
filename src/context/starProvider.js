@@ -3,40 +3,25 @@ import PropTypes from 'prop-types';
 import StarContext from './starContext';
 
 export default function StarProvider({ children }) {
-  const [data, setData] = useState('');
+  const [data, setData] = useState([{}]);
 
   const planetApi = async () => {
-      const responseJson = await response.json();
-      if (responseJson.meals === null) {
-        throw new Error(ERROR_MESSAGE);
-      }
-      setFoodAndDrinks(responseJson.meals);
-    } catch (error) {
-      global.alert(ERROR_MESSAGE);
-      return error;
-    }
+    const planets = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+    let results = await planets.json();
+    results = results.results;
+    results.forEach((result) => {
+      delete result.residents;
+    });
+    setData(results);
+    return results;
   };
 
+  useEffect(() => {
+    planetApi();
+  }, []);
 
   const values = {
-    radioButtonOption,
-    setRadioButtonOption,
-    inputSearch,
-    setInputSearch,
-    foodAndDrinks,
-    setFoodAndDrinks,
-    redirect,
-    setRedirect,
-    foodAPISearch,
-    drinkAPISearch,
-    favorites,
-    setFavorites,
-    done,
-    setDone,
-    copy,
-    recipe,
-    setRecipe,
-    getRecipe,
+    data,
   };
 
   return (
@@ -50,6 +35,6 @@ export default function StarProvider({ children }) {
   );
 }
 
-RecipeProvider.propTypes = {
+StarProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
