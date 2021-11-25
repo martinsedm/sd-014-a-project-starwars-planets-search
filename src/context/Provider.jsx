@@ -4,8 +4,17 @@ import AppContext from './StarWarsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   const contextValue = {
+    filter,
+    setFilter,
     data,
     setData,
   };
@@ -15,6 +24,15 @@ function Provider({ children }) {
     const responseData = await response.json();
     return responseData.results;
   };
+
+  function filterPlanets() {
+    data.filter((planet) => {
+      const result = planet.name.includes(filter.name);
+      return result
+    });
+  }
+  console.log(filterPlanets(), "oi");
+  filterPlanets();
 
   useEffect(() => {
     getPlanets().then(setData);
