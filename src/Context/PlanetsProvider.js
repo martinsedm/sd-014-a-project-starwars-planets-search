@@ -18,7 +18,6 @@ export default function PlanetsProvider({ children }) {
 
   const context = {
     data,
-    getPlanets,
   };
 
   return (

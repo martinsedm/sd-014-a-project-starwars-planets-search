@@ -22,14 +22,14 @@ export default function PlanetsList() {
 
   const filterByNumeric = (column, comparison, number) => {
     if (comparison === 'maior que') {
-      return filterPlanets.filter((e) => e[column] > number);
+      return filterPlanets.filter((e) => Number(e[column]) > Number(number));
     }
 
     if (comparison === 'menor que') {
-      return filterPlanets.filter((e) => e[column] < number);
+      return filterPlanets.filter((e) => Number(e[column]) < Number(number));
     }
 
-    return filterPlanets.filter((e) => e[column] === number);
+    return filterPlanets.filter((e) => Number(e[column]) === Number(number));
   };
 
   const setFilters = () => {
@@ -99,9 +99,14 @@ export default function PlanetsList() {
     const planetsFilter = (text) => {
       const planets = data.filter(({ name }) => name.includes(text));
       setPlanets(planets);
+      console.log(planets);
     };
     planetsFilter(searchText);
   }, [searchText, data]);
+
+  useEffect(() => {
+
+  }, [numericFilters]);
 
   return (
     <main>
