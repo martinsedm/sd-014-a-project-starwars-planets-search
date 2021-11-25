@@ -32,6 +32,31 @@ export default function PlanetsList() {
     return filterPlanets.filter((e) => Number(e[column]) === Number(number));
   };
 
+  const getRemovedElements = (column, comparison, number) => {
+    if (comparison === 'maior que') {
+      return data.filter((e) => Number(e[column]) < Number(number));
+    }
+
+    if (comparison === 'menor que') {
+      return data.filter((e) => Number(e[column]) > Number(number));
+    }
+
+    return data.filter((e) => Number(e[column]) !== Number(number));
+  };
+
+  const removeFilterElement = (column) => {
+    const element = document.getElementById('select-filter');
+    element.remove();
+    setSelects([...selects, column]);
+  };
+
+  const deleteFilter = (value) => {
+    const { column } = value;
+    removeFilterElement(column);
+    const newPlanets = getRemovedElements(value);
+    setPlanets(newPlanets);
+  };
+
   const setFilters = () => {
     const column = document.getElementById('column').value;
     const comparison = document.getElementById('comparison').value;
@@ -99,14 +124,9 @@ export default function PlanetsList() {
     const planetsFilter = (text) => {
       const planets = data.filter(({ name }) => name.includes(text));
       setPlanets(planets);
-      console.log(planets);
     };
     planetsFilter(searchText);
   }, [searchText, data]);
-
-  useEffect(() => {
-
-  }, [numericFilters]);
 
   return (
     <main>
@@ -114,9 +134,15 @@ export default function PlanetsList() {
       { renderNumericFiltersForm() }
       {
         selectFilters.map(({ column, comparison, number }, index) => (
-          <section key={ index } id={ column }>
+          <section data-testid="filter" key={ index } id="select-filter">
             <p>{`${column} ${comparison} ${number}`}</p>
-            <button type="button" value={ column }>X</button>
+            <button
+              type="button"
+              value={ column }
+              onClick={ () => deleteFilter({ column, comparison, number }) }
+            >
+              X
+            </button>
           </section>
         ))
       }
