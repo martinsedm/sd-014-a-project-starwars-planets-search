@@ -12,7 +12,7 @@ function BodyTable() {
     <tbody>
       {data.map((planet) => (
 
-        <tr className="table" key={ planet.name }>
+        <tr key={ planet.name }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
           <td>{planet.orbital_period}</td>

@@ -2,7 +2,7 @@ import React from 'react';
 
 function HeaderTable() {
   return (
-    <thead className="table_edit">
+    <thead>
       <tr>
         <th>Name</th>
         <th>Rotation Period</th>
