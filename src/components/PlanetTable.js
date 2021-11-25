@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import PlanetsContext from '../Context/PlanetsContext';
+import PlanetsContext from '../../context/PlanetsContext';
 
 import Filters from './Filters';
 

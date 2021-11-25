@@ -1,13 +1,14 @@
 import React from 'react';
-import TabelaPlaneta from './components/TabelaPlaneta';
-import ProviderTabela from '../provider/ProviderTabela';
+import './App.css';
+
+import PlanetsProvider from './context/PlanetsProvider';
+import PlanetTable from './components/PlanetTable';
 
 function App() {
   return (
-    <ProviderTabela>
-      <h1>Star Wars Planet</h1>
-      <TabelaPlaneta />
-    </ProviderTabela>
+    <PlanetsProvider>
+      <PlanetTable />
+    </PlanetsProvider>
   );
 }
 

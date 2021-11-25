@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import PlanetsContext from '../Context/PlanetsContext';
+import PlanetsContext from '../../context/PlanetsContext';
 
 function SelectFilter() {
   const { filters: { filterByNumericValues },

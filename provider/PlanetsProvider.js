@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import PlanetsContext from './PlanetsContext';
-import fetchPlanets from '../Services/api';
+import PlanetsContext from '../context/PlanetsContext';
+import fetchPlanets from '../services/Api';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
