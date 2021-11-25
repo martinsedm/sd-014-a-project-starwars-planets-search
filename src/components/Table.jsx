@@ -8,8 +8,6 @@ function Table() {
     return <h2>Carregando...</h2>;
   }
 
-  const { results } = planets;
-
   return (
     <table border="1">
       <thead>
@@ -31,9 +29,9 @@ function Table() {
       </thead>
       <tbody>
         {
-          results.map((item, i) => (
+          planets.map((item, i) => (
             <tr key={ i }>
-              <td>{ item.name }</td>
+              <td data-testid="planet-name">{ item.name }</td>
               <td>{ item.rotation_period }</td>
               <td>{ item.orbital_period }</td>
               <td>{ item.diameter }</td>
