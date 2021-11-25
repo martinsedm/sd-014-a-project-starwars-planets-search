@@ -8,7 +8,6 @@ function StartWarsPlanetsProvider({ children }) {
 
   const starWarsPlanetsApi = async () => {
     const result = await fetchStarWarsPlanets();
-    console.log(result);
     setData(result);
   };
 
