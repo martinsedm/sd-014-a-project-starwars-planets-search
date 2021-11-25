@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import PlanetsContext from '../context/PlanetsContext';
+import PlanetsContext from '../src/context/PlanetsContext';
 import fetchPlanets from '../services/Api';
 
 function PlanetsProvider({ children }) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import PlanetsProvider from '../context/PlanetsContext';
+import PlanetsProvider from './context/PlanetsContext';
 import PlanetTable from './components/PlanetTable';
 
 function App() {

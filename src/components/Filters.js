@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import PlanetsContext from '../../context/PlanetsContext';
+import PlanetsContext from '../context/PlanetsContext';
 import RadioFilter from './RadioFilter';
 import SelectFilter from './SelectFilter';
 import TextFilter from './TextFilter';
