@@ -1,41 +1,91 @@
-.App {
+* {
+  background-color: black;
+  color: gold;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+img {
+  height: 300px;
+  width: 400px;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.input-search {
+  padding: 5px 50px;
+  border: 1px solid gold;
+  margin-bottom: 25px;
+  border-radius: 5%;
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+.filter {
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
   justify-content: center;
-  min-height: 100vh;
+  margin-bottom: 25px;
 }
 
-.App-link {
-  color: #61dafb;
+.filter select {
+  margin-left: 20px;
+  border: 1px solid gold;
+  font-size: 15px;
+  padding-right: 25px;
+  padding-bottom: 5px;
+  border-radius: 5%;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.filter input {
+  margin-left: 20px;
+  border: 1px solid gold;
 }
+
+.filter button {
+  margin-left: 10px;
+  border: 1px solid gold;
+  width: 50px;
+}
+
+.filter label {
+  margin-left: 5px;
+}
+
+.filter button:hover {
+  background-color: rgba(196, 196, 70, 0.438);
+}
+
+.filter-appear {
+  display: flex;
+  justify-content: space-evenly;
+  border: 1px solid gold;
+  width: 300px;
+  margin-left: 40%;
+  margin-bottom: 25px;
+}
+
+.filter-appear button {
+  width: 20px;
+}
+
+.filter-appear button:hover {
+  background-color: rgba(196, 196, 70, 0.438);
+}
+
+table {
+  width: 100%;
+  border: 1px solid gold;
+  border-collapse: collapse;
+  margin-bottom: 100px;
+}
+
+thead th {
+  border: 1px solid yellow;
+  height: 100px;
+  color: yellow;
+  padding: 15px;
+}
+
+tbody td {
+  border: 1px solid gold;
+  text-align: center;
+  padding: 15px;
+}
+

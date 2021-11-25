@@ -1,9 +1,5 @@
 import React from 'react';
 
-const xablau = {
-  name: 'xabaluzin',
-};
-
-const StarWarsContext = React.createContext(xablau);
+const StarWarsContext = React.createContext();
 
 export default StarWarsContext;

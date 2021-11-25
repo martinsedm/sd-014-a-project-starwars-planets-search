@@ -7,6 +7,7 @@ export default function Search() {
   return (
     <div>
       <input
+        className="input-search"
         type="text"
         placeholder="Filter by name"
         data-testid="name-filter"

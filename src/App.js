@@ -6,7 +6,7 @@ import StarWarsProvider from './context/StarWarsProvider';
 
 function App() {
   return (
-    <main>
+    <main className="InitialConfigs">
       <StarWarsProvider>
         <Header />
         <Search />
