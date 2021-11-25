@@ -6,8 +6,6 @@ function Table() {
   const { filterByNumericValues } = filters;
   const filterNum = filterByNumericValues;
 
-  console.log(filterNum);
-
   return (
     <table>
       <thead>
