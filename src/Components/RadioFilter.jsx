@@ -49,7 +49,6 @@ function RadioFilter() {
   };
 
   const setFilter = () => {
-    // const { column, sort } = order;
     if (column === 'orbital_period') {
       filterByNumber(sort, column);
       setFilterSort({ column, sort });
@@ -65,20 +64,19 @@ function RadioFilter() {
   return (
     <>
       <br />
-
       <label htmlFor="columns">
         <select
           name="columns"
           id="column"
           data-testid="column-sort"
-          onChange={ ({ target }) => {
+          onChange={({ target }) => {
             setColumn(target.value);
-          } }
+          }}
         >
           {columns.map((col, idx) => (
             <option
-              key={ idx }
-              value={ col }
+              key={idx}
+              value={col}
             >
               {col}
             </option>
@@ -94,9 +92,9 @@ function RadioFilter() {
             name="sortWay"
             id="sortAsc"
             value="ASC"
-            onClick={ ({ target }) => {
+            onClick={({ target }) => {
               setSort(target.value);
-            } }
+            }}
             data-testid="column-sort-input-asc"
           />
         </label>
@@ -107,9 +105,9 @@ function RadioFilter() {
             name="sortWay"
             id="sortDesc"
             value="DESC"
-            onClick={ ({ target }) => {
+            onClick={({ target }) => {
               setSort(target.value);
-            } }
+            }}
             data-testid="column-sort-input-desc"
           />
         </label>
@@ -117,7 +115,7 @@ function RadioFilter() {
       <br />
       <button
         type="button"
-        onClick={ setFilter }
+        onClick={setFilter}
         data-testid="column-sort-button"
       >
         Ordenar

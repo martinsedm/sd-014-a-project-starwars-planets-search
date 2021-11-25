@@ -3,23 +3,23 @@ import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 
 function SelectFilter() {
-    const { filters: { filterByNumericValues },
-        setFilterNumeric, data, setFiltered, filtered } = useContext(PlanetsContext);
-    const [columns, setColumns] = useState(['population', 'orbital_period',
-        'diameter', 'rotation_period', 'surface_water']);
-    const [column, setColumn] = useState('population');
-    const [delColumns, setDelColumns] = useState([]);
-    const [comparison, setComparison] = useState('maior_que');
-    const [numberValue, setNumberValue] = useState('');
-    const [btnArray, setBtnArray] = useState([]);
+  const { filters: { filterByNumericValues },
+    setFilterNumeric, data, setFiltered, filtered } = useContext(PlanetsContext);
+  const [columns, setColumns] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
+  const [column, setColumn] = useState('population');
+  const [delColumns, setDelColumns] = useState([]);
+  const [comparison, setComparison] = useState('maior_que');
+  const [numberValue, setNumberValue] = useState('');
+  const [btnArray, setBtnArray] = useState([]);
 
-    const setFilter = () => {
-        if (filterByNumericValues.length > 0) {
-            filterByNumericValues.forEach((obj) => {
-                switch (obj.comparison) {
-                    case 'maior que':
-                        setFiltered(filtered.filter((pl) => +pl[column] > +numberValue));
-                        break;
+  const setFilter = () => {
+    if (filterByNumericValues.length > 0) {
+  filterByNumericValues.forEach((obj) => {
+      switch (obj.comparison) {
+    case 'maior que':
+    setFiltered(filtered.filter((pl) => +pl[column] > +numberValue));
+    break;
                     case 'menor que':
                         setFiltered(filtered.filter((pl) => +pl[column] < +numberValue));
                         break;
