@@ -11,6 +11,13 @@ function PlanetProvider({ children }) {
       name: '',
     },
   });
+  const [filters, setFilters] = useState({
+    filterByNumericValues: [],
+  });
+
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
 
   async function fetchPlanet() {
     const chamadaApi = await Api();
@@ -23,7 +30,6 @@ function PlanetProvider({ children }) {
 
   const handleChange = ({ target }) => {
     const filterSearch = target.value;
-    console.log(filterSearch);
 
     setFilter({
       ...filter,
@@ -41,6 +47,14 @@ function PlanetProvider({ children }) {
     filter,
     setFilter,
     handleChange,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    filters,
+    setFilters,
   };
   return (
     <ContextPlanet.Provider value={ context }>
