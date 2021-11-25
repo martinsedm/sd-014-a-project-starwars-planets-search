@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import PlanetsContext from '../context/PlanetsContext';
+import PlanetsContext from '../Context/PlanetsContext';
 
 function RadioFilter() {
   const { setFilterSort,
