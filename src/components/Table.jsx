@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Table() {
-  const { data } = useContext(Context);
+  const { planets } = useContext(Context);
 
-  if (!data) {
+  if (!planets) {
     return <h2>Carregando...</h2>;
   }
 
-  const { results } = data;
+  const { results } = planets;
 
   return (
     <table border="1">
