@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 
-function OrderColumns() {
+function Columns() {
   const { handleOrderColumns } = useContext(Context);
   const initialOrder = { column: 'name', sort: 'ASC' };
   const [order, setOrder] = useState(initialOrder);
@@ -60,4 +60,4 @@ function OrderColumns() {
   );
 }
 
-export default OrderColumns;
+export default Columns;
