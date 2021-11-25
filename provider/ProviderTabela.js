@@ -73,7 +73,7 @@ function ProviderTabela({ children }) {
 
   return (
     <ContextTabela.Provider value={ myContext }>
-      {children}
+      { children }
     </ContextTabela.Provider>
   );
 }
