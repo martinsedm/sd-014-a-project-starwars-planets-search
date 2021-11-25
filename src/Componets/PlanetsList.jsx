@@ -20,6 +20,18 @@ export default function PlanetsList() {
   const [selects, setSelects] = useState(defaultSelects);
   const [selectFilters, setSelectFilters] = useState([]);
 
+  const filterByNumeric = (column, comparison, number) => {
+    if (comparison === 'maior que') {
+      return filterPlanets.filter((e) => e[column] > number);
+    }
+
+    if (comparison === 'menor que') {
+      return filterPlanets.filter((e) => e[column] < number);
+    }
+
+    return filterPlanets.filter((e) => e[column] === number);
+  };
+
   const setFilters = () => {
     const column = document.getElementById('column').value;
     const comparison = document.getElementById('comparison').value;
@@ -36,6 +48,9 @@ export default function PlanetsList() {
 
     const modifySelects = selects.filter((e) => e !== column);
 
+    const elementsFilter = filterByNumeric(column, comparison, number);
+
+    setPlanets(elementsFilter);
     setSelectFilters(filtros);
     setNumFilter(filtros);
     setSelects(modifySelects);
@@ -87,9 +102,6 @@ export default function PlanetsList() {
     };
     planetsFilter(searchText);
   }, [searchText, data]);
-
-  useEffect(() => {
-  }, []);
 
   return (
     <main>
