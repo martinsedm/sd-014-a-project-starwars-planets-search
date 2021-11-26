@@ -12,7 +12,18 @@ function ColumnFilter() {
     setFilters,
     data,
     setData,
+    options,
+    setOptions,
   } = useContext(ContextPlanet);
+
+  const optionsRemoveFilters = () => {
+    const optionRemoveFilter = options.filter((option) => option !== column);
+    setOptions(optionRemoveFilter);
+    console.log(optionRemoveFilter);
+    console.log('');
+    console.log(options);
+    console.log(column);
+  };
 
   const handleSearch = (e) => {
     if (e.target.name === 'column') {
@@ -42,6 +53,7 @@ function ColumnFilter() {
     });
 
     setData(filtro);
+    optionsRemoveFilters();
   };
 
   return (
@@ -52,12 +64,13 @@ function ColumnFilter() {
         name="column"
         id="population"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { options.map((option) => (
+          <option key={ option } value={ option }>
+            { option }
+          </option>
+        )) }
       </select>
+
       <select
         data-testid="comparison-filter"
         onChange={ handleSearch }
@@ -69,6 +82,7 @@ function ColumnFilter() {
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
+
       <input
         onChange={ handleSearch }
         data-testid="value-filter"

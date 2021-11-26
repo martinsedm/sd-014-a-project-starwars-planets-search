@@ -18,6 +18,13 @@ function PlanetProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   async function fetchPlanet() {
     const chamadaApi = await Api();
@@ -55,6 +62,8 @@ function PlanetProvider({ children }) {
     setValue,
     filters,
     setFilters,
+    options,
+    setOptions,
   };
   return (
     <ContextPlanet.Provider value={ context }>
