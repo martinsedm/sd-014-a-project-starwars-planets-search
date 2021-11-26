@@ -12,8 +12,8 @@ function StarsProvider({ children }) {
   });
 
   const [numericFilter, setNumericFilter] = useState([{
-    caracteristic: 'population',
-    comparison: 'maior que',
+    caracteristic: '',
+    comparison: '',
     value: 0,
   }]);
 
