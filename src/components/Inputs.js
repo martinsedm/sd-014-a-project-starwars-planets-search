@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarwarsContext';
 
-const columnFilterArray = ['population', 'orbital_period',
-  'diameter', 'rotation_period', 'surface_water'];
-
 const comparisonFilterArray = ['maior que', 'menor que', 'igual a'];
 
 function Inputs() {
   const { handleChangeName, handleChange,
-    handleClick, filteredArray } = useContext(StarWarsContext);
+    handleClick, columnsArray } = useContext(StarWarsContext);
 
   return (
     <div>
@@ -46,11 +43,10 @@ function Inputs() {
       <select
         data-testid="column-filter"
         name="column"
+        id="column"
         onChange={ handleChange }
       >
-        { columnFilterArray
-        // https://stackoverflow.com/questions/45599749/using-filter-to-compare-two-arrays-and-return-values-that-arent-matched
-          .filter((element) => !filteredArray.includes(element))
+        { columnsArray
           .map((filter) => (
             <option
               key={ filter }

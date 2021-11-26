@@ -24,9 +24,33 @@ function mappingHeader(element) {
 }
 
 function Table() {
-  const { isFetching, data } = useContext(StarwarsContext);
+  const { isFetching, data, filters, removeFilter } = useContext(StarwarsContext);
+
+  function filterHeader() {
+    return (
+      <div>
+        { filters.filterByNumericValues.map(
+          ({ column, comparison, value }, i) => (
+            <span data-testid="filter" key={ i }>
+              <h3>{`${column} ${comparison} ${value}`}</h3>
+              <button
+                type="button"
+                id="filter"
+                onClick={ removeFilter }
+                name={ column }
+              >
+                X
+              </button>
+            </span>
+          ),
+        )}
+      </div>
+    );
+  }
+
   return !isFetching ? (
     <section id="table-elements">
+      { filterHeader()}
       <table>
         <thead>
           <tr>

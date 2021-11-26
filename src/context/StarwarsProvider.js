@@ -8,14 +8,13 @@ class StarwarsProvider extends React.Component {
     super();
 
     this.state = {
-      column: 'population',
       comparison: 'maior que',
+      columnsArray: ['population', 'orbital_period',
+        'diameter', 'rotation_period', 'surface_water'],
+      filteredColumn: '',
       value: 0,
       data: [],
-      keys: [],
-      values: [],
       isFetching: false,
-      filteredArray: [],
       filters: {
         filterByName: {
           name: '',
@@ -27,10 +26,20 @@ class StarwarsProvider extends React.Component {
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleFilteredData = this.handleFilteredData.bind(this);
+    this.removeFilter = this.removeFilter.bind(this);
   }
 
   componentDidMount() {
     this.getAPI();
+  }
+
+  handleFilteredData(column) {
+    const { columnsArray } = this.state;
+    const filtered = columnsArray
+      .filter((element) => !column.includes(element));
+    this.setState({ columnsArray: filtered });
+    this.setState({ filteredColumn: column });
   }
 
   handleChangeName(e) {
@@ -47,18 +56,20 @@ class StarwarsProvider extends React.Component {
     const { name, value } = e.target;
     if (name === 'filterByNumericValues') { this.setState({ value }); }
     if (name === 'comparison') { this.setState({ comparison: value }); }
-    if (name === 'column') { this.setState({ column: value }); }
   }
 
   handleClick() {
-    const { filters, column, comparison, value, data, filteredArray } = this.state;
+    const elementById = document.getElementById('column');
+    const selectedColumn = elementById.options[elementById.selectedIndex].value;
+
+    const { filters, comparison, value, data } = this.state;
     this.setState({
       filters: {
         ...filters,
         filterByNumericValues: [
           ...filters.filterByNumericValues,
           {
-            column,
+            column: selectedColumn,
             comparison,
             value,
           },
@@ -70,17 +81,17 @@ class StarwarsProvider extends React.Component {
       .filter((element) => {
         switch (comparison) {
         case 'maior que':
-          return Number(element[column]) > Number(value);
+          return Number(element[selectedColumn]) > Number(value);
         case 'menor que':
-          return Number(element[column]) < Number(value);
+          return Number(element[selectedColumn]) < Number(value);
         case 'igual a':
-          return Number(element[column]) === Number(value);
+          return Number(element[selectedColumn]) === Number(value);
         default:
           return element;
         }
       });
     this.setState({ data: filtered });
-    this.setState({ filteredArray: [...filteredArray, column] });
+    this.handleFilteredData(selectedColumn);
   }
 
   getAPI() {
@@ -92,6 +103,19 @@ class StarwarsProvider extends React.Component {
     });
   }
 
+  removeFilter(e) {
+    const { filters, columnsArray, rawData } = this.state;
+    this.setState({
+      filters: {
+        ...filters,
+        filterByNumericValues:
+        filters.filterByNumericValues.filter(({ column }) => column !== e.target.name),
+      },
+    });
+    this.setState({ columnsArray: [e.target.name, ...columnsArray] });
+    this.setState({ data: rawData });
+  }
+
   render() {
     const { children } = this.props;
     return (
@@ -101,6 +125,7 @@ class StarwarsProvider extends React.Component {
           handleChangeName: this.handleChangeName,
           handleChange: this.handleChange,
           handleClick: this.handleClick,
+          removeFilter: this.removeFilter,
         } }
       >
         {children}
