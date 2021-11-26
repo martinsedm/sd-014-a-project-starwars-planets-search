@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import StarsContext from '../context/myContext';
+import AppliedFilters from './AppliedFilters';
 import FilterCaracteristic from './FilterCaracteristic';
 import FilterComparison from './FilterComparison';
 import FilterNumerically from './FilterNumerically';
@@ -18,7 +19,7 @@ export default function NumberFilter() {
 
   return (
     <form>
-      <p>Quer uma seleção específica?</p>
+      <p>Procure por especificidade: </p>
       <FilterCaracteristic />
       <FilterComparison />
       <FilterNumerically />
@@ -29,6 +30,7 @@ export default function NumberFilter() {
       >
         Filtrar
       </button>
+      <AppliedFilters />
     </form>
   );
 }

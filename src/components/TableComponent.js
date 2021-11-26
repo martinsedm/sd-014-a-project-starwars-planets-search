@@ -43,9 +43,9 @@ export default function TableComponent() {
     const { caracteristic, comparison, value } = numericFilter;
     if (Object.keys(filterByNumericValues).length) {
       const newFilter = getFilteredNumerically(caracteristic, comparison, value);
-      console.log(numericFilter);
+      console.log(caracteristic);
       console.log(comparison);
-      console.log(numericFilter.value);
+      console.log(value);
       return newFilter;
     }
 
@@ -54,32 +54,6 @@ export default function TableComponent() {
         name.toLowerCase().includes(filterByName.name.toLowerCase())
       ));
     return filtered;
-  };
-
-  const showFilters = () => {
-    const { caracteristic, comparison, value } = numericFilter;
-    const showing = [caracteristic, comparison, value];
-    return (
-      <div className="d-flex p-2 bd-highlight">
-        <p>
-          {
-            showing.map((item, i) => (
-              <span key={ i }>
-                {
-                  item
-                }
-              </span>
-            ))
-          }
-        </p>
-        <button
-          type="button"
-          style={ { display: '-ms-inline-flexbox' } }
-        >
-          X
-        </button>
-      </div>
-    );
   };
 
   const filteredPlanets = getFilteredPlanets();
@@ -103,9 +77,6 @@ export default function TableComponent() {
 
   return (
     <section>
-      <p>
-        { showFilters() }
-      </p>
       <table
         className="table table-striped
         table-dark table-bordered table-hover table-sm"
