@@ -3,13 +3,10 @@ import AppContext from '../context/StarWarsContext';
 import TableRow from './TableRow';
 
 function Table() {
-  const { data } = useContext(AppContext);
-  // console.log(data);
+  const { filteredPlanets } = useContext(AppContext);
 
-  // console.log(data, 'data');
-
-  if (data.length === 0) return (<div>Loading...</div>);
-  return data.length > 0 && (
+  if (filteredPlanets.length === 0) return (<div>Loading...</div>);
+  return filteredPlanets.length > 0 && (
     <table>
       <thead>
         <tr>
@@ -29,7 +26,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((planet) => <TableRow key={ planet.url } planet={ planet } />) }
+        {filteredPlanets
+          .map((planet) => <TableRow key={ planet.url } planet={ planet } />)}
       </tbody>
     </table>
   );
