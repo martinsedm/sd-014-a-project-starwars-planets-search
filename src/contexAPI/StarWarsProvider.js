@@ -23,27 +23,25 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     planetsAPI();
   }, []);
-
+  // assistido pelo Jonathan Ferreira!!
   useEffect(() => {
-    const xablau = (planet) => {
+    const planetsFilter = (planet) => {
       const nameCheckedPlanet = planet.name.toLowerCase().includes(name.toLowerCase());
       if (!nameCheckedPlanet) {
         return false;
-      } if
-      (nameCheckedPlanet) {
-        switch (comparison) {
-        case 'maior que':
-          return Number(planet[column]) > Number(value) && nameCheckedPlanet;
-        case 'menor que':
-          return Number(planet[column]) < Number(value) && nameCheckedPlanet;
-        case 'igual a':
-          return Number(planet[column]) === Number(value) && nameCheckedPlanet;
-        default: return nameCheckedPlanet;
-        }
+      }
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      case 'igual a':
+        return Number(planet[column]) === Number(value);
+      default: return nameCheckedPlanet;
       }
     };
-    const filterNamePlanets = data.filter(xablau);
-    setPlanets(filterNamePlanets);
+    const filteredPlanets = data.filter(planetsFilter);
+    setPlanets(filteredPlanets);
   }, [name, filters, filterByNumericValues, data, comparison, column, value]);
 
   const context = {
