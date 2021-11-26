@@ -1,21 +1,29 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import Context from './Context';
 import fecthPlanets from '../helper/fetchPlanets';
+import Context from './Context';
 
 export default function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [unFilterPlanets, setUnFilterPlanets] = useState([]);
 
   useEffect(() => {
     async function getPlanets() {
       const data = await fecthPlanets();
-      setPlanets(data.results);
+      setUnFilterPlanets([...data.results]);
+      console.log('dataResults', data.results);
+      // console.log('unFilterPlanets', unFilterPlanets);
     }
     getPlanets();
+    // if (!planets) {
+    //   setPlanets([...unFilterPlanets]);
+    // }
   }, []);
 
   const Values = {
+    unFilterPlanets,
     planets,
+    setPlanets,
   };
 
   return (

@@ -1,18 +1,11 @@
 import React, { useContext } from 'react';
+import getIdFromURL from '../helper/getIdFromURL';
 import Context from '../contexts/Context';
 
 export default function Table() {
-  const contextData = useContext(Context);
-  const { planets } = contextData;
+  const { unFilterPlanets } = useContext(Context);
 
-  function getIdFromURL(planet) {
-    const URL_BASE = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const URLPlanet = planet.url;
-    const id = URLPlanet.replace(URL_BASE, '').replace('/', '');
-    return id;
-  }
-
-  if (planets.length === 0) return <span>Loading...</span>;
+  if (unFilterPlanets.length === 0) return <span>Loading...</span>;
 
   return (
     <table>
@@ -34,7 +27,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet) => (
+        { unFilterPlanets.map((planet) => (
           <tr key={ getIdFromURL(planet) }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
