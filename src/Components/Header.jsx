@@ -1,8 +1,8 @@
-import React, { userContext, useState } from 'react' ;
+import React, { useContext, useState } from 'react' ;
 import FilterContext from '../Context/FilterContext';
 
 function Header() {
-  const { handlerChangeName, handleFilter } = userContext(FilterContext);
+  const { handlerChangeName, handleFilter } = useContext(FilterContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [number, setNumber] = useState('');
