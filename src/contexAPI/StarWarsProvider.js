@@ -5,8 +5,14 @@ import starWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
-  const { filterByName: { name } } = filters;
+  const [filters, setFilters] = useState({ filterByName: { name: '' },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: 0,
+    }] });
+  const { filterByName: { name }, filterByNumericValues } = filters;
+  const { column, comparison, value } = filterByNumericValues[0];
 
   const planetsAPI = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -19,17 +25,32 @@ function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const filterNamePlanets = data.filter((planet) => planet.name.includes(name));
+    const xablau = (planet) => {
+      const nameCheckedPlanet = planet.name.toLowerCase().includes(name.toLowerCase());
+      if (!nameCheckedPlanet) {
+        return false;
+      } if
+      (nameCheckedPlanet) {
+        switch (comparison) {
+        case 'maior que':
+          return Number(planet[column]) > Number(value) && nameCheckedPlanet;
+        case 'menor que':
+          return Number(planet[column]) < Number(value) && nameCheckedPlanet;
+        case 'igual a':
+          return Number(planet[column]) === Number(value) && nameCheckedPlanet;
+        default: return nameCheckedPlanet;
+        }
+      }
+    };
+    const filterNamePlanets = data.filter(xablau);
     setPlanets(filterNamePlanets);
-  }, [data, name, filters]);
+  }, [name, filters, filterByNumericValues, data, comparison, column, value]);
 
   const context = {
-    data,
-    setData,
-    planets,
-    setPlanets,
     filters,
     setFilters,
+    planets,
+    setPlanets,
   };
 
   return (
