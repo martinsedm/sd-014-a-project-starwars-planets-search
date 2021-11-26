@@ -1,29 +1,73 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import FilterContext from './FilterContext';
+import useData from '../Hooks/useData';
 
 function FilterProvider({ children }) {
-  const INITIAL_STATE = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  };
+  const [planets, tableHeadData] = useData();
+  const [name, setName] = useState('');
+  const [numericFilters, setNumericFilters] = useState([]);
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
+  const [filteredList, setFilteredList] = useState([]);
 
-  const [state, setName] = useState(INITIAL_STATE);
-  const handleChangeName = ({ target: { value } }) => setName(
-    { ...state,
-      filters: { ...state.filters,
-        filterByName: {
-          name: value,
-        },
-      },
-    },
+  const addFilter = (newFilter) => setNumericFilters(
+    [...numericFilters, newFilter],
   );
 
+  const rmvFilter = (removed) => setNumericFilters(
+    [...numericFilters.filter((filter) => filter.column !== removed.column)],
+  );
+
+  const handleOrder = (params) => setOrder({ ...params });
+
+  useEffect(() => {
+    let filteredPlanets = [...planets];
+
+    if (name) {
+      filteredPlanets = filteredPlanets.filter((planet) => planet.name.toLowerCase()
+        .includes(name.toLowerCase()));
+    }
+
+    if (numericFilters) {
+      numericFilters.forEach(({ column, comparison, value }) => {
+        filteredPlanets = filteredPlanets.filter((planet) => {
+          if (comparison === 'maior que') {
+            return Number(planet[column]) > value;
+          }
+          if (comparison === 'menor que') {
+            return Number(planet[column]) < value;
+          }
+          return planet[column] === value;
+        });
+      });
+    }
+    setFilteredList([...filteredPlanets]);
+  }, [planets, name, numericFilters]);
+
+  const value = {
+    filters: {
+      filterByName: {
+        name,
+      },
+      filterByNumericValues: numericFilters,
+      order,
+    },
+    data: {
+      planets,
+      tableHeadData,
+    },
+    filteredList,
+    addFilter,
+    rmvFilter,
+    handleOrder,
+    setName,
+  };
+
   return (
-    <FilterContext.Provider value={ { ...state, handleChangeName } }>
+    <FilterContext.Provider value={ value }>
       {children}
     </FilterContext.Provider>
   );

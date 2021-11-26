@@ -1,53 +1,65 @@
-import React, { useState, useEffect, useContext } from 'react';
-import FilterContext from './Context/FilterContext';
+import React, { useContext } from 'react';
+import FilterContext from '../Context/FilterContext';
 
 function Table() {
-  const [planets, setPlanets] = useState([]);
-  const [tableHeadData, setTableHeadData] = useState([]);
+  const { filters: { order: { column, sort } }, data: { tableHeadData },
+    filteredList } = useContext(FilterContext);
 
-  let filteredPlanets = [...planets];
+  function orderString(a, b) {
+    if (a[column] < b[column]) {
+      const oneNegative = -1;
+      return oneNegative;
+    }
+    if (a[column] > b[column]) {
+      return 1;
+    }
+    return 0;
+  }
 
-  useEffect(() => {
-    const fetchAPI = async () => {
-      const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-      const response = await fetch(API_URL);
-      const { results } = await response.json();
-      const resultsWithoutResidents = results.map((planet) => {
-        delete planet.residents;
-        return planet;
-      });
-      setPlanets(resultsWithoutResidents);
-      setTableHeadData(Object.keys(resultsWithoutResidents[0]));
-    };
-    fetchAPI();
-  }, []);
+  filteredList.sort((a, b) => {
+    if (Number(a[column])) {
+      return a[column] - b[column];
+    }
+    return orderString(a, b);
+  });
 
-  const tableHead = () => (
-    <thead>
-      <tr>
-        { tableHeadData.map((column, index) => (
-          <th key={ index }>{column}</th>
-        ))}
-      </tr>
-    </thead>
-  );
-
-  const { filters: { filterByName: { name } } } = useContext(FilterContext);
-  if (name) {
-    filteredPlanets = filteredPlanets.filter((planet) => planet.name.toLowerCase()
-      .includes(name.toLowerCase())
-    );
+  if (sort === 'DESC') {
+    filteredList.reverse();
   }
 
   return (
     <table>
-      { tableHead() }
+      <thead>
+        <tr>
+          { tableHeadData.map((dataColumn, dataIndex) => (
+            <th key={ dataIndex }>{dataColumn}</th>
+          ))}
+        </tr>
+      </thead>
       <tbody>
-        { filteredPlanets.map((planet, index) => (
-          <tr key={ index }>
-            {tableHeadData.map((column, dataindex) => (
-              <td key={ dataindex }>{ planet[column]}</td>
-            ))}
+        { filteredList.map((planet, planetIndex) => (
+          <tr key={ planetIndex }>
+            {tableHeadData.map((dataColumn, dataIndex) => {
+              if (dataColumn === 'name') {
+                return (
+                  <td
+                    key={ dataIndex }
+                    data-testid="planet-name"
+                  >
+                    { planet[dataColumn]}
+                  </td>);
+              }
+              if (dataColumn === 'films') {
+                return (
+                  <td
+                    key={ dataIndex }
+                    className="films"
+                  >
+                    { planet[dataColumn].join(' ')}
+                  </td>);
+              }
+              return <td key={ dataIndex }>{ planet[dataColumn]}</td>;
+            })}
           </tr>
         ))}
       </tbody>
