@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import starWarsContext from '../contexAPI/StarWarsContext';
 
 function Filters() {
-  const { filters, setFilters } = useContext(starWarsContext);
+  const { filters, setFilters, currentFilters, setCurrentFilters,
+    columnToTakeOff, setColumnToTakeOff } = useContext(starWarsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const { filterByName: { name } } = filters;
-
+  const { filterByName: { name }, filterByNumericValues } = filters;
   // seteando o valor da chave name, para setear o filtro por planeta
   function handleChangePlanet({ target: { value: values } }) {
     setFilters({
@@ -19,15 +19,16 @@ function Filters() {
   }
   //  seteando filters, no click do botão
   function handleClick() {
+    setCurrentFilters({ value, column, comparison });
     setFilters({
       ...filters,
-      filterByNumericValues: [{
-        column,
-        comparison,
-        value,
-      }],
+      filterByNumericValues: [...filterByNumericValues, currentFilters],
     });
+    setColumnToTakeOff(column);
   }
+
+  const filertOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   return (
     <form>
@@ -46,11 +47,9 @@ function Filters() {
         onChange={ ({ target: { value: e } }) => setColumn(e) }
         name="column"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filertOptions
+          .filter((option) => option !== columnToTakeOff)
+          .map((option) => <option key={ option } value={ option }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"

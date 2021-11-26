@@ -6,13 +6,13 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({ filterByName: { name: '' },
-    filterByNumericValues: [{
-      column: '',
-      comparison: '',
-      value: 0,
-    }] });
+    filterByNumericValues: [] });
+  const [currentFilters, setCurrentFilters] = useState({ comparison: '',
+    value: 0,
+    column: ',' });
+  const [columnToTakeOff, setColumnToTakeOff] = useState('');
   const { filterByName: { name }, filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues[0];
+  const { column, comparison, value } = currentFilters;
 
   const planetsAPI = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -51,6 +51,10 @@ function StarWarsProvider({ children }) {
     setFilters,
     planets,
     setPlanets,
+    currentFilters,
+    setCurrentFilters,
+    columnToTakeOff,
+    setColumnToTakeOff,
   };
 
   return (
