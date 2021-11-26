@@ -4,13 +4,6 @@ import ContextStar from '../context/ContextStar';
 function FilterNumber() {
   const { handleClickInput, filterInput, handleButton } = useContext(ContextStar);
 
-  // o que falta:
-  // filterPlanets
-
-  // function handleClick({ target }) {
-  //   filters(target.value);
-  // }
-
   return (
     <form>
       <label htmlFor="name">

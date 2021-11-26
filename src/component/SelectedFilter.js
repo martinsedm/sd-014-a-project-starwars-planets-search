@@ -2,8 +2,12 @@ import React, { useContext } from 'react';
 import ContextStar from '../context/ContextStar';
 
 function SelectedFilter() {
-  const { handleClickSelect, filterSelect,
-    handleClickComparison, filterComparation } = useContext(ContextStar);
+  const { handleClickSelect,
+    handleClickComparison,
+    filterComparation,
+    columnList,
+    filterSelect,
+    filters: { filterByNumericValues } } = useContext(ContextStar);
   return (
     <div>
       <select
@@ -11,12 +15,28 @@ function SelectedFilter() {
         value={ filterSelect }
         onChange={ handleClickSelect }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        { !columnList.find(
+          (item) => item === 'population',
+        ) && <option>population</option> }
+        { !columnList.find(
+          (item) => item === 'orbital_period',
+        ) && <option>orbital_period</option> }
+        { !columnList.find(
+          (item) => item === 'diameter',
+        ) && <option>diameter</option> }
+        { !columnList.find(
+          (item) => item === 'rotation_period',
+        ) && <option>rotation_period</option> }
+        { !columnList.find(
+          (item) => item === 'surface_water',
+        ) && <option>surface_water</option> }
       </select>
+      {filterByNumericValues.map(({ column, comparison, value }, index) => (
+        <p
+          key={ index }
+        >
+          { `${column} ${comparison} ${value}` }
+        </p>))}
       <select
         data-testid="comparison-filter"
         value={ filterComparation }

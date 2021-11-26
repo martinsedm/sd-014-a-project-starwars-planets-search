@@ -8,7 +8,7 @@ function ProviderStar({ children }) {
   const [planets, setPlanets] = useState([]);
   // reescreve o (planets) com base dos fltros, ou seja, as novas informações da API filtradas.
   const [filterData, setFilterData] = useState([]);
-  // guarda os filtros que serão utilizados.
+  // guarda os filtros/informações do input que serão utilizados.
   const [filters, setFilters] = useState(
     { filterByName: { name: '' }, filterByNumericValues: [] },
   );
@@ -19,6 +19,7 @@ function ProviderStar({ children }) {
   // estado do select
   const [filterInput, setFilterInput] = useState('10000');
   // const [filterObject, setFilterObject] = useState([]);
+  const [columnList, setColumnList] = useState([]);
 
   useEffect(() => {
     const { filterByName: { name } } = filters;
@@ -75,8 +76,12 @@ function ProviderStar({ children }) {
   }
 
   function handleButton() {
-    // const { filterByNumericValues } = filters;
+    const { filterByNumericValues } = filters;
     // quero que o valor final dos valores do meu input sejam enviados para o array ao clique do botão.
+    const addColumn = [...columnList];
+    addColumn.push(filterSelect);
+    console.log('ai', addColumn);
+    setColumnList(addColumn);
     const newFilters = {
       ...filters,
       filterByNumericValues: [
@@ -85,19 +90,16 @@ function ProviderStar({ children }) {
           comparison: filterComparation,
           value: filterInput,
         },
+        ...filterByNumericValues,
       ],
     };
-    // o novo filter serve para substituir o filter anterior. Sendo o valor oq for depositado dentro do input.
-    // acessar os valores do input
     setFilters(newFilters);
-    // jogar dentro do array
   }
-  //
-  // próximo passo ao jogar as informações pro array. Filtrar (já feito).
 
   return (
     <ContextStar.Provider
-      value={ { InfoPlanetsAPI,
+      value={ {
+        InfoPlanetsAPI,
         planets,
         setFilters,
         filters,
@@ -111,7 +113,9 @@ function ProviderStar({ children }) {
         setFilterComparation,
         filterInput,
         setFilterInput,
-        handleButton } }
+        handleButton,
+        columnList,
+      } }
     >
       { children }
     </ContextStar.Provider>
