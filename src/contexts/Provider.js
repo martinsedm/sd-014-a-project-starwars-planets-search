@@ -4,26 +4,32 @@ import fecthPlanets from '../helper/fetchPlanets';
 import Context from './Context';
 
 export default function Provider({ children }) {
+  const filtersObj = {
+    filterByName: {
+      name: '',
+    },
+  };
+
   const [planets, setPlanets] = useState([]);
-  const [unFilterPlanets, setUnFilterPlanets] = useState([]);
+  const [filterPlanets, setFilterPlanets] = useState([]);
+  const [filters, setFilters] = useState(filtersObj);
 
   useEffect(() => {
     async function getPlanets() {
       const data = await fecthPlanets();
-      setUnFilterPlanets([...data.results]);
-      console.log('dataResults', data.results);
-      // console.log('unFilterPlanets', unFilterPlanets);
+      setPlanets(data.results);
+      setFilterPlanets(data.results);
     }
     getPlanets();
-    // if (!planets) {
-    //   setPlanets([...unFilterPlanets]);
-    // }
   }, []);
 
   const Values = {
-    unFilterPlanets,
+    filterPlanets,
+    setFilterPlanets,
     planets,
     setPlanets,
+    filters,
+    setFilters,
   };
 
   return (

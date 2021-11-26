@@ -3,9 +3,9 @@ import getIdFromURL from '../helper/getIdFromURL';
 import Context from '../contexts/Context';
 
 export default function Table() {
-  const { unFilterPlanets } = useContext(Context);
+  const { filterPlanets, planets } = useContext(Context);
 
-  if (unFilterPlanets.length === 0) return <span>Loading...</span>;
+  if (planets.length === 0) return <span>Loading...</span>;
 
   return (
     <table>
@@ -27,7 +27,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { unFilterPlanets.map((planet) => (
+        { filterPlanets.map((planet) => (
           <tr key={ getIdFromURL(planet) }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

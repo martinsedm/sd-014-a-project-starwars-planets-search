@@ -1,10 +1,12 @@
 import React from 'react';
+import Button from './atomos/Button';
 import Input from './atomos/Input';
 
-export default function Table() {
+export default function SearchBar() {
   return (
-    <header>
-      <Input testId="name-filter" />
-    </header>
+    <div>
+      <Input placeHolder="0" />
+      <Button label="Filtrar" />
+    </div>
   );
 }
