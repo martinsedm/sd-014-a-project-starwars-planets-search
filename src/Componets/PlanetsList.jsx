@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import PlanetsContext from '../Context/PlanetsContext';
 import PlanetDetails from './PlanetDetails';
+import comparar from '../data';
 
 export default function PlanetsList() {
   const { data } = useContext(PlanetsContext);
@@ -22,19 +23,6 @@ export default function PlanetsList() {
 
   const [nameColumn, setColumn] = useState('name');
   const [sortOrder, setSort] = useState('ASC');
-
-  const comparar = (a, b) => {
-    const descNumber = -1;
-    if (a > b) {
-      return 1;
-    }
-
-    if (a < b) {
-      return descNumber;
-    }
-
-    return 0;
-  };
 
   const handdleClick = (column, sort) => {
     const planetsArray = [...filterPlanets];
