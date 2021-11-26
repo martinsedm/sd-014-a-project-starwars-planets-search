@@ -8,21 +8,12 @@ function StarProvider(props) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   };
 
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState(INITIAL_STATE);
   const [planetsCopy, setPlanetsCopy] = useState([]);
-
-  useEffect(() => {
-    const { filterByName } = filters;
-    let planetFilter = [...planets];
-    if (filterByName.name !== '') {
-      planetFilter = planetFilter.filter((planet) => planet.name.toLowerCase()
-        .includes(filterByName.name.toLowerCase()));
-    }
-    setPlanetsCopy(planetFilter);
-  }, [filters, planets]);
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
@@ -37,11 +28,38 @@ function StarProvider(props) {
     getPlanets();
   }, []);
 
+  useEffect(() => {
+    const { filterByName, filterByNumericValues } = filters;
+    let planetFilter = [...planets];
+    if (filterByName.name !== '') {
+      planetFilter = planetFilter.filter((planet) => planet.name.toLowerCase()
+        .includes(filterByName.name.toLowerCase()));
+    }
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        if (comparison === 'igual a') {
+          planetFilter = planetFilter.filter((planet) => planet[column] === value);
+        }
+        if (comparison === 'maior que') {
+          console.log(typeof value);
+          planetFilter = planetFilter
+            .filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
+        }
+        if (comparison === 'menor que') {
+          planetFilter = planetFilter
+            .filter((planet) => parseInt(planet[column], 10) < parseInt(value, 10));
+        }
+      });
+    }
+    setPlanetsCopy(planetFilter);
+  }, [filters, planets]);
+
   const context = {
     planets,
     filters,
     planetsCopy,
     handleChange,
+    setFilters,
   };
 
   const { children } = props;
