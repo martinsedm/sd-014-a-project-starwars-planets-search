@@ -1,13 +1,16 @@
 import React from 'react';
 import { Header, Table } from './Components';
+import FilterProvider from './Context/FilterProvinder';
 
 import './App.css';
 
 function App() {
   return (
     <>
-      <Header />
-      <Table />
+      <FilterProvider>
+        <Header />
+        <Table />
+      </FilterProvider>
     </>
   );
 }
