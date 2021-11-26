@@ -20,6 +20,46 @@ export default function PlanetsList() {
   const [selects, setSelects] = useState(defaultSelects);
   const [selectFilters, setSelectFilters] = useState([]);
 
+  const [nameColumn, setColumn] = useState('name');
+  const [sortOrder, setSort] = useState('ASC');
+
+  const comparar = (a, b) => {
+    const descNumber = -1;
+    if (a > b) {
+      return 1;
+    }
+
+    if (a < b) {
+      return descNumber;
+    }
+
+    return 0;
+  };
+
+  const handdleClick = (column, sort) => {
+    const planetsArray = [...filterPlanets];
+
+    if (column === 'name') {
+      if (sort === 'ASC') {
+        planetsArray.sort((a, b) => comparar(a[column], b[column]));
+      }
+
+      if (sort === 'DESC') {
+        planetsArray.sort((a, b) => comparar(b[column], a[column]));
+      }
+    } else {
+      if (sort === 'ASC') {
+        planetsArray.sort((a, b) => comparar(Number(a[column]), Number(b[column])));
+      }
+
+      if (sort === 'DESC') {
+        planetsArray.sort((a, b) => comparar(Number(b[column]), Number(a[column])));
+      }
+    }
+
+    setPlanets(planetsArray);
+  };
+
   const filterByNumeric = (column, comparison, number) => {
     if (comparison === 'maior que') {
       return filterPlanets.filter((e) => Number(e[column]) > Number(number));
@@ -120,6 +160,44 @@ export default function PlanetsList() {
     </form>
   );
 
+  const renderSortInputs = () => (
+    <>
+      <select
+        onChange={ ({ target }) => setColumn(target.value) }
+        data-testid="column-sort"
+      >
+        <option value="name">name</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <input
+        data-testid="column-sort-input-asc"
+        type="radio"
+        name="radio-btn"
+        value="ASC"
+        onChange={ ({ target }) => setSort(target.value) }
+      />
+      Ascendente
+      <input
+        data-testid="column-sort-input-desc"
+        type="radio"
+        name="radio-btn"
+        value="DESC"
+        onChange={ ({ target }) => setSort(target.value) }
+      />
+      Descendente
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ () => handdleClick(nameColumn, sortOrder) }
+      >
+        Ordenar
+      </button>
+    </>
+  );
+
   useEffect(() => {
     const planetsFilter = (text) => {
       const planets = data.filter(({ name }) => name.includes(text));
@@ -128,10 +206,20 @@ export default function PlanetsList() {
     planetsFilter(searchText);
   }, [searchText, data]);
 
+  useEffect(() => {
+    const planetsArray = [...data];
+    const initialSort = (column) => {
+      planetsArray.sort((a, b) => comparar(a[column], b[column]));
+      setPlanets(planetsArray);
+    };
+    initialSort('name');
+  }, [data]);
+
   return (
     <main>
       { renderInputText() }
       { renderNumericFiltersForm() }
+      { renderSortInputs() }
       {
         selectFilters.map(({ column, comparison, number }, index) => (
           <section data-testid="filter" key={ index } id="select-filter">
