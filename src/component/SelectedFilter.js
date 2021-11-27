@@ -7,7 +7,8 @@ function SelectedFilter() {
     filterComparation,
     columnList,
     filterSelect,
-    filters: { filterByNumericValues } } = useContext(ContextStar);
+    filters: { filterByNumericValues },
+    removeNewElementHtml } = useContext(ContextStar);
   return (
     <div>
       <select
@@ -31,12 +32,17 @@ function SelectedFilter() {
           (item) => item === 'surface_water',
         ) && <option>surface_water</option> }
       </select>
-      {filterByNumericValues.map(({ column, comparison, value }, index) => (
-        <p
-          key={ index }
-        >
-          { `${column} ${comparison} ${value}` }
-        </p>))}
+      { filterByNumericValues.map(({ column, comparison, value }) => (
+        <div data-testid="filter" key={ column }>
+          <span>{ `${column} ${comparison} ${value}` }</span>
+          <button
+            type="button"
+            onClick={ () => removeNewElementHtml(column) }
+          >
+            X
+          </button>
+        </div>
+      ))}
       <select
         data-testid="comparison-filter"
         value={ filterComparation }

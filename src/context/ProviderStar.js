@@ -75,6 +75,14 @@ function ProviderStar({ children }) {
     setFilterComparation(target.value);
   }
 
+  function removeNewElementHtml(filterColumn) {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter(({ column }) => column !== filterColumn),
+    });
+  }
+
   function handleButton() {
     const { filterByNumericValues } = filters;
     // quero que o valor final dos valores do meu input sejam enviados para o array ao clique do botão.
@@ -115,6 +123,7 @@ function ProviderStar({ children }) {
         setFilterInput,
         handleButton,
         columnList,
+        removeNewElementHtml,
       } }
     >
       { children }
