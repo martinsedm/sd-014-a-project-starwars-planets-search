@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ContextStar from './ContextStar';
 import requisitionPlanets from '../services/api';
@@ -10,7 +10,12 @@ function ProviderStar({ children }) {
   const [filterData, setFilterData] = useState([]);
   // guarda os filtros/informações do input que serão utilizados.
   const [filters, setFilters] = useState(
-    { filterByName: { name: '' }, filterByNumericValues: [] },
+    { filterByName: { name: '' },
+      filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      } },
   );
   // estados do meu select.
   const [filterSelect, setFilterSelect] = useState('population');
@@ -20,6 +25,58 @@ function ProviderStar({ children }) {
   const [filterInput, setFilterInput] = useState('10000');
   // const [filterObject, setFilterObject] = useState([]);
   const [columnList, setColumnList] = useState([]);
+
+  const [orderColumn, setOrderColumn] = useState('');
+  const [orderType, setOrderType] = useState(false);
+
+  const orderOptions = [
+    'name',
+    'climate',
+    'created',
+    'diameter',
+    'edited',
+    'gravity',
+    'orbital_period',
+    'population',
+    'rotation_period',
+    'surface_water',
+    'terrain',
+  ];
+
+  const categories = [
+    'name',
+    'climate',
+    'created',
+    'edited',
+    'gravity',
+    'terrain',
+  ];
+
+  const sorting = (ordered, num, a, b) => {
+    const { order } = filters;
+    const findCategory = categories.find((cat) => cat === ordered.column);
+    const magicNumber = -1;
+    if (order.sort === 'ASC') {
+      if (findCategory) {
+        return a[ordered.column] > b[ordered.column] ? 1 : magicNumber;
+      }
+      return num > 0 ? 1 : magicNumber;
+    }
+    if (findCategory) {
+      return b[order.column] > a[order.column] ? 1 : magicNumber;
+    }
+    return num > 0 ? magicNumber : 1;
+  };
+
+  const setSort = (useCallback((array) => {
+    const { order } = filters;
+    const salaryArray = array.sort((a, b) => {
+      const num = a[order.column] - b[order.column];
+      return sorting(order, num, a, b);
+    });
+    setFilterData(salaryArray);
+  // eslint-disable-next-line
+  }, [filters]));
 
   useEffect(() => {
     const { filterByName: { name } } = filters;
@@ -32,7 +89,6 @@ function ProviderStar({ children }) {
     }
 
     const { filterByNumericValues } = filters;
-    console.log('aa', filterByNumericValues);
     filterByNumericValues.forEach((filter) => {
       // comparação númerica entre chaves e valores.
       if (filter.comparison === 'maior que') {
@@ -54,9 +110,8 @@ function ProviderStar({ children }) {
       }
     });
 
-    setFilterData(resultFilterNames);
-  }, [filters, planets]);
-  console.log('fil', filters);
+    setSort(resultFilterNames);
+  }, [filters, planets, setSort]);
 
   async function InfoPlanetsAPI() {
     const saveInfos = await requisitionPlanets();
@@ -83,12 +138,19 @@ function ProviderStar({ children }) {
     });
   }
 
+  const toSort = () => {
+    const filtered = {
+      column: orderColumn,
+      sort: orderType,
+    };
+    setFilters({ ...filters, order: filtered });
+  };
+
   function handleButton() {
     const { filterByNumericValues } = filters;
     // quero que o valor final dos valores do meu input sejam enviados para o array ao clique do botão.
     const addColumn = [...columnList];
     addColumn.push(filterSelect);
-    console.log('ai', addColumn);
     setColumnList(addColumn);
     const newFilters = {
       ...filters,
@@ -124,6 +186,13 @@ function ProviderStar({ children }) {
         handleButton,
         columnList,
         removeNewElementHtml,
+        toSort,
+        orderOptions,
+        setSort,
+        orderColumn,
+        setOrderColumn,
+        orderType,
+        setOrderType,
       } }
     >
       { children }

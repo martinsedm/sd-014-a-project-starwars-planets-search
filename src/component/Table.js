@@ -7,7 +7,6 @@ function Table() {
   useEffect(() => {
     InfoPlanetsAPI();
   }, []);
-
   return (
     <div>
       <table>
@@ -31,7 +30,7 @@ function Table() {
         <tbody>
           { filterData.map((planet, index) => (
             <tr key={ index }>
-              <td>{planet.name}</td>
+              <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.climate}</td>
               <td>{planet.terrain}</td>
               <td>{planet.created}</td>
@@ -42,7 +41,7 @@ function Table() {
               <td>{planet.population}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.surface_water}</td>
-              <td>{planet.films}</td>
+              <td>{planet.films.map((all, film) => `${all}, ${film}`)}</td>
               <td>{planet.url}</td>
             </tr>
           ))}
