@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import starWarsContext from '../contexAPI/StarWarsContext';
 
 function Filters() {
-  const { filters, setFilters, currentFilters, setCurrentFilters,
-    columnToTakeOff, setColumnToTakeOff } = useContext(starWarsContext);
+  const { filters, setFilters } = useContext(starWarsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
@@ -17,18 +16,47 @@ function Filters() {
       },
     });
   }
-  //  seteando filters, no click do botão
-  function handleClick() {
-    setCurrentFilters({ value, column, comparison });
-    setFilters({
-      ...filters,
-      filterByNumericValues: [...filterByNumericValues, currentFilters],
-    });
-    setColumnToTakeOff(column);
-  }
 
   const filertOptions = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const usedOptions = filterByNumericValues.map((object) => object.column);
+
+  const newOptions = filertOptions.filter((option) => !usedOptions.includes(option));
+
+  // apaga filtro clickado
+  const handleFilterClick = ({ target: { value: val } }) => {
+    const newFilters = filterByNumericValues.filter((object) => object.column !== val);
+    setFilters({
+      ...filters,
+      filterByNumericValues: newFilters,
+    });
+  };
+
+  const renderFilterOptions = ({ column: col, comparison: comp, value: val }) => (
+    <div data-testid="filter">
+      <button
+        key={ col }
+        type="button"
+        onClick={ handleFilterClick }
+        value={ col }
+      >
+        {`${col} ${comp} ${val}`}
+      </button>
+    </div>
+  );
+
+  //  seteando filters, no click do botão
+  function handleClick() {
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filterByNumericValues, { value, column, comparison }],
+    });
+  }
+
+  useEffect(() => {
+    setColumn(newOptions[0]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
   return (
     <form>
@@ -46,15 +74,16 @@ function Filters() {
         data-testid="column-filter"
         onChange={ ({ target: { value: e } }) => setColumn(e) }
         name="column"
+        value={ column }
       >
-        {filertOptions
-          .filter((option) => option !== columnToTakeOff)
+        {newOptions
           .map((option) => <option key={ option } value={ option }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
         onChange={ ({ target: { value: e } }) => setComparison(e) }
         name="comparison"
+        value={ comparison }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
@@ -64,6 +93,7 @@ function Filters() {
         data-testid="value-filter"
         type="number"
         name="value"
+        value={ value }
         onChange={ ({ target: { value: e } }) => setValue(e) }
       />
       <button
@@ -73,6 +103,9 @@ function Filters() {
       >
         Filtrar
       </button>
+      <div>
+        { filterByNumericValues.map(renderFilterOptions) }
+      </div>
     </form>
   );
 }
