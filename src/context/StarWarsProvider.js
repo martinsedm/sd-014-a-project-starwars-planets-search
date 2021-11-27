@@ -5,17 +5,22 @@ import fetchApi from '../services';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filterPlanets, setFilterPlanets] = useState('');
 
   const dataApi = async () => {
     const { results } = await fetchApi();
     setData(results);
   };
 
+  const handleChange = ({ target }) => {
+    setFilterPlanets(target.value);
+  };
+
   useEffect(() => {
     dataApi();
   }, []);
 
-  const contextValue = { data };
+  const contextValue = { data, filterPlanets, handleChange };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
