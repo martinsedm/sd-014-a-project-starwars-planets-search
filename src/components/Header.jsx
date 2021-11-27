@@ -3,7 +3,7 @@ import Context from '../contexts/Context';
 import Input from './atomos/Input';
 
 export default function Header() {
-  const { setFilters, planets, setFilterPlanets } = useContext(Context);
+  const { filters, setFilters, planets, setFilterPlanets } = useContext(Context);
 
   const filteringByName = (inputName) => {
     if (inputName) {
@@ -17,19 +17,21 @@ export default function Header() {
   const handleChange = ({ target: { value } }) => {
     filteringByName(value);
     // https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
-    setFilters((prevState) => ({
+    setFilters({
+      ...filters,
       filterByName: {
-        ...prevState.filterByName,
+        ...filters.filterByName,
         name: value,
       },
-    }));
+    });
   };
 
   return (
     <header>
       <h1>Projeto Star Wars - Trybe</h1>
       <Input
-        testId="name-filter"
+        value={ filters.filterByName.name }
+        testId="name"
         placeHolder="Filtrar por nome"
         onChange={ handleChange }
       />

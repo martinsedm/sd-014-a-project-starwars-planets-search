@@ -4,7 +4,6 @@ import PropsTypes from 'prop-types';
 class Input extends React.Component {
   render() {
     const { type, name, onChange, value, testId, label, placeHolder } = this.props;
-    const dataTestId = (testId !== undefined ? testId : `${name}-input`);
     return (
       <label htmlFor={ name }>
         { label }
@@ -12,8 +11,8 @@ class Input extends React.Component {
           id={ name }
           type={ type }
           name={ name }
-          data-testid={ dataTestId }
           value={ value }
+          data-testid={ `${testId}-filter` }
           onChange={ onChange }
           placeholder={ placeHolder }
         />
@@ -23,13 +22,22 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
-  type: PropsTypes.string.isRequired,
-  name: PropsTypes.string.isRequired,
+  type: PropsTypes.string,
+  name: PropsTypes.string,
   onChange: PropsTypes.func.isRequired,
-  value: PropsTypes.string.isRequired,
-  testId: PropsTypes.string.isRequired,
-  label: PropsTypes.string.isRequired,
-  placeHolder: PropsTypes.string.isRequired,
+  testId: PropsTypes.string,
+  label: PropsTypes.string,
+  value: PropsTypes.string,
+  placeHolder: PropsTypes.string,
+};
+
+Input.defaultProps = {
+  type: 'text',
+  name: 'input',
+  testId: 'input',
+  label: '',
+  placeHolder: '',
+  value: '',
 };
 
 export default Input;
