@@ -4,8 +4,8 @@ import Button from './atomos/Button';
 import Input from './atomos/Input';
 
 export default function Header() {
-  const { columns, filters, setFilters } = useContext(Context);
-  // const [numericValues, setNumericValues ] = useState({});
+  const { columns, filters, setFilters,
+    planets, setFilterPlanets } = useContext(Context);
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
   const handleChange = ({ target: { value, name } }) => {
@@ -20,16 +20,31 @@ export default function Header() {
     });
   };
 
-  const handleClick = (() => {
-    console.log('click');
+  if (!columns) return <span>Loading...</span>;
+
+  const { column, comparison, value } = filters.filterByNumericValues[0];
+
+  const filtered = planets.filter((planet) => {
+    if (comparison === 'maior que') {
+      return Number(planet[column]) > Number(value);
+    }
+    if (comparison === 'menor que') {
+      return Number(planet[column]) < Number(value);
+    }
+    if (comparison === 'igual a') {
+      return Number(planet[column]) === Number(value);
+    }
+    return false;
   });
 
-  if (!columns) return <span>Loading...</span>;
+  const handleClick = (() => {
+    setFilterPlanets(filtered);
+  });
 
   return (
     <header>
       <select
-        value={ filters.filterByNumericValues[0].column }
+        value={ column }
         name="column"
         onChange={ handleChange }
         data-testid="column-filter"
@@ -39,7 +54,7 @@ export default function Header() {
         ))}
       </select>
       <select
-        value={ filters.filterByNumericValues[0].comparison }
+        value={ comparison }
         name="comparison"
         onChange={ handleChange }
         data-testid="comparison-filter"
@@ -53,7 +68,7 @@ export default function Header() {
         testId="value"
         name="value"
         onChange={ handleChange }
-        value={ filters.filterByNumericValues[0].value }
+        value={ value }
       />
       <Button label="Filtrar" onClick={ handleClick } />
     </header>
