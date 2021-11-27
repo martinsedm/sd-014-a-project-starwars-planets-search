@@ -6,10 +6,25 @@ function PlanetsTable() {
   const { data, filters } = useContext(PlanetsContext);
 
   const filterPlanets = () => {
-    const { filterByName } = filters;
-    const filteredPlanets = data.filter(({ name }) => (
-      name.toLowerCase().includes(filterByName.name.toLowerCase())
-    ));
+    const { filterByName, filterByNumericValues } = filters;
+    const { column, comparison, value } = filterByNumericValues[0];
+
+    const filteredPlanets = data
+      .filter(({ name }) => (
+        name.toLowerCase().includes(filterByName.name.toLowerCase())
+      ))
+      .filter((planet) => {
+        if (!value) return planet;
+        if (comparison === 'maior que') {
+          return Number(planet[column]) > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return Number(planet[column]) < Number(value);
+        }
+        if (comparison === 'igual a') return planet[column] === value;
+        console.log(planet);
+        return planet;
+      });
     return filteredPlanets;
   };
 

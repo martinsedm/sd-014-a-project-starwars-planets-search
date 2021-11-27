@@ -6,9 +6,21 @@ import fetchPlanets from '../services/planetsAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: {
-    name: '',
-  } });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column,
+        comparison,
+        value,
+      },
+    ],
+  });
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -23,6 +35,12 @@ function PlanetsProvider({ children }) {
     data,
     filters,
     setFilters,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
   };
 
   return (
