@@ -8,29 +8,25 @@ export default function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
   };
 
   const [planets, setPlanets] = useState([]);
   const [filterPlanets, setFilterPlanets] = useState([]);
   const [filters, setFilters] = useState(filtersObj);
   const [columns, setColumns] = useState();
+  const col = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
 
   useEffect(() => {
     async function getPlanets() {
       const data = await fecthPlanets();
       setPlanets(data.results);
       setFilterPlanets(data.results);
-      setColumns(Object.keys(data.results[0]));
+      setColumns(col);
     }
     getPlanets();
-  }, []);
+  }, [col]);
 
   const Values = {
     filterPlanets,

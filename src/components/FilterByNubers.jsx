@@ -1,44 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../contexts/Context';
 import Button from './atomos/Button';
 import Input from './atomos/Input';
 
 export default function Header() {
-  const { columns, filters, setFilters,
-    planets, setFilterPlanets } = useContext(Context);
+  const INITIAL_NUMBFILTER = {
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  };
+  const { columns, filters, setFilters } = useContext(Context);
+  const [eachFilter, setEachFilter] = useState(INITIAL_NUMBFILTER);
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
   const handleChange = ({ target: { value, name } }) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [
-        {
-          ...filters.filterByNumericValues[0],
-          [name]: value,
-        },
-      ],
+    setEachFilter({
+      ...eachFilter,
+      [name]: value,
     });
   };
 
   if (!columns) return <span>Loading...</span>;
 
-  const { column, comparison, value } = filters.filterByNumericValues[0];
-
-  const filtered = planets.filter((planet) => {
-    if (comparison === 'maior que') {
-      return Number(planet[column]) > Number(value);
-    }
-    if (comparison === 'menor que') {
-      return Number(planet[column]) < Number(value);
-    }
-    if (comparison === 'igual a') {
-      return Number(planet[column]) === Number(value);
-    }
-    return false;
-  });
+  const { column, comparison, value } = eachFilter;
 
   const handleClick = (() => {
-    setFilterPlanets(filtered);
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        eachFilter,
+      ],
+    });
+    // const col = columns.filter((eachColumn) => eachColumn !== column);
+    // setColumns(col);
+    setEachFilter(INITIAL_NUMBFILTER);
   });
 
   return (
