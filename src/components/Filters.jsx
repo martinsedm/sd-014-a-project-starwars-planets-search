@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import StarContext from '../context/StarContext';
 import SelectFilter from './SelectFilter';
 
 function Filters() {
-  const { filters, handleChange, setFilters } = useContext(StarContext);
+  const {
+    filters, columnFilters, handleChange, setFilters, columnFilter,
+  } = useContext(StarContext);
   const { filterByName: { name } } = filters;
-  const columns = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
   const comparisons = ['maior que', 'menor que', 'igual a'];
   const [newState, setNewState] = useState({
     column: '',
@@ -26,6 +26,10 @@ function Filters() {
       filterByNumericValues: [...filters.filterByNumericValues, newState] });
   };
 
+  useEffect(() => {
+    columnFilter();
+  }, [filters]);
+
   return (
     <form>
       <section>
@@ -40,7 +44,7 @@ function Filters() {
       </section>
       <section>
         <SelectFilter
-          setup={ [columns, 'column-filter', 'column', column, handleSelect] }
+          setup={ [columnFilters, 'column-filter', 'column', column, handleSelect] }
         />
         <SelectFilter
           setup={

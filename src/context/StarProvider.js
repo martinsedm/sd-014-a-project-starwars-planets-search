@@ -11,9 +11,14 @@ function StarProvider(props) {
     filterByNumericValues: [],
   };
 
+  const columns = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState(INITIAL_STATE);
   const [planetsCopy, setPlanetsCopy] = useState([]);
+  const [columnFilters, setColumnFilters] = useState(columns);
 
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
@@ -22,6 +27,15 @@ function StarProvider(props) {
 
   const handleChange = ({ target: { name, value } }, key) => {
     setFilters({ ...filters, [key]: { [name]: value } });
+  };
+
+  const columnFilter = () => {
+    if (filters.filterByNumericValues.length !== 0) {
+      const filteredColumns = columnFilters
+        .filter((column) => filters.filterByNumericValues
+          .some((filter) => filter.column !== column));
+      setColumnFilters(filteredColumns);
+    }
   };
 
   useEffect(() => {
@@ -41,7 +55,6 @@ function StarProvider(props) {
           planetFilter = planetFilter.filter((planet) => planet[column] === value);
         }
         if (comparison === 'maior que') {
-          console.log(typeof value);
           planetFilter = planetFilter
             .filter((planet) => parseInt(planet[column], 10) > parseInt(value, 10));
         }
@@ -58,8 +71,10 @@ function StarProvider(props) {
     planets,
     filters,
     planetsCopy,
+    columnFilters,
     handleChange,
     setFilters,
+    columnFilter,
   };
 
   const { children } = props;
