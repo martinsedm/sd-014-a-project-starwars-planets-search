@@ -38,6 +38,13 @@ function StarProvider(props) {
     }
   };
 
+  const handleFilters = ({ target: { id } }) => {
+    const newFilter = filters.filterByNumericValues
+      .filter((numFilter) => numFilter.column !== id);
+    setFilters({ ...filters, filterByNumericValues: newFilter });
+    console.log(filters);
+  };
+
   useEffect(() => {
     getPlanets();
   }, []);
@@ -75,6 +82,7 @@ function StarProvider(props) {
     handleChange,
     setFilters,
     columnFilter,
+    handleFilters,
   };
 
   const { children } = props;

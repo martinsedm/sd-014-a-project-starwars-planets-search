@@ -6,7 +6,7 @@ import SelectFilter from './SelectFilter';
 
 function Filters() {
   const {
-    filters, columnFilters, handleChange, setFilters, columnFilter,
+    filters, columnFilters, handleChange, setFilters, columnFilter, handleFilters,
   } = useContext(StarContext);
   const { filterByName: { name } } = filters;
   const comparisons = ['maior que', 'menor que', 'igual a'];
@@ -66,6 +66,18 @@ function Filters() {
           Filtrar
         </Button>
       </section>
+      {filters.filterByNumericValues.length > 0 ? filters.filterByNumericValues
+        .map((filter, index) => (
+          <div key={ index } data-testid="filter">
+            <span>
+              {`${filter.column} ${filter.comparison} ${filter.value}`}
+            </span>
+            <button id={ filter.column } type="button" onClick={ handleFilters }>
+              x
+            </button>
+          </div>
+        ))
+        : null}
     </form>
   );
 }
