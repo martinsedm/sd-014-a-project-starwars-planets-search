@@ -3,13 +3,12 @@ import StarWarsContext from '../context/StarWarsContext';
 
 export default function Header() {
   const { filter: { filters: { filterByName, filterByNumericValues },
-  }, setFilter } = useContext(StarWarsContext);
+  }, setFilter, setControl } = useContext(StarWarsContext);
 
   // funciona e salva corretamente no context
   // falta apenas arrumar o filtro em PlanetsTable
   function eventHandler({ target }) {
     const { id, value } = target;
-
     setFilter({
       filters: {
         filterByName: {
@@ -25,6 +24,12 @@ export default function Header() {
             : filterByNumericValues[filterByNumericValues.length - 1].value,
         }],
       },
+    });
+  }
+
+  function clickHandler() {
+    setControl({
+      control: 1,
     });
   }
 
@@ -91,7 +96,13 @@ export default function Header() {
 
   function btnFilter() {
     return (
-      <button data-testid="button-filter" type="button">Filtrar</button>
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ clickHandler }
+      >
+        Filtrar
+      </button>
     );
   }
 

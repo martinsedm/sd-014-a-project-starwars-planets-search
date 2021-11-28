@@ -1,26 +1,28 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
+import '../index.css';
 
 export default function PlanetsTable() {
-  const { planets,
-    filter: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
+  const { planets, control: { control },
+    filter: { filters: {
+      filterByNumericValues,
+      filterByName: { name } } } } = useContext(StarWarsContext);
 
   function showPlanets(world) {
     const showExpenses = world.map((planet) => (
       <tr key={ planet.name }>
         <td>{ planet.name }</td>
-        <td>{ planet.climate }</td>
-        <td>{ planet.created }</td>
-        <td>{ planet.diameter }</td>
-        <td>{ planet.edited }</td>
-        <td>{ planet.films }</td>
-        <td>{ planet.gravity }</td>
-        <td>{ planet.orbital_period }</td>
-        <td>{ planet.population }</td>
-        <td>{ planet.residents }</td>
         <td>{ planet.rotation_period }</td>
-        <td>{ planet.surface_water }</td>
+        <td>{ planet.orbital_period }</td>
+        <td>{ planet.diameter }</td>
+        <td>{ planet.climate }</td>
+        <td>{ planet.gravity }</td>
         <td>{ planet.terrain }</td>
+        <td>{ planet.surface_water }</td>
+        <td>{ planet.population }</td>
+        <td>{ planet.films }</td>
+        <td>{ planet.created }</td>
+        <td>{ planet.edited }</td>
         <td>{ planet.url }</td>
       </tr>
     ));
@@ -31,17 +33,17 @@ export default function PlanetsTable() {
     return (
       <tr>
         <th>Nome</th>
-        <th>Clima</th>
-        <th>Criado</th>
-        <th>Diâmetro</th>
-        <th>Editado</th>
-        <th>Filmes</th>
-        <th>Periodo da órbita</th>
-        <th>População</th>
-        <th>Residentes</th>
         <th>Tempo de rotação</th>
-        <th>Água</th>
+        <th>Periodo da órbita</th>
+        <th>Diâmetro</th>
+        <th>Clima</th>
+        <th>Gravidade</th>
         <th>Terreno</th>
+        <th>Água</th>
+        <th>População</th>
+        <th>Filmes</th>
+        <th>Criado</th>
+        <th>Editado</th>
         <th>URL</th>
       </tr>
 
@@ -49,23 +51,43 @@ export default function PlanetsTable() {
   }
 
   function filterPlanets() {
-    const filter = planets.filter((planet) => planet.name.includes(name));
-    return filter;
+    if (name.length !== 0) {
+      const filter = planets.filter((planet) => planet.name.includes(name));
+      return filter;
+    }
+    return planets;
   }
 
-  // function comparisonFilter(type) {
-  //   const filter = planets.filter((planet) => planet[type] === type)
-  // }
+  function filterPlanetsByComparison() {
+    const { column,
+      comparison,
+      value } = filterByNumericValues[filterByNumericValues.length - 1];
+    if (control === 1) {
+      const filter = planets.filter((planet) => {
+        switch (comparison) {
+        case 'greater':
+          return Number(planet[column]) > value;
+        case 'less':
+          return Number(planet[column]) < value;
+        default:
+          return planet[column] === value;
+        }
+      });
+      return filter;
+    }
+
+    console.log(column, comparison, value);
+    return filterPlanets();
+  }
 
   return (
     <div>
       <table>
         <thead>
-          { showTable()}
+          { showTable() }
         </thead>
         <tbody>
-          { name.lenght === 0 ? showPlanets(planets)
-            : showPlanets(filterPlanets()) }
+          { showPlanets(filterPlanetsByComparison()) }
         </tbody>
       </table>
     </div>

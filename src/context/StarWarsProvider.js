@@ -6,6 +6,9 @@ import StarWarsContext from './StarWarsContext';
 
 export default function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [control, setControl] = useState({
+    control: 0,
+  });
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
@@ -16,6 +19,10 @@ export default function StarWarsProvider({ children }) {
         comparison: 'greater',
         value: '',
       }],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
     },
   });
 
@@ -24,6 +31,8 @@ export default function StarWarsProvider({ children }) {
     setPlanets,
     filter,
     setFilter,
+    control,
+    setControl,
   };
 
   useEffect(() => {
