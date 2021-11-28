@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import PlanetsContext from '../context/PlanetsContext';
 
@@ -14,6 +14,19 @@ function FilterPlanetsByNumericValues() {
     setValue,
   } = useContext(PlanetsContext);
 
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const filterOptions = () => {
+    const filteredOption = columnOptions.filter((option) => option !== column);
+    setColumnOptions(filteredOption);
+  };
+
   const handleClick = () => {
     setFilters({
       ...filters,
@@ -25,6 +38,7 @@ function FilterPlanetsByNumericValues() {
         },
       ],
     });
+    filterOptions();
   };
 
   return (
@@ -38,11 +52,14 @@ function FilterPlanetsByNumericValues() {
             value={ column }
             onChange={ (e) => setColumn(e.target.value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            { columnOptions.map((option) => (
+              <option
+                key={ option }
+                value={ option }
+              >
+                { option }
+              </option>
+            )) }
           </select>
         </label>
         <label htmlFor="comparison-select">
