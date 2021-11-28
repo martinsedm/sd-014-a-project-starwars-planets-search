@@ -4,7 +4,9 @@ import ContextApi from '../componentes/ContextApi';
 
 function Header() {
   // td q vem do Provider - NÂO TROCA DE LUGAR
-  const { filters, ChangeFiltersName, ChangeFiltersNumeric } = useContext(ContextApi);
+  const { filters, ChangeFiltersName, ChangeFiltersNumeric,
+    RemoverFilterNumeric } = useContext(ContextApi);
+  const { filterByNumericValues } = filters;
 
   // td q sera usado no botão - NÂO TROCA DE LUGAR
   const [disabledButton, setDisabledButton] = useState(true);
@@ -16,11 +18,9 @@ function Header() {
   const [column, setColumn] = useState(optionsColumn[0]);
   const [comparsion, setComparsion] = useState('maior que');
   const [num, setNum] = useState();
-  console.log('column: ', column);
 
   // td para remover opções do Column - NÂO TROCA DE LUGAR
   const [columnPraRemover, setColumnPraRemover] = useState();
-  console.log('columnPraRemover: ', columnPraRemover);
 
   // filterByNumericValues.forEach((a) => console.log('click', a.column));
   // passei para o buttonOnClick()
@@ -53,15 +53,14 @@ function Header() {
 
   useEffect(() => {
     const NOVAS_OPTIONS = optionsColumn.filter((valor) => valor !== columnPraRemover);
-    console.log('NOVAS_OPTIONS', NOVAS_OPTIONS);
     setOptionsColumn(NOVAS_OPTIONS);
+    setColumn(NOVAS_OPTIONS[0]);
   // eslint-disable-next-line
   }, [columnPraRemover]);
 
   // if (filterByNumericValues.length !== 0) {
   //   removerOptions();
   // }
-  console.log('optionsColumn: ', optionsColumn);
   return (
     <header>
       <h1>StarWars Planets</h1>
@@ -125,7 +124,16 @@ function Header() {
       >
         Filtrar
       </button>
-
+      {
+        filterByNumericValues.map(({ column: clm, comparsion: cmp, value }) => (
+          <div data-testid="filter" key={ clm }>
+            <p>{`Column: ${clm} Comparsion: ${cmp} Value: ${value}`}</p>
+            <button type="button" onClick={ () => RemoverFilterNumeric(clm) }>
+              x
+            </button>
+          </div>
+        ))
+      }
       <br />
       <br />
     </header>

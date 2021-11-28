@@ -48,6 +48,14 @@ export default function StarWarsProvider({ children }) {
     });
   };
 
+  const RemoverFilterNumeric = (filterRemove) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter(({ column }) => column !== filterRemove),
+    });
+  };
+
   const DataFiltered = data.filter(
     (plt) => plt.name.toLowerCase().includes(filterByName.name.toLowerCase()),
   );
@@ -60,6 +68,7 @@ export default function StarWarsProvider({ children }) {
         ChangeFiltersName,
         DataFiltered,
         ChangeFiltersNumeric,
+        RemoverFilterNumeric,
       } }
     >
       {children}

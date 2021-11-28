@@ -6,6 +6,25 @@ function Table() {
   const { filterByNumericValues } = filters;
   const filterNum = filterByNumericValues;
 
+  const filterNumericFunctions = (plt, { comparsion, column, value }) => {
+    switch (comparsion) {
+    case 'maior que':
+      return plt[column] > Number(value);
+    case 'menor que':
+      return plt[column] < Number(value);
+    case 'igual a':
+      return plt[column] === value;
+
+    default:
+      return plt;
+    }
+  };
+
+  const everyFilter = (plt) => {
+    if (!filterNum[0]) return plt;
+    return filterNum.every((filt) => filterNumericFunctions(plt, filt));
+  };
+
   return (
     <table>
       <thead>
@@ -26,20 +45,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {DataFiltered.filter((plt) => {
-          if (!filterNum[0]) return plt;
-          switch (filterNum[0].comparsion) {
-          case 'maior que':
-            return plt[filterNum[0].column] > Number(filterNum[0].value);
-          case 'menor que':
-            return plt[filterNum[0].column] < Number(filterNum[0].value);
-          case 'igual a':
-            return plt[filterNum[0].column] === filterNum[0].value;
-
-          default:
-            return plt;
-          }
-        }).map((info, key) => (
+        {DataFiltered.filter(everyFilter).map((info, key) => (
           <tr key={ key }>
             <td>{info.name}</td>
             <td>{info.rotation_period}</td>
