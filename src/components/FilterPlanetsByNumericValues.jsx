@@ -5,41 +5,16 @@ import PlanetsContext from '../context/PlanetsContext';
 function FilterPlanetsByNumericValues() {
   const {
     filters,
-    setFilters,
-    column,
-    setColumn,
-    comparison,
-    setComparison,
-    value,
-    setValue,
+    columnOptions,
+    handleClickNumericFilter,
+    removeNumericFilter,
   } = useContext(PlanetsContext);
 
-  const [columnOptions, setColumnOptions] = useState([
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ]);
+  const [columnSelect, setColumnSelect] = useState('population');
+  const [comparisonSelect, setComparisonSelect] = useState('maior que');
+  const [valueInput, setValueInput] = useState(0);
 
-  const filterOptions = () => {
-    const filteredOption = columnOptions.filter((option) => option !== column);
-    setColumnOptions(filteredOption);
-  };
-
-  const handleClick = () => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
-    });
-    filterOptions();
-  };
+  const { filterByNumericValues } = filters;
 
   return (
     <div>
@@ -47,10 +22,10 @@ function FilterPlanetsByNumericValues() {
         <label htmlFor="column-select">
           <select
             data-testid="column-filter"
-            name="column"
+            name="columnSelect"
             id="column-select"
-            value={ column }
-            onChange={ (e) => setColumn(e.target.value) }
+            value={ columnSelect }
+            onChange={ ({ target }) => setColumnSelect(target.value) }
           >
             { columnOptions.map((option) => (
               <option
@@ -65,10 +40,10 @@ function FilterPlanetsByNumericValues() {
         <label htmlFor="comparison-select">
           <select
             data-testid="comparison-filter"
-            name="comparison"
+            name="comparisonSelect"
             id="comparison-select"
-            value={ comparison }
-            onChange={ (e) => setComparison(e.target.value) }
+            value={ comparisonSelect }
+            onChange={ ({ target }) => setComparisonSelect(target.value) }
           >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
@@ -79,20 +54,34 @@ function FilterPlanetsByNumericValues() {
           <input
             data-testid="value-filter"
             type="number"
-            name="value"
+            name="valueInput"
             id="value-input"
-            value={ value }
-            onChange={ (e) => setValue(e.target.value) }
+            value={ valueInput }
+            onChange={ ({ target }) => setValueInput(target.value) }
           />
         </label>
         <button
           data-testid="button-filter"
           type="button"
-          onClick={ handleClick }
+          onClick={ () => handleClickNumericFilter({
+            column: columnSelect,
+            comparison: comparisonSelect,
+            value: valueInput,
+          }) }
         >
           Filtrar
         </button>
       </form>
+      <div>
+        {filterByNumericValues.map(({ column, comparison, value }) => (
+          <div data-testid="filter" key={ column }>
+            <p>{`${column} ${comparison} ${value}`}</p>
+            <button type="button" onClick={ () => removeNumericFilter(column) }>
+              x
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

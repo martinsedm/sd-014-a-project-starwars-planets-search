@@ -3,17 +3,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterPlanetsByName() {
-  const { filters, setFilters } = useContext(PlanetsContext);
-
-  const handleChange = ({ target }) => {
-    const { value } = target;
-    setFilters({
-      ...filters,
-      filterByName: {
-        name: value,
-      },
-    });
-  };
+  const { filters, handleChangeNameFilter } = useContext(PlanetsContext);
 
   return (
     <div>
@@ -26,7 +16,7 @@ function FilterPlanetsByName() {
             type="text"
             id="input-name"
             value={ filters.filterByName.name }
-            onChange={ handleChange }
+            onChange={ ({ target }) => handleChangeNameFilter(target.value) }
           />
         </label>
       </form>
