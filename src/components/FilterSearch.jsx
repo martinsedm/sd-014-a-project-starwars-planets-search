@@ -32,6 +32,7 @@ export default function FilterSearch() {
       <input
         type="text"
         value={ name }
+        id="filterByName"
         onChange={ handleChange }
         data-testid="name-filter"
         placeholder="Search..."

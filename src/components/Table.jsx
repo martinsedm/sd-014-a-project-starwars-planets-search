@@ -1,12 +1,62 @@
-import React, { useContext } from 'react';
-import AppContext from '../context/StarWarsContext';
+import React, { useContext, useEffect, useState } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 import TableRow from './TableRow';
 
 function Table() {
-  const { filteredPlanets } = useContext(AppContext);
+  const {
+    loading,
+    planets,
+    getPlanetsData,
+    numberFilters,
+    filters,
+  } = useContext(StarWarsContext);
+  const [planetsUpdated, setPlanetsUpdated] = useState(planets);
 
-  if (filteredPlanets.length === 0) return (<div>Loading...</div>);
-  return filteredPlanets.length > 0 && (
+  useEffect(() => {
+    setPlanetsUpdated(planets);
+  }, [getPlanetsData, planets]);
+
+  if (loading) return <p>Loading...</p>;
+
+  const filterPlanets = () => {
+    const newPlanets = [...planetsUpdated];
+    const { filterByNumericValues } = numberFilters;
+    const { filterByName } = filters;
+    if (filterByName.name) {
+      return planetsUpdated.filter(
+        ({ name }) => name.toLowerCase().includes(filterByName.name),
+      );
+    }
+
+    if (filterByNumericValues[0]) {
+      return filterByNumericValues.reduce((accumulator, currentValue) => {
+        const { comparison, column, value } = currentValue;
+        switch (comparison) {
+        case 'maior que':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) > Number(value));
+          break;
+
+        case 'menor que':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) < Number(value));
+          break;
+
+        case 'igual a':
+          accumulator = planetsUpdated
+            .filter((planet) => Number(planet[column]) === Number(value));
+          break;
+
+        default:
+          break;
+        }
+        return accumulator;
+      }, [planetsUpdated]);
+    }
+    return newPlanets;
+  };
+
+  return (
     <table>
       <thead>
         <tr>
@@ -26,8 +76,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets
-          .map((planet) => <TableRow key={ planet.url } planet={ planet } />)}
+        {filterPlanets()
+          .map((planet, index) => <TableRow key={ index } planet={ planet } />)}
       </tbody>
     </table>
   );
