@@ -20,6 +20,7 @@ function Table() {
       ...prevState,
       [name]: value,
     }));
+    // trecho abaixo retirado de https://stackoverflow.com/questions/44469548/es6-filter-data-with-case-insensitive-term
     setFilteredPlanet(planetsData.filter(
       (planet) => planet.name.toLowerCase().includes(
         filters.filterByName.name.toLowerCase(),
