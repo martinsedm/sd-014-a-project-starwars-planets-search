@@ -1,13 +1,15 @@
 import React from 'react';
 import BodyTable from './BodyTable';
-import HeaderTable from './HeaderTable';
+
+import HeaderTable from '../header/HeaderTable';
 
 function Table() {
   return (
-    <div>
+    <table>
       <HeaderTable />
       <BodyTable />
-    </div>
+
+    </table>
   );
 }
 
