@@ -5,7 +5,7 @@ import HeaderTable from './HeaderTable';
 function Table() {
   return (
     <div>
-      <table>
+      <table className="table-container">
         <HeaderTable />
         <PlanetsTable />
       </table>

@@ -18,7 +18,7 @@ function StarWarsProvider({ children }) {
     setData(results);
   };
 
-  const handleChange = ({ target }) => {
+  const changeName = ({ target }) => {
     setFilterPlanets(target.value);
   };
 
@@ -30,7 +30,7 @@ function StarWarsProvider({ children }) {
     data,
     setData,
     filterPlanets,
-    handleChange,
+    changeName,
     filterNumeric,
     setFilterNumeric,
     column,

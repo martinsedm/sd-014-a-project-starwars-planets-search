@@ -2,15 +2,15 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function FilterInput() {
-  const { handleChange } = useContext(StarWarsContext);
+  const { changeName } = useContext(StarWarsContext);
 
   return (
-    <div>
+    <div className="filter-name">
       <input
         type="search"
         placeholder="Filtrar por nome"
         data-testid="name-filter"
-        onChange={ handleChange }
+        onChange={ changeName }
       />
     </div>
   );
