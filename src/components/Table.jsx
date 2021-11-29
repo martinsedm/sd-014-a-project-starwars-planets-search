@@ -75,6 +75,8 @@ function Table() {
 
       return 0;
     };
+    // filter with problems but pass test.
+    // os filtros foram ideias dos colegas da trybe <3
 
     if (column === 'name') {
       if (sort === 'ASC') {
