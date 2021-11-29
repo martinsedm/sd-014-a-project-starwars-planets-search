@@ -14,6 +14,10 @@ export default function StarWarsProvider({ children }) {
     },
     filterByNumericValues: [
     ],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   const { filterByNumericValues, filterByName } = filters;
@@ -65,6 +69,7 @@ export default function StarWarsProvider({ children }) {
       value={ {
         data,
         filters,
+        setFilters,
         ChangeFiltersName,
         DataFiltered,
         ChangeFiltersNumeric,

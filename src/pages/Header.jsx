@@ -22,34 +22,10 @@ function Header() {
   // td para remover opções do Column - NÂO TROCA DE LUGAR
   const [columnPraRemover, setColumnPraRemover] = useState();
 
-  // filterByNumericValues.forEach((a) => console.log('click', a.column));
-  // passei para o buttonOnClick()
-
-  // filterByNumericValues.forEach((a) => {
-  //   if (!columnPraRemover.includes(a.column)) {
-  //     setColumnPraRemover([
-  //       ...columnPraRemover,
-  //       a.column,
-  //     ]);
-  //   }
-  // });
-
   const buttonOnClick = () => {
     ChangeFiltersNumeric({ column, comparsion, value: num });
     setColumnPraRemover(column);
-    // variavel array options (optionsColumn)
-    // criar uma const q pega essa array e cria uma nova no array
-    // a callback do filter vai buscar tds q é diferente(!==) columnPraRemover
-    // const NOVAS_OPTIONS = optionsColumn.filter((valor) => valor !== columnPraRemover);
-    // set'a a nova array no setOptionsColumn
-    // setOptionsColumn(NOVAS_OPTIONS);
   };
-
-  // const removerOptions = useCallback(() => {
-  //   const NOVAS_OPTIONS = optionsColumn.filter((valor) => valor !== columnPraRemover);
-  //   console.log('NOVAS_OPTIONS', NOVAS_OPTIONS);
-  //   setOptionsColumn(NOVAS_OPTIONS);
-  // });
 
   useEffect(() => {
     const NOVAS_OPTIONS = optionsColumn.filter((valor) => valor !== columnPraRemover);
@@ -58,9 +34,6 @@ function Header() {
   // eslint-disable-next-line
   }, [columnPraRemover]);
 
-  // if (filterByNumericValues.length !== 0) {
-  //   removerOptions();
-  // }
   return (
     <header>
       <h1>StarWars Planets</h1>
@@ -136,6 +109,7 @@ function Header() {
       }
       <br />
       <br />
+
     </header>
   );
 }
