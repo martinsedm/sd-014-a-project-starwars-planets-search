@@ -11,7 +11,8 @@ function StarWarsProvider({ children }) {
       column: 'name',
       sort: 'ASC',
     } });
-  const [columnToTakeOff, setColumnToTakeOff] = useState('');
+  const [currentColumn, setCurrentColumn] = useState('');
+  const [currentSort, setCurrentSort] = useState('');
   const { filterByName: { name }, filterByNumericValues } = filters;
   const planetsAPI = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -22,6 +23,7 @@ function StarWarsProvider({ children }) {
   useEffect(() => {
     planetsAPI();
   }, []);
+
   // assistido pelo Jonathan Ferreira!!
   useEffect(() => {
     const planetsFilter = (planet) => {
@@ -50,8 +52,10 @@ function StarWarsProvider({ children }) {
     setFilters,
     planets,
     setPlanets,
-    columnToTakeOff,
-    setColumnToTakeOff,
+    currentColumn,
+    setCurrentColumn,
+    currentSort,
+    setCurrentSort,
   };
 
   return (

@@ -1,30 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import starWarsContext from '../contexAPI/StarWarsContext';
 
 function SortFilter() {
   const { planets, setFilters, filters } = useContext(starWarsContext);
   const { column, sort } = filters.order;
+  const [currentColumn, setCurrentColumn] = useState(column);
+  const [currentSort, setCurrentSort] = useState(sort);
   if (!planets.length) {
     return <p> ...LOADING </p>;
   }
   const titles = Object.keys(planets[0]).filter((info) => info !== 'residents');
 
-  function setColumn({ target: { value } }) {
+  function handleClick() {
     setFilters({
       ...filters,
       order: {
-        column: value,
-        sort,
-      },
-    });
-  }
-
-  function setSort({ target: { value } }) {
-    setFilters({
-      ...filters,
-      order: {
-        column,
-        sort: value,
+        column: currentColumn,
+        sort: currentSort,
       },
     });
   }
@@ -33,8 +25,8 @@ function SortFilter() {
     <span>
       <select
         data-testid="column-sort"
-        value={ column }
-        onChange={ setColumn }
+        value={ currentColumn }
+        onChange={ (e) => setCurrentColumn(e.target.value) }
       >
         {titles.map((title) => (
           <option value={ title } key={ title }>{ title }</option>
@@ -48,8 +40,8 @@ function SortFilter() {
           id="ascendente"
           name="sort"
           value="ASC"
-          onChange={ setSort }
-          checked={ sort === 'ASC' }
+          onChange={ () => setCurrentSort('ASC') }
+          checked={ currentSort === 'ASC' }
         />
       </label>
       <label htmlFor="descendente">
@@ -60,13 +52,15 @@ function SortFilter() {
           name="sort"
           id="descendente"
           value="DESC"
-          onChange={ setSort }
-          checked={ sort === 'DESC' }
+          onChange={ () => setCurrentSort('DESC') }
+          checked={ currentSort === 'DESC' }
         />
       </label>
       <button
         type="button"
         data-testid="column-sort-button"
+        onClick={ handleClick }
+
       >
         Ordenar
       </button>
