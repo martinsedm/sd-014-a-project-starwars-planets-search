@@ -6,12 +6,10 @@ import './App.css';
 
 function App() {
   return (
-    <>
-      <FilterProvider>
-        <Header />
-        <Table />
-      </FilterProvider>
-    </>
+    <FilterProvider>
+      <Header />
+      <Table />
+    </FilterProvider>
   );
 }
 
