@@ -10,9 +10,11 @@ function FiltersInputsNumerics() {
     column,
     comparison,
     value,
+    options,
     setColumn,
     setComparison,
     setValue,
+    // setOptions,
   } = useContext(StarWarsContext);
 
   const changeColumn = (event) => {
@@ -59,11 +61,13 @@ function FiltersInputsNumerics() {
         data-testid="column-filter"
         onChange={ changeColumn }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          options.map((option, index) => (
+            <option value={ option } key={ index }>
+              { option }
+            </option>
+          ))
+        }
       </select>
 
       <select
