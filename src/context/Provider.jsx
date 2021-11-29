@@ -6,27 +6,21 @@ import AppContext from './StarWarsContext';
 function Provider({ children }) {
   const [loading, setLoading] = useState(true);
   const [planets, setPlanets] = useState([]);
-  const [searchName, setSearchName] = useState('');
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
   });
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('0');
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+
+  });
+
   const [numberFilters, setNumberFilters] = useState({
     filterByNumericValues: [],
   });
 
   const { filterByNumericValues } = numberFilters;
-
-  const changeNumericClick = () => {
-    setNumberFilters({
-      ...numberFilters,
-      filterByNumericValues: [...numberFilters.filterByNumericValues,
-        { column, comparison, value }],
-    });
-  };
 
   const changeNameFilter = ({ target }) => {
     setFilters({
@@ -35,13 +29,6 @@ function Provider({ children }) {
         name: target.value,
       },
     });
-    setSearchName(target.value);
-  };
-
-  const handleNumericChange = ({ target }) => {
-    if (target.id === 'setColumn') setColumn(target.value);
-    if (target.id === 'setComparison') setComparison(target.value);
-    if (target.id === 'setValue') setValue(target.value);
   };
 
   const handleDeleteFilter = (filtered) => {
@@ -66,33 +53,26 @@ function Provider({ children }) {
   };
 
   const contextValue = {
-    searchName,
-    setSearchName,
+    order,
+    setOrder,
     changeNameFilter,
     loading,
     setLoading,
     numberFilters,
     setNumberFilters,
-    column,
-    setColumn,
-    comparison,
-    setComparison,
-    value,
-    setValue,
     filteredPlanets,
     setFilteredPlanets,
     filters,
     setFilters,
     planets,
     setPlanets,
-    handleNumericChange,
-    changeNumericClick,
     handleDeleteFilter,
     getPlanetsData,
   };
 
   useEffect(() => {
     getPlanetsData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);// remover
 
   useEffect(() => {

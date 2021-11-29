@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchBar() {
   const {
-    column,
-    handleNumericChange,
-    changeNumericClick,
     numberFilters,
     handleDeleteFilter,
+    setNumberFilters,
 
   } = useContext(StarWarsContext);
+
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
 
   const arrOption = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
@@ -20,10 +22,23 @@ function SearchBar() {
     filtro.column
   ));
 
-  const restValues = arrOption.filter((option) => !filterValues.includes(option))
-    .concat(filterValues.filter((option) => !arrOption.includes(option)));
+  const restValues = arrOption.filter((option) => !filterValues.includes(option));
   console.log(restValues);
   // filtros pegando ideia desse site> https://qastack.com.br/programming/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
+
+  const handleNumericChange = ({ target }) => {
+    if (target.id === 'setColumn') setColumn(target.value);
+    if (target.id === 'setComparison') setComparison(target.value);
+    if (target.id === 'setValue') setValue(target.value);
+  };
+
+  const changeNumericClick = () => {
+    setNumberFilters({
+      ...numberFilters,
+      filterByNumericValues: [...numberFilters.filterByNumericValues,
+        { column, comparison, value }],
+    });
+  };
 
   return (
     <div>
@@ -40,6 +55,7 @@ function SearchBar() {
       <select
         data-testid="comparison-filter"
         id="setComparison"
+        value={ comparison }
         onChange={ handleNumericChange }
       >
         <option value="maior que">maior que</option>
@@ -49,6 +65,7 @@ function SearchBar() {
       <input
         data-testid="value-filter"
         type="number"
+        value={ value }
         placeholder="Digite um número"
         id="setValue"
         onChange={ handleNumericChange }
