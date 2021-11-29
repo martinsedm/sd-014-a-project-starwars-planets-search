@@ -47,10 +47,7 @@ export default function Header() {
       ],
     });
     setEachFilter(NEXT_NUMBFILTER);
-    // if (filterByNumericValues.length > 0) {
-    //   const col = filterByNumericValues.map(({ column: c }) => console.log('c', c));
-    //   console.log('col', col);
-    // }
+    
   });
 
   return (
