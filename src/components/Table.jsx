@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
-import TableRow from './TableRow';
+import sortFilter from '../utils/filters';
 
 function Table() {
   const {
@@ -58,47 +58,47 @@ function Table() {
     return newPlanets;
   };
 
-  function sortFilter() {
-    const { column, sort } = order;
-    console.log('column', column, 'sort', sort);
-    const arrOfPlanets = filterPlanets();
+  // function sortFilter() {
+  //   const { column, sort } = order;
+  //   console.log('column', column, 'sort', sort);
+  //   const arrOfPlanets = filterPlanets();
 
-    const comparar = (a, b) => {
-      const descNumber = -1;
-      if (a > b) {
-        return 1;
-      }
+  //   const comparar = (a, b) => {
+  //     const descNumber = -1;
+  //     if (a > b) {
+  //       return 1;
+  //     }
 
-      if (a < b) {
-        return descNumber;
-      }
+  //     if (a < b) {
+  //       return descNumber;
+  //     }
 
-      return 0;
-    };
-    // filter with problems but pass test.
-    // os filtros foram ideias dos colegas da trybe <3
+  //     return 0;
+  //   };
+  //   // filter with problems but pass test.
+  //   // os filtros foram ideias dos colegas da trybe <3
 
-    if (column === 'name') {
-      if (sort === 'ASC') {
-        arrOfPlanets.sort((a, b) => comparar(a[column], b[column]));
-      }
+  //   if (column === 'name') {
+  //     if (sort === 'ASC') {
+  //       arrOfPlanets.sort((a, b) => comparar(a[column], b[column]));
+  //     }
 
-      if (sort === 'DESC') {
-        arrOfPlanets.sort((a, b) => comparar(b[column], a[column]));
-      }
-    } else {
-      if (sort === 'ASC') {
-        arrOfPlanets.sort((a, b) => comparar(Number(a[column]), Number(b[column])));
-      }
+  //     if (sort === 'DESC') {
+  //       arrOfPlanets.sort((a, b) => comparar(b[column], a[column]));
+  //     }
+  //   } else {
+  //     if (sort === 'ASC') {
+  //       arrOfPlanets.sort((a, b) => comparar(Number(a[column]), Number(b[column])));
+  //     }
 
-      if (sort === 'DESC') {
-        arrOfPlanets.sort((a, b) => comparar(Number(b[column]), Number(a[column])));
-      }
-    }
+  //     if (sort === 'DESC') {
+  //       arrOfPlanets.sort((a, b) => comparar(Number(b[column]), Number(a[column])));
+  //     }
+  //   }
 
-    return (arrOfPlanets
-      .map((planet, index) => <TableRow key={ index } planet={ planet } />));
-  }
+  //   return (arrOfPlanets
+  //     .map((planet, index) => <TableRow key={ index } planet={ planet } />));
+  // }
 
   function handleChangeSorte({ target }) {
     setOrder({
@@ -168,7 +168,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { sortFilter() }
+          { sortFilter(order, filterPlanets()) }
         </tbody>
       </table>
     </div>
