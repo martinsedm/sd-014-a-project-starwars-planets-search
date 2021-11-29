@@ -4,6 +4,7 @@ import Button from './atomos/Button';
 
 export default function NumberFilters() {
   const { filters, setFilters, planets, setFilterPlanets } = useContext(Context);
+  // const { middleStage, setMidleStage } = useState(planets);
   const { filterByNumericValues } = filters;
 
   function handleClick({ target: { value } }) {
@@ -33,14 +34,10 @@ export default function NumberFilters() {
     }
 
     if (filterByNumericValues.length > 0) {
-      console.log('filterByNumericValues', filterByNumericValues);
       let filteredPlanets;
       const filtered = filterByNumericValues
         .forEach(({ column, comparison, value }) => {
-          // console.log('1', column, comparison, value);
           filteredPlanets = planetsFilter(column, comparison, value);
-        // return planetsFilter('population', 'maior que', '100000');
-        // return 'forEach ta retornando';
         });
       console.log('2', filtered);
       // console.log('3', planetsFilter('population', 'maior que', '100000'));

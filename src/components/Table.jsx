@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import getIdFromURL from '../helper/getIdFromURL';
 import Context from '../contexts/Context';
 
 export default function Table() {
@@ -28,7 +27,7 @@ export default function Table() {
       </thead>
       <tbody>
         { filterPlanets.map((planet) => (
-          <tr key={ getIdFromURL(planet) }>
+          <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.orbital_period}</td>

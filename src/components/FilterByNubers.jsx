@@ -12,17 +12,31 @@ export default function Header() {
   const { columns, filters, setFilters } = useContext(Context);
   const [eachFilter, setEachFilter] = useState(INITIAL_NUMBFILTER);
   const comparisons = ['maior que', 'menor que', 'igual a'];
+  const { column, comparison, value } = eachFilter;
 
-  const handleChange = ({ target: { value, name } }) => {
+  const handleChange = ({ target: { value: val, name } }) => {
     setEachFilter({
       ...eachFilter,
-      [name]: value,
+      [name]: val,
     });
   };
 
+  // useEffect((
+  //   () => {
+  //     const { filterByNumericValues } = filters;
+  //     const reduce = filterByNumericValues.reduce((acc, ele) => acc.push(ele.column), []);
+  //     console.log(filterByNumericValues);
+  //     console.log(reduce);
+  //   }
+  // ), [filters]);
+
   if (!columns) return <span>Loading...</span>;
 
-  const { column, comparison, value } = eachFilter;
+  const NEXT_NUMBFILTER = {
+    column: columns[0],
+    comparison: 'maior que',
+    value: '100000',
+  };
 
   const handleClick = (() => {
     setFilters({
@@ -32,9 +46,11 @@ export default function Header() {
         eachFilter,
       ],
     });
-    // const col = columns.filter((eachColumn) => eachColumn !== column);
-    // setColumns(col);
-    setEachFilter(INITIAL_NUMBFILTER);
+    setEachFilter(NEXT_NUMBFILTER);
+    // if (filterByNumericValues.length > 0) {
+    //   const col = filterByNumericValues.map(({ column: c }) => console.log('c', c));
+    //   console.log('col', col);
+    // }
   });
 
   return (
