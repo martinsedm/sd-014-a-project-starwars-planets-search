@@ -18,24 +18,27 @@ export default function AppliedFilters() {
   const showFilters = () => (
     <div className="d-flex p-2 bd-highlight">
       <p>Filtros em ação: </p>
-      {
-        filterByNumericValues.map(({ caracteristic, comparison, value }, i) => (
-          <div key={ i }>
-            <div data-testid="filter" className="used-filter">
-              {
-                `${caracteristic} ${comparison} ${value}`
-              }
-              <button
-                className="exclude-btn"
-                type="button"
-                onClick={ () => handleClick(i) }
-              >
-                X
-              </button>
+      <ul>
+
+        {
+          filterByNumericValues.map(({ caracteristic, comparison, value }, i) => (
+            <div key={ i }>
+              <li data-testid="filter" className="used-filter">
+                {
+                  `${caracteristic} ${comparison} ${value}`
+                }
+                <button
+                  className="exclude-btn"
+                  type="button"
+                  onClick={ () => handleClick(i) }
+                >
+                  X
+                </button>
+              </li>
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </ul>
     </div>
   );
   const newLocal = showFilters();

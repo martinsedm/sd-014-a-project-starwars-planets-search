@@ -9,6 +9,10 @@ function StarsProvider({ children }) {
   const [filters, setFilter] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   const [numericFilter, setNumericFilter] = useState([{
@@ -30,8 +34,8 @@ function StarsProvider({ children }) {
 
   const contextValue = {
     getPlanetsAPI,
-    setIsLoading,
     isLoading,
+    setIsLoading,
     numericFilter,
     setNumericFilter,
     filters,

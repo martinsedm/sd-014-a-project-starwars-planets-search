@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StarsContext from '../context/myContext';
 import AppliedFilters from './AppliedFilters';
+import SortByColumn from './SortByColumn';
 import FilterCaracteristic from './FilterCaracteristic';
 import FilterComparison from './FilterComparison';
 import FilterNumerically from './FilterNumerically';
@@ -30,6 +31,7 @@ export default function NumberFilter() {
       >
         Filtrar
       </button>
+      <SortByColumn />
       <AppliedFilters />
     </form>
   );
