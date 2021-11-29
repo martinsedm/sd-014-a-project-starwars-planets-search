@@ -14,8 +14,13 @@ function FiltersInputsNumerics() {
     setColumn,
     setComparison,
     setValue,
-    // setOptions,
+    setOptions,
   } = useContext(StarWarsContext);
+
+  const removeFilter = () => {
+    const filterRmv = options.filter((option) => option !== column);
+    setOptions(filterRmv);
+  };
 
   const changeColumn = (event) => {
     setColumn(event.target.value);
@@ -52,6 +57,7 @@ function FiltersInputsNumerics() {
     });
 
     setData(filtersNumerics);
+    removeFilter();
   };
 
   return (
