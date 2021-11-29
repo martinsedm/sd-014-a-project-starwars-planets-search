@@ -4,14 +4,7 @@ import { Table } from 'react-bootstrap';
 import StarContext from '../context/StarContext';
 
 function PlanetsTable() {
-  const { planets, planetsCopy } = useContext(StarContext);
-
-  const getHeaders = () => {
-    if (planets.length !== 0) {
-      return Object.keys(planets[0]).filter((planet) => planet !== 'residents');
-    }
-    return [];
-  };
+  const { planetsCopy, getHeaders } = useContext(StarContext);
 
   const headers = getHeaders();
   return (
@@ -27,9 +20,19 @@ function PlanetsTable() {
         <tbody>
           {planetsCopy.map((planet, index) => (
             <tr key={ index }>
-              {headers.map((header, i) => (
-                <td key={ `${header}-${i}` }>{ planet[header] }</td>
-              ))}
+              {headers.map((header, i) => {
+                if (i === 0) {
+                  return (
+                    <td
+                      key={ `${header}-${i}` }
+                      data-testid="planet-name"
+                    >
+                      { planet[header] }
+                    </td>
+                  );
+                }
+                return (<td key={ `${header}-${i}` }>{ planet[header] }</td>);
+              })}
 
             </tr>
           ))}

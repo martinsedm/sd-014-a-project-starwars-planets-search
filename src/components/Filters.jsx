@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import StarContext from '../context/StarContext';
 import SelectFilter from './SelectFilter';
+import OrderFilter from './OrderFilter';
 
 function Filters() {
   const {
@@ -11,8 +12,8 @@ function Filters() {
   const { filterByName: { name } } = filters;
   const comparisons = ['maior que', 'menor que', 'igual a'];
   const [newState, setNewState] = useState({
-    column: '',
-    comparison: '',
+    column: 'population',
+    comparison: 'maior que',
     value: 0,
   });
   const { column, comparison, value } = newState;
@@ -78,6 +79,7 @@ function Filters() {
           </div>
         ))
         : null}
+      <OrderFilter />
     </form>
   );
 }

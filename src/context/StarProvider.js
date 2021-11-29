@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import StarContext from './StarContext';
 import fetchPlanets from '../services';
@@ -9,6 +9,10 @@ function StarProvider(props) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
 
   const columns = [
@@ -23,6 +27,13 @@ function StarProvider(props) {
   const getPlanets = async () => {
     const { results } = await fetchPlanets();
     setPlanets(results);
+  };
+
+  const getHeaders = () => {
+    if (planets.length !== 0) {
+      return Object.keys(planets[0]).filter((planet) => planet !== 'residents');
+    }
+    return [];
   };
 
   const handleChange = ({ target: { name, value } }, key) => {
@@ -44,6 +55,32 @@ function StarProvider(props) {
     setFilters({ ...filters, filterByNumericValues: newFilter });
     console.log(filters);
   };
+
+  const handleRadio = (orderFilter) => {
+    setFilters({ ...filters, order: orderFilter });
+  };
+
+  const compareNumbers = (a, b) => {
+    const returnMenosUm = -1;
+    if (Number.isNaN(Number(a))) {
+      if (a > b) return 1;
+      if (a < b) return returnMenosUm;
+      return 0;
+    }
+    return a - b;
+  };
+
+  const orderFilter = useCallback((array) => {
+    const { order } = filters;
+    let newArray = [];
+    if (order.sort === 'ASC') {
+      newArray = array.sort((a, b) => compareNumbers(a[order.column], b[order.column]));
+    }
+    if (order.sort === 'DESC') {
+      newArray = array.sort((a, b) => compareNumbers(b[order.column], a[order.column]));
+    }
+    return newArray;
+  }, [filters]);
 
   useEffect(() => {
     getPlanets();
@@ -71,18 +108,21 @@ function StarProvider(props) {
         }
       });
     }
+    planetFilter = orderFilter(planetFilter);
     setPlanetsCopy(planetFilter);
-  }, [filters, planets]);
+  }, [filters, orderFilter, planets]);
 
   const context = {
     planets,
     filters,
     planetsCopy,
     columnFilters,
+    getHeaders,
     handleChange,
     setFilters,
     columnFilter,
     handleFilters,
+    handleRadio,
   };
 
   const { children } = props;
