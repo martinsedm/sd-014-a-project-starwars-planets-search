@@ -6,19 +6,12 @@ import StarWarsContext from './StarWarsContext';
 
 export default function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [control, setControl] = useState({
-    control: 0,
-  });
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [{
-        column: 'population',
-        comparison: 'greater',
-        value: '',
-      }],
+      filterByNumericValues: [],
       order: {
         column: 'name',
         sort: 'ASC',
@@ -26,13 +19,29 @@ export default function StarWarsProvider({ children }) {
     },
   });
 
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const [state, setState] = useState({
+    column: 'population',
+    comparison: 'greater',
+    value: '',
+  });
+
   const data = {
     planets,
     setPlanets,
     filter,
     setFilter,
-    control,
-    setControl,
+    options,
+    setOptions,
+    state,
+    setState,
   };
 
   useEffect(() => {

@@ -2,35 +2,46 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 export default function Header() {
-  const { filter: { filters: { filterByName, filterByNumericValues },
-  }, setFilter, setControl } = useContext(StarWarsContext);
+  const { filter: { filters: { filterByName, filterByNumericValues: values }, filters,
+  }, setFilter, options, setOptions, state, setState,
+  } = useContext(StarWarsContext);
 
-  // funciona e salva corretamente no context
-  // falta apenas arrumar o filtro em PlanetsTable
   function eventHandler({ target }) {
     const { id, value } = target;
     setFilter({
       filters: {
+        ...filters,
         filterByName: {
           name: (id === 'name') ? value : filterByName.name,
         },
-        filterByNumericValues: [{
-          column: (id === 'column-filter') ? target[target.selectedIndex].id
-            : filterByNumericValues[filterByNumericValues.length - 1].column,
-          comparison: (id === 'comparison-filter')
-            ? target[target.selectedIndex].id
-            : filterByNumericValues[filterByNumericValues.length - 1].comparison,
-          value: (id === 'value-filter') ? value
-            : filterByNumericValues[filterByNumericValues.length - 1].value,
-        }],
       },
+    });
+
+    // 4
+    setState({
+      column:
+        (id === 'column-filter')
+          ? target[target.selectedIndex].id : state.column,
+      comparison:
+        (id === 'comparison-filter')
+          ? target[target.selectedIndex].id : state.comparison,
+      value:
+        (id === 'value-filter')
+          ? value : state.value,
     });
   }
 
   function clickHandler() {
-    setControl({
-      control: 1,
+    setFilter({
+      filters: {
+        ...filters,
+        filterByNumericValues: [
+          ...values,
+          { ...state }],
+      },
     });
+    const selectOption = options.filter((option) => option !== state.column);
+    setOptions(selectOption);
   }
 
   function searchBar() {
@@ -54,11 +65,13 @@ export default function Header() {
           id="column-filter"
           onChange={ eventHandler }
         >
-          <option id="population">population</option>
-          <option id="orbital_period">orbital_period</option>
-          <option id="diameter">diameter</option>
-          <option id="rotation_period">rotation_period</option>
-          <option id="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option
+              key={ option }
+              id={ option }
+            >
+              { option }
+            </option>))}
         </select>
       </div>
     );
@@ -116,6 +129,7 @@ export default function Header() {
       { filterByComparison() }
       { filterByValue() }
       { btnFilter() }
+
     </header>
   );
 }

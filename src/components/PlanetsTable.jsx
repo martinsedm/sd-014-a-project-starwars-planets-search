@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 import '../index.css';
 
 export default function PlanetsTable() {
-  const { planets, control: { control },
+  const { planets,
     filter: { filters: {
       filterByNumericValues,
       filterByName: { name } } } } = useContext(StarWarsContext);
@@ -58,11 +58,18 @@ export default function PlanetsTable() {
     return planets;
   }
 
+  function filterControl() {
+    if (filterByNumericValues.length !== 0) {
+      return true;
+    }
+    return false;
+  }
+
   function filterPlanetsByComparison() {
-    const { column,
-      comparison,
-      value } = filterByNumericValues[filterByNumericValues.length - 1];
-    if (control === 1) {
+    if (filterControl()) {
+      const { column,
+        comparison,
+        value } = filterByNumericValues[filterByNumericValues.length - 1];
       const filter = planets.filter((planet) => {
         switch (comparison) {
         case 'greater':
@@ -73,10 +80,8 @@ export default function PlanetsTable() {
           return planet[column] === value;
         }
       });
-      return filter;
+      return showPlanets(filter);
     }
-
-    console.log(column, comparison, value);
     return filterPlanets();
   }
 
