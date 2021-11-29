@@ -11,14 +11,19 @@ function SearchBar() {
 
   } = useContext(StarWarsContext);
 
-  const options = ['population', 'orbital_period',
+  const arrOption = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
 
   const { filterByNumericValues } = numberFilters;
 
-  // const filterValues = filterByNumericValues.map((filtro) => (
-  //   filtro.column
-  // ));
+  const filterValues = filterByNumericValues.map((filtro) => (
+    filtro.column
+  ));
+
+  const restValues = arrOption.filter((option) => !filterValues.includes(option))
+    .concat(filterValues.filter((option) => !arrOption.includes(option)));
+  console.log(restValues);
+  // filtros pegando ideia desse site> https://qastack.com.br/programming/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
 
   return (
     <div>
@@ -28,7 +33,7 @@ function SearchBar() {
         value={ column }
         onChange={ handleNumericChange }
       >
-        {options.map((option, index) => (
+        {restValues.map((option, index) => (
           <option key={ index } value={ option }>{option}</option>
         ))}
       </select>
