@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import starWarsContext from '../contexAPI/StarWarsContext';
+import SortFilter from './SortFilter';
 
 function Filters() {
   const { filters, setFilters } = useContext(starWarsContext);
@@ -103,6 +104,7 @@ function Filters() {
       >
         Filtrar
       </button>
+      <SortFilter />
       <div>
         { filterByNumericValues.map(renderFilterOptions) }
       </div>

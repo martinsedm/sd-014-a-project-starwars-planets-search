@@ -7,8 +7,8 @@ function Table() {
     return <p> ...LOADING </p>;
   }
 
-  const titleInfo = Object.keys(planets[0]).filter((info) => info !== 'residents');
-  const titles = [...titleInfo];
+  const titles = Object.keys(planets[0]).filter((info) => info !== 'residents');
+
   return (
     <table>
       <thead>

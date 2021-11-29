@@ -6,7 +6,11 @@ function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [filters, setFilters] = useState({ filterByName: { name: '' },
-    filterByNumericValues: [] });
+    filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    } });
   const [columnToTakeOff, setColumnToTakeOff] = useState('');
   const { filterByName: { name }, filterByNumericValues } = filters;
   const planetsAPI = async () => {
