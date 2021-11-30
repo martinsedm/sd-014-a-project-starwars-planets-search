@@ -2,18 +2,26 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { planetsData } = useContext(PlanetsContext);
+  const { filterByNumber } = useContext(PlanetsContext);
   const [filters, setFilters] = useState(
     {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
     },
   );
   const [filteredPlanets, setFilteredPlanet] = useState([]);
   const [isSearching, setIsSearchin] = useState(false);
 
   const planetFilter = (e) => {
+    if (filters.filterByName.name === '') setIsSearchin(false);
     filters.filterByName.name = e.target.value;
     const { name, value } = e.target;
     setFilters((prevState) => ({
@@ -21,7 +29,7 @@ function Table() {
       [name]: value,
     }));
     // trecho abaixo retirado de https://stackoverflow.com/questions/44469548/es6-filter-data-with-case-insensitive-term
-    setFilteredPlanet(planetsData.filter(
+    setFilteredPlanet(filterByNumber.filter(
       (planet) => planet.name.toLowerCase().includes(
         filters.filterByName.name.toLowerCase(),
       ),
@@ -74,7 +82,7 @@ function Table() {
                 <td>{planet.edited}</td>
                 <td>{planet.url}</td>
               </tr>))
-              : planetsData.map((planet) => (
+              : filterByNumber.map((planet) => (
                 <tr key={ planet.name }>
                   <td>{planet.name}</td>
                   <td>{planet.rotation_period}</td>

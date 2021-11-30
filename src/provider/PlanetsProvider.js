@@ -4,16 +4,19 @@ import PlanetsContext from '../context/PlanetsContext';
 import fetchPlanetsInfo from '../services/planetRequestAPI';
 
 function PlanetsProvider({ children }) {
+  const [filterByNumber, setFilterByNumber] = useState([]);
   const [planetsData, setPlanetsData] = useState([]);
   async function invokeAPI() {
     const planetData = await fetchPlanetsInfo();
     setPlanetsData(planetData);
+    setFilterByNumber(planetData);
   }
+  const contextData = { planetsData, filterByNumber, setFilterByNumber };
   useEffect(() => {
     invokeAPI();
   }, []);
   return (
-    <PlanetsContext.Provider value={ { planetsData } }>
+    <PlanetsContext.Provider value={ contextData }>
       {children}
     </PlanetsContext.Provider>
   );
