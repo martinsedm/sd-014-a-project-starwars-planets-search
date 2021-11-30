@@ -52,7 +52,7 @@ export default function NumberFilters() {
         {filterByNumericValues.map(({ column, comparison, value }) => (
           <div key={ column } data-testid="filter">
             <span>{`${column} ${comparison} ${value} `}</span>
-            <Button value={ column } label="X" onClick={ handleClick } data="REMOVE_FILTER_SELECTOR" />
+            <Button value={ column } label="X" onClick={ handleClick } />
           </div>
         ))}
       </div>

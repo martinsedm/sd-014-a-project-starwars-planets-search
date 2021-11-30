@@ -23,10 +23,10 @@ export default function Sort() {
   function sorting() {
     const { column, sort } = eachSort;
     const filterdSort = filterPlanets.sort((a, b) => {
-      // if (sort === 'ASC') {
+      if (sort === 'ASC') {
         console.log(a[column]);
         return a[column] - b[column];
-      // } return b[column] - a[column];
+      } return b[column] - a[column];
     });
     setFilterPlanets(filterdSort);
   }

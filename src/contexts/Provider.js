@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import fecthPlanets from '../helper/fetchPlanets';
 import Context from './Context';
 // API caiu...
-import testData from '../testData';
+// import testData from '../testData';
 
 export default function Provider({ children }) {
   const filtersObj = {
@@ -26,10 +26,10 @@ export default function Provider({ children }) {
 
   useEffect(() => {
     async function getPlanets() {
-      const x = await fecthPlanets();
+      const data = await fecthPlanets();
       // if (!data.results) { data = testData; }
       // console.log(x);
-      const data = testData;
+      // const data = testData;
       setPlanets(data.results);
       setFilterPlanets(data.results);
     }
