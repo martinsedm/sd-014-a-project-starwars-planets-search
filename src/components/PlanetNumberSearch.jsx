@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetNumberSearch() {
-  const { planetsData, setFilterByNumber } = useContext(PlanetsContext);
+  const { planetsData, setFilterByNumber, setSelectColumn } = useContext(PlanetsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [numberValue, setValue] = useState('');
@@ -31,6 +31,7 @@ function PlanetNumberSearch() {
     default:
       break;
     }
+    setSelectColumn(column);
     setOptions(selectOptions.filter((option) => option !== column));
     setFilterByNumber(filteredNumberPlanets);
   };

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { filterByNumber } = useContext(PlanetsContext);
+  const { filterByNumber, selectColumn } = useContext(PlanetsContext);
   const [filters, setFilters] = useState(
     {
       filterByName: {
@@ -19,6 +19,8 @@ function Table() {
   );
   const [filteredPlanets, setFilteredPlanet] = useState([]);
   const [isSearching, setIsSearchin] = useState(false);
+  const sortSelect = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
 
   const planetFilter = (e) => {
     if (filters.filterByName.name === '') setIsSearchin(false);
@@ -36,6 +38,11 @@ function Table() {
     ));
     setIsSearchin(true);
   };
+  const [sortOrder, setSort] = useState('ASC');
+  const handleSort = ({ target }) => {
+    if (target.id === 'ASC') setSort(target.value);
+    if (target.id === 'DESC') setSort(target.value);
+  };
 
   return (
     <div>
@@ -46,6 +53,47 @@ function Table() {
         type="text"
         onChange={ planetFilter }
       />
+      <select data-testid="column-sort">
+        { sortSelect.map((select) => (
+          <option
+            value={ select }
+            key={ select }
+          >
+            {select}
+          </option>))}
+      </select>
+      <form>
+        <label htmlFor="asc">
+          ascendente
+          <input
+            checked={ sortOrder === 'ASC' }
+            id="asc"
+            type="radio"
+            value="ASC"
+            onChange={ handleSort }
+            data-testid="column-sort-input-asc"
+          />
+        </label>
+        <label htmlFor="des">
+          descendente
+          <input
+            checked={ sortOrder === 'DESC' }
+            id="des"
+            type="radio"
+            value="DESC"
+            onChange={ handleSort }
+            data-testid="column-sort-input-desc"
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+        >
+          Ordenar
+
+        </button>
+      </form>
+
       <table>
         <thead>
           <tr>
@@ -66,7 +114,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            isSearching ? filteredPlanets.map((planet) => (
+            isSearching ? filteredPlanets.sort.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>
