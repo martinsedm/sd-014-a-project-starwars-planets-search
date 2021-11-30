@@ -5,8 +5,8 @@ function FiltersInputsNumerics() {
   const {
     data,
     setData,
-    filterNumeric,
-    setFilterNumeric,
+    filters,
+    setFilters,
     column,
     comparison,
     value,
@@ -35,9 +35,9 @@ function FiltersInputsNumerics() {
   };
 
   const handleClick = () => {
-    setFilterNumeric({
+    setFilters({
       filterByNumericValues: [
-        ...filterNumeric.filterByNumericValues,
+        ...filters.filterByNumericValues,
         { column,
           comparison,
           value,

@@ -5,6 +5,7 @@ import Header from './components/Header';
 import FilterInputByName from './components/FilterInputByName';
 import FiltersInputsNumerics from './components/FiltersInputsNumerics';
 import StarWarsProvider from './context/StarWarsProvider';
+import DeleteFilter from './components/DeleteFilter';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Header />
       <FilterInputByName />
       <FiltersInputsNumerics />
+      <DeleteFilter />
       <Table />
     </StarWarsProvider>
   );

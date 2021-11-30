@@ -5,20 +5,26 @@ import fetchApi from '../services';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filterPlanets, setFilterPlanets] = useState('');
-  const [filterNumeric, setFilterNumeric] = useState({
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
+  const [filterPlanets, setFilterPlanets] = useState('');
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const [options, setOptions] = useState([
+  const filterOptions = [
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water',
-  ]);
+  ];
+  const [options, setOptions] = useState(filterOptions);
 
   const dataApi = async () => {
     const { results } = await fetchApi();
@@ -38,8 +44,6 @@ function StarWarsProvider({ children }) {
     setData,
     filterPlanets,
     changeName,
-    filterNumeric,
-    setFilterNumeric,
     column,
     comparison,
     value,
@@ -48,6 +52,8 @@ function StarWarsProvider({ children }) {
     setComparison,
     setValue,
     setOptions,
+    filters,
+    setFilters,
   };
 
   return (
