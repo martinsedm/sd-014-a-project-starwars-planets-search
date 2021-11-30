@@ -3,8 +3,7 @@ import Context from '../contexts/Context';
 import Button from './atomos/Button';
 
 export default function Sort() {
-  const { planets, setFilters, filters, filterPlanets,
-    setFilterPlanets } = useContext(Context);
+  const { planets, setFilters, filters, filterPlanets } = useContext(Context);
   const [columns, setColumns] = useState([]);
   // const [asc, setAsc] = useState(true);
   // const [desc, setDesc] = useState(false);
@@ -20,18 +19,41 @@ export default function Sort() {
     }
   }, [planets]);
 
+  function sortString(column, sort) {
+    filterPlanets.sort((a, b) => {
+      if (sort === 'ASC') {
+        console.log('string', a[column]);
+        // https://stackoverflow.com/questions/51165/how-to-sort-strings-in-javascript
+        return (String(a[column])).localeCompare(String(b[column]));
+      } return (String(b[column])).localeCompare(String(a[column]));
+    });
+  }
+
+  function sortNumber(column, sort) {
+    filterPlanets.sort((a, b) => {
+      if (sort === 'ASC') {
+        console.log('number', a[column]);
+        return Number(a[column]) - Number(b[column]);
+      } return Number(b[column]) - Number(a[column]);
+    });
+  }
+
   function sorting() {
     const { column, sort } = eachSort;
-    const filterdSort = filterPlanets.sort((a, b) => {
-      if (sort === 'ASC') {
-        console.log(a[column]);
-        // https://stackoverflow.com/questions/51165/how-to-sort-strings-in-javascript
-        return (a[column]).localeCompare(b[column]);
-        // return a[column] - b[column];
-      } return (b[column]).localeCompare(a[column]);
-      // } return b[column] - a[column];
+    const filterdSort = (() => {
+      const test = filterPlanets[0][column];
+      console.log('tipo', typeof test);
+      if (column === 'name') {
+        sortString(column, sort);
+      } else {
+        sortNumber(column, sort);
+      }
     });
-    setFilterPlanets(filterdSort);
+    filterdSort();
+    console.log(filterPlanets);
+    // console.log('condition');
+    // https://mkyong.com/javascript/check-if-variable-is-a-number-in-javascript/
+    // setFilterPlanets(filterdSort);
   }
 
   if (!columns) return <span>Loading...</span>;
