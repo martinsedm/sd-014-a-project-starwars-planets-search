@@ -6,8 +6,11 @@ import PlanetContext from './PlanetContext';
 function PlanetFinder({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filterByText, setFilterByText] = useState('');
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [{ column: 'population', comparison: 'maior que', value: 0 }],
+  });
 
   async function fetchPlanetsList() {
     setIsLoading(true);
@@ -21,17 +24,41 @@ function PlanetFinder({ children }) {
     fetchPlanetsList();
   }, []);
 
+  const setNameFilterText = ({ value }) => {
+    setFilters({ ...filters, filterByName: { name: value } });
+  };
+
+  const getNumericFilters = (value) => {
+    setFilters({ ...filters, filterByNumericValues: value });
+  };
+
   useEffect(() => {
-    const filtered = data.filter(({ name }) => name.includes(filterByText));
+    const filtered = data.filter(({ name }) => name.includes(filters.filterByName.name));
     setFilteredPlanets(filtered);
-  }, [data, filterByText]);
+  }, [filters]);
+
+  useEffect(() => {
+    let filteredByNumbers = '';
+    const { column, comparison, value } = filters.filterByNumericValues;
+    console.log(comparison);
+    if (comparison === 'maior que') {
+      filteredByNumbers = data.filter((item) => (
+        parseInt(item[column], 10) > parseInt(value, 10)));
+    } else if ((comparison === 'menor que')) {
+      filteredByNumbers = data.filter((item) => (
+        parseInt(item[column], 10) < parseInt(value, 10)));
+    } else {
+      filteredByNumbers = data.filter((item) => (
+        parseInt(item[column], 10) === parseInt(value, 10)));
+    }
+    setFilteredPlanets(filteredByNumbers);
+  }, [filters]);
+
+  const contextValue = {
+    data, isLoading, filteredPlanets, setNameFilterText, getNumericFilters, filters };
 
   return (
-    <PlanetContext.Provider
-      value={
-        { data, isLoading, filteredPlanets, filterByText, setFilterByText }
-      }
-    >
+    <PlanetContext.Provider value={ contextValue }>
       {children}
     </PlanetContext.Provider>
   );
