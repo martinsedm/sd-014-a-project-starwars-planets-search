@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import starWarsPlanetsContext from '../../context/StarWarsPlanetsContext';
 import RenderFilters from './RenderFilter';
 import Selector from './Selector';
 
 function Header() {
+  const [sort, setSort] = useState('ASC');
+  const [columnSort, setColumnSort] = useState('name');
+
   const {
     filters,
     setFilters,
@@ -123,6 +126,66 @@ function Header() {
             handleClick={ handleRemoveFilter }
           />
         </div>
+        <div>
+          Ordenamento
+          <select
+            data-testid="column-sort"
+            onChange={ ({ target }) => setColumnSort(target.value) }
+          >
+            <option value="name">Name</option>
+            <option value="climated">Climated</option>
+            <option value="created">Created</option>
+            <option value="diameter">Diameter</option>
+            <option value="edited">Edited</option>
+            <option value="films">Films</option>
+            <option value="gravity">Gravity</option>
+            <option value="orbital_period">Orbital Period</option>
+            <option value="population">Population</option>
+            <option value="rotation_period">Rotation Period</option>
+            <option value="surface_water">SurfaceWater</option>
+            <option value="terrain">Terrain</option>
+            <option value="url">URL</option>
+          </select>
+          <label htmlFor="asc">
+            ASC
+            <input
+              data-testid="column-sort-input-asc"
+              type="radio"
+              name="order"
+              id="asc"
+              value="ASC"
+              defaultChecked
+              onClick={ ({ target }) => setSort(target.value) }
+            />
+          </label>
+          <label htmlFor="desc">
+            DESC
+            <input
+              data-testid="column-sort-input-desc"
+              type="radio"
+              name="order"
+              id="desc"
+              value="DESC"
+              onClick={ ({ target }) => setSort(target.value) }
+            />
+          </label>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ () => setFilters({
+
+              ...filters,
+              order: {
+                column: columnSort,
+                sort,
+              },
+
+            }) }
+          >
+            Ordenar
+          </button>
+        </div>
+
       </form>
     </header>
   );

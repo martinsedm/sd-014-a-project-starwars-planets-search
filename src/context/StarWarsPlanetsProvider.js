@@ -7,7 +7,10 @@ const INITIAL_STATE = {
     name: '',
   },
   filterByNumericValues: [],
-  order: {},
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -21,6 +24,7 @@ function StarWarsPlanetsProvider({ children }) {
     comparison: 'maior que',
     value: '',
   });
+
   const { filterByName: { name }, filterByNumericValues } = filters;
 
   useEffect(() => {
@@ -53,8 +57,21 @@ function StarWarsPlanetsProvider({ children }) {
         return Number(planet[column]) === Number(value);
       });
     });
+    result = result.sort((a, b) => {
+      if (Number.isNaN(+(a[filters.order.column]))) {
+        if (filters.order.sort === 'ASC') {
+          return a[filters.order.column].localeCompare(b[filters.order.column]);
+        } return b[filters.order.column].localeCompare(a[filters.order.column]);
+      }
+      if (filters.order.sort === 'ASC') {
+        return Number(a[filters.order.column]) - Number(b[filters.order.column]);
+      } return Number(b[filters.order.column]) - Number(a[filters.order.column]);
+    });
+
+    // Fiz com ajuda do Alan Freitas da turma 13B, função que ele utilizou no próprio código.
+
     setPlanetsFiltered(result);
-  }, [filterByNumericValues, name, data]);
+  }, [filterByNumericValues, name, data, filters.order.column, filters.order.sort]);
   const value = {
     data,
     planetsFiltered,

@@ -3,7 +3,7 @@ import starWarsPlanetsContext from '../../context/StarWarsPlanetsContext';
 
 function BodyTable() {
   const { data, planetsFiltered } = useContext(starWarsPlanetsContext);
-  console.log(data);
+
   return (
     <tbody>
       { data.length > 0 && planetsFiltered.map((planet) => (
