@@ -25,8 +25,11 @@ export default function Sort() {
     const filterdSort = filterPlanets.sort((a, b) => {
       if (sort === 'ASC') {
         console.log(a[column]);
-        return a[column] - b[column];
-      } return b[column] - a[column];
+        // https://stackoverflow.com/questions/51165/how-to-sort-strings-in-javascript
+        return (a[column]).localeCompare(b[column]);
+        // return a[column] - b[column];
+      } return (b[column]).localeCompare(a[column]);
+      // } return b[column] - a[column];
     });
     setFilterPlanets(filterdSort);
   }
