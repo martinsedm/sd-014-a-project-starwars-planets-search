@@ -12,12 +12,7 @@ export default function Sort() {
     sort: 'ASC',
   };
   const [eachSort, setEachSort] = useState(eachOrder);
-
-  useEffect(() => {
-    if (planets.length > 0) {
-      setColumns(Object.keys(planets[0]));
-    }
-  }, [planets]);
+  // const [asc, setAsc] = useState(true);
 
   function sortString(column, sort) {
     filterPlanets.sort((a, b) => {
@@ -41,8 +36,6 @@ export default function Sort() {
   function sorting() {
     const { column, sort } = eachSort;
     const filterdSort = (() => {
-      const test = filterPlanets[0][column];
-      console.log('tipo', typeof test);
       if (column === 'name') {
         sortString(column, sort);
       } else {
@@ -55,6 +48,22 @@ export default function Sort() {
     // https://mkyong.com/javascript/check-if-variable-is-a-number-in-javascript/
     // setFilterPlanets(filterdSort);
   }
+
+  useEffect(() => {
+    if (planets.length > 0) {
+      setColumns(Object.keys(planets[0]));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planets]);
+
+  useEffect(() => {
+    if (planets.length > 0) {
+      sorting();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
 
   if (!columns) return <span>Loading...</span>;
 

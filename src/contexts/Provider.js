@@ -24,6 +24,13 @@ export default function Provider({ children }) {
     'diameter', 'rotation_period', 'surface_water'];
   const [columns, setColumns] = useState(col);
 
+  function inicialSort(sorte) {
+    return sorte.sort((a, b) => {
+      console.log('string', a.name);
+      return (String(a.name)).localeCompare(String(b.name));
+    });
+  }
+
   useEffect(() => {
     async function getPlanets() {
       const data = await fecthPlanets();
@@ -31,7 +38,7 @@ export default function Provider({ children }) {
       // console.log(x);
       // const data = testData;
       setPlanets(data.results);
-      setFilterPlanets(data.results);
+      setFilterPlanets(inicialSort(data.results));
     }
     getPlanets();
   }, []);
