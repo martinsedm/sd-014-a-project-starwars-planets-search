@@ -14,6 +14,7 @@ function StarWarsProvider({ children }) {
     },
   });
   const [filterPlanets, setFilterPlanets] = useState('');
+  const [filterNumeric, setFilterNumeric] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
@@ -29,6 +30,7 @@ function StarWarsProvider({ children }) {
   const dataApi = async () => {
     const { results } = await fetchApi();
     setData(results);
+    setFilterNumeric(results);
   };
 
   const changeName = ({ target }) => {
@@ -54,6 +56,9 @@ function StarWarsProvider({ children }) {
     setOptions,
     filters,
     setFilters,
+    setFilterPlanets,
+    filterNumeric,
+    setFilterNumeric,
   };
 
   return (

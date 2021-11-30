@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function PlanetsTable() {
-  const { data, filterPlanets } = useContext(StarWarsContext);
-
-  const dataTable = () => data.filter((planet) => planet.name.includes(filterPlanets))
+  const { filterPlanets, filterNumeric } = useContext(StarWarsContext);
+  const dataTable = () => filterNumeric
+    .filter((planet) => planet.name.includes(filterPlanets))
     .map((planet, index) => (
       <tr key={ index }>
         <td>{planet.name}</td>

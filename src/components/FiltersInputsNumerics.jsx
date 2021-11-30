@@ -4,7 +4,6 @@ import StarWarsContext from '../context/StarWarsContext';
 function FiltersInputsNumerics() {
   const {
     data,
-    setData,
     filters,
     setFilters,
     column,
@@ -15,6 +14,7 @@ function FiltersInputsNumerics() {
     setComparison,
     setValue,
     setOptions,
+    setFilterNumeric,
   } = useContext(StarWarsContext);
 
   const removeFilter = () => {
@@ -44,7 +44,6 @@ function FiltersInputsNumerics() {
         },
       ],
     });
-
     const filtersNumerics = data.filter((planet) => {
       switch (comparison) {
       case 'maior que':
@@ -55,8 +54,7 @@ function FiltersInputsNumerics() {
         return planet[column] === value;
       }
     });
-
-    setData(filtersNumerics);
+    setFilterNumeric(filtersNumerics);
     removeFilter();
   };
 
