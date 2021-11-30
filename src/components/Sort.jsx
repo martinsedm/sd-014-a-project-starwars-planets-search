@@ -63,8 +63,6 @@ export default function Sort() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
   if (!columns) return <span>Loading...</span>;
 
   function handleClick() {
