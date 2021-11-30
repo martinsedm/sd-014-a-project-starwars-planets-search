@@ -9,7 +9,7 @@ export default function Header() {
     comparison: 'maior que',
     value: '100000',
   };
-  const { columns, filters, setFilters } = useContext(Context);
+  const { columns, filters, setFilters, setColumns } = useContext(Context);
   const [eachFilter, setEachFilter] = useState(INITIAL_NUMBFILTER);
   const comparisons = ['maior que', 'menor que', 'igual a'];
   const { column, comparison, value } = eachFilter;
@@ -21,15 +21,6 @@ export default function Header() {
     });
   };
 
-  // useEffect((
-  //   () => {
-  //     const { filterByNumericValues } = filters;
-  //     const reduce = filterByNumericValues.reduce((acc, ele) => acc.push(ele.column), []);
-  //     console.log(filterByNumericValues);
-  //     console.log(reduce);
-  //   }
-  // ), [filters]);
-
   if (!columns) return <span>Loading...</span>;
 
   const NEXT_NUMBFILTER = {
@@ -37,6 +28,11 @@ export default function Header() {
     comparison: 'maior que',
     value: '100000',
   };
+
+  function removeCol(eachCol) {
+    const col = columns.filter((c) => c !== eachCol);
+    return col;
+  }
 
   const handleClick = (() => {
     setFilters({
@@ -47,7 +43,7 @@ export default function Header() {
       ],
     });
     setEachFilter(NEXT_NUMBFILTER);
-    
+    setColumns(removeCol(eachFilter.column));
   });
 
   return (
@@ -79,7 +75,7 @@ export default function Header() {
         onChange={ handleChange }
         value={ value }
       />
-      <Button label="Filtrar" onClick={ handleClick } />
+      <Button label="Filtrar" onClick={ handleClick } data="button-filter" />
     </header>
   );
 }

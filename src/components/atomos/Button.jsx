@@ -7,7 +7,7 @@ class Button extends React.Component {
     return (
       <button
         type="button"
-        data-testid={ `${data}-filter` }
+        data-testid={ data }
         disabled={ disabled }
         onClick={ onClick }
         name={ name }

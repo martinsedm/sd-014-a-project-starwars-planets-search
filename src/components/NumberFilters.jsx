@@ -3,7 +3,8 @@ import Context from '../contexts/Context';
 import Button from './atomos/Button';
 
 export default function NumberFilters() {
-  const { filters, setFilters, planets, setFilterPlanets } = useContext(Context);
+  const { filters, setFilters, columns, setColumns,
+    filterPlanets, setFilterPlanets, planets } = useContext(Context);
   // const { middleStage, setMidleStage } = useState(planets);
   const { filterByNumericValues } = filters;
 
@@ -14,11 +15,13 @@ export default function NumberFilters() {
       ...filters,
       filterByNumericValues: deletedFilter,
     });
+    setFilterPlanets(planets);
+    setColumns([...columns, value]);
   }
 
   useEffect((() => {
     function planetsFilter(column, comparison, value) {
-      const resultArray = planets.filter((planet) => {
+      const resultArray = filterPlanets.filter((planet) => {
         if (comparison === 'maior que') {
           return Number(planet[column]) > Number(value);
         }
@@ -34,24 +37,22 @@ export default function NumberFilters() {
     }
 
     if (filterByNumericValues.length > 0) {
-      let filteredPlanets;
-      const filtered = filterByNumericValues
-        .forEach(({ column, comparison, value }) => {
-          filteredPlanets = planetsFilter(column, comparison, value);
-        });
-      console.log('2', filtered);
-      // console.log('3', planetsFilter('population', 'maior que', '100000'));
+      let filteredPlanets = [];
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        filteredPlanets = planetsFilter(column, comparison, value);
+      });
       setFilterPlanets(filteredPlanets);
     }
-  }), [filterByNumericValues, planets, setFilterPlanets]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [filterByNumericValues]);
 
   if (filterByNumericValues.length > 0) {
     return (
       <div>
         {filterByNumericValues.map(({ column, comparison, value }) => (
-          <div key={ column }>
+          <div key={ column } data-testid="filter">
             <span>{`${column} ${comparison} ${value} `}</span>
-            <Button value={ column } label="X" onClick={ handleClick } />
+            <Button value={ column } label="X" onClick={ handleClick } data="REMOVE_FILTER_SELECTOR" />
           </div>
         ))}
       </div>

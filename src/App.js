@@ -5,6 +5,7 @@ import SearchBar from './components/SearchBar';
 import Provider from './contexts/Provider';
 import Header from './components/Header';
 import NumberFilters from './components/NumberFilters';
+import Sort from './components/Sort';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Header />
       <NumberFilters />
       <SearchBar />
+      <Sort />
       <Table />
     </Provider>
   );
