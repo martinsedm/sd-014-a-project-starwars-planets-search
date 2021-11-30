@@ -23,7 +23,7 @@ function Table() {
           .toLowerCase().includes(name.toLowerCase()))
           .map((information) => (
             <tr key={ information.diameter }>
-              <td>{information.name}</td>
+              <td data-testid="planet-name">{information.name}</td>
               <td>{information.rotation_period}</td>
               <td>{information.orbital_period}</td>
               <td>{information.diameter}</td>

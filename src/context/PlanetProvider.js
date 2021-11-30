@@ -28,11 +28,44 @@ function PlanetProvider({ children }) {
     'surface_water',
   ]);
 
+  const [nameColumn, setNameColumn] = useState('name');
+  const [ordem, setOrdem] = useState('ASC');
+
+  const comparar = (a, b) => {
+    const descNumber = -1;
+    if (a > b) {
+      return 1;
+    }
+    if (a < b) {
+      return descNumber;
+    }
+    return 0;
+  };
+
+  const sortElement = (columns, sort) => {
+    const planetsArray = [...dataFilters];
+    if (column === 'name') {
+      if (sort === 'ASC') {
+        planetsArray.sort((a, b) => comparar(a[columns], b[columns]));
+      }
+      if (sort === 'DESC') {
+        planetsArray.sort((a, b) => comparar(b[columns], a[columns]));
+      }
+    } else {
+      if (sort === 'ASC') {
+        planetsArray.sort((a, b) => comparar(Number(a[columns]), Number(b[columns])));
+      }
+      if (sort === 'DESC') {
+        planetsArray.sort((a, b) => comparar(Number(b[columns]), Number(a[columns])));
+      }
+    }
+    setDataFilters(planetsArray);
+  };
+
   async function fetchPlanet() {
     const chamadaApi = await Api();
     setData(chamadaApi);
     setIsLoading(false);
-    setDataFilters(chamadaApi);
   }
   useEffect(() => {
     fetchPlanet();
@@ -67,6 +100,15 @@ function PlanetProvider({ children }) {
     });
   };
 
+  useEffect(() => {
+    const planetsArray = [...data];
+    const initialSort = (coluna) => {
+      planetsArray.sort((a, b) => comparar(a[coluna], b[coluna]));
+      setDataFilters(planetsArray);
+    };
+    initialSort('name');
+  }, [data]);
+
   const context = {
     data,
     isLoading,
@@ -76,9 +118,12 @@ function PlanetProvider({ children }) {
     value,
     filters,
     options,
+    nameColumn,
+    ordem,
     dataFilters,
     filterRemove,
     handleChange,
+    sortElement,
     setFilter,
     setData,
     setIsLoading,
@@ -88,10 +133,12 @@ function PlanetProvider({ children }) {
     setFilters,
     setOptions,
     setFilterRemove,
+    setNameColumn,
+    setOrdem,
   };
   return (
     <ContextPlanet.Provider value={ context }>
-      { children }
+      {children}
     </ContextPlanet.Provider>
   );
 }

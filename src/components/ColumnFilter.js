@@ -12,6 +12,11 @@ function ColumnFilter() {
     setFilters,
     options,
     setOptions,
+    setNameColumn,
+    setOrdem,
+    sortElement,
+    ordem,
+    nameColumn,
   } = useContext(ContextPlanet);
 
   const optionsRemoveFilters = () => {
@@ -57,7 +62,7 @@ function ColumnFilter() {
       >
         {options.map((option) => (
           <option key={ option } value={ option }>
-            {option}
+            { option }
           </option>
         ))}
       </select>
@@ -80,6 +85,50 @@ function ColumnFilter() {
         type="Number"
         name="value"
       />
+
+      <select
+        data-testid="column-sort"
+        onChange={ ({ target }) => setNameColumn(target.value) }
+      >
+        <option value="name">name</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="surface_water">surface_water</option>
+        <option value="population">population</option>
+      </select>
+
+      <label htmlFor="ASC">
+        ascendente
+        <input
+          type="radio"
+          value="ASC"
+          id="ASC"
+          name="radio-btn"
+          data-testid="column-sort-input-asc"
+          onChange={ ({ target }) => setOrdem(target.value) }
+        />
+      </label>
+      <label htmlFor="DESC">
+        descendente
+        <input
+          type="radio"
+          value="DESC"
+          name="radio-btn"
+          id="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ ({ target }) => setOrdem(target.value) }
+        />
+      </label>
+
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ () => sortElement(nameColumn, ordem) }
+      >
+        Ordenar
+      </button>
+
       <button
         onClick={ handleClick }
         data-testid="button-filter"
@@ -87,21 +136,24 @@ function ColumnFilter() {
       >
         Filtrar
       </button>
-      {filters.filterByNumericValues.map((elemento) => (
-        <div key={ elemento.column } data-testid="filter">
-          <p>
-            <span>{elemento.column}</span>
-            <span>{elemento.comparison}</span>
-            <span>{elemento.value}</span>
-          </p>
-          <button
-            type="button"
-            onClick={ () => (handleRemove(elemento.column)) }
-          >
-            X
-          </button>
-        </div>
-      ))}
+
+      {
+        filters.filterByNumericValues.map((elemento) => (
+          <div key={ elemento.column } data-testid="filter">
+            <p>
+              <span>{elemento.column}</span>
+              <span>{elemento.comparison}</span>
+              <span>{elemento.value}</span>
+            </p>
+            <button
+              type="button"
+              onClick={ () => (handleRemove(elemento.column)) }
+            >
+              X
+            </button>
+          </div>
+        ))
+      }
     </div>
   );
 }
