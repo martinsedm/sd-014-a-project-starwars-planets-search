@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
   const { filterByNumber, selectColumn } = useContext(PlanetsContext);
+  console.log(filterByNumber);
   const [filters, setFilters] = useState(
     {
       filterByName: {
@@ -114,7 +115,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            isSearching ? filteredPlanets.sort.map((planet) => (
+            isSearching ? filteredPlanets.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>

@@ -2,7 +2,10 @@ import React, { useState, useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetNumberSearch() {
-  const { planetsData, setFilterByNumber, setSelectColumn } = useContext(PlanetsContext);
+  const {
+    setFilterByNumeric,
+    filterByNumericValue,
+    setSelectColumn } = useContext(PlanetsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [numberValue, setValue] = useState('');
@@ -14,26 +17,13 @@ function PlanetNumberSearch() {
     if (target.id === 'setValue') setValue(target.value);
   }
   const filterPlanets = () => {
-    let filteredNumberPlanets;
-    switch (comparison) {
-    case 'maior que':
-      filteredNumberPlanets = planetsData
-        .filter((planet) => Number(planet[column]) > Number(numberValue));
-      break;
-    case 'menor que':
-      filteredNumberPlanets = planetsData
-        .filter((planet) => Number(planet[column]) < Number(numberValue));
-      break;
-    case 'igual a':
-      filteredNumberPlanets = planetsData
-        .filter((planet) => Number(planet[column]) === Number(numberValue));
-      break;
-    default:
-      break;
-    }
+    setFilterByNumeric([
+      ...filterByNumericValue,
+      {
+        comparison, column, numberValue }]);
+
     setSelectColumn(column);
     setOptions(selectOptions.filter((option) => option !== column));
-    setFilterByNumber(filteredNumberPlanets);
   };
   return (
     <div>
