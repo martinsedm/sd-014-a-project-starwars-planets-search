@@ -5,6 +5,7 @@ import ContextPlanet from './ContextPlanet';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
+  const [dataFilters, setDataFilters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState({
     filterByName: {
@@ -18,6 +19,7 @@ function PlanetProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [filterRemove, setFilterRemove] = useState();
   const [options, setOptions] = useState([
     'population',
     'orbital_period',
@@ -30,10 +32,29 @@ function PlanetProvider({ children }) {
     const chamadaApi = await Api();
     setData(chamadaApi);
     setIsLoading(false);
+    setDataFilters(chamadaApi);
   }
   useEffect(() => {
     fetchPlanet();
   }, []);
+
+  useEffect(() => {
+    let filtro = [...data];
+    filters.filterByNumericValues.forEach((elemento) => {
+      filtro = filtro.filter((planeta) => {
+        switch (elemento.comparison) {
+        case 'maior que':
+          return parseFloat(planeta[elemento.column]) > parseFloat(elemento.value);
+        case 'menor que':
+          return parseFloat(planeta[elemento.column]) < parseFloat(elemento.value);
+        default:
+          return planeta[elemento.column] === elemento.value;
+        }
+      });
+    });
+
+    setDataFilters(filtro);
+  }, [filters, data]);
 
   const handleChange = ({ target }) => {
     const filterSearch = target.value;
@@ -48,26 +69,29 @@ function PlanetProvider({ children }) {
 
   const context = {
     data,
-    setData,
     isLoading,
-    setIsLoading,
     filter,
-    setFilter,
-    handleChange,
     column,
-    setColumn,
     comparison,
-    setComparison,
     value,
-    setValue,
     filters,
-    setFilters,
     options,
+    dataFilters,
+    filterRemove,
+    handleChange,
+    setFilter,
+    setData,
+    setIsLoading,
+    setColumn,
+    setComparison,
+    setValue,
+    setFilters,
     setOptions,
+    setFilterRemove,
   };
   return (
     <ContextPlanet.Provider value={ context }>
-      {children}
+      { children }
     </ContextPlanet.Provider>
   );
 }

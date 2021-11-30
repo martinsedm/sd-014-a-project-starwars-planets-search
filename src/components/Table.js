@@ -2,15 +2,16 @@ import React, { useContext } from 'react';
 import ContextPlanet from '../context/ContextPlanet';
 
 function Table() {
-  const { data, isLoading, filter } = useContext(ContextPlanet);
+  const { dataFilters, isLoading, filter } = useContext(ContextPlanet);
   const { filterByName: { name } } = filter;
 
   if (isLoading === true) return <p>Carregando...</p>;
+  if (dataFilters.length === 0) return <p>Nenhum planeta encontrado</p>;
   return (
     <table>
       <thead>
         <tr>
-          {Object.keys(data[0]).map((information) => (
+          {Object.keys(dataFilters[0]).map((information) => (
             <th key={ information }>
               {information}
             </th>
@@ -18,7 +19,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.filter((value) => value.name.toLowerCase().includes(name.toLowerCase()))
+        {dataFilters.filter((value) => value.name
+          .toLowerCase().includes(name.toLowerCase()))
           .map((information) => (
             <tr key={ information.diameter }>
               <td>{information.name}</td>

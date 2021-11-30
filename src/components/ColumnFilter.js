@@ -10,8 +10,6 @@ function ColumnFilter() {
     setValue,
     filters,
     setFilters,
-    data,
-    setData,
     options,
     setOptions,
   } = useContext(ContextPlanet);
@@ -19,10 +17,6 @@ function ColumnFilter() {
   const optionsRemoveFilters = () => {
     const optionRemoveFilter = options.filter((option) => option !== column);
     setOptions(optionRemoveFilter);
-    console.log(optionRemoveFilter);
-    console.log('');
-    console.log(options);
-    console.log(column);
   };
 
   const handleSearch = (e) => {
@@ -39,21 +33,18 @@ function ColumnFilter() {
     setFilters({
       filterByNumericValues: [
         ...filters.filterByNumericValues, { column, comparison, value },
-      ] });
-
-    const filtro = data.filter((planeta) => {
-      switch (comparison) {
-      case 'maior que':
-        return parseFloat(planeta[column]) > parseFloat(value);
-      case 'menor que':
-        return parseFloat(planeta[column]) < parseFloat(value);
-      default:
-        return planeta[column] === value;
-      }
+      ],
     });
 
-    setData(filtro);
     optionsRemoveFilters();
+  };
+
+  const handleRemove = (elemento) => {
+    const removeFiltro = filters.filterByNumericValues
+      .filter((filtro) => (elemento !== filtro.column));
+    setFilters({
+      filterByNumericValues: removeFiltro,
+    });
   };
 
   return (
@@ -64,11 +55,11 @@ function ColumnFilter() {
         name="column"
         id="population"
       >
-        { options.map((option) => (
+        {options.map((option) => (
           <option key={ option } value={ option }>
-            { option }
+            {option}
           </option>
-        )) }
+        ))}
       </select>
 
       <select
@@ -96,6 +87,21 @@ function ColumnFilter() {
       >
         Filtrar
       </button>
+      {filters.filterByNumericValues.map((elemento) => (
+        <div key={ elemento.column } data-testid="filter">
+          <p>
+            <span>{elemento.column}</span>
+            <span>{elemento.comparison}</span>
+            <span>{elemento.value}</span>
+          </p>
+          <button
+            type="button"
+            onClick={ () => (handleRemove(elemento.column)) }
+          >
+            X
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
