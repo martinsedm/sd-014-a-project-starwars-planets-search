@@ -25,6 +25,10 @@ function PlanetNumberSearch() {
     setSelectColumn(column);
     setOptions(selectOptions.filter((option) => option !== column));
   };
+  const removeFilter = ({ target }) => {
+    const removed = filterByNumericValue.filter((item) => item.column !== target.name);
+    setFilterByNumeric(removed);
+  };
   return (
     <div>
       <select
@@ -66,7 +70,26 @@ function PlanetNumberSearch() {
       >
         Filtrar
       </button>
+      {
+        filterByNumericValue.map((filter) => (
+          <div
+            data-testid="filter"
+            key={ filter.column }
+          >
 
+            {`${filter.comparison}, ${filter.column}, ${filter.numberValue}`}
+            <button
+              onClick={ removeFilter }
+              name={ filter.column }
+              type="button"
+            >
+              {' '}
+              X
+              {' '}
+
+            </button>
+          </div>))
+      }
     </div>);
 }
 
