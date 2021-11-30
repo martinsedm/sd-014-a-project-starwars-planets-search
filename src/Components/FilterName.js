@@ -6,7 +6,9 @@ function FilterName() {
 
   const handleChange = (e) => {
     filterPlanetsByName(e.target.value);
-    setFilters({ ...filters, filterByName: e.target.value });
+    setFilters({ ...filters,
+      filterByName: e.target.value,
+    });
   };
 
   return (

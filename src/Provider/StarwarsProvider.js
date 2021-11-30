@@ -4,9 +4,20 @@ import StarwarsContext from './StarwarsContext';
 
 function StarwarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [valor, setValor] = useState('');
 
   const filter = {
     filterByName: '',
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
   };
 
   const [filters, setFilters] = useState(filter);
@@ -15,17 +26,31 @@ function StarwarsProvider({ children }) {
     const fetchApi = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const data = await fetchApi.json();
     setPlanets(data.results);
+    setFilteredPlanets(data.results);
   };
 
   const filterPlanetsByName = (name) => {
-    if (name) {
-      const filterPlanets = planets.filter((planet) => planet.name.toLowerCase()
-        .includes(name.toLowerCase()));
-      setPlanets(filterPlanets);
-    } else {
-      fetchPlanets();
-    }
+    const lowerBusca = name.toLowerCase();
+    const filterPlanets = planets
+      .filter((planet) => planet.name.toLowerCase()
+        .includes(lowerBusca));
+    setFilteredPlanets(filterPlanets);
   };
+
+  // const filterPlanetsByNumber = () => {
+  //   const { filterByNumericValues: [{ column, value, comparison }] } = filters;
+  //   let planetsByNumber;
+  //   if (comparison === 'maior que') {
+  //     planetsByNumber = planets.filter((planet) => planet[column] > value);
+  //   }
+  //   if (comparison === 'menor que') {
+  //     planetsByNumber = planets.filter((planet) => planet[column] < value);
+  //   }
+  //   if (comparison === 'igual a') {
+  //     planetsByNumber = planets.filter((planet) => planet[column] === value);
+  //   }
+  //   setFilteredPlanets(planetsByNumber);
+  // };
 
   const contextValue = {
     planets,
@@ -33,10 +58,25 @@ function StarwarsProvider({ children }) {
     filters,
     setFilters,
     filterPlanetsByName,
+    filteredPlanets,
+    setFilteredPlanets,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    valor,
+    setValor,
+
   };
+
   useEffect(() => {
     fetchPlanets();
   }, []);
+
+  // useEffect(() => {
+  //   const planetsNumeric = filterPlanetsByNumber();
+  //   setFilteredPlanets(planetsNumeric);
+  // }, [filter.filterByNumericValues]);
 
   return (
     <StarwarsContext.Provider value={ contextValue }>
