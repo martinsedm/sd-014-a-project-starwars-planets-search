@@ -7,6 +7,7 @@ function FilterNumber() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valor, setValor] = useState('');
+  // const [option, setOption] = useState([])
 
   const filterPlanetsByNumber = () => {
     let planetsByNumber;
@@ -46,14 +47,11 @@ function FilterNumber() {
         onChange={ ({ target: { value } }) => setColumn(value) }
         value={ column }
       >
-        {/* <option value="population">population</option>
+        <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option> */}
-        { option.map((item) => (
-          <option key={ item } value={ item }>{item}</option>
-        )) }
+        <option value="surface_water">surface_water</option>
 
       </select>
       <select
