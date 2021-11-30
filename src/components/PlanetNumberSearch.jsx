@@ -6,6 +6,8 @@ function PlanetNumberSearch() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [numberValue, setValue] = useState('');
+  const [selectOptions, setOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   function handleFilter({ target }) {
     if (target.id === 'setColumn') setColumn(target.value);
     if (target.id === 'setComparison') setComparison(target.value);
@@ -29,6 +31,7 @@ function PlanetNumberSearch() {
     default:
       break;
     }
+    setOptions(selectOptions.filter((option) => option !== column));
     setFilterByNumber(filteredNumberPlanets);
   };
   return (
@@ -39,12 +42,13 @@ function PlanetNumberSearch() {
         onChange={ handleFilter }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-
+        { selectOptions.map((options) => (
+          <option
+            key={ options }
+            value={ options }
+          >
+            {options}
+          </option>))}
       </select>
       <select
         value={ comparison }
