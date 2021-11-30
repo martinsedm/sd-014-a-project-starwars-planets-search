@@ -37,21 +37,6 @@ function StarwarsProvider({ children }) {
     setFilteredPlanets(filterPlanets);
   };
 
-  // const filterPlanetsByNumber = () => {
-  //   const { filterByNumericValues: [{ column, value, comparison }] } = filters;
-  //   let planetsByNumber;
-  //   if (comparison === 'maior que') {
-  //     planetsByNumber = planets.filter((planet) => planet[column] > value);
-  //   }
-  //   if (comparison === 'menor que') {
-  //     planetsByNumber = planets.filter((planet) => planet[column] < value);
-  //   }
-  //   if (comparison === 'igual a') {
-  //     planetsByNumber = planets.filter((planet) => planet[column] === value);
-  //   }
-  //   setFilteredPlanets(planetsByNumber);
-  // };
-
   const contextValue = {
     planets,
     setPlanets,
