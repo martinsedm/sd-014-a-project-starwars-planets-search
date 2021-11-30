@@ -1,7 +1,7 @@
-const fetchAPI = async () => {
-  const data = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-  const { results } = await data.json();
+const fetchPlanets = async () => {
+  const planets = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+  const { results } = await planets.json();
   return results;
 };
 
-export default fetchAPI;
+export default fetchPlanets;

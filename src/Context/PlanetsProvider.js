@@ -5,6 +5,10 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planetsData, setPlanetsData] = useState([]);
+  const [name, setName] = useState('');
+  const [filtered, setFiltered] = useState(planetsData);
+  const [filterNumber, setFilterNumber] = useState([]);
+  const [filterSort, setFilterSort] = useState({ column: 'name', sort: 'ASC' });
 
   const callFetch = () => {
     fetchAPI().then((response) => setPlanetsData(response));
@@ -12,9 +16,26 @@ function PlanetsProvider({ children }) {
 
   useEffect(callFetch, []);
 
+  const mainContext = {
+    planetsData,
+    setPlanetsData,
+    setName,
+    setFilterNumber,
+    setFilterSort,
+    filters: {
+      filterByName: {
+        name,
+      },
+      filterByNumericValues: filterNumber,
+      order: filterSort,
+    },
+    filtered,
+    setFiltered,
+  };
+
   return (
     <PlanetsContext.Provider
-      value={ { planetsData } }
+      value={ mainContext }
     >
       {children}
     </PlanetsContext.Provider>
