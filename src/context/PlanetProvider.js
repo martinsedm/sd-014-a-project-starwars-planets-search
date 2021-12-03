@@ -55,25 +55,24 @@ function PlanetProvider({ children }) {
     if (filterByNumericValues.length === 0) {
       setFilteredPlanets(data);
     } else {
-      const { column, comparison, value } = (
-        filterByNumericValues[filterByNumericValues.length - 1]);
-
-      switch (comparison) {
-      case 'maior que': filteredByNumbers = filteredPlanets.filter(
-        (item) => (parseInt(item[column], 10) > parseInt(value, 10)),
-      );
-        break;
-      case 'menor que': filteredByNumbers = filteredPlanets.filter(
-        (item) => (parseInt(item[column], 10) < parseInt(value, 10)),
-      );
-        break;
-      case 'igual a': filteredByNumbers = filteredPlanets.filter(
-        (item) => (parseInt(item[column], 10) === parseInt(value, 10)),
-      );
-        break;
-      default:
-        break;
-      }
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
+        case 'maior que': filteredByNumbers = data.filter(
+          (item) => (parseInt(item[column], 10) > parseInt(value, 10)),
+        );
+          break;
+        case 'menor que': filteredByNumbers = data.filter(
+          (item) => (parseInt(item[column], 10) < parseInt(value, 10)),
+        );
+          break;
+        case 'igual a': filteredByNumbers = data.filter(
+          (item) => (parseInt(item[column], 10) === parseInt(value, 10)),
+        );
+          break;
+        default:
+          break;
+        }
+      });
       setFilteredPlanets(filteredByNumbers);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

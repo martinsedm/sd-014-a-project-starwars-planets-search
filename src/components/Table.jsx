@@ -7,6 +7,10 @@ function Table() {
 
   const PLANET_INFO_LENGTH = 13;
 
+  if (filteredPlanets === 0) {
+    return <h3>Nenhum planeta atende ao filtro selecionado</h3>;
+  }
+
   return (
     <div>
       {!isLoading && (
