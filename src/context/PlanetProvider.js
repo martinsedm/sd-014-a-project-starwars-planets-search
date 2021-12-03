@@ -133,7 +133,7 @@ function PlanetProvider({ children }) {
     const { column } = order;
     let sorted = '';
     if (isLoading) setFilteredPlanets(filteredPlanets);
-    if (!isLoading) {
+    if (!isLoading && filteredPlanets.length !== 0) {
       sorted = (!Number.isNaN(parseInt(filteredPlanets[0][column], 10))
         ? switchForNumber()
         : switchForText());
