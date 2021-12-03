@@ -140,7 +140,6 @@ function PlanetProvider({ children }) {
       setFilteredPlanets(sorted);
     }
     setFilters({ ...filters });
-    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.order, filteredPlanets]);
 

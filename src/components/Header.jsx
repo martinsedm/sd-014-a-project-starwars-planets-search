@@ -106,6 +106,7 @@ function Header() {
             type="button"
             onClick={ handleSubmit }
             data-testid="button-filter"
+            disabled={ columnOptions.length === 0 }
           >
             Adicionar Filtro
           </button>
