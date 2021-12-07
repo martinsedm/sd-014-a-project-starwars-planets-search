@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/jsx-max-depth */
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 import logo from '../images/star-wars-4.svg';
+import audio from '../audio/audio.mp3';
 
 function Header() {
   const {
@@ -78,6 +80,11 @@ function Header() {
 
   return (
     <main className="App-header">
+      <audio autoPlay>
+        <source src="horse.ogg" type="audio/ogg" />
+        <source src={ audio } type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
       <img className="App-logo" src={ logo } alt="logo-starwars" />
       <div className="filter-container">
         <div className="filter-form">
@@ -132,7 +139,6 @@ function Header() {
               </select>
               <label htmlFor="ASC" className="column-sort-radio">
                 <input
-                  
                   type="radio"
                   value="ASC"
                   name="order"

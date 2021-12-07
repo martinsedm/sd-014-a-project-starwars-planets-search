@@ -45,7 +45,8 @@ function PlanetProvider({ children }) {
 
   useEffect(() => {
     const filtered = data
-      .filter(({ name }) => name.includes(filters.filterByName.name));
+      .filter(({ name }) => (
+        name.toLowerCase().includes(filters.filterByName.name.toLowerCase())));
     setFilteredPlanets(filtered);
   }, [filters.filterByName, data]);
 
@@ -55,17 +56,18 @@ function PlanetProvider({ children }) {
     if (filterByNumericValues.length === 0) {
       setFilteredPlanets(data);
     } else {
+      filteredByNumbers = data;
       filterByNumericValues.forEach(({ column, comparison, value }) => {
         switch (comparison) {
-        case 'maior que': filteredByNumbers = data.filter(
+        case 'maior que': filteredByNumbers = filteredByNumbers.filter(
           (item) => (parseInt(item[column], 10) > parseInt(value, 10)),
         );
           break;
-        case 'menor que': filteredByNumbers = data.filter(
+        case 'menor que': filteredByNumbers = filteredByNumbers.filter(
           (item) => (parseInt(item[column], 10) < parseInt(value, 10)),
         );
           break;
-        case 'igual a': filteredByNumbers = data.filter(
+        case 'igual a': filteredByNumbers = filteredByNumbers.filter(
           (item) => (parseInt(item[column], 10) === parseInt(value, 10)),
         );
           break;
