@@ -5,6 +5,7 @@
 html, body {
   background-color: black;
   height: 100%;
+  background-image: url('./images/original.jpg');
 }
 
 textarea:focus, input:focus {
@@ -24,12 +25,14 @@ textarea:focus, input:focus {
 
 .App-header {
   align-items: flex-start;
-  background-color: black;
+  background-color: transparent;
   color: white;
   display: flex;
   font-size: calc(5px + 2vmin);
   justify-content: space-between;
   margin: 50px;
+  
+  background-image: cover;
 }
 
 .App-header li {
@@ -145,7 +148,7 @@ label {
 
 
 .table-container {
-  background-color: black;
+  background-color: rgba(0,0,0,0.6);
   color: white;
   padding: 10px;
 }
@@ -156,12 +159,12 @@ label {
 }
 
 .table thead {
-  background-color: rgb(175, 131, 0);
+  background-color: rgba(175, 131, 0, 0.8);
   border-bottom: 1px solid white;
 }
 
 .table tr:nth-child( even ) {
-  background-color: rgb(91, 67, 0);
+  background-color: rgba(91, 67, 0, 0.8);
 }
 
 .table tr:hover {
