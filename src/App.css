@@ -14,6 +14,7 @@ html,body {
 .App-logo {
   height: 12vmin;
   margin: auto;
+  margin-top: 30px;
 }
 
 
@@ -23,7 +24,9 @@ html,body {
   display: flex;
   font-size: calc(5px + 2vmin);
   justify-content: space-between;
-  padding: 50px;
+  align-items: flex-start;
+  /* padding: 50px; */
+  margin: 50px;
 }
 
 .App-header li{
@@ -54,6 +57,7 @@ html,body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-top: 30px;
 }
 
 .filter-form {
