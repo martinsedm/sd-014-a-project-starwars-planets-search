@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
-import logo from '../images/star-wars.svg';
+import logo from '../images/star-wars-4.svg';
 
 function Header() {
   const {

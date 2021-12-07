@@ -1,11 +1,13 @@
+* {
+  margin: 0;
+}
 .App {
   text-align: center;
-  /* background-color: black; */
 }
 
 .App-logo {
-  height: 20vmin;
-  filter: invert();
+  height: 12vmin;
+  margin: auto;
 }
 
 
@@ -70,4 +72,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.table-container {
+  background-color: black;
+  padding: 10px;
+  color: white;
+  min-height: 100vh;
+}
+
+.table {
+  padding: 10px;
+}
+
+.table thead {
+  border: solid 1px white;
+}
+
+.table tr:nth-child(even){
+  background-color: rgb(91, 67, 0);
+}
+
+.table tr:hover{
+  background-color: rgb(175, 131, 0);
+}
+
+.list-url {
+  color: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

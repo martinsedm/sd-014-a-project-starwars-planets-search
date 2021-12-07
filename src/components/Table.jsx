@@ -7,12 +7,21 @@ function Table() {
 
   const PLANET_INFO_LENGTH = 13;
 
+  const verifyIfURLField = (info) => (
+    info.includes('https')
+      ? (
+        <a href={ info } className="list-url">
+          { info }
+        </a>)
+      : info
+  );
+
   return (
-    <div>
+    <div className="table-container">
       {filteredPlanets.length === 0
         ? <h3>Nenhum planeta atende ao filtro selecionado</h3>
         : !isLoading && (
-          <table>
+          <table className="table">
             <thead>
               <tr>
                 {Object.keys(data[0]).map((element) => (
@@ -27,11 +36,16 @@ function Table() {
                   <td key={ planetInfo.name } data-testid="planet-name">
                     {planetInfo.name}
                   </td>
-                  {/* {teste = Object.values(planetInfo).splice(1,12)} */}
                   {Object.values(planetInfo)
                     .slice(1, PLANET_INFO_LENGTH).map((info, indexInfo) => (
                       <td key={ indexInfo }>
-                        {info}
+                        {typeof (info) === 'object'
+                          ? info.map((url) => (
+                            <a key={ url } href={ url } className="list-url">
+                              { url }
+                              <br />
+                            </a>))
+                          : verifyIfURLField(info) }
                       </td>
                     ))}
                 </tr>))}
