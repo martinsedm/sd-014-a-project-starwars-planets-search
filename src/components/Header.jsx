@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
@@ -41,10 +42,9 @@ function Header() {
 
   const handleClick = (ev) => {
     const { filterByNumericValues } = filters;
-    const columnFilter = (ev.target.parentElement.innerHTML.split(' ')[0]);
     const newFilters = filterByNumericValues
-      .filter(({ column }) => column !== columnFilter);
-    setColumsOptions(columnOptions.concat(columnFilter));
+      .filter(({ column }) => column !== ev);
+    setColumsOptions(columnOptions.concat(ev));
     removeFilter(newFilters);
   };
 
@@ -67,7 +67,7 @@ function Header() {
           <button
             className="del-btn"
             type="button"
-            onClick={ handleClick }
+            onClick={ () => handleClick(column) }
           >
             Apagar
           </button>
@@ -90,76 +90,79 @@ function Header() {
             onChange={ (ev) => setNameFilterText(ev.target) }
           />
           <div className="filter-details">
-            <select data-testid="column-filter" name="column" onChange={ handleChange }>
-              {filterColumnList()}
-            </select>
-            <select
-              data-testid="comparison-filter"
-              name="comparison"
-              onChange={ handleChange }
-            >
-              <option selected value="maior que">maior que</option>
-              <option value="menor que">menor que</option>
-              <option value="igual a">igual a</option>
-            </select>
-            <input
-              name="value"
-              value={ numericFilters.value }
-              type="number"
-              data-testid="value-filter"
-              onChange={ handleChange }
-            />
-            <button
-              type="button"
-              onClick={ handleSubmit }
-              data-testid="button-filter"
-              disabled={ columnOptions.length === 0 }
-            >
-              Adicionar Filtro
-            </button>
-            <select
-              data-testid="column-sort"
-              name="sort"
-              onChange={ handleChangeColumnSort }
-            >
-              {!isLoading && Object.keys(data[0]).map((element) => (
-                <option key={ element } name="column" value={ element }>
-                  {element}
-                </option>))}
-            </select>
-            <label htmlFor="ASC">
+            <div className="filter-by-number">
+              <select data-testid="column-filter" name="column" onChange={ handleChange }>
+                {filterColumnList()}
+              </select>
+              <select
+                data-testid="comparison-filter"
+                name="comparison"
+                onChange={ handleChange }
+              >
+                <option selected value="maior que">maior que</option>
+                <option value="menor que">menor que</option>
+                <option value="igual a">igual a</option>
+              </select>
               <input
-                className="column-sort-radio"
-                type="radio"
-                value="ASC"
-                name="order"
-                id="ASC"
-                onChange={ handleCheck }
-                checked={ sortOrderList.sort === 'ASC' }
-                data-testid="column-sort-input-asc"
+                name="value"
+                value={ numericFilters.value }
+                type="number"
+                data-testid="value-filter"
+                onChange={ handleChange }
+              />
+              <button
+                type="button"
+                onClick={ handleSubmit }
+                data-testid="button-filter"
+                disabled={ columnOptions.length === 0 }
+              >
+                Adicionar Filtro
+              </button>
+            </div>
+            <div className="filter-sort">
+              <select
+                data-testid="column-sort"
+                name="sort"
+                onChange={ handleChangeColumnSort }
+              >
+                {!isLoading && Object.keys(data[0]).map((element) => (
+                  <option key={ element } name="column" value={ element }>
+                    {element}
+                  </option>))}
+              </select>
+              <label htmlFor="ASC" className="column-sort-radio">
+                <input
+                  
+                  type="radio"
+                  value="ASC"
+                  name="order"
+                  id="ASC"
+                  onChange={ handleCheck }
+                  checked={ sortOrderList.sort === 'ASC' }
+                  data-testid="column-sort-input-asc"
                 />
-              ASC
-            </label>
-            <label htmlFor="DESC" className="colum-sort-radio">
-              <input
-                
-                type="radio"
-                value="DESC"
-                name="order"
-                id="DESC"
-                onChange={ handleCheck }
-                data-testid="column-sort-input-desc"
-                checked={ sortOrderList.sort === 'DESC' }
+                ASC
+              </label>
+              <label htmlFor="DESC" className="column-sort-radio">
+                <input
+                  type="radio"
+                  value="DESC"
+                  name="order"
+                  id="DESC"
+                  onChange={ handleCheck }
+                  data-testid="column-sort-input-desc"
+                  checked={ sortOrderList.sort === 'DESC' }
                 />
-              DESC
-            </label>
-            <button
-              type="button"
-              data-testid="column-sort-button"
-              onClick={ handleSubmitOrder }
-            >
-              Ordenar
-            </button>
+                DESC
+              </label>
+              <button
+                type="button"
+                data-testid="column-sort-button"
+                onClick={ handleSubmitOrder }
+              >
+                Ordenar
+              </button>
+            </div>
           </div>
         </div>
         {activeFilter()}
