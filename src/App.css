@@ -1,6 +1,12 @@
 * {
   margin: 0;
 }
+
+html,body { 
+  background-color: black;
+  height:100%; 
+}
+
 .App {
   text-align: center;
 }
@@ -15,70 +21,120 @@
   background-color: black;
   color: white;
   display: flex;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(5px + 2vmin);
   justify-content: space-between;
   padding: 50px;
 }
 
 .App-header li{
   display: flex;
-  font-size: 16px;
+  font-size: 18px;
   justify-content: space-between;
+  padding-left: 100px;
+  margin: 5px;
+  max-width: 300px;
 }
 
 .del-btn {
   border: none;
-  background-color: black;
-  color: red;
+  background-color: red;
+  font-size: 12px;
+  border-radius: 5px;
+  color: black;
   cursor: pointer;
+  width: auto;
+}
+
+.del-btn:hover {
+  color: white;
 }
 
 .filter-container {
   width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.filter-by-name {
-  display:flex;
-  height: 20px;
-  border-radius: 5px;
-  border: none;
-  margin: 10px;
-  text-align: center;
+  justify-content: space-around;
 }
 
 .filter-form {
   display: flex;
-  margin: 10px;
+  padding-left: 30px;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.filter-sort {
-  margin: 10px;
+.filter-form select {
+  height: 30px;
+  margin: 0 5px;
+}
+
+.filter-by-name {
+  height: 30px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border: 3px solid rgb(175, 131, 0);
+  text-align: center;
+  font-size: 18px;
+  width: 400px;
+}
+
+.filter-details {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 2;
+  font-size: 14px;
 }
 
-.App-link {
-  color: #61dafb;
+.filter-details select {
+  height: 30px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border: 3px solid rgb(175, 131, 0);
+  text-align: center;
+  width: 100px;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.filter-details input {
+  height: 22px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  border: 3px solid rgb(175, 131, 0);
+  text-align: center;
+  font-size: 16px;
+  width: 40px;
 }
+
+.filter-details button {
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgb(175, 131, 0);
+  color: white;
+  border: 3px solid rgb(175, 131, 0);
+  text-align: center;
+  font-size: 16px;
+  /* width: 40px; */
+}
+
+label {
+  /* width: 10px; */
+  /* height: 20px; */
+  /* font-size: 10px; */
+  background: none;
+  /* border: 3px solid rgb(175, 131, 0); */
+  /* padding: 0; */
+  /* margin: 0; */
+}
+
+
 
 .table-container {
   background-color: black;
   padding: 10px;
   color: white;
-  min-height: 100vh;
 }
 
 .table {
@@ -86,7 +142,8 @@
 }
 
 .table thead {
-  border: solid 1px white;
+  border-bottom: 1px solid white;
+  background-color: rgb(175, 131, 0);
 }
 
 .table tr:nth-child(even){
@@ -102,4 +159,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.list-url:hover {
+  color: greenyellow;
 }
