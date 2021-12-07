@@ -26,7 +26,7 @@ function Table() {
               <tr>
                 {Object.keys(data[0]).map((element) => (
                   <th key={ element }>
-                    {element.replace('_', ' ')}
+                    {element.replace('_', ' ').toUpperCase()}
                   </th>))}
               </tr>
             </thead>
