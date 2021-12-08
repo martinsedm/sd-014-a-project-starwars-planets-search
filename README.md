@@ -323,24 +323,20 @@ O que será verificado:
 
 ### 6 - Ordene as colunas de forma ascendente ou descendente
 
-A informação acerca da ordenação das colunas deve ser armazenada nos campos `filters: { filterByName: { name }, filterByNumericValues = [], order: { column: 'Name', sort: 'ASC'} }`, o campo column representa o nome da coluna a ordenar e a ordem representa a ordenação, sendo 'ASC' ascendente e 'DESC' descendente. Por padrão, a tabela começa ordenada pela coluna 'Name' em ordem ascendente. Por exemplo:
+A informação acerca da ordenação das colunas deve ser armazenada em um novo campo `{ order: { column: 'name', sort: 'ASC'} }`, o campo column representa o nome da coluna a ordenar e a ordem representa a ordenação, sendo 'ASC' ascendente e 'DESC' descendente. Por padrão, a tabela deverá começar ordenada pela coluna 'name' em ordem ascendente. Por exemplo:
 
 ```javascript
 {
-  filters: {
-    filterByName: {
-      name: ''
-    },
-    filterByNumericValues : [],
-    order: {
-      column: 'name',
-      sort: 'ASC',
-    }
+  order: {
+    column: 'name',
+    sort: 'ASC',
   }
 }
 ```
 
 Essa ordenação deve ser feita via filtro: um dropdown selecionará a coluna a basear a ordenação e um par de radio buttons determinará se esta é ascendente ou descendente.
+
+As colunas selecionáveis através deste dropdown são: 'population', 'orbital_period', 'diameter', 'rotation_period' e 'surface_water'.
 
 O dropdown deve ser um elemento `select` com a propriedade `data-testid='column-sort'`, com as opções das colunas escolhíveis em seu interior. Deve haver também, dois `inputs` de tipo `radio`, com propriedades `data-testid='column-sort-input-asc'` e `data-testid='column-sort-input-desc'`, para definir o sentido da ordenação (com `value` sendo `ASC` ou `DESC`) e um botão para submeter a ordenação, com uma tag `button` e a propriedade `data-testid='column-sort-button'`.
 
@@ -349,7 +345,9 @@ Adicione o atributo `data-testid` com o valor `planet-name` em todos os elemento
 O que será verificado:
 ```
 - Verifica ordenação inicial
-- Ordena os planetas do mais populoso para o menos populoso
+- Ordena os planetas do maior período orbital para o menor período orbital
+- Ordena os planetas do menor diametro para o maior diametro
+
 ```
 ![img](req-6.gif)
 
